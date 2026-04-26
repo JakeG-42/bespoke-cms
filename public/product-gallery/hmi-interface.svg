@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" role="img" aria-labelledby="title desc">
-  <title id="title">Generated HMI interface placeholder</title>
+  <title id="title">HMI interface visual</title>
   <desc id="desc">A stylised rugged machinery HMI display with interface panels and soft keys.</desc>
   <defs>
     <linearGradient id="line" x1="120" x2="820" y1="90" y2="520" gradientUnits="userSpaceOnUse">

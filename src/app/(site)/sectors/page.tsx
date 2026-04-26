@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { GeneratedVisual } from "@/components/site/generated-visuals";
+import { TechnicalVisual } from "@/components/site/technical-visuals";
 import { sectorModules } from "@/content/site";
 
 export const metadata = {
@@ -16,8 +16,8 @@ export default function SectorsPage() {
           <p className="code-kicker">sectors.map</p>
           <h1>Control systems for real working environments.</h1>
           <p className="lede">
-            The current Eltronic site already points to a wide sector spread.
-            This page turns those signals into clear pathways for visitors.
+            Eltronic supports specialist machinery across sectors where clear
+            operator feedback, reliable data and rugged control matter.
           </p>
           <div className="actions">
             <Link className="button" href="/contact">
@@ -28,7 +28,7 @@ export default function SectorsPage() {
             </Link>
           </div>
         </div>
-        <GeneratedVisual label="Generated sector map image" variant="sectors" />
+        <TechnicalVisual label="Application sector map" variant="sectors" />
       </section>
 
       <section className="section">

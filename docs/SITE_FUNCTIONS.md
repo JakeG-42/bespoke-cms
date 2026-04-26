@@ -17,7 +17,7 @@ Concise living reference for how the current Eltronic Next.js site works.
 - Public navigation: brand link to `/`, plus icon-labelled links for `/products`, `/solutions`, `/sectors`, `/data-specification`, `/about`, and `/contact`.
 - Fonts: `Tajawal` and `Fira_Code` are loaded through `next/font/google`.
 - UI system: public pages use custom CSS; admin uses Tailwind CSS v4 and shadcn-style local components under `src/components/ui`.
-- Generated visual modules: `src/components/site/generated-visuals.tsx` renders SVG-style imagery for public pages.
+- Technical visual modules: `src/components/site/technical-visuals.tsx` renders SVG-style imagery for public pages.
 - AI context pack: future agents should start with `docs/AGENT_CONTEXT.md` and `docs/AI_FUNCTION_MAP.json`.
 
 ## Current Routes
@@ -108,7 +108,7 @@ Each product currently has:
 ## Known Placeholders
 
 - Product content is now seeded from the public `eltronic.co.uk` crawl.
-- Product pages show real product copy, source trace links, public WordPress image URLs, specifications, documents where known, and order variants where available.
+- Product pages show product copy, local product image assets, specifications, documents where known, and order variants where available.
 - WordPress migration/plugin work is being considered but is not implemented in the current app.
 - Image upload management is not implemented yet; product images currently use URLs.
 - Generated public-page imagery is currently code-native SVG, not bitmap media uploads.

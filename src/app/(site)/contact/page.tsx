@@ -35,9 +35,8 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
           <p className="code-kicker">enquiry.create</p>
           <h1>Start the conversation.</h1>
           <p className="lede">
-            The current WordPress form asks for name, company, email, message
-            and an optional product selection. This is the same intended flow,
-            now wired into Eltronic Studio so submissions are captured for review.
+            Tell us about the machine, product or control challenge. We will
+            review the details and come back with a practical next step.
           </p>
 
           <div className="contact-list">

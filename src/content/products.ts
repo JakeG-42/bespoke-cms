@@ -40,8 +40,8 @@ export type Product = {
 };
 
 const topconDocuments: ProductDocument[] = [
-  { label: "Full data sheet", url: "https://eltronic.co.uk/product-data-sheets-certificates" },
-  { label: "Basic data sheet", url: "https://eltronic.co.uk/product-data-sheets-certificates" },
+  { label: "Request full data sheet", url: "/contact" },
+  { label: "Request basic data sheet", url: "/contact" },
 ];
 
 export const products: Product[] = [
@@ -53,7 +53,7 @@ export const products: Product[] = [
     template: "data-logger",
     sourceUrl: "https://eltronic.co.uk/autopi",
     image: {
-      src: "https://eltronic.co.uk/wp-content/uploads/2025/05/4in1_Antenna_Kit_Device_with_Screws_-_Edit_011.png",
+      src: "/product-images/autopi-can-fd-pro.png",
       alt: "AutoPi CAN-FD Pro device and antenna kit",
     },
     summary:
@@ -94,23 +94,23 @@ export const products: Product[] = [
     template: "module",
     sourceUrl: "https://eltronic.co.uk/eltronic-i-o-iq-can-bus-module",
     image: {
-      src: "https://eltronic.co.uk/wp-content/uploads/2023/08/MODUL-I-O-V1.0-top.jpg",
+      src: "/product-images/eltronic-iq-can-bus-module.jpg",
       alt: "Eltronic I&Q CAN-bus I/O module",
     },
     summary:
-      "Eltronic CAN-bus I/O module page currently marked as under construction on the existing site.",
+      "CAN-bus I/O expansion module for machinery control projects, with configuration details confirmed during enquiry.",
     description:
-      "The current WordPress product page is still being filled in. The new site keeps this product visible while making its status clear and easy to update.",
+      "The I&Q CAN-bus I/O Module supports control-system expansion where additional machine inputs, outputs and CAN connectivity need to be discussed around the application.",
     highlights: [
       "Eltronic-owned product page for CAN-bus I/O expansion",
       "Technical data sections exist for housing, user interface and real time clock",
-      "Order information has placeholders for versions A, B, C and D",
+      "Version options can be confirmed during enquiry",
     ],
     specifications: [
-      { label: "Page status", value: "Under construction on current site" },
-      { label: "Housing", value: "To be updated" },
-      { label: "User interface", value: "To be updated" },
-      { label: "Real time clock", value: "To be updated" },
+      { label: "Product family", value: "Eltronic CAN-bus I/O expansion" },
+      { label: "Housing", value: "Application dependent" },
+      { label: "User interface", value: "Project specification" },
+      { label: "Real time clock", value: "Available on request" },
     ],
     variants: [
       { name: "Version A", details: "To be updated", articleNumber: "TBU" },
@@ -128,7 +128,7 @@ export const products: Product[] = [
     template: "hmi",
     sourceUrl: "https://eltronic.co.uk/topcon-opus-b6e",
     image: {
-      src: "https://eltronic.co.uk/wp-content/uploads/2023/08/OPUS_B6E_Front_web_1024-768-85-2.jpg",
+      src: "/product-images/topcon-opus-b6e.jpg",
       alt: "TOPCON OPUS B6e front view",
     },
     summary:
@@ -161,7 +161,7 @@ export const products: Product[] = [
     template: "hmi",
     sourceUrl: "https://eltronic.co.uk/topcon-opus-b4e",
     image: {
-      src: "https://eltronic.co.uk/wp-content/uploads/2023/08/OPUS_B4E_Front_web_1024-768-85-1.jpg",
+      src: "/product-images/topcon-opus-b4e.jpg",
       alt: "TOPCON OPUS B4e front view",
     },
     summary:
@@ -194,7 +194,7 @@ export const products: Product[] = [
     template: "hmi",
     sourceUrl: "https://eltronic.co.uk/topcon-opus-b3e",
     image: {
-      src: "https://eltronic.co.uk/wp-content/uploads/2023/08/OPUS_B3E_Front_web_1024-768-85-1.jpg",
+      src: "/product-images/topcon-opus-b3e.jpg",
       alt: "TOPCON OPUS B3e front view",
     },
     summary:
@@ -233,7 +233,7 @@ export const products: Product[] = [
     template: "hmi",
     sourceUrl: "https://eltronic.co.uk/topcon-opus-a8s",
     image: {
-      src: "https://eltronic.co.uk/wp-content/uploads/2023/08/OPUS_A8S_Front_web_1024-768-85-1.jpg",
+      src: "/product-images/topcon-opus-a8s.jpg",
       alt: "TOPCON OPUS A8s front view",
     },
     summary:
@@ -272,7 +272,7 @@ export const products: Product[] = [
     template: "hmi",
     sourceUrl: "https://eltronic.co.uk/topcon-opus-a8e",
     image: {
-      src: "https://eltronic.co.uk/wp-content/uploads/2023/08/OPUS_A8E_Front_web_1024-768-85-1.jpg",
+      src: "/product-images/topcon-opus-a8e.jpg",
       alt: "TOPCON OPUS A8e front view",
     },
     summary:
@@ -311,7 +311,7 @@ export const products: Product[] = [
     template: "hmi",
     sourceUrl: "https://eltronic.co.uk/topcon-a6s",
     image: {
-      src: "https://eltronic.co.uk/wp-content/uploads/2023/08/OPUS_A6S_Front_web_1024-768-85-1.jpg",
+      src: "/product-images/topcon-opus-a6s.jpg",
       alt: "TOPCON OPUS A6s front view",
     },
     summary:
@@ -350,7 +350,7 @@ export const products: Product[] = [
     template: "hmi",
     sourceUrl: "https://eltronic.co.uk/topcon-new",
     image: {
-      src: "https://eltronic.co.uk/wp-content/uploads/2023/08/OPUS_A6E_Front_web_1024-768-85-1.jpg",
+      src: "/product-images/topcon-opus-a6e.jpg",
       alt: "TOPCON OPUS A6e front view",
     },
     summary:
@@ -389,7 +389,7 @@ export const products: Product[] = [
     template: "hmi",
     sourceUrl: "https://eltronic.co.uk/opus-a3e",
     image: {
-      src: "https://eltronic.co.uk/wp-content/uploads/2023/08/OPUS_A3E_Front_web_1024-768-85-1-1.jpg",
+      src: "/product-images/topcon-opus-a3e.jpg",
       alt: "TOPCON OPUS A3e front view",
     },
     summary:
@@ -428,7 +428,7 @@ export const products: Product[] = [
     template: "hmi",
     sourceUrl: "https://eltronic.co.uk/opus-test-a3s",
     image: {
-      src: "https://eltronic.co.uk/wp-content/uploads/2023/08/OPUS_A3S_Front_web_1024-768-85-1.jpg",
+      src: "/product-images/topcon-opus-a3s.jpg",
       alt: "TOPCON OPUS A3s front view",
     },
     summary:

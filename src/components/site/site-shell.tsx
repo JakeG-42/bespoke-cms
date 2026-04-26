@@ -14,10 +14,8 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
     <div className="site-shell">
       <header className="main-header">
         <nav className="nav-container" aria-label="Main navigation">
-          <Link className="brand-logo" href="/">
-            <span className="logo-bracket">&lt;</span>
-            <span className="logo-text">Eltronic</span>
-            <span className="logo-bracket">/&gt;</span>
+          <Link className="brand-logo logo-text" href="/">
+            Eltronic
           </Link>
           <div className="nav-menu">
             {navItems.map((item) => (

@@ -454,7 +454,7 @@ h3 {
   border-color: rgba(251, 191, 36, 0.66);
 }
 
-.generated-visual {
+.technical-visual {
   position: relative;
   margin: 0;
   overflow: hidden;
@@ -468,13 +468,13 @@ h3 {
   box-shadow: var(--shadow-lg);
 }
 
-.generated-visual svg {
+.technical-visual svg {
   display: block;
   width: 100%;
   height: auto;
 }
 
-.generated-visual figcaption {
+.technical-visual figcaption {
   position: absolute;
   right: 1rem;
   bottom: 1rem;

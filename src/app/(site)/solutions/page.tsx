@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { GeneratedVisual } from "@/components/site/generated-visuals";
+import { TechnicalVisual } from "@/components/site/technical-visuals";
 import { serviceModules, workflowModules } from "@/content/site";
 
 export const metadata = {
@@ -29,7 +29,7 @@ export default function SolutionsPage() {
             </Link>
           </div>
         </div>
-        <GeneratedVisual label="Generated control-system module" variant="network" />
+        <TechnicalVisual label="Control-system network" variant="network" />
       </section>
 
       <section className="section">
@@ -39,8 +39,8 @@ export default function SolutionsPage() {
             <h2>Core solution modules</h2>
           </div>
           <p>
-            These modules map the current WordPress positioning into clearer
-            public service pages.
+            A practical view of the services that sit around every successful
+            HMI, CANbus or machine-control project.
           </p>
         </div>
         <div className="module-grid">
@@ -61,7 +61,7 @@ export default function SolutionsPage() {
 
       <section className="section">
         <div className="split-module reverse">
-          <GeneratedVisual label="Generated HMI interface image" variant="display" />
+          <TechnicalVisual label="HMI interface architecture" variant="display" />
           <div>
             <span className="section-number">02</span>
             <h2>From display choice to working system.</h2>

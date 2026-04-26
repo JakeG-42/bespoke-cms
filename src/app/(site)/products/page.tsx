@@ -18,11 +18,11 @@ export default async function ProductsPage() {
         <div className="section-heading">
           <div>
             <span className="section-number">products.index</span>
-            <h1>Product catalogue</h1>
+          <h1>Product catalogue</h1>
           </div>
           <p>
-            Crawled from the live WordPress site and rebuilt as structured
-            content for the new Next.js app.
+            Explore rugged displays, CAN data logging tools and control modules
+            for machinery projects that need a quote-led specification.
           </p>
         </div>
 

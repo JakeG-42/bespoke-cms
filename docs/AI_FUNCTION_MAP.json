@@ -276,7 +276,7 @@
     "templateChangeChecklist": [
       "src/content/products.ts#ProductTemplate",
       "src/lib/managed-data.ts#parseProductTemplate",
-      "src/lib/managed-data.ts#placeholderGallery",
+      "src/lib/managed-data.ts#fallbackGallery",
       "src/components/studio/product-form.tsx template select",
       "src/app/(site)/products/[slug]/page.tsx#templateLabel",
       "docs/AI_FUNCTION_MAP.json",
@@ -286,7 +286,8 @@
       "function": "src/lib/managed-data.ts#getProductImages",
       "assetDirectory": "public/product-gallery",
       "behavior": "Appends template-aware local SVG placeholders after real images until each product has up to four unique gallery images."
-    }
+    },
+    "primaryImageAssets": "public/product-images"
   },
   "contactSubmissionModel": {
     "typeFile": "src/lib/managed-data.ts",
@@ -320,8 +321,8 @@
       "file": "src/components/site/product-media-gallery.tsx",
       "behavior": "Client-side selected image state, thumbnail switching, keyboard-friendly zoom overlay, previous/next controls."
     },
-    "publicGeneratedVisuals": {
-      "file": "src/components/site/generated-visuals.tsx",
+    "publicTechnicalVisuals": {
+      "file": "src/components/site/technical-visuals.tsx",
       "type": "code-native SVG",
       "variants": ["display", "network", "sectors", "data"]
     },

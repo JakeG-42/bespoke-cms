@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { GeneratedVisual } from "@/components/site/generated-visuals";
+import { TechnicalVisual } from "@/components/site/technical-visuals";
 import { resourceModules } from "@/content/site";
 import { getProducts } from "@/lib/managed-data";
 
@@ -27,8 +27,8 @@ export default async function DataSpecificationPage() {
           <p className="code-kicker">data.specification</p>
           <h1>Data sheets, guides and product evidence.</h1>
           <p className="lede">
-            A new home for the WordPress Data & Specification area, shaped
-            around the structured product catalogue and future guides.
+            Product documents, technical notes and enquiry support collected
+            around the hardware and systems Eltronic can help specify.
           </p>
           <div className="actions">
             <Link className="button" href="/products">
@@ -39,7 +39,7 @@ export default async function DataSpecificationPage() {
             </Link>
           </div>
         </div>
-        <GeneratedVisual label="Generated data and specification image" variant="data" />
+        <TechnicalVisual label="Data and specification workflow" variant="data" />
       </section>
 
       <section className="section">
@@ -60,8 +60,8 @@ export default async function DataSpecificationPage() {
             <h2>Known product documents</h2>
           </div>
           <p>
-            These links are drawn from the structured product data and can be
-            improved as more WordPress assets are migrated.
+            These links collect the technical resources currently attached to
+            the catalogue and will expand as the product library grows.
           </p>
         </div>
         <div className="document-grid">

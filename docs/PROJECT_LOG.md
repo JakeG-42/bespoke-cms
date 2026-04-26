@@ -32,9 +32,10 @@ Concise living log for the Eltronic standalone site/app. Add newest updates at t
 - Added an AI context pack in `docs/AGENT_CONTEXT.md` and `docs/AI_FUNCTION_MAP.json` so future sessions can quickly recover auth, storage, routes and feature behavior.
 - Split public site chrome from Studio chrome with route groups.
 - Added Studio sidebar modes, dark/light mode, product table, quick-edit drawer, full product edit pages and ordered multi-image product galleries.
-- Added public `Solutions`, `Sectors`, and `Data & Specification` pages with reusable code-native generated visual modules.
+- Added public `Solutions`, `Sectors`, and `Data & Specification` pages with reusable code-native technical visual modules.
 - Added public nav icons, product gallery SVG placeholders for every product template, and product detail spacing polish.
 - Replaced static product image cards with an interactive thumbnail gallery and zoom overlay, and tightened public nav icon alignment.
+- Moved public catalogue imagery into local `public/product-images` assets and removed public-facing migration/source-trace language.
 - Checked Vercel env vars on 2026-04-27; none are configured yet, so KV/Upstash persistence is still required before live admin/contact writes are trusted.
 
 ## Future Considerations

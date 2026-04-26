@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { GeneratedVisual } from "@/components/site/generated-visuals";
+import { TechnicalVisual } from "@/components/site/technical-visuals";
 import { sectorModules, serviceModules, workflowModules } from "@/content/site";
 import { getFeaturedProducts, getProducts } from "@/lib/managed-data";
 
@@ -33,14 +33,14 @@ export default async function Home() {
           </div>
         </div>
 
-        <GeneratedVisual label="HMI, CANbus and machine control architecture" variant="display" />
+        <TechnicalVisual label="HMI, CANbus and machine control architecture" variant="display" />
       </section>
 
       <section className="section">
         <div className="stats-grid">
           <div className="stat-card">
             <strong>{products.length}</strong>
-            <span>public products crawled from the current site</span>
+            <span>specialist products ready for enquiry and specification</span>
           </div>
           <div className="stat-card">
             <strong>3</strong>
@@ -48,7 +48,7 @@ export default async function Home() {
           </div>
           <div className="stat-card">
             <strong>{sectorModules.length}</strong>
-            <span>core sectors carried over from the WordPress homepage</span>
+            <span>core sectors supported by Eltronic systems</span>
           </div>
         </div>
       </section>
@@ -60,9 +60,8 @@ export default async function Home() {
             <h2>Machine-ready systems</h2>
           </div>
           <p>
-            The old site content points to a clear product story: rugged HMIs,
-            CAN data capture and bespoke integration work around specialist
-            machinery.
+            Rugged HMIs, CAN data capture and bespoke integration work come
+            together around the machine, the operator and the environment.
           </p>
         </div>
         <div className="capability-grid">
@@ -88,8 +87,8 @@ export default async function Home() {
             <h2>Featured products</h2>
           </div>
           <p>
-            These are powered from structured content now, not WordPress page
-            builder blocks.
+            A focused selection of displays, data logging tools and control
+            modules for quote-led machinery projects.
           </p>
         </div>
         <div className="product-grid">
@@ -135,13 +134,14 @@ export default async function Home() {
 
       <section className="section">
         <div className="split-module">
-          <GeneratedVisual label="Sector map generated from current Eltronic positioning" variant="sectors" />
+          <TechnicalVisual label="Eltronic sector map" variant="sectors" />
           <div>
             <span className="section-number">04</span>
             <h2>Application sectors</h2>
             <p className="lede">
               Agriculture, construction, logistics and industrial automation
-              are now proper public pathways, not just homepage labels.
+              each have different pressures around reliability, operator
+              feedback and maintainable control systems.
             </p>
             <div className="tag-row">
               {sectorModules.map((sector) => (

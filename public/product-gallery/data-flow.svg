@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" role="img" aria-labelledby="title desc">
-  <title id="title">Generated data logging placeholder</title>
+  <title id="title">Data logging visual</title>
   <desc id="desc">A stylised data logging flow from vehicle CAN data to cloud storage.</desc>
   <defs>
     <linearGradient id="line" x1="130" x2="830" y1="100" y2="500" gradientUnits="userSpaceOnUse">

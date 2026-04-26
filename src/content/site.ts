@@ -90,6 +90,6 @@ export const resourceModules = [
   },
   {
     title: "Guides and specification notes",
-    summary: "A future home for migration content from the WordPress Data & Specification and Guides sections.",
+    summary: "A growing home for specification notes, project guides and support material.",
   },
 ];

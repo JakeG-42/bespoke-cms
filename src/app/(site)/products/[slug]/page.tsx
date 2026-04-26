@@ -45,9 +45,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
             <Link className="button" href={`/contact?product=${product.slug}`}>
               {product.enquiryPrompt}
             </Link>
-            <a className="button secondary" href={product.sourceUrl}>
-              Current WP source
-            </a>
           </div>
         </div>
 
@@ -110,17 +107,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
               </div>
             </section>
           ) : null}
-
-          <section className="panel">
-            <h2>Source trace</h2>
-            <p>
-              This page was ported from the public WordPress product content and
-              reshaped into structured Next.js data.
-            </p>
-            <a className="source-link" href={product.sourceUrl}>
-              {product.sourceUrl}
-            </a>
-          </section>
         </aside>
       </section>
     </main>

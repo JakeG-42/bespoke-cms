@@ -36,21 +36,21 @@ const featuredProductSlugs = [
   "eltronic-iq-can-bus-module",
 ];
 
-const placeholderGallery: Record<ProductTemplate, Array<{ src: string; altSuffix: string }>> = {
+const fallbackGallery: Record<ProductTemplate, Array<{ src: string; altSuffix: string }>> = {
   hmi: [
-    { src: "/product-gallery/hmi-interface.svg", altSuffix: "operator interface placeholder" },
-    { src: "/product-gallery/can-network.svg", altSuffix: "CANbus network placeholder" },
-    { src: "/product-gallery/machine-application.svg", altSuffix: "machine application placeholder" },
+    { src: "/product-gallery/hmi-interface.svg", altSuffix: "operator interface visual" },
+    { src: "/product-gallery/can-network.svg", altSuffix: "CANbus network visual" },
+    { src: "/product-gallery/machine-application.svg", altSuffix: "machine application visual" },
   ],
   "data-logger": [
-    { src: "/product-gallery/data-flow.svg", altSuffix: "data logging workflow placeholder" },
-    { src: "/product-gallery/can-network.svg", altSuffix: "CANbus network placeholder" },
-    { src: "/product-gallery/machine-application.svg", altSuffix: "machine application placeholder" },
+    { src: "/product-gallery/data-flow.svg", altSuffix: "data logging workflow visual" },
+    { src: "/product-gallery/can-network.svg", altSuffix: "CANbus network visual" },
+    { src: "/product-gallery/machine-application.svg", altSuffix: "machine application visual" },
   ],
   module: [
-    { src: "/product-gallery/module-io.svg", altSuffix: "I/O wiring placeholder" },
-    { src: "/product-gallery/can-network.svg", altSuffix: "CANbus network placeholder" },
-    { src: "/product-gallery/machine-application.svg", altSuffix: "machine application placeholder" },
+    { src: "/product-gallery/module-io.svg", altSuffix: "I/O wiring visual" },
+    { src: "/product-gallery/can-network.svg", altSuffix: "CANbus network visual" },
+    { src: "/product-gallery/machine-application.svg", altSuffix: "machine application visual" },
   ],
 };
 
@@ -193,12 +193,12 @@ export function getProductImages(product: Product): ProductImage[] {
     ? product.images.filter((image) => image.src)
     : [];
   const mergedImages = images.length > 0 ? images : [product.image].filter((image) => image?.src);
-  const placeholders = placeholderGallery[product.template].map((image) => ({
+  const fallbackImages = fallbackGallery[product.template].map((image) => ({
     src: image.src,
     alt: `${product.name} ${image.altSuffix}`,
   }));
 
-  return [...mergedImages, ...placeholders]
+  return [...mergedImages, ...fallbackImages]
     .filter((image, index, gallery) => gallery.findIndex((item) => item.src === image.src) === index)
     .slice(0, 4)
     .map((image) => ({

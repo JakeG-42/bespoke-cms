@@ -1,14 +1,14 @@
-type GeneratedVisualVariant = "network" | "display" | "sectors" | "data";
+type TechnicalVisualVariant = "network" | "display" | "sectors" | "data";
 
-export function GeneratedVisual({
+export function TechnicalVisual({
   label,
   variant,
 }: {
   label: string;
-  variant: GeneratedVisualVariant;
+  variant: TechnicalVisualVariant;
 }) {
   return (
-    <figure className={`generated-visual ${variant}`}>
+    <figure className={`technical-visual ${variant}`}>
       <svg aria-hidden="true" viewBox="0 0 720 460" role="img">
         <defs>
           <linearGradient id={`${variant}-line`} x1="0%" x2="100%" y1="0%" y2="100%">

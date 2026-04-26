@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" role="img" aria-labelledby="title desc">
-  <title id="title">Generated I/O module placeholder</title>
+  <title id="title">I/O module visual</title>
   <desc id="desc">A stylised I/O module with terminals, wiring and machine control signals.</desc>
   <defs>
     <linearGradient id="line" x1="120" x2="840" y1="100" y2="500" gradientUnits="userSpaceOnUse">

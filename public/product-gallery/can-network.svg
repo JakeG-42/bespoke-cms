@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" role="img" aria-labelledby="title desc">
-  <title id="title">Generated CANbus network placeholder</title>
+  <title id="title">CANbus network visual</title>
   <desc id="desc">A stylised CANbus machine network with connected control nodes.</desc>
   <defs>
     <linearGradient id="line" x1="160" x2="800" y1="100" y2="500" gradientUnits="userSpaceOnUse">
