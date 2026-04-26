@@ -1,21 +1,23 @@
 import type { Metadata } from "next";
-import { Source_Serif_4, Space_Grotesk } from "next/font/google";
+import { Fira_Code, Tajawal } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
 
-const display = Source_Serif_4({
+const body = Tajawal({
   subsets: ["latin"],
-  variable: "--font-display",
+  weight: ["400", "500", "700", "800", "900"],
+  variable: "--font-body",
 });
 
-const body = Space_Grotesk({
+const code = Fira_Code({
   subsets: ["latin"],
-  variable: "--font-body",
+  variable: "--font-code",
 });
 
 export const metadata: Metadata = {
   title: "Eltronic",
-  description: "Product showcase and enquiry website for Eltronic.",
+  description:
+    "Systems integration, HMI displays, CAN data logging and machinery control solutions.",
 };
 
 export default function RootLayout({
@@ -25,20 +27,32 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${display.variable} ${body.variable}`}>
+      <body className={`${body.variable} ${code.variable}`}>
         <div className="site-shell">
-          <header className="site-header">
-            <Link className="brand" href="/">
-              Eltronic
-            </Link>
-            <nav className="nav" aria-label="Main navigation">
-              <Link href="/products">Products</Link>
-              <Link href="/about">About</Link>
-              <Link href="/contact">Contact</Link>
+          <header className="main-header">
+            <nav className="nav-container" aria-label="Main navigation">
+              <Link className="brand-logo" href="/">
+                <span className="logo-bracket">&lt;</span>
+                <span className="logo-text">Eltronic</span>
+                <span className="logo-bracket">/&gt;</span>
+              </Link>
+              <div className="nav-menu">
+                <Link href="/products">Products</Link>
+                <Link href="/about">About</Link>
+                <Link href="/contact">Contact</Link>
+              </div>
             </nav>
           </header>
           {children}
-          <footer className="footer">Eltronic product showcase starter.</footer>
+          <footer className="main-footer">
+            <div className="footer-container">
+              <p>© 2026 Eltronic</p>
+              <div className="footer-links">
+                <a href="tel:+447935239421">+44(0) 79 3523 9421</a>
+                <a href="mailto:sales@eltronic.co.uk">sales@eltronic.co.uk</a>
+              </div>
+            </div>
+          </footer>
         </div>
       </body>
     </html>

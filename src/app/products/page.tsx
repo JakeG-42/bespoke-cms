@@ -1,38 +1,53 @@
+import Image from "next/image";
 import Link from "next/link";
-import { products } from "@/content/products";
+import { productFamilies, products } from "@/content/products";
 
 export const metadata = {
   title: "Products | Eltronic",
-  description: "Browse Eltronic product showcase pages.",
+  description: "Browse Eltronic HMI, CAN data logging and control products.",
 };
 
 export default function ProductsPage() {
   return (
     <main className="page">
-      <div className="section-heading">
-        <div>
-          <p className="eyebrow">Products</p>
-          <h1>Showcase</h1>
+      <section className="section">
+        <div className="section-heading">
+          <div>
+            <span className="section-number">products.index</span>
+            <h1>Product catalogue</h1>
+          </div>
+          <p>
+            Crawled from the live WordPress site and rebuilt as structured
+            content for the new Next.js app.
+          </p>
         </div>
-        <p>
-          Placeholder content for now; the structure is ready for your real
-          products, images, specs, and page template choices.
-        </p>
-      </div>
 
-      <div className="product-grid">
+        <div className="tag-row">
+          {productFamilies.map((family) => (
+            <span className="tag" key={family}>
+              {family}
+            </span>
+          ))}
+        </div>
+      </section>
+
+      <section className="product-grid">
         {products.map((product) => (
-          <Link
-            className="product-card"
-            href={`/products/${product.slug}`}
-            key={product.slug}
-          >
-            <span className="tag">{product.category}</span>
-            <h3>{product.name}</h3>
-            <p>{product.summary}</p>
+          <Link className="product-card" href={`/products/${product.slug}`} key={product.slug}>
+            <div className="product-media">
+              <Image src={product.image.src} alt={product.image.alt} fill sizes="(max-width: 980px) 100vw, 33vw" />
+            </div>
+            <div className="product-content">
+              <div className="tag-row">
+                <span className="tag">{product.family}</span>
+                <span className="tag warning">{product.category}</span>
+              </div>
+              <h3>{product.name}</h3>
+              <p>{product.summary}</p>
+            </div>
           </Link>
         ))}
-      </div>
+      </section>
     </main>
   );
 }
