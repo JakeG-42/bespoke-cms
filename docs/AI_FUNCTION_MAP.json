@@ -284,7 +284,7 @@
       "src/lib/managed-data.ts#parseProductTemplate",
       "src/lib/managed-data.ts#fallbackGallery",
       "src/components/studio/product-form.tsx template select",
-      "src/app/(site)/products/[slug]/page.tsx#templateLabel",
+      "src/app/(site)/products/[slug]/page.tsx#productTypeLabel",
       "docs/AI_FUNCTION_MAP.json",
       "docs/SITE_FUNCTIONS.md"
     ],
@@ -322,6 +322,16 @@
     "publicNavIcons": {
       "file": "src/components/site/site-shell.tsx",
       "type": "inline SVG"
+    },
+    "publicFooterReveal": {
+      "shellFile": "src/components/site/site-shell.tsx",
+      "styleFile": "src/app/globals.css",
+      "behavior": "CSS-only sticky footer reveal beneath the main page surface with subtle gradient/grid treatment."
+    },
+    "publicWorkflowCopy": {
+      "contentFile": "src/content/site.ts",
+      "exports": ["workflowModules", "softwareWorkflowModules"],
+      "tone": "Professional delivery for complex systems, presented as controlled, clear and easy for customers to move through."
     },
     "productMediaGallery": {
       "file": "src/components/site/product-media-gallery.tsx",

@@ -100,11 +100,11 @@ export default function SolutionsPage() {
         <div className="section-heading">
           <div>
             <span className="section-number">03</span>
-            <h2>Project workflow</h2>
+            <h2>Professional delivery, made straightforward</h2>
           </div>
           <p>
-            A simple way to explain what happens between a product enquiry and
-            a practical machine-ready solution.
+            Machinery integration has moving parts. The process keeps decisions,
+            risks and next steps clear from enquiry through support.
           </p>
         </div>
         <div className="process-grid">

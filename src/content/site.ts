@@ -73,27 +73,27 @@ export const softwareServiceModules = [
 export const softwareWorkflowModules = [
   {
     step: "01",
-    title: "Understand the workflow",
+    title: "Operational discovery",
     summary:
-      "We map the real workflow, where errors happen, where time is lost and which systems already need to be respected.",
+      "We map the real process, existing systems, failure points, manual handovers and the places where time or accuracy is being lost.",
   },
   {
     step: "02",
-    title: "Choose the right architecture",
+    title: "Architecture and integration plan",
     summary:
-      "That may mean custom software, API integration, server-side services, embedded messaging or improving existing tools first.",
+      "We define the right route across software, APIs, embedded messaging, databases, servers and existing tools before anything is overbuilt.",
   },
   {
     step: "03",
-    title: "Build in useful stages",
+    title: "Staged delivery and validation",
     summary:
-      "The first version should reduce manual work and improve reliability quickly, then grow with the business in sensible phases.",
+      "Work is delivered in controlled phases so the first useful version reduces errors and admin time while the wider system grows safely.",
   },
   {
     step: "04",
-    title: "Support and improve",
+    title: "Handover and continuous improvement",
     summary:
-      "Once live, we keep the system understandable with documentation, support, improvements and clear ownership of how it works.",
+      "Documentation, support and measured improvements keep the system understandable, maintainable and ready for future operational needs.",
   },
 ];
 
@@ -131,23 +131,27 @@ export const sectorModules = [
 export const workflowModules = [
   {
     step: "01",
-    title: "Map the machine",
-    summary: "We define the operator workflow, environment, protocols, I/O and constraints before choosing hardware.",
+    title: "Technical discovery",
+    summary:
+      "We build a clear picture of the machine, environment, operator workflow, protocols, I/O and constraints before recommending hardware.",
   },
   {
     step: "02",
-    title: "Specify the interface",
-    summary: "HMI, CAN interfaces, harnessing and data requirements are matched to the machine and support model.",
+    title: "Specification and risk planning",
+    summary:
+      "HMI choice, CAN interfaces, harnessing, data requirements and support expectations are specified with practical risk and maintainability in mind.",
   },
   {
     step: "03",
-    title: "Build the integration",
-    summary: "Software, wiring, configuration and testing are brought together into a quote-led project plan.",
+    title: "Integration and validation",
+    summary:
+      "Software, wiring, configuration and testing are brought together in controlled stages so the finished system is reliable in the real environment.",
   },
   {
     step: "04",
-    title: "Support the system",
-    summary: "Documentation, diagnostics and long-term product support keep the system maintainable after install.",
+    title: "Handover and lifecycle support",
+    summary:
+      "Clear documentation, diagnostics and long-term support make the system easier to operate, maintain and improve after installation.",
   },
 ];
 

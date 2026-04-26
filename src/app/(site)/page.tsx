@@ -124,11 +124,11 @@ export default async function Home() {
         <div className="section-heading">
           <div>
             <span className="section-number">04</span>
-            <h2>How projects come together</h2>
+            <h2>Complex projects, made straightforward</h2>
           </div>
           <p>
-            A clear path from product enquiry to practical machine-ready
-            integration.
+            The engineering can be detailed. The customer experience should
+            still feel clear, structured and easy to move through.
           </p>
         </div>
         <div className="process-grid">

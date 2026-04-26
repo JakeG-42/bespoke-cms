@@ -84,12 +84,12 @@ export default function SoftwareItPage() {
         <div className="section-heading">
           <div>
             <span className="section-number">delivery.flow</span>
-            <h2>How we keep it manageable</h2>
+            <h2>Complex systems, made straightforward</h2>
           </div>
           <p>
-            Broad capability does not need to become a complicated project.
-            The work is scoped around useful steps, clear ownership and
-            measurable operational improvements.
+            The work can involve several systems, protocols and stakeholders.
+            The delivery should still feel clear, controlled and easy to
+            understand.
           </p>
         </div>
         <div className="process-grid">

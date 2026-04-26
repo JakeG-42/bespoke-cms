@@ -18,11 +18,12 @@ Concise living reference for how the current Eltronic Next.js site works.
 - Fonts: `Tajawal` and `Fira_Code` are loaded through `next/font/google`.
 - UI system: public pages use custom CSS; admin uses Tailwind CSS v4 and shadcn-style local components under `src/components/ui`.
 - Technical visual modules: `src/components/site/technical-visuals.tsx` renders SVG-style imagery for public pages.
+- Public footer: `src/components/site/site-shell.tsx` renders the footer; `src/app/globals.css` gives it a subtle sticky reveal beneath the main page surface.
 - AI context pack: future agents should start with `docs/AGENT_CONTEXT.md` and `docs/AI_FUNCTION_MAP.json`.
 
 ## Current Routes
 
-- `/`: homepage with hero copy, solution/service sections, featured product cards and public service CTAs.
+- `/`: homepage with hero copy, solution/service sections, featured product cards, public service CTAs and the shared professional workflow modules from `src/content/site.ts`.
 - `/products`: dynamic product listing page generated from the managed catalogue.
 - `/products/[slug]`: dynamic product detail page generated from the managed catalogue.
 - `/solutions`: public solution/service page for HMI, CANbus and bespoke control integration.

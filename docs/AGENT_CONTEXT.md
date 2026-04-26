@@ -157,7 +157,7 @@ If adding a new template, update:
 - `ProductTemplate` in `src/content/products.ts`.
 - `parseProductTemplate()` in `src/lib/managed-data.ts`.
 - The template select in `src/components/studio/product-form.tsx`.
-- `templateLabel` in `src/app/(site)/products/[slug]/page.tsx`.
+- `productTypeLabel` in `src/app/(site)/products/[slug]/page.tsx`.
 - `docs/AI_FUNCTION_MAP.json`.
 
 ## Contact Submissions
@@ -186,6 +186,10 @@ Public page visuals are code-native SVG modules, not bitmap files:
 - Preferred for now because visuals remain editable, versioned and deployable without a media library.
 
 The public main navigation uses inline SVG icons in `src/components/site/site-shell.tsx`.
+
+The public footer is also rendered from `src/components/site/site-shell.tsx`. Its reveal effect is CSS-only in `src/app/globals.css`: the main page surface sits above a sticky footer with subtle gradient/grid treatment.
+
+Workflow/process copy for public machine integration and Software & Systems pages lives in `src/content/site.ts`. Keep it professional: complex engineering should be presented as controlled, clear and easy for the customer to move through, not as if the work itself is basic.
 
 The admin uses Tailwind CSS v4 plus local shadcn-style primitives:
 
