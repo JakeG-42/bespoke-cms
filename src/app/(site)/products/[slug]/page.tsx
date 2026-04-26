@@ -1,6 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ProductMediaGallery } from "@/components/site/product-media-gallery";
 import { getProductBySlug, getProductImages } from "@/lib/managed-data";
 
 type ProductPageProps = {
@@ -51,27 +51,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </div>
         </div>
 
-        <div className="detail-media">
-          <Image
-            src={product.image.src}
-            alt={product.image.alt}
-            fill
-            priority
-            sizes="(max-width: 980px) 100vw, 42vw"
-          />
-        </div>
+        <ProductMediaGallery images={images} productName={product.name} />
       </section>
-
-      {images.length > 1 ? (
-        <section className="product-gallery" aria-label={`${product.name} image gallery`}>
-          {images.map((image, index) => (
-            <figure className="gallery-card" key={`${image.src}-${index}`}>
-              <Image src={image.src} alt={image.alt} width={640} height={400} />
-              <figcaption>{image.alt || `${product.name} image ${index + 1}`}</figcaption>
-            </figure>
-          ))}
-        </section>
-      ) : null}
 
       <section className="detail-layout">
         <div className="stack">

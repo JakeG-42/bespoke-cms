@@ -7,6 +7,7 @@ Concise living reference for how the current Eltronic Next.js site works.
 - Framework: Next.js with App Router.
 - Global layout: `src/app/layout.tsx`.
 - Public site shell: `src/app/(site)/layout.tsx` and `src/components/site/site-shell.tsx`.
+- Public product media gallery: `src/components/site/product-media-gallery.tsx`.
 - Studio shell: `src/app/studio/(admin)/layout.tsx` and `src/components/studio/studio-shell.tsx`.
 - Global styles: `src/app/globals.css`.
 - Product seed data: `src/content/products.ts`.
@@ -65,7 +66,7 @@ Each product currently has:
 - `generateMetadata()` sets product-specific page title and description.
 - Unknown product slugs call `notFound()`.
 - The detail page displays family, category, name, description, template-specific heading, image, highlights, enquiry prompt, specifications, documents and variants where available.
-- Multiple product images render as an ordered gallery on the detail page. Placeholder SVGs are automatically appended per product template so every product can currently demonstrate gallery layout.
+- Multiple product images render as an interactive ordered gallery on the detail page with selectable thumbnails and a zoom overlay. Placeholder SVGs are automatically appended per product template so every product can currently demonstrate gallery behavior.
 - Template headings are currently mapped in `src/app/(site)/products/[slug]/page.tsx`.
 
 ## Current Product Templates

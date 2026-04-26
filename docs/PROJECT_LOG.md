@@ -34,6 +34,7 @@ Concise living log for the Eltronic standalone site/app. Add newest updates at t
 - Added Studio sidebar modes, dark/light mode, product table, quick-edit drawer, full product edit pages and ordered multi-image product galleries.
 - Added public `Solutions`, `Sectors`, and `Data & Specification` pages with reusable code-native generated visual modules.
 - Added public nav icons, product gallery SVG placeholders for every product template, and product detail spacing polish.
+- Replaced static product image cards with an interactive thumbnail gallery and zoom overlay, and tightened public nav icon alignment.
 - Checked Vercel env vars on 2026-04-27; none are configured yet, so KV/Upstash persistence is still required before live admin/contact writes are trusted.
 
 ## Future Considerations

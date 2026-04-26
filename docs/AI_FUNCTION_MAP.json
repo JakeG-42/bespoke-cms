@@ -131,7 +131,8 @@
       "path": "/products/[slug]",
       "file": "src/app/(site)/products/[slug]/page.tsx",
       "kind": "public",
-      "dataSource": "getProductBySlug(slug), getProductImages(product)"
+      "dataSource": "getProductBySlug(slug), getProductImages(product)",
+      "clientComponents": ["src/components/site/product-media-gallery.tsx"]
     },
     {
       "path": "/solutions",
@@ -314,6 +315,10 @@
     "publicNavIcons": {
       "file": "src/components/site/site-shell.tsx",
       "type": "inline SVG"
+    },
+    "productMediaGallery": {
+      "file": "src/components/site/product-media-gallery.tsx",
+      "behavior": "Client-side selected image state, thumbnail switching, keyboard-friendly zoom overlay, previous/next controls."
     },
     "publicGeneratedVisuals": {
       "file": "src/components/site/generated-visuals.tsx",

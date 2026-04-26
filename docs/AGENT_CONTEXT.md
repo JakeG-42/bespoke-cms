@@ -28,6 +28,7 @@ Always verify current code before changing behavior. Treat this document as a ma
 - `src/content/products.ts`: seed catalogue from the crawled WordPress site.
 - `src/content/site.ts`: public services, sector, workflow and resource module content.
 - `src/components/site/generated-visuals.tsx`: code-native generated public-page visuals.
+- `src/components/site/product-media-gallery.tsx`: interactive product image selection and zoom.
 - `public/product-gallery`: generated SVG placeholder images appended to product galleries.
 - `docs/AI_FUNCTION_MAP.json`: machine-readable feature map.
 
@@ -147,6 +148,7 @@ Gallery fallback behavior:
 - `getProductImages(product)` appends local template-aware SVG placeholders from `public/product-gallery` until each gallery has up to four unique images.
 - Real images from `product.images` always come first.
 - The fallback exists to demonstrate the gallery on every product while real migrated product media is still incomplete.
+- Product detail pages render `ProductMediaGallery`, a client component with thumbnail switching, keyboard-friendly zoom, and previous/next controls.
 
 If adding a new template, update:
 
