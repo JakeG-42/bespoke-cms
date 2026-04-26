@@ -1,23 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
+import { GeneratedVisual } from "@/components/site/generated-visuals";
+import { sectorModules, serviceModules, workflowModules } from "@/content/site";
 import { getFeaturedProducts, getProducts } from "@/lib/managed-data";
-
-const capabilities = [
-  {
-    title: "HMI supply and integration",
-    text: "Rugged TOPCON OPUS displays for agriculture, construction, logistics and industrial machinery.",
-  },
-  {
-    title: "CAN data and diagnostics",
-    text: "CAN-FD logging, edge processing, remote diagnostics and cloud-ready vehicle data capture.",
-  },
-  {
-    title: "Bespoke control solutions",
-    text: "Custom software, wiring, harnesses and control-system integration around real machinery needs.",
-  },
-];
-
-const sectors = ["Agriculture", "Construction", "Logistics", "Industrial automation"];
 
 export const dynamic = "force-dynamic";
 
@@ -48,25 +33,7 @@ export default async function Home() {
           </div>
         </div>
 
-        <div className="terminal-panel" aria-label="Eltronic product interface preview">
-          <div className="terminal-bar">
-            <span className="terminal-dot" />
-            <span className="terminal-dot" />
-            <span className="terminal-dot" />
-          </div>
-          <div className="terminal-body">
-            <p className="terminal-line">
-              product.family: <strong>TOPCON OPUS</strong>
-            </p>
-            <p className="terminal-line">
-              protocol.stack: <strong>CANbus / J1939 / CANopen</strong>
-            </p>
-            <p className="terminal-line">
-              enquiry.mode: <strong>quote-first</strong>
-            </p>
-          </div>
-          <div className="visual-product" />
-        </div>
+        <GeneratedVisual label="HMI, CANbus and machine control architecture" variant="display" />
       </section>
 
       <section className="section">
@@ -80,7 +47,7 @@ export default async function Home() {
             <span>initial product templates: HMI, data logger and module</span>
           </div>
           <div className="stat-card">
-            <strong>4</strong>
+            <strong>{sectorModules.length}</strong>
             <span>core sectors carried over from the WordPress homepage</span>
           </div>
         </div>
@@ -99,12 +66,18 @@ export default async function Home() {
           </p>
         </div>
         <div className="capability-grid">
-          {capabilities.map((capability) => (
+          {serviceModules.map((capability) => (
             <article className="capability-card panel" key={capability.title}>
+              <span className="section-number">{capability.eyebrow}</span>
               <h3>{capability.title}</h3>
-              <p>{capability.text}</p>
+              <p>{capability.summary}</p>
             </article>
           ))}
+        </div>
+        <div className="actions">
+          <Link className="button secondary" href="/solutions">
+            Explore solutions
+          </Link>
         </div>
       </section>
 
@@ -142,19 +115,47 @@ export default async function Home() {
         <div className="section-heading">
           <div>
             <span className="section-number">03</span>
-            <h2>Application sectors</h2>
+            <h2>How projects come together</h2>
           </div>
           <p>
-            The homepage crawl listed these sectors as first-class signals for
-            where Eltronic products and integration work fit.
+            The new site can explain the integration process instead of only
+            listing products.
           </p>
         </div>
-        <div className="tag-row">
-          {sectors.map((sector) => (
-            <span className="tag" key={sector}>
-              {sector}
-            </span>
+        <div className="process-grid">
+          {workflowModules.map((step) => (
+            <article className="process-card" key={step.step}>
+              <strong>{step.step}</strong>
+              <h3>{step.title}</h3>
+              <p>{step.summary}</p>
+            </article>
           ))}
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="split-module">
+          <GeneratedVisual label="Sector map generated from current Eltronic positioning" variant="sectors" />
+          <div>
+            <span className="section-number">04</span>
+            <h2>Application sectors</h2>
+            <p className="lede">
+              Agriculture, construction, logistics and industrial automation
+              are now proper public pathways, not just homepage labels.
+            </p>
+            <div className="tag-row">
+              {sectorModules.map((sector) => (
+                <span className="tag" key={sector.title}>
+                  {sector.title}
+                </span>
+              ))}
+            </div>
+            <div className="actions">
+              <Link className="button" href="/sectors">
+                View sectors
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
     </main>

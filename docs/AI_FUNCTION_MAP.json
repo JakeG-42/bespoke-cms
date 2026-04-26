@@ -129,6 +129,24 @@
       "dataSource": "getProductBySlug(slug), getProductImages(product)"
     },
     {
+      "path": "/solutions",
+      "file": "src/app/(site)/solutions/page.tsx",
+      "kind": "public-content",
+      "dataSource": "src/content/site.ts#serviceModules, workflowModules"
+    },
+    {
+      "path": "/sectors",
+      "file": "src/app/(site)/sectors/page.tsx",
+      "kind": "public-content",
+      "dataSource": "src/content/site.ts#sectorModules"
+    },
+    {
+      "path": "/data-specification",
+      "file": "src/app/(site)/data-specification/page.tsx",
+      "kind": "public-resource",
+      "dataSource": "getProducts(), src/content/site.ts#resourceModules"
+    },
+    {
       "path": "/contact",
       "file": "src/app/(site)/contact/page.tsx",
       "kind": "public-form",
@@ -282,6 +300,11 @@
     "adminStyle": "Tailwind CSS v4 + local shadcn-style primitives",
     "shadcnConfig": "components.json",
     "publicShell": "src/components/site/site-shell.tsx",
+    "publicGeneratedVisuals": {
+      "file": "src/components/site/generated-visuals.tsx",
+      "type": "code-native SVG",
+      "variants": ["display", "network", "sectors", "data"]
+    },
     "studioShell": "src/components/studio/studio-shell.tsx",
     "studioTheme": "dark/light mode stored in localStorage key eltronic-studio-theme",
     "components": [

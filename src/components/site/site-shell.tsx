@@ -12,6 +12,9 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           </Link>
           <div className="nav-menu">
             <Link href="/products">Products</Link>
+            <Link href="/solutions">Solutions</Link>
+            <Link href="/sectors">Sectors</Link>
+            <Link href="/data-specification">Data</Link>
             <Link href="/about">About</Link>
             <Link href="/contact">Contact</Link>
           </div>

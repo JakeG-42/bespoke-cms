@@ -194,6 +194,7 @@ h3 {
 .nav-menu {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: clamp(0.7rem, 2vw, 1.8rem);
   color: var(--text-secondary);
   font-weight: 700;
@@ -237,6 +238,11 @@ h3 {
   gap: clamp(2rem, 6vw, 5rem);
   align-items: center;
   min-height: calc(100vh - 4.75rem);
+}
+
+.compact-hero {
+  min-height: auto;
+  padding: clamp(2rem, 5vw, 4rem) 0;
 }
 
 .hero-copy {
@@ -400,6 +406,107 @@ h3 {
   border-color: rgba(251, 191, 36, 0.66);
 }
 
+.generated-visual {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background:
+    linear-gradient(rgba(139, 211, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139, 211, 255, 0.06) 1px, transparent 1px),
+    #050816;
+  background-size: 34px 34px;
+  box-shadow: var(--shadow-lg);
+}
+
+.generated-visual svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.generated-visual figcaption {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  left: 1rem;
+  width: fit-content;
+  max-width: calc(100% - 2rem);
+  padding: 0.45rem 0.7rem;
+  border: 1px solid rgba(139, 211, 255, 0.24);
+  border-radius: 999px;
+  background: rgba(2, 6, 23, 0.72);
+  color: var(--text-secondary);
+  font-family: var(--font-code), monospace;
+  font-size: 0.78rem;
+}
+
+.visual-bg {
+  fill: #050816;
+}
+
+.visual-grid {
+  fill: none;
+  stroke: rgba(139, 211, 255, 0.08);
+  stroke-width: 1;
+}
+
+.visual-device {
+  fill: rgba(23, 32, 51, 0.88);
+  stroke: rgba(139, 211, 255, 0.38);
+  stroke-width: 2;
+}
+
+.visual-device.small {
+  fill: rgba(15, 23, 42, 0.92);
+}
+
+.visual-screen {
+  fill: rgba(2, 6, 23, 0.82);
+  stroke: rgba(251, 191, 36, 0.32);
+  stroke-width: 1.5;
+}
+
+.visual-line {
+  fill: none;
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.visual-node {
+  fill: var(--accent);
+  stroke: rgba(255, 255, 255, 0.55);
+  stroke-width: 2;
+}
+
+.visual-node-halo {
+  fill: rgba(139, 211, 255, 0.12);
+  stroke: rgba(139, 211, 255, 0.28);
+  stroke-width: 1;
+}
+
+.visual-accent {
+  fill: rgba(251, 191, 36, 0.17);
+  stroke: rgba(251, 191, 36, 0.52);
+  stroke-width: 2;
+}
+
+.visual-softkey {
+  fill: none;
+  stroke: rgba(139, 211, 255, 0.46);
+  stroke-width: 8;
+  stroke-linecap: round;
+}
+
+.visual-text {
+  fill: var(--text-primary);
+  font-family: var(--font-code), monospace;
+  font-size: 24px;
+  font-weight: 800;
+}
+
 .section {
   padding: clamp(3rem, 7vw, 6rem) 0;
 }
@@ -432,6 +539,30 @@ h3 {
   gap: 1rem;
 }
 
+.module-grid,
+.process-grid,
+.sector-grid,
+.document-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.module-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.process-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.sector-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.document-grid {
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
 .stat-card {
   padding: 1.25rem;
 }
@@ -455,6 +586,134 @@ h3 {
   min-height: 13rem;
   padding: 1.3rem;
   border-left: 3px solid var(--primary);
+}
+
+.feature-module,
+.process-card,
+.sector-card,
+.document-card,
+.cta-module {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at top right, rgba(139, 211, 255, 0.08), transparent 16rem),
+    rgba(23, 32, 51, 0.78);
+  box-shadow: var(--shadow-lg);
+}
+
+.feature-module,
+.process-card,
+.sector-card {
+  padding: clamp(1rem, 3vw, 1.5rem);
+}
+
+.feature-module p,
+.process-card p,
+.sector-card p,
+.document-card small,
+.cta-module p {
+  color: var(--text-secondary);
+}
+
+.mini-list {
+  display: grid;
+  gap: 0.55rem;
+  margin: 1.2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mini-list li {
+  display: flex;
+  gap: 0.6rem;
+  color: var(--text-secondary);
+}
+
+.mini-list li::before {
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-top: 0.55rem;
+  content: "";
+  border-radius: 50%;
+  background: var(--gradient-2);
+  box-shadow: var(--shadow-glow);
+  flex: 0 0 auto;
+}
+
+.process-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.process-card strong {
+  display: block;
+  margin-bottom: 1.5rem;
+  color: var(--accent);
+  font-family: var(--font-code), monospace;
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.process-card::after {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  width: 4rem;
+  height: 4rem;
+  content: "";
+  border: 1px solid rgba(139, 211, 255, 0.2);
+  border-radius: 50%;
+}
+
+.split-module {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.9fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+
+.split-module.reverse {
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.9fr);
+}
+
+.sector-card {
+  min-height: 20rem;
+}
+
+.sector-card .tag-row {
+  margin-top: 1.5rem;
+}
+
+.document-card {
+  display: grid;
+  gap: 0.4rem;
+  padding: 1rem;
+  transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+}
+
+.document-card span {
+  color: var(--accent);
+  font-family: var(--font-code), monospace;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.document-card strong {
+  color: var(--text-primary);
+}
+
+.document-card:hover {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-3px);
+}
+
+.cta-module {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: clamp(1.25rem, 4vw, 2rem);
 }
 
 .product-grid {
@@ -1050,13 +1309,18 @@ h3 {
   .detail-hero,
   .detail-layout,
   .contact-grid,
-  .section-heading {
+  .section-heading,
+  .split-module,
+  .split-module.reverse {
     grid-template-columns: 1fr;
   }
 
   .stats-grid,
   .capability-grid,
-  .product-grid {
+  .product-grid,
+  .module-grid,
+  .process-grid,
+  .sector-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1083,8 +1347,17 @@ h3 {
 
   .stats-grid,
   .capability-grid,
-  .product-grid {
+  .product-grid,
+  .module-grid,
+  .process-grid,
+  .sector-grid,
+  .document-grid {
     grid-template-columns: 1fr;
+  }
+
+  .cta-module {
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   .hero {

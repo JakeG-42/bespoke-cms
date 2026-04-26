@@ -32,6 +32,7 @@ Concise living log for the Eltronic standalone site/app. Add newest updates at t
 - Added an AI context pack in `docs/AGENT_CONTEXT.md` and `docs/AI_FUNCTION_MAP.json` so future sessions can quickly recover auth, storage, routes and feature behavior.
 - Split public site chrome from Studio chrome with route groups.
 - Added Studio sidebar modes, dark/light mode, product table, quick-edit drawer, full product edit pages and ordered multi-image product galleries.
+- Added public `Solutions`, `Sectors`, and `Data & Specification` pages with reusable code-native generated visual modules.
 
 ## Future Considerations
 

@@ -26,6 +26,8 @@ Always verify current code before changing behavior. Treat this document as a ma
 - `src/app/studio/actions.ts`: admin server actions.
 - `src/app/contact/actions.ts`: public contact form submission action.
 - `src/content/products.ts`: seed catalogue from the crawled WordPress site.
+- `src/content/site.ts`: public services, sector, workflow and resource module content.
+- `src/components/site/generated-visuals.tsx`: code-native generated public-page visuals.
 - `docs/AI_FUNCTION_MAP.json`: machine-readable feature map.
 
 ## Auth Model
@@ -165,6 +167,12 @@ There is no email notification yet. A future email/CRM integration should call f
 ## UI System
 
 The public site uses the existing custom CSS in `src/app/globals.css`.
+
+Public page visuals are code-native SVG modules, not bitmap files:
+
+- Component: `src/components/site/generated-visuals.tsx`.
+- Variants: `display`, `network`, `sectors`, `data`.
+- Preferred for now because visuals remain editable, versioned and deployable without a media library.
 
 The admin uses Tailwind CSS v4 plus local shadcn-style primitives:
 

@@ -10,11 +10,13 @@ Concise living reference for how the current Eltronic Next.js site works.
 - Studio shell: `src/app/studio/(admin)/layout.tsx` and `src/components/studio/studio-shell.tsx`.
 - Global styles: `src/app/globals.css`.
 - Product seed data: `src/content/products.ts`.
+- Site page/module content: `src/content/site.ts`.
 - Managed data layer: `src/lib/managed-data.ts`.
 - Admin UI: `src/app/studio`.
 - Public navigation: brand link to `/`, plus `/products`, `/about`, and `/contact`.
 - Fonts: `Tajawal` and `Fira_Code` are loaded through `next/font/google`.
 - UI system: public pages use custom CSS; admin uses Tailwind CSS v4 and shadcn-style local components under `src/components/ui`.
+- Generated visual modules: `src/components/site/generated-visuals.tsx` renders SVG-style imagery for public pages.
 - AI context pack: future agents should start with `docs/AGENT_CONTEXT.md` and `docs/AI_FUNCTION_MAP.json`.
 
 ## Current Routes
@@ -22,6 +24,9 @@ Concise living reference for how the current Eltronic Next.js site works.
 - `/`: homepage with hero copy, product-template explanation, and product cards generated from `products`.
 - `/products`: dynamic product listing page generated from the managed catalogue.
 - `/products/[slug]`: dynamic product detail page generated from the managed catalogue.
+- `/solutions`: public solution/service page for HMI, CANbus and bespoke control integration.
+- `/sectors`: public sector page for agriculture, construction, logistics and industrial automation.
+- `/data-specification`: public resource page for data sheets, guides and product documents.
 - `/about`: placeholder page for company story, services, credentials, and trust-building content.
 - `/contact`: quote/contact flow that stores submissions in the managed data layer.
 - `/studio/login`: password login for the admin area.
@@ -104,3 +109,4 @@ Each product currently has:
 - Product pages show real product copy, source trace links, public WordPress image URLs, specifications, documents where known, and order variants where available.
 - WordPress migration/plugin work is being considered but is not implemented in the current app.
 - Image upload management is not implemented yet; product images currently use URLs.
+- Generated public-page imagery is currently code-native SVG, not bitmap media uploads.
