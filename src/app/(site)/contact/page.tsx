@@ -30,44 +30,86 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
 
   return (
     <main className="page">
-      <section className="section contact-grid">
-        <div>
-          <p className="code-kicker">enquiry.create</p>
-          <h1>Start the conversation.</h1>
+      <section className="contact-hero">
+        <div className="contact-copy">
+          <p className="code-kicker">project.enquiry</p>
+          <h1 className="contact-title">Talk through your machine project.</h1>
           <p className="lede">
-            Tell us about the machine, product or control challenge. We will
-            review the details and come back with a practical next step.
+            Tell us what you are building, replacing or trying to control.
+            We will review the application and come back with a practical
+            next step.
           </p>
 
-          <div className="contact-list">
-            <div className="contact-item">
-              <span>phone</span>
-              <a href="tel:+447935239421">+44(0) 79 3523 9421</a>
-            </div>
-            <div className="contact-item">
-              <span>email</span>
-              <a href="mailto:sales@eltronic.co.uk">sales@eltronic.co.uk</a>
-            </div>
+          <div className="contact-card-grid">
+            <a className="contact-card" href="tel:+447935239421">
+              <span>Phone</span>
+              <strong>+44(0) 79 3523 9421</strong>
+            </a>
+            <a className="contact-card" href="mailto:sales@eltronic.co.uk">
+              <span>Email</span>
+              <strong>sales@eltronic.co.uk</strong>
+            </a>
+          </div>
+
+          <div className="contact-note">
+            <span>Useful details</span>
+            <p>
+              Product name, machine type, CAN protocol, environment and timing
+              are enough to start. If you are not sure yet, send the rough idea.
+            </p>
           </div>
         </div>
 
-        <form action={submitContactFormAction} className="panel form-grid">
+        <form action={submitContactFormAction} className="contact-form-panel">
+          <div className="contact-form-header">
+            <span>Quote request</span>
+            <h2>Send an enquiry</h2>
+            <p>We will use this to understand the project, not to add you to a mailing list.</p>
+          </div>
+
           {params?.sent ? (
             <div className="success-message">Thanks, your enquiry has been saved. We will reply shortly.</div>
           ) : null}
           {errorMessage ? <div className="error-message">{errorMessage}</div> : null}
-          <input aria-label="Name" name="name" placeholder="Name" required />
-          <input aria-label="Company name" name="company" placeholder="Company name" />
-          <input aria-label="Email" name="email" placeholder="Email" required type="email" />
-          <select aria-label="Product" defaultValue={selectedProduct} name="productSlug">
-            <option value="">Please select product (optional)</option>
-            {products.map((product) => (
-              <option key={product.slug} value={product.slug}>
-                {product.name}
-              </option>
-            ))}
-          </select>
-          <textarea aria-label="Message" name="message" placeholder="Message" required />
+
+          <div className="form-row">
+            <label className="field-label">
+              <span>Name</span>
+              <input aria-label="Name" name="name" placeholder="Your name" required />
+            </label>
+            <label className="field-label">
+              <span>Company</span>
+              <input aria-label="Company name" name="company" placeholder="Company name" />
+            </label>
+          </div>
+
+          <label className="field-label">
+            <span>Email</span>
+            <input aria-label="Email" name="email" placeholder="you@example.com" required type="email" />
+          </label>
+
+          <label className="field-label">
+            <span>Product or area</span>
+            <select aria-label="Product" defaultValue={selectedProduct} name="productSlug">
+              <option value="">Please select product (optional)</option>
+              {products.map((product) => (
+                <option key={product.slug} value={product.slug}>
+                  {product.name}
+                </option>
+              ))}
+            </select>
+          </label>
+
+          <label className="field-label">
+            <span>Project details</span>
+            <textarea
+              aria-label="Message"
+              name="message"
+              placeholder="Tell us about the machine, operating environment, control requirements or product you want to specify."
+              required
+            />
+          </label>
+
           <Button type="submit" size="lg">
             Send enquiry
           </Button>
