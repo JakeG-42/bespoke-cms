@@ -36,6 +36,24 @@ const featuredProductSlugs = [
   "eltronic-iq-can-bus-module",
 ];
 
+const placeholderGallery: Record<ProductTemplate, Array<{ src: string; altSuffix: string }>> = {
+  hmi: [
+    { src: "/product-gallery/hmi-interface.svg", altSuffix: "operator interface placeholder" },
+    { src: "/product-gallery/can-network.svg", altSuffix: "CANbus network placeholder" },
+    { src: "/product-gallery/machine-application.svg", altSuffix: "machine application placeholder" },
+  ],
+  "data-logger": [
+    { src: "/product-gallery/data-flow.svg", altSuffix: "data logging workflow placeholder" },
+    { src: "/product-gallery/can-network.svg", altSuffix: "CANbus network placeholder" },
+    { src: "/product-gallery/machine-application.svg", altSuffix: "machine application placeholder" },
+  ],
+  module: [
+    { src: "/product-gallery/module-io.svg", altSuffix: "I/O wiring placeholder" },
+    { src: "/product-gallery/can-network.svg", altSuffix: "CANbus network placeholder" },
+    { src: "/product-gallery/machine-application.svg", altSuffix: "machine application placeholder" },
+  ],
+};
+
 function getRedisConfig() {
   const url = process.env.KV_REST_API_URL ?? process.env.UPSTASH_REDIS_REST_URL;
   const token = process.env.KV_REST_API_TOKEN ?? process.env.UPSTASH_REDIS_REST_TOKEN;
@@ -175,11 +193,18 @@ export function getProductImages(product: Product): ProductImage[] {
     ? product.images.filter((image) => image.src)
     : [];
   const mergedImages = images.length > 0 ? images : [product.image].filter((image) => image?.src);
-
-  return mergedImages.map((image) => ({
+  const placeholders = placeholderGallery[product.template].map((image) => ({
     src: image.src,
-    alt: image.alt || product.name,
+    alt: `${product.name} ${image.altSuffix}`,
   }));
+
+  return [...mergedImages, ...placeholders]
+    .filter((image, index, gallery) => gallery.findIndex((item) => item.src === image.src) === index)
+    .slice(0, 4)
+    .map((image) => ({
+      src: image.src,
+      alt: image.alt || product.name,
+    }));
 }
 
 export async function upsertProduct(product: Product, previousSlug?: string) {

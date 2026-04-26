@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" role="img" aria-labelledby="title desc">
+  <title id="title">Generated CANbus network placeholder</title>
+  <desc id="desc">A stylised CANbus machine network with connected control nodes.</desc>
+  <defs>
+    <linearGradient id="line" x1="160" x2="800" y1="100" y2="500" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8bd3ff"/>
+      <stop offset=".55" stop-color="#b7a3ff"/>
+      <stop offset="1" stop-color="#fbbf24"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="62%">
+      <stop stop-color="#b7a3ff" stop-opacity=".22"/>
+      <stop offset="1" stop-color="#020617" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="960" height="600" rx="36" fill="#050816"/>
+  <rect width="960" height="600" rx="36" fill="url(#glow)"/>
+  <path d="M100 150h760M100 300h760M100 450h760M220 80v440M480 80v440M740 80v440" fill="none" stroke="#8bd3ff" stroke-opacity=".08"/>
+  <path d="M190 300h580M320 190v220M480 150v300M640 190v220" fill="none" stroke="url(#line)" stroke-width="10" stroke-linecap="round"/>
+  <g fill="#fbbf24" stroke="#fff" stroke-opacity=".55" stroke-width="4">
+    <circle cx="190" cy="300" r="18"/>
+    <circle cx="320" cy="190" r="18"/>
+    <circle cx="320" cy="410" r="18"/>
+    <circle cx="480" cy="150" r="18"/>
+    <circle cx="480" cy="450" r="18"/>
+    <circle cx="640" cy="190" r="18"/>
+    <circle cx="640" cy="410" r="18"/>
+    <circle cx="770" cy="300" r="18"/>
+  </g>
+  <rect x="382" y="245" width="196" height="110" rx="24" fill="#172033" stroke="#8bd3ff" stroke-opacity=".42" stroke-width="4"/>
+  <text x="480" y="313" text-anchor="middle" fill="#f1f5f9" font-family="monospace" font-size="44" font-weight="800">CAN</text>
+</svg>

@@ -28,6 +28,7 @@ Always verify current code before changing behavior. Treat this document as a ma
 - `src/content/products.ts`: seed catalogue from the crawled WordPress site.
 - `src/content/site.ts`: public services, sector, workflow and resource module content.
 - `src/components/site/generated-visuals.tsx`: code-native generated public-page visuals.
+- `public/product-gallery`: generated SVG placeholder images appended to product galleries.
 - `docs/AI_FUNCTION_MAP.json`: machine-readable feature map.
 
 ## Auth Model
@@ -141,6 +142,12 @@ Product templates are currently:
 - `data-logger`
 - `module`
 
+Gallery fallback behavior:
+
+- `getProductImages(product)` appends local template-aware SVG placeholders from `public/product-gallery` until each gallery has up to four unique images.
+- Real images from `product.images` always come first.
+- The fallback exists to demonstrate the gallery on every product while real migrated product media is still incomplete.
+
 If adding a new template, update:
 
 - `ProductTemplate` in `src/content/products.ts`.
@@ -174,6 +181,8 @@ Public page visuals are code-native SVG modules, not bitmap files:
 - Variants: `display`, `network`, `sectors`, `data`.
 - Preferred for now because visuals remain editable, versioned and deployable without a media library.
 
+The public main navigation uses inline SVG icons in `src/components/site/site-shell.tsx`.
+
 The admin uses Tailwind CSS v4 plus local shadcn-style primitives:
 
 - `src/components/ui/button.tsx`
@@ -204,6 +213,8 @@ Before relying on live admin writes, configure persistent KV env vars in Vercel:
 
 - `KV_REST_API_URL`
 - `KV_REST_API_TOKEN`
+
+As of 2026-04-27, `npx vercel env ls` returned no configured env vars for `project-5v5cr`, so production admin/contact writes should still be treated as not persistent until KV/Upstash is connected and redeployed.
 
 ## Agent Maintenance Rules
 

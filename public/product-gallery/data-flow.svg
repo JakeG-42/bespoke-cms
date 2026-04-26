@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" role="img" aria-labelledby="title desc">
+  <title id="title">Generated data logging placeholder</title>
+  <desc id="desc">A stylised data logging flow from vehicle CAN data to cloud storage.</desc>
+  <defs>
+    <linearGradient id="line" x1="130" x2="830" y1="100" y2="500" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8bd3ff"/>
+      <stop offset=".55" stop-color="#b7a3ff"/>
+      <stop offset="1" stop-color="#fbbf24"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="48%" cy="48%" r="62%">
+      <stop stop-color="#8bd3ff" stop-opacity=".22"/>
+      <stop offset="1" stop-color="#020617" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="960" height="600" rx="36" fill="#050816"/>
+  <rect width="960" height="600" rx="36" fill="url(#glow)"/>
+  <rect x="120" y="144" width="236" height="312" rx="28" fill="#172033" stroke="#8bd3ff" stroke-opacity=".42" stroke-width="4"/>
+  <path d="M170 214h136M170 280h108M170 346h152M170 406h88" stroke="#8bd3ff" stroke-opacity=".54" stroke-width="11" stroke-linecap="round"/>
+  <rect x="572" y="174" width="236" height="252" rx="28" fill="#172033" stroke="#8bd3ff" stroke-opacity=".42" stroke-width="4"/>
+  <path d="M356 248c88 0 128 0 216 0M356 352c88 0 128 0 216 0" fill="none" stroke="url(#line)" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="468" cy="248" r="16" fill="#fbbf24" stroke="#fff" stroke-opacity=".55" stroke-width="4"/>
+  <circle cx="468" cy="352" r="16" fill="#fbbf24" stroke="#fff" stroke-opacity=".55" stroke-width="4"/>
+  <path d="M626 346l54-82 50 44 48-94" fill="none" stroke="url(#line)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="690" y="396" text-anchor="middle" fill="#f1f5f9" font-family="monospace" font-size="30" font-weight="800">LOG</text>
+</svg>

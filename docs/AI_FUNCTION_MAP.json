@@ -94,6 +94,11 @@
       "kvToken": ["KV_REST_API_TOKEN", "UPSTASH_REDIS_REST_TOKEN"],
       "allowLocalProductionWrites": "ELTRONIC_ALLOW_LOCAL_WRITES"
     },
+    "currentVercelEnvCheck": {
+      "checkedAt": "2026-04-27",
+      "project": "project-5v5cr",
+      "result": "No environment variables configured"
+    },
     "exports": [
       "getProducts",
       "getProductBySlug",
@@ -270,11 +275,17 @@
     "templateChangeChecklist": [
       "src/content/products.ts#ProductTemplate",
       "src/lib/managed-data.ts#parseProductTemplate",
+      "src/lib/managed-data.ts#placeholderGallery",
       "src/components/studio/product-form.tsx template select",
       "src/app/(site)/products/[slug]/page.tsx#templateLabel",
       "docs/AI_FUNCTION_MAP.json",
       "docs/SITE_FUNCTIONS.md"
-    ]
+    ],
+    "galleryFallback": {
+      "function": "src/lib/managed-data.ts#getProductImages",
+      "assetDirectory": "public/product-gallery",
+      "behavior": "Appends template-aware local SVG placeholders after real images until each product has up to four unique gallery images."
+    }
   },
   "contactSubmissionModel": {
     "typeFile": "src/lib/managed-data.ts",
@@ -300,10 +311,18 @@
     "adminStyle": "Tailwind CSS v4 + local shadcn-style primitives",
     "shadcnConfig": "components.json",
     "publicShell": "src/components/site/site-shell.tsx",
+    "publicNavIcons": {
+      "file": "src/components/site/site-shell.tsx",
+      "type": "inline SVG"
+    },
     "publicGeneratedVisuals": {
       "file": "src/components/site/generated-visuals.tsx",
       "type": "code-native SVG",
       "variants": ["display", "network", "sectors", "data"]
+    },
+    "productGalleryPlaceholders": {
+      "directory": "public/product-gallery",
+      "type": "local SVG image assets"
     },
     "studioShell": "src/components/studio/studio-shell.tsx",
     "studioTheme": "dark/light mode stored in localStorage key eltronic-studio-theme",

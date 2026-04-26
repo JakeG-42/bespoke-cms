@@ -13,7 +13,7 @@ Concise living reference for how the current Eltronic Next.js site works.
 - Site page/module content: `src/content/site.ts`.
 - Managed data layer: `src/lib/managed-data.ts`.
 - Admin UI: `src/app/studio`.
-- Public navigation: brand link to `/`, plus `/products`, `/about`, and `/contact`.
+- Public navigation: brand link to `/`, plus icon-labelled links for `/products`, `/solutions`, `/sectors`, `/data-specification`, `/about`, and `/contact`.
 - Fonts: `Tajawal` and `Fira_Code` are loaded through `next/font/google`.
 - UI system: public pages use custom CSS; admin uses Tailwind CSS v4 and shadcn-style local components under `src/components/ui`.
 - Generated visual modules: `src/components/site/generated-visuals.tsx` renders SVG-style imagery for public pages.
@@ -50,7 +50,7 @@ Each product currently has:
 - `template`: one of `hmi`, `data-logger`, or `module`.
 - `sourceUrl`: original crawl/source URL.
 - `image`: `{ src, alt }` used by listings and detail pages.
-- `images`: optional ordered gallery of `{ src, alt }`; if missing, the primary `image` is used.
+- `images`: optional ordered gallery of `{ src, alt }`; if fewer than four images exist, `src/lib/managed-data.ts` appends local SVG placeholders from `public/product-gallery`.
 - `summary`: short card/listing copy.
 - `description`: product detail intro copy.
 - `highlights`: list of product or template highlights.
@@ -65,7 +65,7 @@ Each product currently has:
 - `generateMetadata()` sets product-specific page title and description.
 - Unknown product slugs call `notFound()`.
 - The detail page displays family, category, name, description, template-specific heading, image, highlights, enquiry prompt, specifications, documents and variants where available.
-- Multiple product images render as an ordered gallery on the detail page.
+- Multiple product images render as an ordered gallery on the detail page. Placeholder SVGs are automatically appended per product template so every product can currently demonstrate gallery layout.
 - Template headings are currently mapped in `src/app/(site)/products/[slug]/page.tsx`.
 
 ## Current Product Templates
@@ -95,6 +95,7 @@ Each product currently has:
 - `.data/` is gitignored because it may contain contact submissions.
 - On Vercel, set `KV_REST_API_URL` and `KV_REST_API_TOKEN` to persist products and submissions.
 - Without persistent production storage, public pages fall back to seeded product content and admin/contact writes are blocked.
+- As of 2026-04-27, `npx vercel env ls` showed no configured environment variables for `project-5v5cr`.
 
 ## Deployment Behavior
 
@@ -110,3 +111,4 @@ Each product currently has:
 - WordPress migration/plugin work is being considered but is not implemented in the current app.
 - Image upload management is not implemented yet; product images currently use URLs.
 - Generated public-page imagery is currently code-native SVG, not bitmap media uploads.
+- Product gallery placeholders live in `public/product-gallery` and are intended to be replaced with real product images later through Studio.
