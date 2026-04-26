@@ -5,10 +5,17 @@
 node_modules/
 
 # Build output
+.next/
 dist/
 build/
+out/
 
 # Environment
 .env
 .env.local
 
+# Vercel
+.vercel/
+
+# Logs
+npm-debug.log*

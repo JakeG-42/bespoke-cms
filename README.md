@@ -1,4 +1,18 @@
 # Eltronic
 
-Personal website project.
+Personal website and product showcase for Eltronic.
 
+## Local Development
+
+```bash
+npm install
+npm run dev
+```
+
+Open `http://localhost:3000`.
+
+## Project Shape
+
+- `src/app` contains the public Next.js routes.
+- `src/content/products.ts` is the first structured product data source.
+- Product pages support different templates through the `template` field.
