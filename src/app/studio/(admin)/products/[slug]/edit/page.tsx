@@ -1,0 +1,73 @@
+import Link from "next/link";
+import { notFound } from "next/navigation";
+
+import { deleteProductAction } from "@/app/studio/actions";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { ProductForm } from "@/components/studio/product-form";
+import { getProductBySlug, getProductFamilies } from "@/lib/managed-data";
+
+type EditProductPageProps = {
+  params: Promise<{
+    slug: string;
+  }>;
+};
+
+export const dynamic = "force-dynamic";
+
+export async function generateMetadata({ params }: EditProductPageProps) {
+  const { slug } = await params;
+  const product = await getProductBySlug(slug);
+
+  return {
+    title: product ? `Edit ${product.name} | Eltronic Studio` : "Edit Product | Eltronic Studio",
+  };
+}
+
+export default async function EditProductPage({ params }: EditProductPageProps) {
+  const { slug } = await params;
+  const [product, families] = await Promise.all([getProductBySlug(slug), getProductFamilies()]);
+
+  if (!product) {
+    notFound();
+  }
+
+  return (
+    <div className="grid gap-6">
+      <section className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div>
+          <p className="studio-eyebrow">catalogue.edit</p>
+          <h1 className="mb-2 text-4xl font-black">{product.name}</h1>
+          <p className="text-muted-foreground">Full product editor with ordered image gallery support.</p>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <Button asChild variant="outline">
+            <Link href="/studio/products">Back to products</Link>
+          </Button>
+          <Button asChild variant="secondary">
+            <Link href={`/products/${product.slug}`} target="_blank">
+              View public page
+            </Link>
+          </Button>
+        </div>
+      </section>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Product details</CardTitle>
+          <CardDescription>Move image lines up or down to change public gallery order.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <ProductForm families={families} product={product} returnTo={`/studio/products/${product.slug}/edit`} />
+          <form action={deleteProductAction} className="mt-5">
+            <input name="slug" type="hidden" value={product.slug} />
+            <input name="returnTo" type="hidden" value="/studio/products" />
+            <Button type="submit" variant="destructive">
+              Delete product
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}

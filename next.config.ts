@@ -5,11 +5,11 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "eltronic.co.uk",
+        hostname: "**",
       },
       {
-        protocol: "https",
-        hostname: "www.autopi.io",
+        protocol: "http",
+        hostname: "**",
       },
     ],
   },

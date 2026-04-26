@@ -30,6 +30,8 @@ Concise living log for the Eltronic standalone site/app. Add newest updates at t
 - Added local JSON development storage with optional Upstash/Vercel KV persistence through `KV_REST_API_URL` and `KV_REST_API_TOKEN`.
 - Switched public product routes to read from managed catalogue data so admin edits can feed the front end.
 - Added an AI context pack in `docs/AGENT_CONTEXT.md` and `docs/AI_FUNCTION_MAP.json` so future sessions can quickly recover auth, storage, routes and feature behavior.
+- Split public site chrome from Studio chrome with route groups.
+- Added Studio sidebar modes, dark/light mode, product table, quick-edit drawer, full product edit pages and ordered multi-image product galleries.
 
 ## Future Considerations
 

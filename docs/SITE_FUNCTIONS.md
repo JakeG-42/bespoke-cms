@@ -6,6 +6,8 @@ Concise living reference for how the current Eltronic Next.js site works.
 
 - Framework: Next.js with App Router.
 - Global layout: `src/app/layout.tsx`.
+- Public site shell: `src/app/(site)/layout.tsx` and `src/components/site/site-shell.tsx`.
+- Studio shell: `src/app/studio/(admin)/layout.tsx` and `src/components/studio/studio-shell.tsx`.
 - Global styles: `src/app/globals.css`.
 - Product seed data: `src/content/products.ts`.
 - Managed data layer: `src/lib/managed-data.ts`.
@@ -23,7 +25,12 @@ Concise living reference for how the current Eltronic Next.js site works.
 - `/about`: placeholder page for company story, services, credentials, and trust-building content.
 - `/contact`: quote/contact flow that stores submissions in the managed data layer.
 - `/studio/login`: password login for the admin area.
-- `/studio`: shadcn-styled admin for products, template assignment and contact submissions.
+- `/studio`: shadcn-styled admin dashboard.
+- `/studio/products`: product table with quick-edit drawer.
+- `/studio/products/new`: product creation form.
+- `/studio/products/[slug]/edit`: full product editor.
+- `/studio/submissions`: contact submission inbox.
+- `/studio/settings`: Studio settings and notes.
 
 ## Product Data Model
 
@@ -38,6 +45,7 @@ Each product currently has:
 - `template`: one of `hmi`, `data-logger`, or `module`.
 - `sourceUrl`: original crawl/source URL.
 - `image`: `{ src, alt }` used by listings and detail pages.
+- `images`: optional ordered gallery of `{ src, alt }`; if missing, the primary `image` is used.
 - `summary`: short card/listing copy.
 - `description`: product detail intro copy.
 - `highlights`: list of product or template highlights.
@@ -52,7 +60,8 @@ Each product currently has:
 - `generateMetadata()` sets product-specific page title and description.
 - Unknown product slugs call `notFound()`.
 - The detail page displays family, category, name, description, template-specific heading, image, highlights, enquiry prompt, specifications, documents and variants where available.
-- Template headings are currently mapped in `src/app/products/[slug]/page.tsx`.
+- Multiple product images render as an ordered gallery on the detail page.
+- Template headings are currently mapped in `src/app/(site)/products/[slug]/page.tsx`.
 
 ## Current Product Templates
 
@@ -66,7 +75,12 @@ Each product currently has:
 - Temporary login is `admin` / `password`.
 - Production can override this with `ELTRONIC_ADMIN_USERNAME`, `ELTRONIC_ADMIN_PASSWORD`, and `ELTRONIC_ADMIN_SECRET`.
 - Auth is implemented in `src/lib/admin-auth.ts` with HMAC-signed credential comparisons and a signed 7-day `eltronic_admin_session` cookie.
+- Studio is separate from the public site shell; public header/footer do not render in admin routes.
+- Studio has a sidebar, dashboard, products, enquiries and settings modes.
+- Studio has browser-local dark/light mode stored in `localStorage`.
+- Product management is table-first with full edit pages and a quick-edit right drawer.
 - Product forms support newline-based editing for highlights, specs, documents and variants.
+- Product forms support multiple images as `URL | Alt text`, with line order controlling gallery order.
 - Template assignment is managed with a select field on each product.
 - Contact submissions can be reviewed, statused as `new`, `reviewed`, `replied`, or `archived`, and deleted.
 

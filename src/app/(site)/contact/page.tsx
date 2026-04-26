@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { getProducts } from "@/lib/managed-data";
-import { submitContactFormAction } from "./actions";
+import { submitContactFormAction } from "@/app/contact/actions";
 
 export const metadata = {
   title: "Contact | Eltronic",

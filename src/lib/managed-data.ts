@@ -2,7 +2,7 @@ import { Redis } from "@upstash/redis";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import path from "path";
 
-import { products as seededProducts, type Product, type ProductTemplate } from "@/content/products";
+import { products as seededProducts, type Product, type ProductImage, type ProductTemplate } from "@/content/products";
 
 const DATA_KEY = "eltronic:managed-data:v1";
 const LOCAL_DATA_PATH = path.join(process.cwd(), ".data", "eltronic-data.json");
@@ -49,7 +49,7 @@ function getRedisConfig() {
 
 function createEmptyData(): ManagedData {
   return {
-    products: seededProducts,
+    products: normalizeProducts(seededProducts),
     submissions: [],
     updatedAt: new Date().toISOString(),
   };
@@ -57,10 +57,25 @@ function createEmptyData(): ManagedData {
 
 function normalizeData(data: Partial<ManagedData> | null | undefined): ManagedData {
   return {
-    products: Array.isArray(data?.products) && data.products.length > 0 ? data.products : seededProducts,
+    products:
+      Array.isArray(data?.products) && data.products.length > 0
+        ? normalizeProducts(data.products)
+        : normalizeProducts(seededProducts),
     submissions: Array.isArray(data?.submissions) ? data.submissions : [],
     updatedAt: typeof data?.updatedAt === "string" ? data.updatedAt : new Date().toISOString(),
   };
+}
+
+function normalizeProducts(products: Product[]) {
+  return products.map((product) => {
+    const images = getProductImages(product);
+
+    return {
+      ...product,
+      image: images[0],
+      images,
+    };
+  });
 }
 
 function getRedisClient() {
@@ -153,6 +168,18 @@ export async function getFeaturedProducts() {
     .filter((product): product is Product => Boolean(product));
 
   return featured.length > 0 ? featured : products.slice(0, 4);
+}
+
+export function getProductImages(product: Product): ProductImage[] {
+  const images = Array.isArray(product.images)
+    ? product.images.filter((image) => image.src)
+    : [];
+  const mergedImages = images.length > 0 ? images : [product.image].filter((image) => image?.src);
+
+  return mergedImages.map((image) => ({
+    src: image.src,
+    alt: image.alt || product.name,
+  }));
 }
 
 export async function upsertProduct(product: Product, previousSlug?: string) {
@@ -275,6 +302,16 @@ export function productFromFormData(formData: FormData): Product {
     details,
     articleNumber: articleNumber || undefined,
   }));
+  const parsedImages = parseRows(formData.get("images"), 2).map(([src, alt]) => ({
+    src,
+    alt: alt || name,
+  }));
+  const fallbackImage = {
+    src: String(formData.get("imageSrc") ?? "").trim(),
+    alt: String(formData.get("imageAlt") || name).trim(),
+  };
+  const images = parsedImages.length > 0 ? parsedImages : [fallbackImage].filter((image) => image.src);
+  const primaryImage = images[0] ?? fallbackImage;
 
   return {
     slug,
@@ -283,10 +320,8 @@ export function productFromFormData(formData: FormData): Product {
     family: String(formData.get("family") ?? "").trim(),
     template: parseProductTemplate(formData.get("template")),
     sourceUrl: String(formData.get("sourceUrl") ?? "").trim(),
-    image: {
-      src: String(formData.get("imageSrc") ?? "").trim(),
-      alt: String(formData.get("imageAlt") || name).trim(),
-    },
+    image: primaryImage,
+    images,
     summary: String(formData.get("summary") ?? "").trim(),
     description: String(formData.get("description") ?? "").trim(),
     highlights: parseLines(formData.get("highlights")),

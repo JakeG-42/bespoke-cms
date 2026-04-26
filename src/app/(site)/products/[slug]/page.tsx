@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getProductBySlug } from "@/lib/managed-data";
+import { getProductBySlug, getProductImages } from "@/lib/managed-data";
 
 type ProductPageProps = {
   params: Promise<{
@@ -32,6 +32,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   if (!product) {
     notFound();
   }
+  const images = getProductImages(product);
 
   return (
     <main className="page">
@@ -60,6 +61,17 @@ export default async function ProductPage({ params }: ProductPageProps) {
           />
         </div>
       </section>
+
+      {images.length > 1 ? (
+        <section className="product-gallery" aria-label={`${product.name} image gallery`}>
+          {images.map((image, index) => (
+            <figure className="gallery-card" key={`${image.src}-${index}`}>
+              <Image src={image.src} alt={image.alt} width={640} height={400} />
+              <figcaption>{image.alt || `${product.name} image ${index + 1}`}</figcaption>
+            </figure>
+          ))}
+        </section>
+      ) : null}
 
       <section className="detail-layout">
         <div className="stack">

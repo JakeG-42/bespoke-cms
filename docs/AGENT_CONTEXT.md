@@ -19,7 +19,10 @@ Always verify current code before changing behavior. Treat this document as a ma
 
 - `src/lib/admin-auth.ts`: admin credential and cookie session logic.
 - `src/lib/managed-data.ts`: product/submission storage abstraction.
-- `src/app/studio/page.tsx`: admin interface.
+- `src/app/studio/(admin)/layout.tsx`: protected Studio shell wrapper.
+- `src/app/studio/(admin)/page.tsx`: Studio dashboard.
+- `src/app/studio/(admin)/products/page.tsx`: product table and quick-edit drawer.
+- `src/app/studio/(admin)/products/[slug]/edit/page.tsx`: full product editor.
 - `src/app/studio/actions.ts`: admin server actions.
 - `src/app/contact/actions.ts`: public contact form submission action.
 - `src/content/products.ts`: seed catalogue from the crawled WordPress site.
@@ -32,7 +35,7 @@ Auth is intentionally simple at this stage: one admin login, no database-backed 
 - Login page: `src/app/studio/login/page.tsx`.
 - Login action: `src/app/studio/login/actions.ts`.
 - Auth utility: `src/lib/admin-auth.ts`.
-- Studio guard: `src/app/studio/page.tsx` calls `isAdminAuthenticated()`.
+- Studio guard: `src/app/studio/(admin)/layout.tsx` calls `isAdminAuthenticated()`.
 - Admin mutations: `src/app/studio/actions.ts` calls `requireAdminAction()` before writes.
 
 ### Credential Sources
@@ -97,14 +100,34 @@ Storage selection:
 
 The `.data/` folder is gitignored because it can contain contact submissions and edited content.
 
+## Studio Layout
+
+Studio is intentionally separate from the public site chrome.
+
+- Public pages live under the `(site)` route group and use `src/components/site/site-shell.tsx`.
+- Studio pages live under `src/app/studio/(admin)` and use `src/components/studio/studio-shell.tsx`.
+- `/studio/login` is outside the protected admin route group.
+- Studio navigation modes are real routes: `/studio`, `/studio/products`, `/studio/submissions`, and `/studio/settings`.
+- Studio theme is browser-local and toggled by `src/components/studio/studio-shell.tsx`.
+
 ## Product Management
 
 Public catalogue pages read through `getProducts()` and `getProductBySlug()` from `src/lib/managed-data.ts`.
 
 Admin product edits are handled by `saveProductAction()` in `src/app/studio/actions.ts`.
 
+Admin product UI:
+
+- `/studio/products`: table view.
+- `/studio/products?quick=<slug>`: table view with right-side quick-edit drawer.
+- `/studio/products/new`: new product page.
+- `/studio/products/[slug]/edit`: full edit page.
+- Shared form component: `src/components/studio/product-form.tsx`.
+
 Product form parsing uses `productFromFormData()`:
 
+- Images: one item per line as `URL | Alt text`.
+- Image order: line order controls public gallery/order.
 - Highlights: one item per line.
 - Specifications: `Label | Value` per line.
 - Documents: `Label | URL` per line.
@@ -120,8 +143,8 @@ If adding a new template, update:
 
 - `ProductTemplate` in `src/content/products.ts`.
 - `parseProductTemplate()` in `src/lib/managed-data.ts`.
-- The template select in `src/app/studio/page.tsx`.
-- `templateLabel` in `src/app/products/[slug]/page.tsx`.
+- The template select in `src/components/studio/product-form.tsx`.
+- `templateLabel` in `src/app/(site)/products/[slug]/page.tsx`.
 - `docs/AI_FUNCTION_MAP.json`.
 
 ## Contact Submissions

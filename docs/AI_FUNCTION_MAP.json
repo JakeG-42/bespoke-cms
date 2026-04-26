@@ -19,7 +19,9 @@
       "src/lib/admin-auth.ts",
       "src/lib/managed-data.ts",
       "src/app/studio/actions.ts",
-      "src/app/studio/page.tsx"
+      "src/app/studio/(admin)/layout.tsx",
+      "src/app/studio/(admin)/products/page.tsx",
+      "src/components/studio/product-form.tsx"
     ],
     "updateWhenChanged": [
       "docs/AI_FUNCTION_MAP.json",
@@ -46,7 +48,7 @@
       "authUtility": "src/lib/admin-auth.ts",
       "loginPage": "src/app/studio/login/page.tsx",
       "loginAction": "src/app/studio/login/actions.ts",
-      "adminGuards": "src/app/studio/actions.ts"
+      "adminGuards": "src/app/studio/(admin)/layout.tsx"
     },
     "functions": {
       "verify": "verifyAdminCredentials(username, password)",
@@ -97,6 +99,7 @@
       "getProductBySlug",
       "getProductFamilies",
       "getFeaturedProducts",
+      "getProductImages",
       "upsertProduct",
       "deleteProduct",
       "getSubmissions",
@@ -109,25 +112,25 @@
   "routes": [
     {
       "path": "/",
-      "file": "src/app/page.tsx",
+      "file": "src/app/(site)/page.tsx",
       "kind": "public",
       "dataSource": "getProducts(), getFeaturedProducts()"
     },
     {
       "path": "/products",
-      "file": "src/app/products/page.tsx",
+      "file": "src/app/(site)/products/page.tsx",
       "kind": "public",
       "dataSource": "getProducts(), getProductFamilies()"
     },
     {
       "path": "/products/[slug]",
-      "file": "src/app/products/[slug]/page.tsx",
+      "file": "src/app/(site)/products/[slug]/page.tsx",
       "kind": "public",
-      "dataSource": "getProductBySlug(slug)"
+      "dataSource": "getProductBySlug(slug), getProductImages(product)"
     },
     {
       "path": "/contact",
-      "file": "src/app/contact/page.tsx",
+      "file": "src/app/(site)/contact/page.tsx",
       "kind": "public-form",
       "action": "src/app/contact/actions.ts#submitContactFormAction"
     },
@@ -139,8 +142,39 @@
     },
     {
       "path": "/studio",
-      "file": "src/app/studio/page.tsx",
-      "kind": "admin",
+      "file": "src/app/studio/(admin)/page.tsx",
+      "kind": "admin-dashboard",
+      "guard": "isAdminAuthenticated()"
+    },
+    {
+      "path": "/studio/products",
+      "file": "src/app/studio/(admin)/products/page.tsx",
+      "kind": "admin-products-table",
+      "guard": "isAdminAuthenticated()",
+      "quickEdit": "/studio/products?quick=<slug>"
+    },
+    {
+      "path": "/studio/products/new",
+      "file": "src/app/studio/(admin)/products/new/page.tsx",
+      "kind": "admin-product-create",
+      "guard": "isAdminAuthenticated()"
+    },
+    {
+      "path": "/studio/products/[slug]/edit",
+      "file": "src/app/studio/(admin)/products/[slug]/edit/page.tsx",
+      "kind": "admin-product-edit",
+      "guard": "isAdminAuthenticated()"
+    },
+    {
+      "path": "/studio/submissions",
+      "file": "src/app/studio/(admin)/submissions/page.tsx",
+      "kind": "admin-submission-inbox",
+      "guard": "isAdminAuthenticated()"
+    },
+    {
+      "path": "/studio/settings",
+      "file": "src/app/studio/(admin)/settings/page.tsx",
+      "kind": "admin-settings",
       "guard": "isAdminAuthenticated()"
     }
   ],
@@ -201,6 +235,8 @@
       "sourceUrl",
       "image.src",
       "image.alt",
+      "images[].src",
+      "images[].alt",
       "summary",
       "description",
       "highlights[]",
@@ -216,8 +252,8 @@
     "templateChangeChecklist": [
       "src/content/products.ts#ProductTemplate",
       "src/lib/managed-data.ts#parseProductTemplate",
-      "src/app/studio/page.tsx template select",
-      "src/app/products/[slug]/page.tsx#templateLabel",
+      "src/components/studio/product-form.tsx template select",
+      "src/app/(site)/products/[slug]/page.tsx#templateLabel",
       "docs/AI_FUNCTION_MAP.json",
       "docs/SITE_FUNCTIONS.md"
     ]
@@ -245,6 +281,9 @@
     "publicCss": "src/app/globals.css",
     "adminStyle": "Tailwind CSS v4 + local shadcn-style primitives",
     "shadcnConfig": "components.json",
+    "publicShell": "src/components/site/site-shell.tsx",
+    "studioShell": "src/components/studio/studio-shell.tsx",
+    "studioTheme": "dark/light mode stored in localStorage key eltronic-studio-theme",
     "components": [
       "src/components/ui/button.tsx",
       "src/components/ui/card.tsx",
@@ -252,7 +291,9 @@
       "src/components/ui/textarea.tsx",
       "src/components/ui/label.tsx",
       "src/components/ui/badge.tsx",
-      "src/components/ui/separator.tsx"
+      "src/components/ui/separator.tsx",
+      "src/components/studio/product-form.tsx",
+      "src/components/studio/submission-card.tsx"
     ]
   },
   "deployment": {

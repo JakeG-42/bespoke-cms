@@ -29,6 +29,7 @@ export type Product = {
   template: ProductTemplate;
   sourceUrl: string;
   image: ProductImage;
+  images?: ProductImage[];
   summary: string;
   description: string;
   highlights: string[];

@@ -1,0 +1,120 @@
+import Link from "next/link";
+import type { ReactNode } from "react";
+import { Boxes, Database, Inbox, LayoutTemplate, Plus } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { getProducts, getStorageMode, getSubmissions } from "@/lib/managed-data";
+
+export const dynamic = "force-dynamic";
+
+export const metadata = {
+  title: "Studio | Eltronic",
+};
+
+export default async function StudioDashboardPage() {
+  const [products, submissions] = await Promise.all([getProducts(), getSubmissions()]);
+  const templates = new Set(products.map((product) => product.template));
+  const newSubmissions = submissions.filter((submission) => submission.status === "new");
+
+  return (
+    <div className="grid gap-6">
+      <section className="studio-hero">
+        <div>
+          <p className="studio-eyebrow">admin.dashboard</p>
+          <h1 className="mb-3 text-4xl font-black md:text-5xl">Eltronic Studio</h1>
+          <p className="max-w-3xl text-muted-foreground">
+            A clean control room for product content, template assignment, ordered galleries and quote enquiries.
+          </p>
+        </div>
+        <div className="flex flex-wrap gap-3">
+          <Button asChild>
+            <Link href="/studio/products/new">
+              <Plus className="size-4" />
+              Add product
+            </Link>
+          </Button>
+          <Button asChild variant="outline">
+            <Link href="/studio/products">Manage products</Link>
+          </Button>
+        </div>
+      </section>
+
+      <section className="grid gap-4 md:grid-cols-4">
+        <MetricCard icon={<Boxes className="size-5" />} label="Products" value={products.length.toString()} />
+        <MetricCard icon={<LayoutTemplate className="size-5" />} label="Templates" value={templates.size.toString()} />
+        <MetricCard icon={<Inbox className="size-5" />} label="New enquiries" value={newSubmissions.length.toString()} />
+        <MetricCard icon={<Database className="size-5" />} label="Storage" value={getStorageMode()} compact />
+      </section>
+
+      <section className="grid gap-6 lg:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle>Recent products</CardTitle>
+            <CardDescription>Jump straight into full edit or quick editing from the product table.</CardDescription>
+          </CardHeader>
+          <CardContent className="grid gap-3">
+            {products.slice(0, 5).map((product) => (
+              <Link className="studio-list-row" href={`/studio/products?quick=${product.slug}`} key={product.slug}>
+                <span>
+                  <strong>{product.name}</strong>
+                  <small>{product.family}</small>
+                </span>
+                <span>{product.template}</span>
+              </Link>
+            ))}
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Recent enquiries</CardTitle>
+            <CardDescription>Contact form submissions from the public website.</CardDescription>
+          </CardHeader>
+          <CardContent className="grid gap-3">
+            {submissions.length === 0 ? (
+              <p className="mb-0 text-sm text-muted-foreground">No submissions yet.</p>
+            ) : null}
+            {submissions.slice(0, 5).map((submission) => (
+              <Link className="studio-list-row" href="/studio/submissions" key={submission.id}>
+                <span>
+                  <strong>{submission.name}</strong>
+                  <small>{submission.email}</small>
+                </span>
+                <span>{submission.status}</span>
+              </Link>
+            ))}
+          </CardContent>
+        </Card>
+      </section>
+    </div>
+  );
+}
+
+function MetricCard({
+  compact = false,
+  icon,
+  label,
+  value,
+}: {
+  compact?: boolean;
+  icon: ReactNode;
+  label: string;
+  value: string;
+}) {
+  return (
+    <Card>
+      <CardContent className="flex items-center gap-4 p-5">
+        <div className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-primary/12 text-primary">
+          {icon}
+        </div>
+        <div>
+          <p className="mb-1 text-xs font-bold uppercase tracking-[0.22em] text-muted-foreground">{label}</p>
+          <strong className={compact ? "text-sm text-foreground" : "font-mono text-3xl text-foreground"}>
+            {value}
+          </strong>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
