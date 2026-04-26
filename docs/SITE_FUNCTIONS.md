@@ -13,6 +13,7 @@ Concise living reference for how the current Eltronic Next.js site works.
 - Public navigation: brand link to `/`, plus `/products`, `/about`, and `/contact`.
 - Fonts: `Tajawal` and `Fira_Code` are loaded through `next/font/google`.
 - UI system: public pages use custom CSS; admin uses Tailwind CSS v4 and shadcn-style local components under `src/components/ui`.
+- AI context pack: future agents should start with `docs/AGENT_CONTEXT.md` and `docs/AI_FUNCTION_MAP.json`.
 
 ## Current Routes
 
@@ -64,6 +65,7 @@ Each product currently has:
 - `/studio` requires an admin session cookie.
 - Temporary login is `admin` / `password`.
 - Production can override this with `ELTRONIC_ADMIN_USERNAME`, `ELTRONIC_ADMIN_PASSWORD`, and `ELTRONIC_ADMIN_SECRET`.
+- Auth is implemented in `src/lib/admin-auth.ts` with HMAC-signed credential comparisons and a signed 7-day `eltronic_admin_session` cookie.
 - Product forms support newline-based editing for highlights, specs, documents and variants.
 - Template assignment is managed with a select field on each product.
 - Contact submissions can be reviewed, statused as `new`, `reviewed`, `replied`, or `archived`, and deleted.

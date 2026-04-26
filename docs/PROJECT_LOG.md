@@ -29,6 +29,7 @@ Concise living log for the Eltronic standalone site/app. Add newest updates at t
 - Added simple admin authentication using `ELTRONIC_ADMIN_PASSWORD` and `ELTRONIC_ADMIN_SECRET`.
 - Added local JSON development storage with optional Upstash/Vercel KV persistence through `KV_REST_API_URL` and `KV_REST_API_TOKEN`.
 - Switched public product routes to read from managed catalogue data so admin edits can feed the front end.
+- Added an AI context pack in `docs/AGENT_CONTEXT.md` and `docs/AI_FUNCTION_MAP.json` so future sessions can quickly recover auth, storage, routes and feature behavior.
 
 ## Future Considerations
 
@@ -36,6 +37,7 @@ Concise living log for the Eltronic standalone site/app. Add newest updates at t
 - A possible temporary WordPress plugin could provide a controlled JSON/ZIP export from wp-admin.
 - Production persistence needs a Vercel KV/Upstash Redis connection before live admin writes and contact submissions should be trusted.
 - Future admin improvements could include image uploads, richer product template fields, and email notifications for new submissions.
+- Keep AI-facing docs current when auth, route, storage or product-template behavior changes.
 
 ## Update Notes
 

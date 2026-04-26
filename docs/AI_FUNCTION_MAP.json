@@ -1,0 +1,264 @@
+{
+  "schemaVersion": 1,
+  "project": {
+    "name": "Eltronic",
+    "repo": "JakeG-42/eltronic",
+    "framework": "Next.js App Router",
+    "productionUrl": "https://project-5v5cr.vercel.app",
+    "adminUrl": "https://project-5v5cr.vercel.app/studio",
+    "vercelProject": "project-5v5cr"
+  },
+  "agentInstructions": {
+    "readFirst": [
+      "docs/AGENT_CONTEXT.md",
+      "docs/AI_FUNCTION_MAP.json",
+      "docs/SITE_FUNCTIONS.md",
+      "docs/PROJECT_LOG.md"
+    ],
+    "verifyBeforeChanging": [
+      "src/lib/admin-auth.ts",
+      "src/lib/managed-data.ts",
+      "src/app/studio/actions.ts",
+      "src/app/studio/page.tsx"
+    ],
+    "updateWhenChanged": [
+      "docs/AI_FUNCTION_MAP.json",
+      "docs/AGENT_CONTEXT.md",
+      "docs/SITE_FUNCTIONS.md",
+      "docs/PROJECT_LOG.md"
+    ]
+  },
+  "auth": {
+    "id": "studio-single-admin-cookie-auth",
+    "purpose": "Protect the Eltronic Studio admin area and server actions.",
+    "temporaryCredentials": {
+      "username": "admin",
+      "password": "password",
+      "securityNote": "Temporary testing defaults only. Override with environment variables before wider sharing."
+    },
+    "env": {
+      "username": "ELTRONIC_ADMIN_USERNAME",
+      "password": "ELTRONIC_ADMIN_PASSWORD",
+      "secret": "ELTRONIC_ADMIN_SECRET",
+      "fallbackSecret": "temporary-eltronic-admin-secret"
+    },
+    "files": {
+      "authUtility": "src/lib/admin-auth.ts",
+      "loginPage": "src/app/studio/login/page.tsx",
+      "loginAction": "src/app/studio/login/actions.ts",
+      "adminGuards": "src/app/studio/actions.ts"
+    },
+    "functions": {
+      "verify": "verifyAdminCredentials(username, password)",
+      "createSession": "setAdminSession()",
+      "destroySession": "clearAdminSession()",
+      "guard": "isAdminAuthenticated()"
+    },
+    "session": {
+      "cookieName": "eltronic_admin_session",
+      "valueShape": "<issuedAt>.<signature>",
+      "signature": "HMAC-SHA256(issuedAt, adminSecret)",
+      "maxAgeSeconds": 604800,
+      "flags": ["HttpOnly", "SameSite=Lax", "Secure in production"]
+    },
+    "futureExtension": {
+      "testUsers": "Extend src/lib/admin-auth.ts with an AdminUser list/source, keep verifyAdminCredentials as the public API, and sign a user-aware session payload.",
+      "roles": "Add role to session payload and expose getCurrentAdminUser() while keeping isAdminAuthenticated() for simple guards."
+    }
+  },
+  "storage": {
+    "id": "managed-data",
+    "files": {
+      "implementation": "src/lib/managed-data.ts",
+      "seedProducts": "src/content/products.ts",
+      "localFile": ".data/eltronic-data.json"
+    },
+    "selectionOrder": [
+      {
+        "mode": "Upstash/Vercel KV",
+        "condition": "KV_REST_API_URL and KV_REST_API_TOKEN are present"
+      },
+      {
+        "mode": "local JSON",
+        "condition": "not production, or ELTRONIC_ALLOW_LOCAL_WRITES=true"
+      },
+      {
+        "mode": "read-only fallback",
+        "condition": "production without KV"
+      }
+    ],
+    "env": {
+      "kvUrl": ["KV_REST_API_URL", "UPSTASH_REDIS_REST_URL"],
+      "kvToken": ["KV_REST_API_TOKEN", "UPSTASH_REDIS_REST_TOKEN"],
+      "allowLocalProductionWrites": "ELTRONIC_ALLOW_LOCAL_WRITES"
+    },
+    "exports": [
+      "getProducts",
+      "getProductBySlug",
+      "getProductFamilies",
+      "getFeaturedProducts",
+      "upsertProduct",
+      "deleteProduct",
+      "getSubmissions",
+      "createContactSubmission",
+      "updateSubmissionStatus",
+      "deleteSubmission",
+      "productFromFormData"
+    ]
+  },
+  "routes": [
+    {
+      "path": "/",
+      "file": "src/app/page.tsx",
+      "kind": "public",
+      "dataSource": "getProducts(), getFeaturedProducts()"
+    },
+    {
+      "path": "/products",
+      "file": "src/app/products/page.tsx",
+      "kind": "public",
+      "dataSource": "getProducts(), getProductFamilies()"
+    },
+    {
+      "path": "/products/[slug]",
+      "file": "src/app/products/[slug]/page.tsx",
+      "kind": "public",
+      "dataSource": "getProductBySlug(slug)"
+    },
+    {
+      "path": "/contact",
+      "file": "src/app/contact/page.tsx",
+      "kind": "public-form",
+      "action": "src/app/contact/actions.ts#submitContactFormAction"
+    },
+    {
+      "path": "/studio/login",
+      "file": "src/app/studio/login/page.tsx",
+      "kind": "admin-login",
+      "action": "src/app/studio/login/actions.ts#loginAction"
+    },
+    {
+      "path": "/studio",
+      "file": "src/app/studio/page.tsx",
+      "kind": "admin",
+      "guard": "isAdminAuthenticated()"
+    }
+  ],
+  "serverActions": [
+    {
+      "id": "loginAction",
+      "file": "src/app/studio/login/actions.ts",
+      "authRequired": false,
+      "effect": "Verifies admin credentials, sets session cookie, redirects to /studio."
+    },
+    {
+      "id": "saveProductAction",
+      "file": "src/app/studio/actions.ts",
+      "authRequired": true,
+      "effect": "Creates or updates one product from form data and revalidates managed pages."
+    },
+    {
+      "id": "deleteProductAction",
+      "file": "src/app/studio/actions.ts",
+      "authRequired": true,
+      "effect": "Deletes a product by slug and revalidates managed pages."
+    },
+    {
+      "id": "updateSubmissionStatusAction",
+      "file": "src/app/studio/actions.ts",
+      "authRequired": true,
+      "effect": "Updates one contact submission status."
+    },
+    {
+      "id": "deleteSubmissionAction",
+      "file": "src/app/studio/actions.ts",
+      "authRequired": true,
+      "effect": "Deletes one contact submission."
+    },
+    {
+      "id": "logoutAction",
+      "file": "src/app/studio/actions.ts",
+      "authRequired": false,
+      "effect": "Clears admin session cookie and redirects to login."
+    },
+    {
+      "id": "submitContactFormAction",
+      "file": "src/app/contact/actions.ts",
+      "authRequired": false,
+      "effect": "Validates public contact form input, stores a contact submission, redirects to success/error state."
+    }
+  ],
+  "productModel": {
+    "sourceType": "TypeScript",
+    "typeFile": "src/content/products.ts",
+    "templates": ["hmi", "data-logger", "module"],
+    "fields": [
+      "slug",
+      "name",
+      "category",
+      "family",
+      "template",
+      "sourceUrl",
+      "image.src",
+      "image.alt",
+      "summary",
+      "description",
+      "highlights[]",
+      "specifications[].label",
+      "specifications[].value",
+      "documents[].label",
+      "documents[].url",
+      "variants[].name",
+      "variants[].details",
+      "variants[].articleNumber",
+      "enquiryPrompt"
+    ],
+    "templateChangeChecklist": [
+      "src/content/products.ts#ProductTemplate",
+      "src/lib/managed-data.ts#parseProductTemplate",
+      "src/app/studio/page.tsx template select",
+      "src/app/products/[slug]/page.tsx#templateLabel",
+      "docs/AI_FUNCTION_MAP.json",
+      "docs/SITE_FUNCTIONS.md"
+    ]
+  },
+  "contactSubmissionModel": {
+    "typeFile": "src/lib/managed-data.ts",
+    "typeName": "ContactSubmission",
+    "statuses": ["new", "reviewed", "replied", "archived"],
+    "fields": [
+      "id",
+      "name",
+      "company",
+      "email",
+      "productSlug",
+      "productName",
+      "message",
+      "status",
+      "source",
+      "createdAt",
+      "updatedAt"
+    ],
+    "emailNotification": "not implemented"
+  },
+  "ui": {
+    "publicCss": "src/app/globals.css",
+    "adminStyle": "Tailwind CSS v4 + local shadcn-style primitives",
+    "shadcnConfig": "components.json",
+    "components": [
+      "src/components/ui/button.tsx",
+      "src/components/ui/card.tsx",
+      "src/components/ui/input.tsx",
+      "src/components/ui/textarea.tsx",
+      "src/components/ui/label.tsx",
+      "src/components/ui/badge.tsx",
+      "src/components/ui/separator.tsx"
+    ]
+  },
+  "deployment": {
+    "productionCommand": "npx vercel --prod --yes",
+    "buildCommand": "npm run build",
+    "lintCommand": "npm run lint",
+    "lastKnownProductionAlias": "https://project-5v5cr.vercel.app"
+  }
+}
