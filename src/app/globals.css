@@ -263,7 +263,7 @@ h3 {
 }
 
 .nav-menu a {
-  --nav-icon-y: -0.09em;
+  --nav-icon-y: -0.18em;
   position: relative;
   display: inline-grid;
   grid-template-columns: auto auto;
@@ -394,7 +394,7 @@ h3 {
 }
 
 .mobile-nav-panel a {
-  --nav-icon-y: -0.08em;
+  --nav-icon-y: -0.14em;
   display: flex;
   align-items: center;
   gap: 0.65rem;
