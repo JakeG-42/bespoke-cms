@@ -13,19 +13,29 @@ export function SubmissionCard({
   submission,
 }: {
   returnTo?: string;
-  submission: ContactSubmission;
+  submission: ContactSubmission & { duplicateCount?: number };
 }) {
   const isBlocked = submission.type !== "enquiry";
+  const tone = getSubmissionTone(submission.type);
 
   return (
-    <article className="rounded-2xl border border-border bg-background/35 p-4">
+    <article className="submission-card rounded-2xl border border-border bg-background/35 p-4" data-tone={tone}>
       <div className="mb-3 flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h3 className="mb-1 text-lg">{submission.name}</h3>
+          <h3 className="mb-1 flex items-center gap-2 text-lg">
+            <span className="submission-type-dot" aria-hidden="true" />
+            {submission.name}
+          </h3>
           <p className="mb-0 text-sm text-muted-foreground">{formatDate(submission.createdAt)}</p>
         </div>
         <div className="flex flex-wrap justify-end gap-2">
-          <Badge variant={isBlocked ? "warning" : "outline"}>{formatType(submission.type)}</Badge>
+          <Badge className="submission-type-badge" variant={isBlocked ? "warning" : "outline"}>
+            <span className="submission-type-dot" aria-hidden="true" />
+            {formatType(submission.type)}
+          </Badge>
+          {submission.duplicateCount && submission.duplicateCount > 1 ? (
+            <Badge variant="outline">{submission.duplicateCount} repeated attempts</Badge>
+          ) : null}
           <Badge variant={submission.status === "new" ? "warning" : "outline"}>{submission.status}</Badge>
         </div>
       </div>
@@ -72,6 +82,12 @@ export function SubmissionCard({
 function formatType(type: ContactSubmission["type"]) {
   if (type === "captcha_failed") return "captcha failed";
   if (type === "honeypot_spam") return "honeypot spam";
+  return "enquiry";
+}
+
+function getSubmissionTone(type: ContactSubmission["type"]) {
+  if (type === "captcha_failed") return "captcha";
+  if (type === "honeypot_spam") return "honeypot";
   return "enquiry";
 }
 

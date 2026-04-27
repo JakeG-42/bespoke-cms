@@ -6,6 +6,10 @@ import { SubmissionCard } from "@/components/studio/submission-card";
 import { getSubmissions, type ContactSubmission, type ContactSubmissionType } from "@/lib/managed-data";
 
 type SubmissionFilter = "enquiries" | "blocked" | ContactSubmissionType | "all";
+type SubmissionFilterTone = "enquiry" | "blocked" | ContactSubmissionType | "all";
+export type DisplaySubmission = ContactSubmission & {
+  duplicateCount: number;
+};
 
 type SubmissionsPageProps = {
   searchParams?: Promise<{
@@ -22,14 +26,15 @@ export const metadata = {
 export default async function SubmissionsPage({ searchParams }: SubmissionsPageProps) {
   const params = await searchParams;
   const submissions = await getSubmissions();
+  const visibleSubmissions = collapseRepeatedBlockedSubmissions(submissions);
   const activeFilter = parseFilter(params?.type);
-  const filteredSubmissions = filterSubmissions(submissions, activeFilter);
+  const filteredSubmissions = filterSubmissions(visibleSubmissions, activeFilter);
   const counts = {
-    all: submissions.length,
-    blocked: submissions.filter((submission) => submission.type !== "enquiry").length,
-    captcha_failed: submissions.filter((submission) => submission.type === "captcha_failed").length,
-    enquiries: submissions.filter((submission) => submission.type === "enquiry").length,
-    honeypot_spam: submissions.filter((submission) => submission.type === "honeypot_spam").length,
+    all: visibleSubmissions.length,
+    blocked: visibleSubmissions.filter((submission) => submission.type !== "enquiry").length,
+    captcha_failed: visibleSubmissions.filter((submission) => submission.type === "captcha_failed").length,
+    enquiries: visibleSubmissions.filter((submission) => submission.type === "enquiry").length,
+    honeypot_spam: visibleSubmissions.filter((submission) => submission.type === "honeypot_spam").length,
   };
 
   return (
@@ -52,26 +57,35 @@ export default async function SubmissionsPage({ searchParams }: SubmissionsPageP
         </CardHeader>
         <CardContent className="grid gap-4">
           <div className="submission-filter-bar">
-            <FilterLink active={activeFilter === "enquiries"} count={counts.enquiries} href="/studio/submissions" label="Enquiries" />
+            <FilterLink
+              active={activeFilter === "enquiries"}
+              count={counts.enquiries}
+              href="/studio/submissions"
+              label="Enquiries"
+              tone="enquiry"
+            />
             <FilterLink
               active={activeFilter === "blocked"}
               count={counts.blocked}
               href="/studio/submissions?type=blocked"
               label="Blocked"
+              tone="blocked"
             />
             <FilterLink
               active={activeFilter === "captcha_failed"}
               count={counts.captcha_failed}
               href="/studio/submissions?type=captcha_failed"
               label="Captcha"
+              tone="captcha_failed"
             />
             <FilterLink
               active={activeFilter === "honeypot_spam"}
               count={counts.honeypot_spam}
               href="/studio/submissions?type=honeypot_spam"
               label="Honeypot"
+              tone="honeypot_spam"
             />
-            <FilterLink active={activeFilter === "all"} count={counts.all} href="/studio/submissions?type=all" label="All" />
+            <FilterLink active={activeFilter === "all"} count={counts.all} href="/studio/submissions?type=all" label="All" tone="all" />
           </div>
 
           {filteredSubmissions.length === 0 ? (
@@ -92,11 +106,24 @@ export default async function SubmissionsPage({ searchParams }: SubmissionsPageP
   );
 }
 
-function FilterLink({ active, count, href, label }: { active: boolean; count: number; href: string; label: string }) {
+function FilterLink({
+  active,
+  count,
+  href,
+  label,
+  tone,
+}: {
+  active: boolean;
+  count: number;
+  href: string;
+  label: string;
+  tone: SubmissionFilterTone;
+}) {
   return (
-    <Link className={active ? "active" : undefined} href={href}>
+    <Link className={active ? "active" : undefined} data-tone={tone} href={href}>
+      <span className="submission-type-dot" aria-hidden="true" />
       {label}
-      <span>{count}</span>
+      <span className="submission-filter-count">{count}</span>
     </Link>
   );
 }
@@ -109,7 +136,7 @@ function parseFilter(value?: string): SubmissionFilter {
   return "enquiries";
 }
 
-function filterSubmissions(submissions: ContactSubmission[], filter: SubmissionFilter) {
+function filterSubmissions(submissions: DisplaySubmission[], filter: SubmissionFilter) {
   if (filter === "all") {
     return submissions;
   }
@@ -123,4 +150,40 @@ function filterSubmissions(submissions: ContactSubmission[], filter: SubmissionF
   }
 
   return submissions.filter((submission) => submission.type === filter);
+}
+
+function collapseRepeatedBlockedSubmissions(submissions: ContactSubmission[]): DisplaySubmission[] {
+  const collapsedSubmissions = new Map<string, DisplaySubmission>();
+
+  for (const submission of submissions) {
+    const key = getSubmissionCollapseKey(submission);
+    const existingSubmission = collapsedSubmissions.get(key);
+
+    if (existingSubmission) {
+      existingSubmission.duplicateCount += 1;
+      continue;
+    }
+
+    collapsedSubmissions.set(key, {
+      ...submission,
+      duplicateCount: 1,
+    });
+  }
+
+  return Array.from(collapsedSubmissions.values());
+}
+
+function getSubmissionCollapseKey(submission: ContactSubmission) {
+  if (submission.type === "enquiry") {
+    return submission.id;
+  }
+
+  return [
+    submission.type,
+    submission.email,
+    submission.name,
+    submission.productSlug ?? "",
+    submission.message,
+    submission.rejectionReason ?? "",
+  ].join("|");
 }

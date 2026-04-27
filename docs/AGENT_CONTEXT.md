@@ -182,7 +182,9 @@ The public contact form uses `submitContactFormAction()` in `src/app/contact/act
 
 Submissions are stored through `createContactSubmission()` in `src/lib/managed-data.ts` and displayed in `/studio`.
 
-Before normal enquiry storage, the contact action verifies a local maths captcha from `src/lib/contact-captcha.ts` and checks the hidden `website` honeypot field. The captcha token is HMAC-signed and short-lived. Failed captcha and honeypot attempts are stored as blocked submission records when storage is available, with `type` values `captcha_failed` and `honeypot_spam`. Keep this third-party-free unless Jake explicitly asks for an external captcha service.
+Before normal enquiry storage, the contact action verifies a local maths captcha from `src/lib/contact-captcha.ts` and checks the hidden `website` honeypot field. The captcha token is HMAC-signed and short-lived. Failed captcha and honeypot attempts are stored as blocked submission records when storage is available, with `type` values `captcha_failed` and `honeypot_spam`. Recent duplicate blocked attempts are suppressed in `createBlockedContactSubmission()`. Keep this third-party-free unless Jake explicitly asks for an external captcha service.
+
+The Studio submissions inbox collapses repeated blocked attempts by fingerprint and uses coloured dots/card accents: green for real enquiries, amber for captcha failures and red for honeypot spam.
 
 Use `npm run test:contact-bot` to run the safe fake-bot tester in `scripts/test-contact-antispam.mjs`. By default it targets production and only tests rejected bot paths. A valid submission test requires `-- --valid`, and remote valid submissions require `-- --valid --allow-remote-valid`.
 

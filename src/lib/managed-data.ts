@@ -25,6 +25,7 @@ import {
 const DATA_KEY = "eltronic:managed-data:v1";
 const LOCAL_DATA_PATH = path.join(process.cwd(), ".data", "eltronic-data.json");
 const POSTGRES_TABLE_NAME = "eltronic_managed_data";
+const BLOCKED_SUBMISSION_DEDUPE_WINDOW_MS = 5000;
 
 export type ContactSubmissionStatus = "new" | "reviewed" | "replied" | "archived" | "blocked";
 export type ContactSubmissionType = "enquiry" | "captcha_failed" | "honeypot_spam";
@@ -456,17 +457,45 @@ export async function createBlockedContactSubmission(input: {
     ? data.products.find((item) => item.slug === input.productSlug)
     : undefined;
   const now = new Date().toISOString();
-  const submission: ContactSubmission = {
-    id: crypto.randomUUID(),
-    name: input.name?.trim() || "Blocked visitor",
+  const normalizedSubmission = {
     company: input.company?.trim() || undefined,
     email: input.email?.trim() || "blocked@example.invalid",
-    productSlug: input.productSlug || undefined,
-    productName: product?.name,
     message: input.message?.trim() || "Blocked before a valid enquiry was created.",
-    status: "blocked",
-    type: input.type,
+    name: input.name?.trim() || "Blocked visitor",
+    productSlug: input.productSlug || undefined,
     rejectionReason: input.rejectionReason,
+    type: input.type,
+  };
+  const recentDuplicate = data.submissions.find((submission) => {
+    if (submission.type !== normalizedSubmission.type || submission.status !== "blocked") {
+      return false;
+    }
+
+    return (
+      submission.email === normalizedSubmission.email &&
+      submission.message === normalizedSubmission.message &&
+      submission.name === normalizedSubmission.name &&
+      submission.productSlug === normalizedSubmission.productSlug &&
+      submission.rejectionReason === normalizedSubmission.rejectionReason &&
+      Date.parse(now) - Date.parse(submission.createdAt) <= BLOCKED_SUBMISSION_DEDUPE_WINDOW_MS
+    );
+  });
+
+  if (recentDuplicate) {
+    return recentDuplicate;
+  }
+
+  const submission: ContactSubmission = {
+    id: crypto.randomUUID(),
+    name: normalizedSubmission.name,
+    company: normalizedSubmission.company,
+    email: normalizedSubmission.email,
+    productSlug: normalizedSubmission.productSlug,
+    productName: product?.name,
+    message: normalizedSubmission.message,
+    status: "blocked",
+    type: normalizedSubmission.type,
+    rejectionReason: normalizedSubmission.rejectionReason,
     source: "website",
     createdAt: now,
     updatedAt: now,

@@ -2525,6 +2525,7 @@ h3 {
 }
 
 .submission-filter-bar a {
+  --submission-tone: var(--primary);
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
@@ -2536,22 +2537,83 @@ h3 {
   font-weight: 800;
 }
 
+.submission-filter-bar a[data-tone="enquiry"] {
+  --submission-tone: #22c55e;
+}
+
+.submission-filter-bar a[data-tone="blocked"],
+.submission-filter-bar a[data-tone="all"] {
+  --submission-tone: #a78bfa;
+}
+
+.submission-filter-bar a[data-tone="captcha_failed"] {
+  --submission-tone: #f59e0b;
+}
+
+.submission-filter-bar a[data-tone="honeypot_spam"] {
+  --submission-tone: #ef4444;
+}
+
 .submission-filter-bar a:hover,
 .submission-filter-bar a.active {
-  border-color: color-mix(in srgb, var(--primary) 36%, var(--border));
-  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  border-color: color-mix(in srgb, var(--submission-tone) 42%, var(--border));
+  background: color-mix(in srgb, var(--submission-tone) 12%, transparent);
   color: var(--foreground);
 }
 
-.submission-filter-bar span {
+.submission-filter-count {
   display: inline-grid;
   min-width: 1.4rem;
   min-height: 1.4rem;
   place-items: center;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--primary) 18%, transparent);
-  color: var(--primary);
+  background: color-mix(in srgb, var(--submission-tone) 18%, transparent);
+  color: var(--submission-tone);
   font-size: 0.72rem;
+}
+
+.submission-card {
+  --submission-tone: var(--primary);
+  border-color: color-mix(in srgb, var(--submission-tone) 24%, var(--border));
+  box-shadow: inset 4px 0 0 color-mix(in srgb, var(--submission-tone) 72%, transparent);
+}
+
+.submission-card[data-tone="enquiry"] {
+  --submission-tone: #22c55e;
+}
+
+.submission-card[data-tone="captcha"] {
+  --submission-tone: #f59e0b;
+}
+
+.submission-card[data-tone="honeypot"] {
+  --submission-tone: #ef4444;
+}
+
+.submission-type-dot {
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 0.58rem;
+  height: 0.58rem;
+  border-radius: 999px;
+  background: var(--submission-tone);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--submission-tone) 18%, transparent);
+}
+
+.submission-type-badge {
+  --submission-tone: var(--primary);
+}
+
+.submission-card[data-tone="enquiry"] .submission-type-badge {
+  --submission-tone: #22c55e;
+}
+
+.submission-card[data-tone="captcha"] .submission-type-badge {
+  --submission-tone: #f59e0b;
+}
+
+.submission-card[data-tone="honeypot"] .submission-type-badge {
+  --submission-tone: #ef4444;
 }
 
 .studio-table-wrap {

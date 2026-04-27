@@ -322,7 +322,8 @@
   "contactSubmissionModel": {
     "typeFile": "src/lib/managed-data.ts",
     "typeName": "ContactSubmission",
-    "antiSpam": "src/lib/contact-captcha.ts signs a short-lived math challenge; src/app/contact/actions.ts stores captcha failures and populated website honeypot values as blocked records when storage is available.",
+    "antiSpam": "src/lib/contact-captcha.ts signs a short-lived math challenge; src/app/contact/actions.ts stores captcha failures and populated website honeypot values as blocked records when storage is available; src/lib/managed-data.ts suppresses rapid duplicate blocked attempts.",
+    "studioPresentation": "src/app/studio/(admin)/submissions/page.tsx collapses repeated blocked attempts by fingerprint; src/components/studio/submission-card.tsx and src/app/globals.css render green enquiry, amber captcha and red honeypot markers.",
     "tester": "npm run test:contact-bot runs scripts/test-contact-antispam.mjs against production by default and only exercises rejected bot paths unless -- --valid is passed.",
     "types": ["enquiry", "captcha_failed", "honeypot_spam"],
     "statuses": ["new", "reviewed", "replied", "archived", "blocked"],

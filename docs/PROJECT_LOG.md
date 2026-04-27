@@ -57,6 +57,7 @@ Concise living log for the Eltronic standalone site/app. Add newest updates at t
 - Added `/studio/templates`, a protected WordPress-style template/file editor with a whitelisted source file tree and local-development-only save support.
 - Added a local anti-spam layer to the contact form with a signed maths captcha and hidden honeypot field.
 - Updated contact anti-spam to capture blocked captcha and honeypot attempts in the Studio submissions inbox with type filters.
+- Added duplicate suppression for blocked contact attempts and colour-coded Studio submission markers for enquiries, captcha failures and honeypot spam.
 - Added `npm run storage:check` to verify Neon/Postgres or Upstash/Vercel Redis credentials by writing, reading and deleting a short-lived test key before trusting live admin/contact persistence.
 - Connected Neon database `eltronic_db_1` on Vercel; the app supports the prefixed env vars injected by the integration.
 - Deployed Neon-backed storage support to production deployment `dpl_DfWPHsfjnjTYoAuB8zkHqFRzni2j`; `npm run storage:check` passes and the safe contact bot tester saved two blocked records in Neon.
