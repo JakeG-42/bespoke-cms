@@ -7,6 +7,7 @@ import {
   Boxes,
   ChevronDown,
   ExternalLink,
+  FileCode2,
   Home,
   Inbox,
   LayoutDashboard,
@@ -24,6 +25,7 @@ import { cn } from "@/lib/utils";
 const navItems = [
   { href: "/studio", label: "Dashboard", icon: LayoutDashboard },
   { href: "/studio/builder", label: "Builder", icon: Paintbrush },
+  { href: "/studio/templates", label: "Templates", icon: FileCode2 },
   { href: "/studio/products", label: "Products", icon: Boxes },
   { href: "/studio/submissions", label: "Enquiries", icon: Inbox },
   { href: "/studio/settings", label: "Settings", icon: Settings },
@@ -100,6 +102,7 @@ export function StudioShell({
           <span>Analytics</span>
           <span>Marketing</span>
           <span>Appearance</span>
+          <Link href="/studio/templates">Theme File Editor</Link>
           <span>Plugins</span>
           <span>Users</span>
           <span>Tools</span>
@@ -227,6 +230,7 @@ function ClassicMenuLink({
 function currentModeLabel(pathname: string) {
   if (pathname.startsWith("/studio/classic")) return "New Studio";
   if (pathname.startsWith("/studio/builder")) return "Website Builder";
+  if (pathname.startsWith("/studio/templates")) return "Template Editor";
   if (pathname.startsWith("/studio/products")) return "Products";
   if (pathname.startsWith("/studio/submissions")) return "Enquiries";
   if (pathname.startsWith("/studio/settings")) return "Settings";

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { Boxes, Database, Inbox, LayoutTemplate, Paintbrush, Plus } from "lucide-react";
+import { Boxes, Database, FileCode2, Inbox, LayoutTemplate, Paintbrush, Plus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -35,6 +35,12 @@ export default async function StudioDashboardPage() {
             <Link href="/studio/builder">
               <Paintbrush className="size-4" />
               Website builder
+            </Link>
+          </Button>
+          <Button asChild variant="outline">
+            <Link href="/studio/templates">
+              <FileCode2 className="size-4" />
+              Template editor
             </Link>
           </Button>
         </div>

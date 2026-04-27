@@ -14,6 +14,7 @@ import {
   upsertProduct,
   type ContactSubmissionStatus,
 } from "@/lib/managed-data";
+import { writeTemplateFile } from "@/lib/template-editor";
 
 async function requireAdminAction() {
   if (!(await isAdminAuthenticated())) {
@@ -97,6 +98,32 @@ export async function saveSiteBuilderAction(formData: FormData) {
     revalidatePath("/sectors");
   } catch (error) {
     redirectWithError(error instanceof Error ? error.message : "Unable to save website builder settings.", returnTo);
+  }
+
+  const separator = returnTo.includes("?") ? "&" : "?";
+  redirect(`${returnTo}${separator}saved=1`);
+}
+
+export async function saveTemplateFileAction(formData: FormData) {
+  await requireAdminAction();
+
+  const file = String(formData.get("file") ?? "");
+  const returnTo = getReturnTo(formData, `/studio/templates?file=${encodeURIComponent(file)}`);
+  const content = String(formData.get("content") ?? "");
+
+  try {
+    await writeTemplateFile(file, content);
+    revalidatePath("/studio/templates");
+    revalidatePath("/");
+    revalidatePath("/products");
+    revalidatePath("/products/[slug]", "page");
+    revalidatePath("/solutions");
+    revalidatePath("/about");
+    revalidatePath("/software-it");
+    revalidatePath("/contact");
+    revalidatePath("/sectors");
+  } catch (error) {
+    redirectWithError(error instanceof Error ? error.message : "Unable to save template file.", returnTo);
   }
 
   const separator = returnTo.includes("?") ? "&" : "?";

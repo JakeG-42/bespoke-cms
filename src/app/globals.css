@@ -3100,6 +3100,156 @@ h3 {
   font-size: 0.76rem;
 }
 
+.template-editor-shell {
+  display: grid;
+  gap: 1rem;
+}
+
+.template-editor-header {
+  position: sticky;
+  top: 0;
+  z-index: 12;
+  backdrop-filter: blur(18px);
+}
+
+.template-editor-grid {
+  display: grid;
+  grid-template-columns: minmax(17rem, 0.28fr) minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.template-file-tree {
+  position: sticky;
+  top: 5rem;
+  display: grid;
+  gap: 1rem;
+  max-height: calc(100vh - 7rem);
+  overflow-y: auto;
+  padding: 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  background: color-mix(in srgb, var(--card) 72%, transparent);
+}
+
+.template-file-tree section {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.template-file-tree h2 {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.template-file-tree section > div {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.template-file-tree a {
+  display: flex;
+  gap: 0.65rem;
+  align-items: flex-start;
+  padding: 0.65rem;
+  border: 1px solid transparent;
+  border-radius: 0.9rem;
+  color: var(--foreground);
+  text-decoration: none;
+}
+
+.template-file-tree a:hover,
+.template-file-tree a.active {
+  border-color: color-mix(in srgb, var(--primary) 26%, var(--border));
+  background: color-mix(in srgb, var(--primary) 9%, transparent);
+}
+
+.template-file-tree a svg {
+  margin-top: 0.18rem;
+  color: var(--primary);
+  flex: 0 0 auto;
+}
+
+.template-file-tree strong,
+.template-file-tree small {
+  display: block;
+}
+
+.template-file-tree strong {
+  font-size: 0.88rem;
+  line-height: 1.25;
+}
+
+.template-file-tree small {
+  margin-top: 0.16rem;
+  color: var(--muted-foreground);
+  font-family: var(--font-code), monospace;
+  font-size: 0.68rem;
+  line-height: 1.35;
+  word-break: break-word;
+}
+
+.template-editor-main {
+  min-width: 0;
+}
+
+.template-file-meta {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.template-file-badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.45rem;
+}
+
+.template-file-badges span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.28rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--muted-foreground);
+  font-size: 0.72rem;
+  font-weight: 900;
+}
+
+.template-editor-form {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.template-path-bar {
+  overflow-x: auto;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 0.85rem;
+  background: color-mix(in srgb, var(--background) 58%, transparent);
+  color: var(--muted-foreground);
+  font-family: var(--font-code), monospace;
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+
+.template-code-editor {
+  min-height: min(68vh, 48rem);
+  border-radius: 1rem;
+  font-family: var(--font-code), ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.82rem;
+  line-height: 1.58;
+  tab-size: 2;
+  white-space: pre;
+}
+
 .studio-drawer-overlay {
   position: fixed;
   inset: 0;
@@ -3195,6 +3345,23 @@ h3 {
 
   .builder-preview-panel {
     position: static;
+  }
+
+  .template-editor-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .template-file-tree {
+    position: static;
+    max-height: none;
+  }
+
+  .template-file-meta {
+    flex-direction: column;
+  }
+
+  .template-file-badges {
+    justify-content: flex-start;
   }
 
   .studio-editor-sidebar,
