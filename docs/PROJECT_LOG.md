@@ -39,6 +39,7 @@ Concise living log for the Eltronic standalone site/app. Add newest updates at t
 - Redesigned the public contact page with a dedicated enquiry layout and responsive form panel.
 - Added `/software-it` to present custom software, internal systems, API/shipping integration, embedded services, servers and consultation without bloating the main solutions page.
 - Refined public workflow copy to present complex delivery as professionally controlled and easy for customers to follow, and added a CSS-only sticky footer reveal.
+- Reworked Studio product image editing into a visual preview/order manager and added outcome-led workflow cards with subtle active states.
 - Checked Vercel env vars on 2026-04-27; none are configured yet, so KV/Upstash persistence is still required before live admin/contact writes are trusted.
 
 ## Future Considerations

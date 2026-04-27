@@ -38,7 +38,7 @@ export default async function EditProductPage({ params }: EditProductPageProps) 
         <div>
           <p className="studio-eyebrow">catalogue.edit</p>
           <h1 className="mb-2 text-4xl font-black">{product.name}</h1>
-          <p className="text-muted-foreground">Full product editor with ordered image gallery support.</p>
+          <p className="text-muted-foreground">Full product editor with visual gallery ordering and product data controls.</p>
         </div>
         <div className="flex flex-wrap gap-2">
           <Button asChild variant="outline">
@@ -55,7 +55,7 @@ export default async function EditProductPage({ params }: EditProductPageProps) 
       <Card>
         <CardHeader>
           <CardTitle>Product details</CardTitle>
-          <CardDescription>Move image lines up or down to change public gallery order.</CardDescription>
+          <CardDescription>Preview images, adjust the gallery order and manage the public product record.</CardDescription>
         </CardHeader>
         <CardContent>
           <ProductForm families={families} product={product} returnTo={`/studio/products/${product.slug}/edit`} />

@@ -76,24 +76,28 @@ export const softwareWorkflowModules = [
     title: "Operational discovery",
     summary:
       "We map the real process, existing systems, failure points, manual handovers and the places where time or accuracy is being lost.",
+    outcome: "A precise view of the work, the friction and the systems already in play.",
   },
   {
     step: "02",
     title: "Architecture and integration plan",
     summary:
       "We define the right route across software, APIs, embedded messaging, databases, servers and existing tools before anything is overbuilt.",
+    outcome: "A practical technical route with clear ownership, data flow and delivery boundaries.",
   },
   {
     step: "03",
     title: "Staged delivery and validation",
     summary:
       "Work is delivered in controlled phases so the first useful version reduces errors and admin time while the wider system grows safely.",
+    outcome: "Usable progress early, with each phase tested against the real workflow.",
   },
   {
     step: "04",
     title: "Handover and continuous improvement",
     summary:
       "Documentation, support and measured improvements keep the system understandable, maintainable and ready for future operational needs.",
+    outcome: "A system your team can run, support and improve without guesswork.",
   },
 ];
 
@@ -131,27 +135,31 @@ export const sectorModules = [
 export const workflowModules = [
   {
     step: "01",
-    title: "Technical discovery",
+    title: "Operational and technical discovery",
     summary:
       "We build a clear picture of the machine, environment, operator workflow, protocols, I/O and constraints before recommending hardware.",
+    outcome: "A grounded scope that reflects the real machine, not a generic product list.",
   },
   {
     step: "02",
-    title: "Specification and risk planning",
+    title: "Specification, architecture and risk planning",
     summary:
       "HMI choice, CAN interfaces, harnessing, data requirements and support expectations are specified with practical risk and maintainability in mind.",
+    outcome: "A specification that makes decisions, responsibilities and constraints clear.",
   },
   {
     step: "03",
-    title: "Integration and validation",
+    title: "Controlled integration and validation",
     summary:
       "Software, wiring, configuration and testing are brought together in controlled stages so the finished system is reliable in the real environment.",
+    outcome: "A working integration proven through staged checks, not assumptions.",
   },
   {
     step: "04",
     title: "Handover and lifecycle support",
     summary:
       "Clear documentation, diagnostics and long-term support make the system easier to operate, maintain and improve after installation.",
+    outcome: "A maintainable system with a clear path for support, change and future upgrades.",
   },
 ];
 

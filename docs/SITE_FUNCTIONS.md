@@ -8,6 +8,7 @@ Concise living reference for how the current Eltronic Next.js site works.
 - Global layout: `src/app/layout.tsx`.
 - Public site shell: `src/app/(site)/layout.tsx` and `src/components/site/site-shell.tsx`.
 - Public product media gallery: `src/components/site/product-media-gallery.tsx`.
+- Studio product image manager: `src/components/studio/product-image-manager.tsx`.
 - Studio shell: `src/app/studio/(admin)/layout.tsx` and `src/components/studio/studio-shell.tsx`.
 - Global styles: `src/app/globals.css`.
 - Product seed data: `src/content/products.ts`.
@@ -88,7 +89,7 @@ Each product currently has:
 - Studio has browser-local dark/light mode stored in `localStorage`.
 - Product management is table-first with full edit pages and a quick-edit right drawer.
 - Product forms support newline-based editing for highlights, specs, documents and variants.
-- Product forms support multiple images as `URL | Alt text`, with line order controlling gallery order.
+- Product image editing uses a visual preview/order manager with repeated `imageSrc` and `imageAlt` fields. The first image is saved as the primary image.
 - Template assignment is managed with a select field on each product.
 - Contact submissions can be reviewed, statused as `new`, `reviewed`, `replied`, or `archived`, and deleted.
 

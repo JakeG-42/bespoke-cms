@@ -685,14 +685,52 @@ h3 {
 .process-card {
   position: relative;
   overflow: hidden;
+  isolation: isolate;
+  outline: none;
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition),
+    transform var(--transition),
+    background var(--transition);
+}
+
+.process-card::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  content: "";
+  background:
+    linear-gradient(135deg, rgba(139, 211, 255, 0.16), transparent 38%),
+    radial-gradient(circle at top right, rgba(251, 191, 36, 0.13), transparent 14rem);
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+
+.process-card:hover,
+.process-card:focus-visible {
+  border-color: rgba(139, 211, 255, 0.42);
+  box-shadow: 0 20px 50px rgba(2, 6, 23, 0.34), 0 0 0 1px rgba(139, 211, 255, 0.12);
+  transform: translateY(-0.35rem);
+}
+
+.process-card:hover::before,
+.process-card:focus-visible::before {
+  opacity: 1;
 }
 
 .process-card strong {
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 3.1rem;
+  min-height: 3.1rem;
   margin-bottom: 1.5rem;
+  border: 1px solid rgba(251, 191, 36, 0.34);
+  border-radius: 999px;
+  background: rgba(251, 191, 36, 0.08);
   color: var(--accent);
   font-family: var(--font-code), monospace;
-  font-size: 2rem;
+  font-size: 1.35rem;
   line-height: 1;
 }
 
@@ -705,6 +743,27 @@ h3 {
   content: "";
   border: 1px solid rgba(139, 211, 255, 0.2);
   border-radius: 50%;
+}
+
+.process-outcome {
+  display: block;
+  margin-top: 1.2rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.16);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.process-outcome span {
+  display: block;
+  margin-bottom: 0.3rem;
+  color: var(--accent);
+  font-family: var(--font-code), monospace;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
 }
 
 .split-module {
@@ -1535,6 +1594,99 @@ h3 {
   object-fit: contain;
 }
 
+.studio-form-section {
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1rem, 2vw, 1.25rem);
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  background: color-mix(in srgb, var(--background) 42%, transparent);
+}
+
+.studio-form-section-header,
+.studio-image-manager-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.studio-form-section-header h2 {
+  margin: 0;
+  font-size: 1.15rem;
+  line-height: 1.15;
+}
+
+.studio-form-section-header p,
+.studio-image-manager-header p {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.9rem;
+}
+
+.studio-image-manager {
+  display: grid;
+  gap: 1rem;
+}
+
+.studio-image-list {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.studio-image-card {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--card) 74%, transparent);
+}
+
+.studio-image-preview {
+  position: relative;
+  display: grid;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 0.9rem;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--primary) 12%, transparent), transparent),
+    var(--background);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  color: var(--muted-foreground);
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.studio-image-preview strong {
+  position: absolute;
+  left: 0.45rem;
+  top: 0.45rem;
+  padding: 0.22rem 0.42rem;
+  border-radius: 999px;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+}
+
+.studio-image-fields {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.studio-image-actions {
+  display: grid;
+  gap: 0.45rem;
+}
+
 .studio-drawer-overlay {
   position: fixed;
   inset: 0;
@@ -1576,6 +1728,20 @@ h3 {
   .studio-hero {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .studio-form-section-header,
+  .studio-image-manager-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .studio-image-card {
+    grid-template-columns: 1fr;
+  }
+
+  .studio-image-actions {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 

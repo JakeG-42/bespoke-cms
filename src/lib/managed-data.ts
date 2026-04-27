@@ -327,7 +327,8 @@ export function productFromFormData(formData: FormData): Product {
     details,
     articleNumber: articleNumber || undefined,
   }));
-  const parsedImages = parseRows(formData.get("images"), 2).map(([src, alt]) => ({
+  const parsedImages = parseProductImages(formData, name);
+  const legacyImages = parseRows(formData.get("images"), 2).map(([src, alt]) => ({
     src,
     alt: alt || name,
   }));
@@ -335,7 +336,12 @@ export function productFromFormData(formData: FormData): Product {
     src: String(formData.get("imageSrc") ?? "").trim(),
     alt: String(formData.get("imageAlt") || name).trim(),
   };
-  const images = parsedImages.length > 0 ? parsedImages : [fallbackImage].filter((image) => image.src);
+  const images =
+    parsedImages.length > 0
+      ? parsedImages
+      : legacyImages.length > 0
+        ? legacyImages
+        : [fallbackImage].filter((image) => image.src);
   const primaryImage = images[0] ?? fallbackImage;
 
   return {
@@ -355,6 +361,18 @@ export function productFromFormData(formData: FormData): Product {
     variants: variants.length > 0 ? variants : undefined,
     enquiryPrompt: String(formData.get("enquiryPrompt") ?? "").trim(),
   };
+}
+
+function parseProductImages(formData: FormData, fallbackAlt: string): ProductImage[] {
+  const sources = formData.getAll("imageSrc").map((value) => String(value ?? "").trim());
+  const alts = formData.getAll("imageAlt").map((value) => String(value ?? "").trim());
+
+  return sources
+    .map((src, index) => ({
+      src,
+      alt: alts[index] || fallbackAlt,
+    }))
+    .filter((image) => image.src);
 }
 
 function parseRows(value: FormDataEntryValue | null, columns: number) {

@@ -357,8 +357,15 @@
       "src/components/ui/badge.tsx",
       "src/components/ui/separator.tsx",
       "src/components/studio/product-form.tsx",
+      "src/components/studio/product-image-manager.tsx",
       "src/components/studio/submission-card.tsx"
-    ]
+    ],
+    "studioProductImageManager": {
+      "file": "src/components/studio/product-image-manager.tsx",
+      "parser": "src/lib/managed-data.ts#productFromFormData",
+      "fields": ["imageSrc", "imageAlt"],
+      "behavior": "Visual image preview and ordering UI. Repeated imageSrc/imageAlt fields are saved in order; first image becomes product.image. Public /product-gallery/ fallback images are filtered out of the editor."
+    }
   },
   "deployment": {
     "productionCommand": "npx vercel --prod --yes",

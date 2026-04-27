@@ -29,6 +29,7 @@ Always verify current code before changing behavior. Treat this document as a ma
 - `src/content/site.ts`: public services, software/IT, sector, workflow and resource module content.
 - `src/components/site/technical-visuals.tsx`: code-native public-page technical visuals.
 - `src/components/site/product-media-gallery.tsx`: interactive product image selection and zoom.
+- `src/components/studio/product-image-manager.tsx`: Studio visual image preview/order editor.
 - `public/product-gallery`: generated SVG placeholder images appended to product galleries.
 - `public/product-images`: local product image assets used by the public catalogue.
 - `docs/AI_FUNCTION_MAP.json`: machine-readable feature map.
@@ -121,6 +122,8 @@ Public catalogue pages read through `getProducts()` and `getProductBySlug()` fro
 
 Admin product edits are handled by `saveProductAction()` in `src/app/studio/actions.ts`.
 
+Product gallery editing in Studio uses `src/components/studio/product-image-manager.tsx`, which posts ordered repeated `imageSrc` and `imageAlt` fields. Public fallback gallery assets under `/product-gallery/` are filtered out of the editor so they are not accidentally saved as real product media. `productFromFormData()` in `src/lib/managed-data.ts` keeps backward compatibility with legacy newline `images` form data, but the UI should stay visual rather than returning to textarea-based image ordering.
+
 Admin product UI:
 
 - `/studio/products`: table view.
@@ -131,8 +134,8 @@ Admin product UI:
 
 Product form parsing uses `productFromFormData()`:
 
-- Images: one item per line as `URL | Alt text`.
-- Image order: line order controls public gallery/order.
+- Images: visual Studio manager posts repeated `imageSrc` and `imageAlt` fields.
+- Image order: component state/order controls public gallery order; the first image becomes the primary product image.
 - Highlights: one item per line.
 - Specifications: `Label | Value` per line.
 - Documents: `Label | URL` per line.

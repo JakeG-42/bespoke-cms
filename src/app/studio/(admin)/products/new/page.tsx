@@ -30,7 +30,7 @@ export default async function NewProductPage() {
       <Card>
         <CardHeader>
           <CardTitle>Product details</CardTitle>
-          <CardDescription>Images are entered one per line, and their line order controls gallery order.</CardDescription>
+          <CardDescription>Add the product data, preview gallery images and order the public gallery.</CardDescription>
         </CardHeader>
         <CardContent>
           <ProductForm families={families} returnTo="/studio/products" />

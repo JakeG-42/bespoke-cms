@@ -133,10 +133,14 @@ export default async function Home() {
         </div>
         <div className="process-grid">
           {workflowModules.map((step) => (
-            <article className="process-card" key={step.step}>
+            <article className="process-card" key={step.step} tabIndex={0}>
               <strong>{step.step}</strong>
               <h3>{step.title}</h3>
               <p>{step.summary}</p>
+              <small className="process-outcome">
+                <span>Outcome</span>
+                {step.outcome}
+              </small>
             </article>
           ))}
         </div>
