@@ -63,21 +63,21 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
               </div>
             </div>
 
-            <div className="footer-group">
-              <h2>Explore</h2>
+            <details className="footer-group" open>
+              <summary>Explore</summary>
               <Link href="/products">Products</Link>
               <Link href="/solutions">Solutions</Link>
               <Link href="/software-it">Software & Systems</Link>
               <Link href="/projects">Projects</Link>
-            </div>
+            </details>
 
-            <div className="footer-group">
-              <h2>Resources</h2>
+            <details className="footer-group" open>
+              <summary>Resources</summary>
               <Link href="/sectors">Sectors</Link>
               <Link href="/data-specification">Data & specification</Link>
               <Link href="/about">About Eltronic</Link>
               <Link href="/contact">Start an enquiry</Link>
-            </div>
+            </details>
 
             <div className="footer-contact-card">
               <span className="section-number">contact.signal</span>

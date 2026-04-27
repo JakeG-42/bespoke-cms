@@ -3604,13 +3604,23 @@ h3 {
   gap: 0.65rem;
 }
 
-.footer-group h2,
+.footer-group summary,
 .footer-contact-card h2 {
   margin: 0;
   color: var(--text-primary);
   font-size: 0.9rem;
+  font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+.footer-group summary {
+  list-style: none;
+  cursor: default;
+}
+
+.footer-group summary::-webkit-details-marker {
+  display: none;
 }
 
 .footer-group a,
@@ -3725,10 +3735,50 @@ h3 {
 
   .footer-main {
     grid-template-columns: 1fr;
+    gap: 0.75rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .footer-brand,
+  .footer-contact-card {
+    display: none;
+  }
+
+  .footer-group {
+    padding: 0.85rem 1rem;
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    border-radius: 16px;
+    background: rgba(15, 23, 42, 0.56);
+  }
+
+  .footer-group:not([open]) a {
+    display: none;
+  }
+
+  .footer-group summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+
+  .footer-group summary::after {
+    content: "+";
+    color: var(--cyan);
+    font-family: var(--font-code);
+    font-size: 1rem;
+  }
+
+  .footer-group[open] summary::after {
+    content: "-";
   }
 
   .footer-bottom {
     flex-direction: column;
+    padding-inline: 0;
   }
 
   .page {
