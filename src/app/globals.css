@@ -1903,7 +1903,6 @@ h3 {
   }
 
   .capability-grid,
-  .product-grid,
   .module-grid,
   .process-grid,
   .sector-grid,
@@ -1911,6 +1910,44 @@ h3 {
   .contact-card-grid,
   .form-row {
     grid-template-columns: 1fr;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.7rem;
+  }
+
+  .product-media {
+    aspect-ratio: 1 / 0.86;
+  }
+
+  .product-media img {
+    padding: 0.65rem;
+  }
+
+  .product-content {
+    gap: 0.45rem;
+    padding: 0.75rem;
+  }
+
+  .product-content .tag-row {
+    gap: 0.3rem;
+  }
+
+  .product-content .tag {
+    padding: 0.2rem 0.34rem;
+    font-size: 0.58rem;
+    letter-spacing: -0.01em;
+  }
+
+  .product-content h3 {
+    font-size: 0.92rem;
+    line-height: 1.18;
+  }
+
+  .product-content p {
+    font-size: 0.78rem;
+    line-height: 1.45;
   }
 
   .contact-hero {

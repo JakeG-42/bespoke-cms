@@ -39,7 +39,12 @@ export default async function ProductsPage() {
         {products.map((product) => (
           <Link className="product-card" href={`/products/${product.slug}`} key={product.slug}>
             <div className="product-media">
-              <Image src={product.image.src} alt={product.image.alt} fill sizes="(max-width: 980px) 100vw, 33vw" />
+              <Image
+                src={product.image.src}
+                alt={product.image.alt}
+                fill
+                sizes="(max-width: 680px) 50vw, (max-width: 980px) 50vw, 33vw"
+              />
             </div>
             <div className="product-content">
               <div className="tag-row">

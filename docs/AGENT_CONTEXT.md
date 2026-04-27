@@ -31,6 +31,7 @@ Always verify current code before changing behavior. Treat this document as a ma
 - `src/components/site/product-media-gallery.tsx`: interactive product image selection and zoom.
 - `src/components/studio/product-image-manager.tsx`: Studio visual image preview/order editor.
 - `public/product-images`: local product image assets used by the public catalogue.
+- `public/product-images/placeholders`: explicit seed gallery placeholders that appear in Studio like normal managed images.
 - `docs/AI_FUNCTION_MAP.json`: machine-readable feature map.
 
 ## Auth Model
@@ -148,8 +149,8 @@ Product templates are currently:
 
 Gallery behavior:
 
-- `getProductImages(product)` returns real managed media only: ordered `product.images` first, or the primary `product.image` if no gallery images are set.
-- Generated placeholder gallery assets should not be appended to public product pages.
+- `getProductImages(product)` returns managed media only: ordered `product.images` first, or the primary `product.image` if no gallery images are set.
+- Placeholder gallery assets should be explicit `product.images` entries, not appended by hidden fallback logic.
 - If a product needs multiple images, add them through Studio or seed data so the admin UI remains the source of truth.
 - Product detail pages render `ProductMediaGallery`, a client component with thumbnail switching, keyboard-friendly zoom, and previous/next controls.
 - Primary product images are local files under `public/product-images`; keep public pages off legacy media URLs.

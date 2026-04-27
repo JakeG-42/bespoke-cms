@@ -44,7 +44,23 @@ const topconDocuments: ProductDocument[] = [
   { label: "Request basic data sheet", url: "/contact" },
 ];
 
-export const products: Product[] = [
+function comingSoonImages(productName: string): ProductImage[] {
+  return [1, 2, 3].map((index) => ({
+    src: `/product-images/placeholders/images-coming-soon-${index}.svg`,
+    alt: `${productName} additional image coming soon ${index}`,
+  }));
+}
+
+function withComingSoonImages(product: Product): Product {
+  const baseImages = product.images && product.images.length > 0 ? product.images : [product.image];
+
+  return {
+    ...product,
+    images: [...baseImages, ...comingSoonImages(product.name)],
+  };
+}
+
+const seedProducts: Product[] = [
   {
     slug: "autopi-can-fd-pro",
     name: "AutoPi CAN-FD Pro",
@@ -460,6 +476,8 @@ export const products: Product[] = [
     enquiryPrompt: "Specify an A3s HMI",
   },
 ];
+
+export const products: Product[] = seedProducts.map(withComingSoonImages);
 
 export const productFamilies = Array.from(
   new Set(products.map((product) => product.family)),

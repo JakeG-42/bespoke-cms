@@ -289,7 +289,8 @@
     ],
     "galleryImages": {
       "function": "src/lib/managed-data.ts#getProductImages",
-      "behavior": "Returns managed product.images in order, or product.image as the single fallback. Generated placeholder gallery assets are not appended."
+      "behavior": "Returns managed product.images in order, or product.image as the single fallback. Placeholder gallery assets must be explicit seed/Studio image entries, not hidden fallback appends.",
+      "seedPlaceholders": "public/product-images/placeholders/images-coming-soon-*.svg"
     },
     "primaryImageAssets": "public/product-images"
   },

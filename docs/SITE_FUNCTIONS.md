@@ -54,7 +54,7 @@ Each product currently has:
 - `template`: one of `hmi`, `data-logger`, or `module`.
 - `sourceUrl`: original crawl/source URL.
 - `image`: `{ src, alt }` used by listings and detail pages.
-- `images`: optional ordered gallery of `{ src, alt }`; public product galleries use these managed images only, with `image` as the fallback primary image.
+- `images`: optional ordered gallery of `{ src, alt }`; public product galleries use these managed images only, with `image` as the fallback primary image. Seed products currently include three managed `IMAGES COMING SOON` placeholders so the gallery and Studio image manager have multiple images to work with.
 - `summary`: short card/listing copy.
 - `description`: product detail intro copy.
 - `highlights`: list of product or template highlights.
@@ -115,4 +115,4 @@ Each product currently has:
 - WordPress migration/plugin work is being considered but is not implemented in the current app.
 - Image upload management is not implemented yet; product images currently use URLs.
 - Generated public-page imagery is currently code-native SVG, not bitmap media uploads.
-- Product galleries no longer append generated placeholder images; add real image URLs through Studio or seed product data.
+- Product galleries do not append hidden fallback images; any placeholders should be explicit seed/Studio image entries so they are visible in the admin image manager.

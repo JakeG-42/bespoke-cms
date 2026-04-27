@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="750" viewBox="0 0 1200 750" role="img" aria-labelledby="title desc">
+  <title id="title">Images coming soon placeholder</title>
+  <desc id="desc">Simple Eltronic product gallery placeholder.</desc>
+  <defs>
+    <linearGradient id="bg" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#07111f"/>
+      <stop offset="55%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0v48" fill="none" stroke="#b7a3ff" stroke-opacity="0.08" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="750" fill="url(#bg)"/>
+  <rect width="1200" height="750" fill="url(#grid)"/>
+  <rect x="96" y="96" width="1008" height="558" rx="36" fill="none" stroke="#b7a3ff" stroke-opacity="0.34" stroke-width="3"/>
+  <rect x="510" y="210" width="180" height="138" rx="20" fill="#8bd3ff" fill-opacity="0.1" stroke="#8bd3ff" stroke-opacity="0.5" stroke-width="3"/>
+  <path d="M544 318l62-62 50 50 22-22" fill="none" stroke="#fbbf24" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="652" cy="250" r="16" fill="#86efac"/>
+  <text x="600" y="438" fill="#f1f5f9" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="800" text-anchor="middle" letter-spacing="2">IMAGES COMING SOON</text>
+  <text x="600" y="496" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" text-anchor="middle">Additional product photography will be added here</text>
+</svg>
