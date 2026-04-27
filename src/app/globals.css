@@ -1125,17 +1125,17 @@ h3 {
 .about-quote-card {
   display: grid;
   align-content: center;
-  min-height: 22rem;
-  padding: clamp(1.5rem, 5vw, 3rem);
+  min-height: 15rem;
+  padding: clamp(1.25rem, 4vw, 2rem);
 }
 
 .about-quote-card p {
-  max-width: 11ch;
+  max-width: 34rem;
   margin: 0;
   color: var(--text-primary);
-  font-size: clamp(2rem, 5vw, 4.25rem);
+  font-size: clamp(1.2rem, 2.1vw, 1.7rem);
   font-weight: 800;
-  line-height: 0.98;
+  line-height: 1.25;
 }
 
 .about-cta {
@@ -2549,12 +2549,12 @@ h3 {
   }
 
   .about-quote-card {
-    min-height: 16rem;
+    min-height: auto;
   }
 
   .about-quote-card p {
-    max-width: 12ch;
-    font-size: clamp(2rem, 12vw, 3.1rem);
+    max-width: 34rem;
+    font-size: clamp(1.15rem, 5vw, 1.45rem);
   }
 
   .cta-module {
