@@ -110,7 +110,7 @@
     "currentVercelEnvCheck": {
       "checkedAt": "2026-04-27",
       "project": "project-5v5cr",
-      "result": "Neon database eltronic_db_1 connected with prefixed environment variables"
+      "result": "Neon database eltronic_db_1 connected with prefixed environment variables; storage smoke test passed and production deployment dpl_DfWPHsfjnjTYoAuB8zkHqFRzni2j is live"
     },
     "exports": [
       "getProducts",

@@ -253,7 +253,7 @@ Before relying on live admin writes, configure persistent database env vars in V
 - `DATABASE_URL` or integration-prefixed `eltronic_db_1_DATABASE_URL`
 - Fallback Redis support still accepts `KV_REST_API_URL` and `KV_REST_API_TOKEN`
 
-As of 2026-04-27, the Neon database `eltronic_db_1` is connected to Vercel and injects prefixed env vars such as `eltronic_db_1_DATABASE_URL`. Production admin/contact writes should only be trusted after `npm run storage:check` passes and the project is redeployed.
+As of 2026-04-27, the Neon database `eltronic_db_1` is connected to Vercel and injects prefixed env vars such as `eltronic_db_1_DATABASE_URL`. `npm run storage:check` passes locally after pulling Vercel env vars, production deployment `dpl_DfWPHsfjnjTYoAuB8zkHqFRzni2j` is live, and the safe contact bot tester confirmed blocked attempts are saved in Neon.
 
 ## Agent Maintenance Rules
 
