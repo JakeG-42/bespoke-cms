@@ -83,11 +83,11 @@ export default function SolutionsPage() {
         <div className="cta-module">
           <div>
             <span className="section-number">software.systems</span>
-            <h2>Need the operational system around it too?</h2>
+            <h2>Need the software layer around it too?</h2>
             <p>
-              Eltronic can also help with internal systems, API integrations,
-              embedded services, server-side workflows, CRMs and practical
-              consulting around operational efficiency.
+              Eltronic also builds internal platforms, API integrations,
+              embedded services, device data workflows, CRMs and server-side
+              systems that connect the technical work to daily operations.
             </p>
           </div>
           <Link className="button" href="/software-it">

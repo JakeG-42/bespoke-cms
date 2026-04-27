@@ -83,7 +83,7 @@ export type Product = {
 
 const topconDocuments: ProductDocument[] = [
   { label: "Request full data sheet", url: "/contact" },
-  { label: "Request basic data sheet", url: "/contact" },
+  { label: "Request data sheet", url: "/contact" },
 ];
 
 function comingSoonImages(productName: string): ProductImage[] {

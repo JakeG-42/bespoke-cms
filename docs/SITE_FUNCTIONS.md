@@ -27,7 +27,7 @@ Concise living reference for how the current Eltronic Next.js site works.
 - Technical visual modules: `src/components/site/technical-visuals.tsx` renders SVG-style imagery for public pages.
 - Public footer: `src/components/site/site-shell.tsx` renders a simple static footer; avoid sticky/reveal footer effects unless they are tested across full-page layouts.
 - AI context pack: future agents should start with `docs/AGENT_CONTEXT.md` and `docs/AI_FUNCTION_MAP.json`.
-- Public content tone: prefer precise wording such as specialist equipment, operating environment, application, platform, control system and operational workflow instead of repeating generic machine/machinery phrasing.
+- Public content tone: prefer precise wording such as specialist equipment, operating environment, application, platform, control system, full-stack software, embedded services, connected devices and operational workflow instead of generic IT-support or machine/machinery phrasing.
 
 ## Current Routes
 
@@ -35,7 +35,7 @@ Concise living reference for how the current Eltronic Next.js site works.
 - `/products`: dynamic product listing page generated from the managed catalogue.
 - `/products/[slug]`: dynamic product detail page generated from the managed catalogue.
 - `/solutions`: public solution/service page for HMI, CAN-Bus and bespoke control integration.
-- `/software-it`: public service page for bespoke software, internal systems, API/shipping integrations, embedded services, servers and technical consultation.
+- `/software-it`: public service page for full-stack internal platforms, API/shipping integrations, embedded and IoT/device services, backend infrastructure and technical consultation.
 - `/sectors`: public sector page for agriculture, construction, logistics and industrial automation.
 - `/data-specification`: public resource page for data sheets, guides and product documents.
 - `/about`: company positioning page for Eltronic's machinery, product, integration and software approach.

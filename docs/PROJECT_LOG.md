@@ -67,6 +67,7 @@ Concise living log for the Eltronic standalone site/app. Add newest updates at t
 - Added a brutal direct SMTP notification transport behind `CONTACT_NOTIFICATION_TRANSPORT=direct` for testing owner notifications from Vercel without Resend; keep Resend available as the safer/default transport.
 - Switched Vercel production/development email notifications to direct SMTP mode using `Eltronic <notifications@eltronic.co.uk>` and `eltronic.co.uk` HELO; a live contact test reached `sent=1` and produced no immediate Vercel warning.
 - Paused email notifications after the direct SMTP test failed in practice: removed direct SMTP sender env vars from Vercel and set Studio notification mode to `off` while keeping submissions stored in Neon.
+- Reworked public Software & Systems copy to better reflect full-stack, embedded, IoT/device, API and operational systems capability without sounding like generic IT support; updated persisted homepage builder copy in Neon to match.
 - Added `npm run storage:check` to verify Neon/Postgres or Upstash/Vercel Redis credentials by writing, reading and deleting a short-lived test key before trusting live admin/contact persistence.
 - Connected Neon database `eltronic_db_1` on Vercel; the app supports the prefixed env vars injected by the integration.
 - Deployed Neon-backed storage support to production deployment `dpl_DfWPHsfjnjTYoAuB8zkHqFRzni2j`; `npm run storage:check` passes and the safe contact bot tester saved two blocked records in Neon.

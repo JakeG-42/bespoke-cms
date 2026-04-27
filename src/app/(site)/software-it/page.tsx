@@ -5,7 +5,7 @@ import { softwareServiceModules, softwareWorkflowModules } from "@/content/site"
 export const metadata = {
   title: "Software & Systems | Eltronic",
   description:
-    "Bespoke software, internal systems, API integrations, embedded services, servers and technical consultation from Eltronic.",
+    "Full-stack software, internal systems, API integrations, embedded services, IoT workflows and technical consultation from Eltronic.",
 };
 
 export default function SoftwareItPage() {
@@ -14,16 +14,16 @@ export default function SoftwareItPage() {
       <section className="hero compact-hero">
         <div className="hero-copy">
           <p className="code-kicker">software.systems</p>
-          <h1>Software, systems and practical integration.</h1>
+          <h1>Software engineering for connected operations.</h1>
           <p className="lede">
-            Bespoke software, internal systems, API integrations, embedded
-            services and technical consultation for teams that need their
-            operation to work more efficiently, with fewer errors and less
-            manual admin.
+            Eltronic designs and builds the software layer around equipment,
+            people and business systems: internal platforms, APIs, embedded
+            services, device data, dashboards and the integrations that remove
+            manual work without making the operation harder to run.
           </p>
           <div className="actions">
             <Link className="button" href="/contact">
-              Discuss a project
+              Discuss a system
             </Link>
             <Link className="button secondary" href="/solutions">
               View control-system solutions
@@ -36,13 +36,13 @@ export default function SoftwareItPage() {
       <section className="section">
         <div className="section-heading">
           <div>
-            <span className="section-number">service.map</span>
-            <h2>What we can help with</h2>
+            <span className="section-number">capability.map</span>
+            <h2>Capability across the stack</h2>
           </div>
           <p>
-            A compact service map for the wider software, systems and
-            integration work that often sits around equipment, operations,
-            logistics and business processes.
+            Work can sit in the browser, backend, database, device, gateway or
+            the systems between them. The priority is always the same: reliable
+            data, fewer errors and a workflow the customer can actually use.
           </p>
         </div>
         <div className="module-grid">
@@ -65,13 +65,13 @@ export default function SoftwareItPage() {
         <div className="cta-module">
           <div>
             <span className="section-number">keep.clear</span>
-            <h2>Not sure what category your problem fits?</h2>
+            <h2>Bring the problem, not the category.</h2>
             <p>
-              That is fine. Send the rough version of the problem: what is
-              slow, manual, disconnected, unreliable or causing avoidable
-              errors. We can help decide whether it needs software, an
-              integration, a server-side service, embedded messaging or a
-              better process.
+              You do not need to know whether the answer is an API, dashboard,
+              embedded service, database, device workflow or process change.
+              Describe where the work slows down, where data breaks, where
+              errors enter or where people repeat the same task. We can shape
+              the technical route from there.
             </p>
           </div>
           <Link className="button" href="/contact">
@@ -84,12 +84,13 @@ export default function SoftwareItPage() {
         <div className="section-heading">
           <div>
             <span className="section-number">delivery.flow</span>
-            <h2>Complex systems, made straightforward</h2>
+            <h2>Complex delivery without confusion</h2>
           </div>
           <p>
-            The work can involve several systems, protocols and stakeholders.
-            The delivery should still feel clear, controlled and easy to
-            understand.
+            Serious software work can cross hardware, users, data, hosting,
+            security and existing business tools. The customer experience should
+            still feel controlled, transparent and practical from first scope to
+            handover.
           </p>
         </div>
         <div className="process-grid">

@@ -94,10 +94,10 @@ export const defaultSiteBuilderSettings: SiteBuilderSettings = {
         "systems integrator",
         "systems consultant",
         "control systems partner",
-        "software integration support",
+        "software systems engineer",
       ],
       lede:
-        "Intelligent HMI displays, CAN data logging, custom harnesses and software integration for mobile equipment, fixed installations and specialist vehicles.",
+        "Intelligent HMI displays, CAN data logging, custom harnesses and full-stack software integration for mobile equipment, fixed installations and specialist vehicles.",
       primaryCtaLabel: "Browse products",
       primaryCtaHref: "/products",
       secondaryCtaLabel: "Start an enquiry",
@@ -133,14 +133,15 @@ export const defaultSiteBuilderSettings: SiteBuilderSettings = {
         enabled: true,
         order: 3,
         eyebrow: "03",
-        title: "Software and systems integration",
-        summary: "Bespoke internal systems, API integration, embedded services and practical consulting for more efficient operations.",
+        title: "Software, systems and device integration",
+        summary:
+          "Full-stack internal platforms, API integration, embedded services and technical consultancy for more efficient operations.",
         ctaLabel: "Explore Software & Systems",
         ctaHref: "/software-it",
         panelEyebrow: "software.systems",
-        panelTitle: "Business systems, data and integrations.",
+        panelTitle: "Internal platforms, data and connected devices.",
         panelSummary:
-          "From shipping and CRM integrations to MQTT services, HTTP APIs, internal servers, dashboards and custom workflows, we help reduce errors, manual admin and wasted time.",
+          "From shipping and CRM integrations to MQTT services, HTTP APIs, internal servers, dashboards and connected hardware workflows, Eltronic helps reduce errors, manual admin and wasted time.",
       },
       {
         key: "workflow",

@@ -24,7 +24,7 @@ const strengths = [
     code: "customer.clarity",
     title: "Complex work made clear",
     summary:
-      "Customers should understand the route, the risks and the next decision without needing to translate engineering noise.",
+      "Customers should understand the route, the risks and the next decision without having to decode unnecessary technical noise.",
   },
   {
     code: "long.term",
@@ -38,7 +38,7 @@ const capabilities = [
   "Rugged HMI displays and operator interfaces",
   "CAN-Bus, CAN-FD, data logging and diagnostics",
   "Custom harnesses, wiring and control integration",
-  "Embedded services, APIs, dashboards and internal systems",
+  "Full-stack software, embedded services, APIs and dashboards",
   "Specification support, documentation and lifecycle improvement",
 ];
 
@@ -71,11 +71,11 @@ export default function AboutPage() {
       <section className="about-intro-grid section">
         <article className="about-statement panel">
           <span className="section-number">why.eltronic</span>
-          <h2>Not just a catalogue. Not just code. The useful bit in the middle.</h2>
+          <h2>System-level engineering between hardware and operations.</h2>
           <p>
             A product only matters once it is specified correctly, wired into the
-            real operating environment, configured around the operator and supported by clear
-            information. That is the space Eltronic works in.
+            real operating environment, configured around the operator and
+            supported by clear information. That is the space Eltronic works in.
           </p>
           <p>
             The work can involve an HMI display, CAN logging, a control module,
@@ -111,9 +111,9 @@ export default function AboutPage() {
           <div>
             <h3>Core capability</h3>
             <p>
-              Eltronic sits between product supply, equipment integration and
-              practical software delivery, helping customers make good technical
-              decisions without overcomplicating the project.
+              Eltronic connects product supply, equipment integration and
+              full-stack software delivery, helping customers make sound
+              technical decisions without adding unnecessary complexity.
             </p>
           </div>
           <ul className="about-capability-list">
@@ -178,7 +178,7 @@ export default function AboutPage() {
             <span>Eltronic approach</span>
             <p>
               Make the technical work robust, and make the customer experience
-              simple enough to move forward with confidence.
+              clear enough to move forward with confidence.
             </p>
           </div>
         </div>

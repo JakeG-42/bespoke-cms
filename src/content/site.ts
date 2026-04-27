@@ -27,45 +27,45 @@ export const serviceModules = [
 
 export const softwareServiceModules = [
   {
-    title: "Bespoke business systems",
+    title: "Full-stack internal platforms",
     code: "systems.backend",
     summary:
-      "Internal platforms, admin tools, CRM features, quoting workflows and dashboards built around the exact way your team works.",
-    examples: ["Internal CRMs", "Admin portals", "Quote workflows", "Operations dashboards"],
+      "Admin portals, workflow tools, CRM extensions, dashboards and operational platforms built around the way the business actually runs.",
+    examples: ["Admin portals", "CRM extensions", "Quoting systems", "Operations dashboards"],
   },
   {
-    title: "API, data and shipping integrations",
+    title: "Systems, API and data integration",
     code: "integration.api",
     summary:
-      "Connect customer systems, shipping tools, stock platforms, CRMs and third-party services so data moves cleanly without double entry.",
+      "Connect shipping, stock, CRM, customer portals, finance tools and third-party services so data moves cleanly without double entry.",
     examples: ["Shipping workflows", "CRM automation", "Stock and order sync", "Customer portals"],
   },
   {
-    title: "Embedded and connected services",
+    title: "Embedded, IoT and device services",
     code: "embedded.services",
     summary:
-      "Software services for connected hardware, telemetry, screen systems and operational data using practical protocols and reliable interfaces.",
-    examples: ["MQTT services", "HTTP/HTTPS APIs", "Device messaging", "Telemetry capture"],
+      "Software for connected hardware, controllers, screens, sensors and gateways, with practical protocols and reliable interfaces.",
+    examples: ["MQTT/HTTP services", "Device telemetry", "Edge gateways", "Command/status APIs"],
   },
   {
-    title: "Servers and internal infrastructure",
+    title: "Backend platforms and infrastructure",
     code: "platform.internal",
     summary:
-      "Practical server-side engineering for the internal systems, databases, services and secure workflows that keep operations moving.",
+      "Server-side engineering for databases, background jobs, secure access, reporting and internal services that need to keep running.",
     examples: ["Internal servers", "Databases", "Scheduled jobs", "Secure access"],
   },
   {
-    title: "Consulting and efficiency planning",
+    title: "Technical consultancy and process improvement",
     code: "consult.efficiency",
     summary:
-      "A technical sounding board for reducing errors, cutting manual admin time, improving handovers and choosing the right system approach.",
-    examples: ["Workflow audits", "Automation planning", "System selection", "Project scoping"],
+      "Practical technical guidance on what to build, what to integrate and where automation will reduce errors, rework and wasted time.",
+    examples: ["Workflow reviews", "Automation planning", "System selection", "Project scoping"],
   },
   {
-    title: "Ongoing improvement and support",
+    title: "Lifecycle support and controlled change",
     code: "support.iterate",
     summary:
-      "Careful handover, documentation, monitoring and feature improvements so systems stay useful as the business changes.",
+      "Documentation, monitoring, maintenance and measured feature updates so systems remain understandable as the business changes.",
     examples: ["Maintenance", "Monitoring", "Documentation", "Feature updates"],
   },
 ];
@@ -73,23 +73,23 @@ export const softwareServiceModules = [
 export const softwareWorkflowModules = [
   {
     step: "01",
-    title: "Operational discovery",
+    title: "Operational and technical discovery",
     summary:
-      "We map the real process, existing systems, failure points, manual handovers and the places where time or accuracy is being lost.",
+      "We map the real process, users, devices, existing systems, failure points and the places where time or accuracy is being lost.",
     outcome: "A precise view of the work, the friction and the systems already in play.",
   },
   {
     step: "02",
-    title: "Architecture and integration plan",
+    title: "Architecture across software, data and devices",
     summary:
-      "We define the right route across software, APIs, embedded messaging, databases, servers and existing tools before anything is overbuilt.",
+      "We define the right route across interfaces, APIs, databases, embedded messaging, servers, access control and existing tools before anything is overbuilt.",
     outcome: "A practical technical route with clear ownership, data flow and delivery boundaries.",
   },
   {
     step: "03",
     title: "Staged delivery and validation",
     summary:
-      "Work is delivered in controlled phases so the first useful version reduces errors and admin time while the wider system grows safely.",
+      "Work is delivered in controlled phases so useful value appears early while the wider system is tested against real users, data and operating conditions.",
     outcome: "Usable progress early, with each phase tested against the real workflow.",
   },
   {
