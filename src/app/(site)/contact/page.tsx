@@ -118,7 +118,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
 
           <div className="captcha-panel">
             <label className="field-label">
-              <span>Anti-spam check</span>
+              <span>Verification:</span>
               <input name="captchaToken" type="hidden" value={captcha.token} />
               <input
                 aria-label={captcha.question}
@@ -128,7 +128,6 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                 required
               />
             </label>
-            <p>This is a simple local check. No third-party captcha script is loaded.</p>
           </div>
 
           <label aria-hidden="true" className="contact-honeypot" tabIndex={-1}>
