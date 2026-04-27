@@ -342,7 +342,7 @@
       "createdAt",
       "updatedAt"
     ],
-    "emailNotification": "not implemented"
+    "emailNotification": "src/lib/email-notifications.ts sends Resend email notifications for enquiry, captcha_failed and honeypot_spam records. Settings live in managed data and are editable from /studio/settings. Required env vars: RESEND_API_KEY and CONTACT_NOTIFICATION_FROM. Default recipient: jakub@gajosz.com. Digest endpoint: /api/contact-notifications/digest."
   },
   "ui": {
     "publicCss": "src/app/globals.css",

@@ -29,6 +29,13 @@ const BLOCKED_SUBMISSION_DEDUPE_WINDOW_MS = 5000;
 
 export type ContactSubmissionStatus = "new" | "reviewed" | "replied" | "archived" | "blocked";
 export type ContactSubmissionType = "enquiry" | "captcha_failed" | "honeypot_spam";
+export type ContactNotificationMode = "immediate" | "daily_digest" | "weekly_digest" | "off";
+
+export type ContactNotificationSettings = {
+  lastDigestSentAt?: string;
+  mode: ContactNotificationMode;
+  recipients: string[];
+};
 
 export type ContactSubmission = {
   id: string;
@@ -46,7 +53,13 @@ export type ContactSubmission = {
   updatedAt: string;
 };
 
+export type ContactSubmissionWriteResult = {
+  created: boolean;
+  submission: ContactSubmission;
+};
+
 type ManagedData = {
+  contactNotifications: ContactNotificationSettings;
   products: Product[];
   siteBuilder: SiteBuilderSettings;
   submissions: ContactSubmission[];
@@ -102,6 +115,7 @@ function getPrefixedPostgresConnectionString() {
 
 function createEmptyData(): ManagedData {
   return {
+    contactNotifications: getDefaultContactNotificationSettings(),
     products: normalizeProducts(seededProducts),
     siteBuilder: normalizeSiteBuilderSettings(),
     submissions: [],
@@ -111,6 +125,7 @@ function createEmptyData(): ManagedData {
 
 function normalizeData(data: Partial<ManagedData> | null | undefined): ManagedData {
   return {
+    contactNotifications: normalizeContactNotificationSettings(data?.contactNotifications),
     products:
       Array.isArray(data?.products) && data.products.length > 0
         ? normalizeProducts(data.products)
@@ -118,6 +133,30 @@ function normalizeData(data: Partial<ManagedData> | null | undefined): ManagedDa
     siteBuilder: normalizeSiteBuilderSettings(data?.siteBuilder),
     submissions: Array.isArray(data?.submissions) ? normalizeSubmissions(data.submissions) : [],
     updatedAt: typeof data?.updatedAt === "string" ? data.updatedAt : new Date().toISOString(),
+  };
+}
+
+function getDefaultContactNotificationSettings(): ContactNotificationSettings {
+  return {
+    mode: "immediate",
+    recipients: ["jakub@gajosz.com"],
+  };
+}
+
+function normalizeContactNotificationSettings(settings?: {
+  lastDigestSentAt?: unknown;
+  mode?: unknown;
+  recipients?: unknown;
+} | null): ContactNotificationSettings {
+  const defaults = getDefaultContactNotificationSettings();
+  const recipients = Array.isArray(settings?.recipients)
+    ? settings.recipients.map((recipient) => recipient.trim()).filter(Boolean)
+    : defaults.recipients;
+
+  return {
+    lastDigestSentAt: typeof settings?.lastDigestSentAt === "string" ? settings.lastDigestSentAt : undefined,
+    mode: normalizeContactNotificationMode(settings?.mode),
+    recipients: recipients.length > 0 ? recipients : defaults.recipients,
   };
 }
 
@@ -338,6 +377,47 @@ export async function getSiteBuilderSettings() {
   return data.siteBuilder;
 }
 
+export async function getContactNotificationSettings() {
+  const data = await readManagedData();
+  return data.contactNotifications;
+}
+
+export async function updateContactNotificationSettings(settings: ContactNotificationSettings) {
+  const data = await readManagedData();
+
+  await writeManagedData({
+    ...data,
+    contactNotifications: normalizeContactNotificationSettings({
+      ...settings,
+      lastDigestSentAt: data.contactNotifications.lastDigestSentAt,
+    }),
+  });
+}
+
+export async function getContactDigestSubmissions() {
+  const data = await readManagedData();
+  const settings = data.contactNotifications;
+  const now = new Date();
+  const windowMs = settings.mode === "weekly_digest" ? 7 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000;
+  const since = settings.lastDigestSentAt ? new Date(settings.lastDigestSentAt) : new Date(now.getTime() - windowMs);
+
+  return data.submissions
+    .filter((submission) => new Date(submission.createdAt) > since)
+    .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+}
+
+export async function markContactDigestSent(sentAt = new Date().toISOString()) {
+  const data = await readManagedData();
+
+  await writeManagedData({
+    ...data,
+    contactNotifications: normalizeContactNotificationSettings({
+      ...data.contactNotifications,
+      lastDigestSentAt: sentAt,
+    }),
+  });
+}
+
 export async function updateSiteBuilderSettings(settings: SiteBuilderSettings) {
   const data = await readManagedData();
 
@@ -451,7 +531,7 @@ export async function createBlockedContactSubmission(input: {
   message?: string;
   rejectionReason: string;
   type: Exclude<ContactSubmissionType, "enquiry">;
-}) {
+}): Promise<ContactSubmissionWriteResult> {
   const data = await readManagedData();
   const product = input.productSlug
     ? data.products.find((item) => item.slug === input.productSlug)
@@ -482,7 +562,10 @@ export async function createBlockedContactSubmission(input: {
   });
 
   if (recentDuplicate) {
-    return recentDuplicate;
+    return {
+      created: false,
+      submission: recentDuplicate,
+    };
   }
 
   const submission: ContactSubmission = {
@@ -506,7 +589,10 @@ export async function createBlockedContactSubmission(input: {
     submissions: [submission, ...data.submissions],
   });
 
-  return submission;
+  return {
+    created: true,
+    submission,
+  };
 }
 
 export async function updateSubmissionStatus(id: string, status: ContactSubmissionStatus) {
@@ -604,6 +690,16 @@ export function siteBuilderFromFormData(formData: FormData): SiteBuilderSettings
         };
       }),
     },
+  });
+}
+
+export function contactNotificationSettingsFromFormData(formData: FormData): ContactNotificationSettings {
+  return normalizeContactNotificationSettings({
+    mode: String(formData.get("notificationMode") ?? "immediate"),
+    recipients: String(formData.get("notificationRecipients") ?? "")
+      .split(",")
+      .map((recipient) => recipient.trim())
+      .filter(Boolean),
   });
 }
 
@@ -802,4 +898,17 @@ function normalizeSubmissionType(value: unknown): ContactSubmissionType {
   }
 
   return "enquiry";
+}
+
+function normalizeContactNotificationMode(value: unknown): ContactNotificationMode {
+  if (
+    value === "immediate" ||
+    value === "daily_digest" ||
+    value === "weekly_digest" ||
+    value === "off"
+  ) {
+    return value;
+  }
+
+  return "immediate";
 }

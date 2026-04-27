@@ -5,10 +5,12 @@ import { redirect } from "next/navigation";
 
 import { clearAdminSession, isAdminAuthenticated } from "@/lib/admin-auth";
 import {
+  contactNotificationSettingsFromFormData,
   deleteProduct,
   deleteSubmission,
   productFromFormData,
   siteBuilderFromFormData,
+  updateContactNotificationSettings,
   updateSubmissionStatus,
   updateSiteBuilderSettings,
   upsertProduct,
@@ -128,6 +130,23 @@ export async function saveTemplateFileAction(formData: FormData) {
 
   const separator = returnTo.includes("?") ? "&" : "?";
   redirect(`${returnTo}${separator}saved=1`);
+}
+
+export async function saveContactNotificationSettingsAction(formData: FormData) {
+  await requireAdminAction();
+
+  const returnTo = getReturnTo(formData, "/studio/settings");
+  const settings = contactNotificationSettingsFromFormData(formData);
+
+  try {
+    await updateContactNotificationSettings(settings);
+    revalidatePath("/studio/settings");
+  } catch (error) {
+    redirectWithError(error instanceof Error ? error.message : "Unable to save notification settings.", returnTo);
+  }
+
+  const separator = returnTo.includes("?") ? "&" : "?";
+  redirect(`${returnTo}${separator}saved=notifications`);
 }
 
 export async function updateSubmissionStatusAction(formData: FormData) {

@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 
 import { verifyMathCaptcha } from "@/lib/contact-captcha";
+import { notifyContactSubmission } from "@/lib/email-notifications";
 import { createBlockedContactSubmission, createContactSubmission } from "@/lib/managed-data";
 
 export async function submitContactFormAction(formData: FormData) {
@@ -48,13 +49,14 @@ export async function submitContactFormAction(formData: FormData) {
   }
 
   try {
-    await createContactSubmission({
+    const submission = await createContactSubmission({
       name,
       company,
       email,
       productSlug: productSlug || undefined,
       message,
     });
+    await notifyContactSubmission(submission);
   } catch {
     redirect(contactRedirect("storage", productSlug));
   }
@@ -64,7 +66,11 @@ export async function submitContactFormAction(formData: FormData) {
 
 async function recordBlockedAttempt(input: Parameters<typeof createBlockedContactSubmission>[0]) {
   try {
-    await createBlockedContactSubmission(input);
+    const result = await createBlockedContactSubmission(input);
+
+    if (result.created) {
+      await notifyContactSubmission(result.submission);
+    }
   } catch {
     // The user-facing redirect should still happen if production storage is not configured.
   }

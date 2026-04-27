@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "email:check": "node scripts/check-email-notifications.mjs",
     "start": "next start",
     "storage:check": "node scripts/check-storage.mjs",
     "test:contact-bot": "node scripts/test-contact-antispam.mjs",

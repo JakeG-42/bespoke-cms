@@ -58,6 +58,7 @@ Concise living log for the Eltronic standalone site/app. Add newest updates at t
 - Added a local anti-spam layer to the contact form with a signed maths captcha and hidden honeypot field.
 - Updated contact anti-spam to capture blocked captcha and honeypot attempts in the Studio submissions inbox with type filters.
 - Added duplicate suppression for blocked contact attempts and colour-coded Studio submission markers for enquiries, captcha failures and honeypot spam.
+- Added Resend-backed contact email notifications for both enquiries and blocked attempts, with Studio frequency settings and a Vercel Cron digest endpoint.
 - Added `npm run storage:check` to verify Neon/Postgres or Upstash/Vercel Redis credentials by writing, reading and deleting a short-lived test key before trusting live admin/contact persistence.
 - Connected Neon database `eltronic_db_1` on Vercel; the app supports the prefixed env vars injected by the integration.
 - Deployed Neon-backed storage support to production deployment `dpl_DfWPHsfjnjTYoAuB8zkHqFRzni2j`; `npm run storage:check` passes and the safe contact bot tester saved two blocked records in Neon.
@@ -67,7 +68,7 @@ Concise living log for the Eltronic standalone site/app. Add newest updates at t
 - WordPress migration work is being considered for any content that is not publicly crawlable.
 - A possible temporary WordPress plugin could provide a controlled JSON/ZIP export from wp-admin.
 - Production persistence needs a passing `npm run storage:check` and a fresh Vercel deployment before live admin writes and contact submissions should be trusted.
-- Future admin improvements could include image uploads, per-page builder screens, richer product template fields, and email notifications for new submissions.
+- Future admin improvements could include image uploads, per-page builder screens, richer product template fields, and richer email delivery logs.
 - Keep AI-facing docs current when auth, route, storage or product-template behavior changes.
 
 ## Update Notes

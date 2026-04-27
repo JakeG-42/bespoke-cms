@@ -196,7 +196,7 @@ Statuses:
 - `archived`
 - `blocked`
 
-There is no email notification yet. A future email/CRM integration should call from `createContactSubmission()` or wrap the contact server action.
+Email notifications are handled by `src/lib/email-notifications.ts` and called from `submitContactFormAction()` after both enquiry and blocked records are stored. The default recipient is `jakub@gajosz.com`. Studio settings can change recipient and mode: `immediate`, `daily_digest`, `weekly_digest`, or `off`. Delivery uses Resend and needs `RESEND_API_KEY` plus `CONTACT_NOTIFICATION_FROM` in Vercel. Use `npm run email:check` to verify env vars and `npm run email:check -- --send` to send a real test email after credentials are configured.
 
 ## UI System
 
