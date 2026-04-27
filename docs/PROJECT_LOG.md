@@ -47,6 +47,7 @@ Concise living log for the Eltronic standalone site/app. Add newest updates at t
 - Reworked the About page into a stronger company positioning page and simplified primary navigation to the main customer journeys.
 - Added and tuned a subtle public ambient background with floating syntax glyphs and no cursor glow.
 - Upgraded Studio product management with collapsible WooCommerce-style sections plus admin-only SKU, price, tags, enhanced variants and product module switches.
+- Added mobile hamburger auto-close behavior for link clicks, outside taps and Escape.
 - Checked Vercel env vars on 2026-04-27; none are configured yet, so KV/Upstash persistence is still required before live admin/contact writes are trusted.
 
 ## Future Considerations

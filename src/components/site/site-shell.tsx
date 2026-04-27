@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { AmbientBackground } from "@/components/site/ambient-background";
+import { MobileNavAutoClose } from "@/components/site/mobile-nav-auto-close";
 
 const navItems = [
   { href: "/products", label: "Products", icon: "products" },
@@ -41,6 +42,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
               ))}
             </div>
           </details>
+          <MobileNavAutoClose />
         </nav>
       </header>
       {children}

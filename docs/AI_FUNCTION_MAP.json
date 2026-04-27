@@ -339,7 +339,7 @@
       "type": "inline SVG",
       "primaryItems": ["Products", "Solutions", "Software", "About", "Contact"],
       "secondaryItems": ["Sectors", "Data & specification in footer/page CTAs"],
-      "mobileBehavior": "Full desktop nav collapses to a native details hamburger menu under the mobile breakpoint."
+      "mobileBehavior": "Full desktop nav collapses to a native details hamburger menu under the mobile breakpoint. src/components/site/mobile-nav-auto-close.tsx closes it on link click, outside tap and Escape."
     },
     "publicFooter": {
       "shellFile": "src/components/site/site-shell.tsx",
