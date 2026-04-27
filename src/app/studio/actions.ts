@@ -8,7 +8,9 @@ import {
   deleteProduct,
   deleteSubmission,
   productFromFormData,
+  siteBuilderFromFormData,
   updateSubmissionStatus,
+  updateSiteBuilderSettings,
   upsertProduct,
   type ContactSubmissionStatus,
 } from "@/lib/managed-data";
@@ -36,6 +38,7 @@ function revalidateManagedPages() {
   revalidatePath("/products/[slug]", "page");
   revalidatePath("/studio");
   revalidatePath("/studio/products");
+  revalidatePath("/studio/builder");
   revalidatePath("/studio/submissions");
 }
 
@@ -77,6 +80,27 @@ export async function deleteProductAction(formData: FormData) {
   }
 
   redirect(returnTo);
+}
+
+export async function saveSiteBuilderAction(formData: FormData) {
+  await requireAdminAction();
+
+  const returnTo = getReturnTo(formData, "/studio/builder");
+  const settings = siteBuilderFromFormData(formData);
+
+  try {
+    await updateSiteBuilderSettings(settings);
+    revalidateManagedPages();
+    revalidatePath("/solutions");
+    revalidatePath("/about");
+    revalidatePath("/software-it");
+    revalidatePath("/sectors");
+  } catch (error) {
+    redirectWithError(error instanceof Error ? error.message : "Unable to save website builder settings.", returnTo);
+  }
+
+  const separator = returnTo.includes("?") ? "&" : "?";
+  redirect(`${returnTo}${separator}saved=1`);
 }
 
 export async function updateSubmissionStatusAction(formData: FormData) {

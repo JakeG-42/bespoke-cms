@@ -12,6 +12,7 @@ import {
   LayoutDashboard,
   LogOut,
   Moon,
+  Paintbrush,
   Settings,
   Sun,
 } from "lucide-react";
@@ -22,6 +23,7 @@ import { cn } from "@/lib/utils";
 
 const navItems = [
   { href: "/studio", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/studio/builder", label: "Builder", icon: Paintbrush },
   { href: "/studio/products", label: "Products", icon: Boxes },
   { href: "/studio/submissions", label: "Enquiries", icon: Inbox },
   { href: "/studio/settings", label: "Settings", icon: Settings },
@@ -94,6 +96,7 @@ export function StudioShell({
           <span>Pages</span>
           <span>Comments</span>
           <span>WooCommerce</span>
+          <Link href="/studio/builder">Website Builder</Link>
           <span>Analytics</span>
           <span>Marketing</span>
           <span>Appearance</span>
@@ -223,6 +226,7 @@ function ClassicMenuLink({
 
 function currentModeLabel(pathname: string) {
   if (pathname.startsWith("/studio/classic")) return "New Studio";
+  if (pathname.startsWith("/studio/builder")) return "Website Builder";
   if (pathname.startsWith("/studio/products")) return "Products";
   if (pathname.startsWith("/studio/submissions")) return "Enquiries";
   if (pathname.startsWith("/studio/settings")) return "Settings";

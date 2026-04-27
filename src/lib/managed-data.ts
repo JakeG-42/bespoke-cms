@@ -11,6 +11,15 @@ import {
   type ProductTemplate,
   type ProductVariant,
 } from "@/content/products";
+import {
+  defaultSiteBuilderSettings,
+  type SiteBackgroundStyle,
+  type SiteBuilderSection,
+  type SiteBuilderSettings,
+  type SiteHeroVisualVariant,
+  type SiteThemePreset,
+  type SiteVisualDensity,
+} from "@/content/site-builder";
 
 const DATA_KEY = "eltronic:managed-data:v1";
 const LOCAL_DATA_PATH = path.join(process.cwd(), ".data", "eltronic-data.json");
@@ -33,6 +42,7 @@ export type ContactSubmission = {
 
 type ManagedData = {
   products: Product[];
+  siteBuilder: SiteBuilderSettings;
   submissions: ContactSubmission[];
   updatedAt: string;
 };
@@ -58,6 +68,7 @@ function getRedisConfig() {
 function createEmptyData(): ManagedData {
   return {
     products: normalizeProducts(seededProducts),
+    siteBuilder: normalizeSiteBuilderSettings(),
     submissions: [],
     updatedAt: new Date().toISOString(),
   };
@@ -69,6 +80,7 @@ function normalizeData(data: Partial<ManagedData> | null | undefined): ManagedDa
       Array.isArray(data?.products) && data.products.length > 0
         ? normalizeProducts(data.products)
         : normalizeProducts(seededProducts),
+    siteBuilder: normalizeSiteBuilderSettings(data?.siteBuilder),
     submissions: Array.isArray(data?.submissions) ? data.submissions : [],
     updatedAt: typeof data?.updatedAt === "string" ? data.updatedAt : new Date().toISOString(),
   };
@@ -93,6 +105,49 @@ function normalizeProductModules(modules?: Partial<ProductModules>): ProductModu
     current[module.key] = modules?.[module.key] ?? true;
     return current;
   }, {} as ProductModules);
+}
+
+function normalizeSiteBuilderSettings(settings?: Partial<SiteBuilderSettings> | null): SiteBuilderSettings {
+  const defaults = defaultSiteBuilderSettings;
+  const sectionsByKey = new Map(
+    (Array.isArray(settings?.home?.sections) ? settings.home.sections : []).map((section) => [section.key, section]),
+  );
+
+  return {
+    theme: {
+      preset: normalizeThemePreset(settings?.theme?.preset),
+      accentColor: normalizeHexColor(settings?.theme?.accentColor, defaults.theme.accentColor),
+      secondaryColor: normalizeHexColor(settings?.theme?.secondaryColor, defaults.theme.secondaryColor),
+      highlightColor: normalizeHexColor(settings?.theme?.highlightColor, defaults.theme.highlightColor),
+      backgroundStyle: normalizeBackgroundStyle(settings?.theme?.backgroundStyle),
+      visualDensity: normalizeVisualDensity(settings?.theme?.visualDensity),
+    },
+    home: {
+      hero: {
+        ...defaults.home.hero,
+        ...settings?.home?.hero,
+        rolePhrases: normalizeRolePhrases(settings?.home?.hero?.rolePhrases),
+        visualVariant: normalizeHeroVisualVariant(settings?.home?.hero?.visualVariant),
+      },
+      sections: defaults.home.sections.map((defaultSection) =>
+        normalizeBuilderSection(defaultSection, sectionsByKey.get(defaultSection.key)),
+      ),
+    },
+  };
+}
+
+function normalizeBuilderSection(
+  defaultSection: SiteBuilderSection,
+  section?: Partial<SiteBuilderSection>,
+): SiteBuilderSection {
+  return {
+    ...defaultSection,
+    ...section,
+    key: defaultSection.key,
+    label: defaultSection.label,
+    enabled: section?.enabled ?? defaultSection.enabled,
+    order: normalizeOrder(section?.order, defaultSection.order),
+  };
 }
 
 function getRedisClient() {
@@ -166,6 +221,20 @@ async function writeManagedData(data: ManagedData) {
 export async function getProducts() {
   const data = await readManagedData();
   return data.products;
+}
+
+export async function getSiteBuilderSettings() {
+  const data = await readManagedData();
+  return data.siteBuilder;
+}
+
+export async function updateSiteBuilderSettings(settings: SiteBuilderSettings) {
+  const data = await readManagedData();
+
+  await writeManagedData({
+    ...data,
+    siteBuilder: normalizeSiteBuilderSettings(settings),
+  });
 }
 
 export async function getProductBySlug(slug: string) {
@@ -315,6 +384,52 @@ export function parseProductTemplate(value: FormDataEntryValue | null): ProductT
   return "hmi";
 }
 
+export function siteBuilderFromFormData(formData: FormData): SiteBuilderSettings {
+  const defaults = defaultSiteBuilderSettings;
+
+  return normalizeSiteBuilderSettings({
+    theme: {
+      preset: String(formData.get("themePreset") ?? defaults.theme.preset) as SiteThemePreset,
+      accentColor: String(formData.get("accentColor") ?? defaults.theme.accentColor),
+      secondaryColor: String(formData.get("secondaryColor") ?? defaults.theme.secondaryColor),
+      highlightColor: String(formData.get("highlightColor") ?? defaults.theme.highlightColor),
+      backgroundStyle: String(formData.get("backgroundStyle") ?? defaults.theme.backgroundStyle) as SiteBackgroundStyle,
+      visualDensity: String(formData.get("visualDensity") ?? defaults.theme.visualDensity) as SiteVisualDensity,
+    },
+    home: {
+      hero: {
+        brand: getFormText(formData, "heroBrand", defaults.home.hero.brand),
+        titleSuffix: getFormText(formData, "heroTitleSuffix", defaults.home.hero.titleSuffix),
+        rolePhrases: parseLines(formData.get("heroRolePhrases")),
+        lede: getFormText(formData, "heroLede", defaults.home.hero.lede),
+        primaryCtaLabel: getFormText(formData, "heroPrimaryCtaLabel", defaults.home.hero.primaryCtaLabel),
+        primaryCtaHref: getFormText(formData, "heroPrimaryCtaHref", defaults.home.hero.primaryCtaHref),
+        secondaryCtaLabel: getFormText(formData, "heroSecondaryCtaLabel", defaults.home.hero.secondaryCtaLabel),
+        secondaryCtaHref: getFormText(formData, "heroSecondaryCtaHref", defaults.home.hero.secondaryCtaHref),
+        visualLabel: getFormText(formData, "heroVisualLabel", defaults.home.hero.visualLabel),
+        visualVariant: String(formData.get("heroVisualVariant") ?? defaults.home.hero.visualVariant) as SiteHeroVisualVariant,
+      },
+      sections: defaults.home.sections.map((section) => {
+        const key = section.key;
+
+        return {
+          ...section,
+          enabled: formData.get(`sectionEnabled:${key}`) === "on",
+          order: Number(formData.get(`sectionOrder:${key}`) ?? section.order),
+          eyebrow: getFormText(formData, `sectionEyebrow:${key}`, section.eyebrow),
+          title: getFormText(formData, `sectionTitle:${key}`, section.title),
+          summary: getFormText(formData, `sectionSummary:${key}`, section.summary),
+          ctaLabel: getOptionalFormText(formData, `sectionCtaLabel:${key}`, section.ctaLabel),
+          ctaHref: getOptionalFormText(formData, `sectionCtaHref:${key}`, section.ctaHref),
+          panelEyebrow: getOptionalFormText(formData, `sectionPanelEyebrow:${key}`, section.panelEyebrow),
+          panelTitle: getOptionalFormText(formData, `sectionPanelTitle:${key}`, section.panelTitle),
+          panelSummary: getOptionalFormText(formData, `sectionPanelSummary:${key}`, section.panelSummary),
+        };
+      }),
+    },
+  });
+}
+
 export function productFromFormData(formData: FormData): Product {
   const name = String(formData.get("name") ?? "").trim();
   const slug = slugify(String(formData.get("slug") || name));
@@ -423,4 +538,71 @@ function parseRows(value: FormDataEntryValue | null, columns: number) {
     )
     .map((cells) => cells.slice(0, columns))
     .filter((cells) => cells[0] && cells[1]);
+}
+
+function getFormText(formData: FormData, key: string, fallback: string) {
+  return String(formData.get(key) ?? "").trim() || fallback;
+}
+
+function getOptionalFormText(formData: FormData, key: string, fallback?: string) {
+  return String(formData.get(key) ?? "").trim() || fallback;
+}
+
+function normalizeHexColor(value: unknown, fallback: string) {
+  const color = String(value ?? "").trim();
+  return /^#[0-9a-f]{6}$/i.test(color) ? color : fallback;
+}
+
+function normalizeThemePreset(value: unknown): SiteThemePreset {
+  const preset = String(value ?? "");
+
+  if (preset === "halogen" || preset === "graphite" || preset === "clean") {
+    return preset;
+  }
+
+  return "eltronic";
+}
+
+function normalizeBackgroundStyle(value: unknown): SiteBackgroundStyle {
+  const style = String(value ?? "");
+
+  if (style === "soft" || style === "minimal") {
+    return style;
+  }
+
+  return "grid";
+}
+
+function normalizeVisualDensity(value: unknown): SiteVisualDensity {
+  const density = String(value ?? "");
+
+  if (density === "compact" || density === "spacious") {
+    return density;
+  }
+
+  return "balanced";
+}
+
+function normalizeHeroVisualVariant(value: unknown): SiteHeroVisualVariant {
+  const variant = String(value ?? "");
+
+  if (variant === "network" || variant === "sectors" || variant === "data") {
+    return variant;
+  }
+
+  return "display";
+}
+
+function normalizeRolePhrases(value: unknown) {
+  if (Array.isArray(value)) {
+    const roles = value.map((role) => String(role).trim()).filter(Boolean);
+    return roles.length > 0 ? roles : defaultSiteBuilderSettings.home.hero.rolePhrases;
+  }
+
+  return defaultSiteBuilderSettings.home.hero.rolePhrases;
+}
+
+function normalizeOrder(value: unknown, fallback: number) {
+  const order = Number(value);
+  return Number.isFinite(order) && order > 0 ? order : fallback;
 }

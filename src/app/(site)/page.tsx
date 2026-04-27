@@ -1,52 +1,61 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { CSSProperties } from "react";
+
 import { HeroRoleTypewriter } from "@/components/site/hero-role-typewriter";
 import { TechnicalVisual } from "@/components/site/technical-visuals";
+import type { Product } from "@/content/products";
 import { sectorModules, serviceModules, workflowModules } from "@/content/site";
-import { getFeaturedProducts } from "@/lib/managed-data";
+import type { SiteBuilderSection, SiteBuilderTheme } from "@/content/site-builder";
+import { getFeaturedProducts, getSiteBuilderSettings } from "@/lib/managed-data";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const featuredProducts = await getFeaturedProducts();
+  const [featuredProducts, builder] = await Promise.all([getFeaturedProducts(), getSiteBuilderSettings()]);
+  const visibleSections = [...builder.home.sections].filter((section) => section.enabled).sort((a, b) => a.order - b.order);
 
   return (
-    <main className="page home-page">
+    <main
+      className={`page home-page builder-theme-${builder.theme.preset} builder-bg-${builder.theme.backgroundStyle} builder-density-${builder.theme.visualDensity}`}
+      style={builderThemeStyle(builder.theme)}
+    >
       <section className="hero">
         <div className="hero-copy">
           <h1 className="hero-title">
-            <HeroRoleTypewriter />
-            <span className="title-value gradient-text">Eltronic</span>
-            <span className="title-suffix">;</span>
+            <HeroRoleTypewriter roles={builder.home.hero.rolePhrases} />
+            <span className="title-value gradient-text">{builder.home.hero.brand}</span>
+            <span className="title-suffix">{builder.home.hero.titleSuffix}</span>
           </h1>
-          <p className="lede">
-            Intelligent HMI displays, CAN data logging, custom harnesses and
-            software integration for mobile equipment, fixed installations and
-            specialist vehicles.
-          </p>
+          <p className="lede">{builder.home.hero.lede}</p>
           <div className="actions">
-            <Link className="button" href="/products">
-              Browse products
+            <Link className="button" href={builder.home.hero.primaryCtaHref}>
+              {builder.home.hero.primaryCtaLabel}
             </Link>
-            <Link className="button secondary" href="/contact">
-              Start an enquiry
+            <Link className="button secondary" href={builder.home.hero.secondaryCtaHref}>
+              {builder.home.hero.secondaryCtaLabel}
             </Link>
           </div>
         </div>
 
-        <TechnicalVisual label="HMI, CANbus and control-system architecture" variant="display" />
+        <TechnicalVisual label={builder.home.hero.visualLabel} variant={builder.home.hero.visualVariant} />
       </section>
 
-      <section className="section">
+      {visibleSections.map((section) => renderHomeSection(section, featuredProducts))}
+    </main>
+  );
+}
+
+function renderHomeSection(section: SiteBuilderSection, featuredProducts: Product[]) {
+  if (section.key === "services") {
+    return (
+      <section className="section" key={section.key}>
         <div className="section-heading">
           <div>
-            <span className="section-number">01</span>
-            <h2>Application-ready systems</h2>
+            <span className="section-number">{section.eyebrow}</span>
+            <h2>{section.title}</h2>
           </div>
-          <p>
-            Rugged HMIs, CAN data capture and bespoke integration work come
-            together around the operator, environment and project requirement.
-          </p>
+          <p>{section.summary}</p>
         </div>
         <div className="capability-grid">
           {serviceModules.map((capability) => (
@@ -57,23 +66,26 @@ export default async function Home() {
             </article>
           ))}
         </div>
-        <div className="actions">
-          <Link className="button secondary" href="/solutions">
-            Explore solutions
-          </Link>
-        </div>
+        {section.ctaHref && section.ctaLabel ? (
+          <div className="actions">
+            <Link className="button secondary" href={section.ctaHref}>
+              {section.ctaLabel}
+            </Link>
+          </div>
+        ) : null}
       </section>
+    );
+  }
 
-      <section className="section">
+  if (section.key === "products") {
+    return (
+      <section className="section" key={section.key}>
         <div className="section-heading">
           <div>
-            <span className="section-number">02</span>
-            <h2>Featured products</h2>
+            <span className="section-number">{section.eyebrow}</span>
+            <h2>{section.title}</h2>
           </div>
-          <p>
-            A focused selection of displays, data logging tools and control
-            modules for quote-led equipment projects.
-          </p>
+          <p>{section.summary}</p>
         </div>
         <div className="product-grid">
           {featuredProducts.map((product) => (
@@ -98,44 +110,44 @@ export default async function Home() {
           ))}
         </div>
       </section>
+    );
+  }
 
-      <section className="section">
+  if (section.key === "software") {
+    return (
+      <section className="section" key={section.key}>
         <div className="section-heading">
           <div>
-            <span className="section-number">03</span>
-            <h2>Software and systems integration</h2>
+            <span className="section-number">{section.eyebrow}</span>
+            <h2>{section.title}</h2>
           </div>
-          <p>
-            Bespoke internal systems, API integration, embedded services and
-            practical consulting for more efficient operations.
-          </p>
+          <p>{section.summary}</p>
         </div>
         <div className="cta-module">
           <div>
-            <span className="section-number">software.systems</span>
-            <h2>Business systems, data and integrations.</h2>
-            <p>
-              From shipping and CRM integrations to MQTT services, HTTP APIs,
-              internal servers, dashboards and custom workflows, we help reduce
-              errors, manual admin and wasted time.
-            </p>
+            <span className="section-number">{section.panelEyebrow}</span>
+            <h2>{section.panelTitle}</h2>
+            <p>{section.panelSummary}</p>
           </div>
-          <Link className="button" href="/software-it">
-            Explore Software & Systems
-          </Link>
+          {section.ctaHref && section.ctaLabel ? (
+            <Link className="button" href={section.ctaHref}>
+              {section.ctaLabel}
+            </Link>
+          ) : null}
         </div>
       </section>
+    );
+  }
 
-      <section className="section">
+  if (section.key === "workflow") {
+    return (
+      <section className="section" key={section.key}>
         <div className="section-heading">
           <div>
-            <span className="section-number">04</span>
-            <h2>Complex projects, made straightforward</h2>
+            <span className="section-number">{section.eyebrow}</span>
+            <h2>{section.title}</h2>
           </div>
-          <p>
-            The engineering can be detailed. The customer experience should
-            still feel clear, structured and easy to move through.
-          </p>
+          <p>{section.summary}</p>
         </div>
         <div className="process-grid">
           {workflowModules.map((step) => (
@@ -151,33 +163,56 @@ export default async function Home() {
           ))}
         </div>
       </section>
+    );
+  }
 
-      <section className="section">
-        <div className="split-module">
-          <TechnicalVisual label="Eltronic sector map" variant="sectors" />
-          <div>
-            <span className="section-number">05</span>
-            <h2>Application sectors</h2>
-            <p className="lede">
-              Agriculture, construction, logistics and industrial automation
-              each have different pressures around reliability, operator
-              feedback and maintainable control systems.
-            </p>
-            <div className="tag-row">
-              {sectorModules.map((sector) => (
-                <span className="tag" key={sector.title}>
-                  {sector.title}
-                </span>
-              ))}
-            </div>
+  return (
+    <section className="section" key={section.key}>
+      <div className="split-module">
+        <TechnicalVisual label="Eltronic sector map" variant="sectors" />
+        <div>
+          <span className="section-number">{section.panelEyebrow || section.eyebrow}</span>
+          <h2>{section.panelTitle || section.title}</h2>
+          <p className="lede">{section.summary}</p>
+          <div className="tag-row">
+            {sectorModules.map((sector) => (
+              <span className="tag" key={sector.title}>
+                {sector.title}
+              </span>
+            ))}
+          </div>
+          {section.ctaHref && section.ctaLabel ? (
             <div className="actions">
-              <Link className="button" href="/sectors">
-                View sectors
+              <Link className="button" href={section.ctaHref}>
+                {section.ctaLabel}
               </Link>
             </div>
-          </div>
+          ) : null}
         </div>
-      </section>
-    </main>
+      </div>
+    </section>
   );
+}
+
+type BuilderStyle = CSSProperties & Record<`--${string}`, string>;
+
+function builderThemeStyle(theme: SiteBuilderTheme): BuilderStyle {
+  return {
+    "--primary": theme.accentColor,
+    "--secondary": theme.secondaryColor,
+    "--accent": theme.highlightColor,
+    "--gradient-1": `linear-gradient(135deg, ${theme.accentColor} 0%, ${theme.secondaryColor} 58%, ${theme.highlightColor} 100%)`,
+    "--gradient-2": `linear-gradient(135deg, ${theme.secondaryColor} 0%, ${theme.accentColor} 100%)`,
+    "--shadow-glow": `0 0 30px ${hexToRgba(theme.accentColor, 0.26)}`,
+    "--halogen-edge": `linear-gradient(135deg, ${hexToRgba(theme.secondaryColor, 0.95)}, ${hexToRgba(theme.accentColor, 0.4)}, ${hexToRgba(theme.highlightColor, 0.55)})`,
+  };
+}
+
+function hexToRgba(hex: string, alpha: number) {
+  const cleanHex = hex.replace("#", "");
+  const red = Number.parseInt(cleanHex.slice(0, 2), 16);
+  const green = Number.parseInt(cleanHex.slice(2, 4), 16);
+  const blue = Number.parseInt(cleanHex.slice(4, 6), 16);
+
+  return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
 }

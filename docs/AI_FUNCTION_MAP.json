@@ -368,6 +368,14 @@
     "studioShell": "src/components/studio/studio-shell.tsx",
     "studioTheme": "dark/light mode stored in localStorage key eltronic-studio-theme",
     "studioPageHeaderPattern": "StudioShell topbar displays the active mode. Admin pages use compact .studio-page-header description/action rows instead of large duplicate page h1 titles.",
+    "websiteBuilder": {
+      "route": "/studio/builder",
+      "defaults": "src/content/site-builder.ts",
+      "storage": "siteBuilder key in src/lib/managed-data.ts",
+      "action": "saveSiteBuilderAction in src/app/studio/actions.ts",
+      "publicConsumer": "src/app/(site)/page.tsx",
+      "behavior": "Protected internal Elementor/Colibri-style builder foundation. Controls homepage theme preset, colors, background style, visual density, hero copy/typewriter/CTAs/visual, and section visibility/order/copy. No public admin toolbar."
+    },
     "classicWooStyleBackend": {
       "routes": ["/studio/classic/products", "/studio/classic/products/new", "/studio/classic/products/[slug]/edit"],
       "shell": "src/components/studio/studio-shell.tsx",

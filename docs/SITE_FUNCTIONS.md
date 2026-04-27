@@ -12,6 +12,7 @@ Concise living reference for how the current Eltronic Next.js site works.
 - Homepage role typewriter: `src/components/site/hero-role-typewriter.tsx` animates the small role label above the `Eltronic` hero wordmark.
 - Studio product image manager: `src/components/studio/product-image-manager.tsx`.
 - Studio shell: `src/app/studio/(admin)/layout.tsx` and `src/components/studio/studio-shell.tsx`.
+- Website Builder defaults: `src/content/site-builder.ts`.
 - Classic/Woo-style Studio: `/studio/classic/products` uses `src/components/studio/classic/woocommerce-product-editor.tsx` and WordPress/WooCommerce-inspired list/edit screens.
 - Global styles: `src/app/globals.css`.
 - Product seed data: `src/content/products.ts`.
@@ -39,6 +40,7 @@ Concise living reference for how the current Eltronic Next.js site works.
 - `/contact`: quote/contact flow that stores submissions in the managed data layer.
 - `/studio/login`: password login for the admin area.
 - `/studio`: shadcn-styled admin dashboard.
+- `/studio/builder`: protected Website Builder for homepage theme, hero, section visibility and section order.
 - `/studio/products`: product table with quick-edit drawer.
 - `/studio/products/new`: product creation form.
 - `/studio/products/[slug]/edit`: full product editor.
@@ -74,6 +76,15 @@ Each product currently has:
 - `variants`: optional order/variant list with optional SKU, price and article number.
 - `enquiryPrompt`: detail-page call-to-action label.
 
+## Website Builder Behavior
+
+- `/studio/builder` edits managed homepage settings through `saveSiteBuilderAction()` in `src/app/studio/actions.ts`.
+- Defaults live in `src/content/site-builder.ts`; saved values live as `siteBuilder` in the managed data object handled by `src/lib/managed-data.ts`.
+- The homepage reads `getSiteBuilderSettings()` and applies the settings dynamically.
+- Builder controls currently include theme preset, accent/secondary/highlight colours, background style, visual density, hero brand/typewriter/lede/CTAs/visual, and homepage section visibility/order/copy.
+- The builder is intentionally inside Studio only. There is no public WordPress-style admin toolbar when logged in.
+- This is the first builder layer; deeper per-page and per-card editing can be added against the same `SiteBuilderSettings` model.
+
 ## Product Detail Behavior
 
 - Product listing and detail pages are marked dynamic so admin changes can be reflected without rebuilding static slug lists.
@@ -97,6 +108,7 @@ Each product currently has:
 - Auth is implemented in `src/lib/admin-auth.ts` with HMAC-signed credential comparisons and a signed 7-day `eltronic_admin_session` cookie.
 - Studio is separate from the public site shell; public header/footer do not render in admin routes.
 - Studio has a sidebar, dashboard, products, enquiries and settings modes.
+- Studio includes a Website Builder mode for homepage theme/content controls.
 - Studio has browser-local dark/light mode stored in `localStorage`.
 - Studio page titles are intentionally compact: the sticky top bar carries the current mode, while page bodies use small action/description rows instead of large duplicate headings.
 - Existing Studio topbar includes `Switch to new`, which opens the WordPress/WooCommerce-style product backend at `/studio/classic/products`. That backend includes a black admin bar, left admin menu, product list table, Screen Options/Help tabs, product data panels, publish box, category/tag boxes and product image/gallery boxes. The classic UI is a functional approximation mapped to the current Eltronic product schema, not a full WordPress/WooCommerce runtime.

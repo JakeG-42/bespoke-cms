@@ -27,6 +27,7 @@ Always verify current code before changing behavior. Treat this document as a ma
 - `src/app/contact/actions.ts`: public contact form submission action.
 - `src/content/products.ts`: seed catalogue from the crawled WordPress site.
 - `src/content/site.ts`: public services, software/IT, sector, workflow and resource module content.
+- `src/content/site-builder.ts`: Website Builder defaults for homepage theme, hero and section controls.
 - `src/components/site/technical-visuals.tsx`: code-native public-page technical visuals.
 - `src/components/site/ambient-background.tsx`: subtle public-only floating syntax glyphs.
 - `src/components/site/product-media-gallery.tsx`: interactive product image selection and zoom.
@@ -124,6 +125,8 @@ Public catalogue pages read through `getProducts()` and `getProductBySlug()` fro
 Admin product edits are handled by `saveProductAction()` in `src/app/studio/actions.ts`.
 
 Product gallery editing in Studio uses `src/components/studio/product-image-manager.tsx`, which posts ordered repeated `imageSrc` and `imageAlt` fields. Product galleries should be managed through seed data or Studio image fields only; generated fallback gallery assets are not part of the public media model. `productFromFormData()` in `src/lib/managed-data.ts` keeps backward compatibility with legacy newline `images` form data, but the UI should stay visual rather than returning to textarea-based image ordering.
+
+Website Builder settings are stored in `src/lib/managed-data.ts` under `siteBuilder`. Defaults are in `src/content/site-builder.ts`. `/studio/builder` saves through `saveSiteBuilderAction()` and the homepage uses `getSiteBuilderSettings()` to render theme variables, hero copy, section visibility and section order. Treat it as the internal Elementor/Colibri-style builder foundation; do not add a public admin toolbar unless Jake explicitly asks for one.
 
 Admin product UI:
 

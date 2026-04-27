@@ -416,6 +416,36 @@ h3 {
   padding-top: clamp(0.75rem, 2vw, 1.6rem);
 }
 
+.home-page.builder-density-compact .section {
+  padding: clamp(2.2rem, 5vw, 4.2rem) 0;
+}
+
+.home-page.builder-density-spacious .section {
+  padding: clamp(4rem, 9vw, 7.5rem) 0;
+}
+
+.home-page.builder-bg-soft .technical-visual {
+  background:
+    radial-gradient(circle at 28% 16%, rgba(139, 211, 255, 0.14), transparent 16rem),
+    radial-gradient(circle at 78% 20%, rgba(183, 163, 255, 0.12), transparent 14rem),
+    #050816;
+}
+
+.home-page.builder-bg-minimal .technical-visual,
+.home-page.builder-theme-clean .feature-module,
+.home-page.builder-theme-clean .process-card,
+.home-page.builder-theme-clean .sector-card,
+.home-page.builder-theme-clean .document-card,
+.home-page.builder-theme-clean .cta-module {
+  background: rgba(23, 32, 51, 0.78);
+}
+
+.home-page.builder-theme-halogen .panel,
+.home-page.builder-theme-halogen .product-card,
+.home-page.builder-theme-halogen .cta-module {
+  box-shadow: var(--shadow-lg), 0 0 38px rgba(183, 163, 255, 0.12);
+}
+
 .hero {
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
@@ -2847,6 +2877,229 @@ h3 {
   gap: 0.45rem;
 }
 
+.builder-shell {
+  display: grid;
+  gap: 1rem;
+}
+
+.builder-header {
+  position: sticky;
+  top: 0;
+  z-index: 12;
+  backdrop-filter: blur(18px);
+}
+
+.builder-success {
+  border-color: color-mix(in srgb, var(--primary) 34%, var(--border));
+  color: var(--foreground);
+}
+
+.builder-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.36fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.builder-controls {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.builder-preview-panel {
+  position: sticky;
+  top: 5rem;
+}
+
+.builder-disclosure {
+  background:
+    radial-gradient(circle at top right, color-mix(in srgb, var(--primary) 8%, transparent), transparent 18rem),
+    color-mix(in srgb, var(--card) 72%, transparent);
+}
+
+.builder-summary-icon {
+  display: inline-flex;
+  width: 2rem;
+  height: 2rem;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.55rem;
+  border: 1px solid color-mix(in srgb, var(--primary) 32%, var(--border));
+  border-radius: 0.75rem;
+  color: var(--primary);
+  vertical-align: middle;
+}
+
+.builder-field-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.builder-select {
+  min-height: 2.5rem;
+  width: 100%;
+  border: 1px solid var(--input);
+  border-radius: 0.75rem;
+  background: color-mix(in srgb, var(--background) 60%, transparent);
+  color: var(--foreground);
+  padding: 0.5rem 0.7rem;
+  font: inherit;
+  font-size: 0.9rem;
+}
+
+.builder-color-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.builder-color-field {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.builder-color-field span {
+  color: var(--muted-foreground);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.builder-color-field input[type="color"] {
+  width: 100%;
+  min-height: 3rem;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: transparent;
+  cursor: pointer;
+}
+
+.builder-preset-notes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.builder-preset-notes span {
+  display: grid;
+  gap: 0.22rem;
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--background) 48%, transparent);
+  color: var(--muted-foreground);
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
+.builder-preset-notes strong {
+  color: var(--foreground);
+}
+
+.builder-section-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.builder-section-card {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 1.2rem;
+  background: color-mix(in srgb, var(--background) 36%, transparent);
+}
+
+.builder-preview-window {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 1.35rem;
+  background:
+    linear-gradient(color-mix(in srgb, var(--primary) 10%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--primary) 10%, transparent) 1px, transparent 1px),
+    color-mix(in srgb, var(--background) 74%, transparent);
+  background-size: 24px 24px;
+}
+
+.builder-preview-hero {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.builder-preview-hero span {
+  color: var(--primary);
+  font-family: var(--font-code), monospace;
+  font-size: 0.8rem;
+}
+
+.builder-preview-hero strong {
+  color: var(--foreground);
+  font-family: var(--font-code), monospace;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  line-height: 0.95;
+}
+
+.builder-preview-hero p {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.88rem;
+}
+
+.builder-preview-hero div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.builder-preview-hero small {
+  padding: 0.35rem 0.55rem;
+  border: 1px solid color-mix(in srgb, var(--primary) 28%, var(--border));
+  border-radius: 999px;
+  color: var(--foreground);
+  font-weight: 800;
+}
+
+.builder-preview-sections {
+  display: grid;
+  gap: 0.55rem;
+  padding: 1rem;
+}
+
+.builder-preview-sections article {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 0.9rem;
+  background: color-mix(in srgb, var(--card) 56%, transparent);
+}
+
+.builder-preview-sections article.is-disabled {
+  opacity: 0.45;
+}
+
+.builder-preview-sections span {
+  color: var(--primary);
+  font-size: 0.72rem;
+  font-weight: 900;
+}
+
+.builder-preview-sections strong {
+  color: var(--foreground);
+  line-height: 1.2;
+}
+
+.builder-preview-sections small {
+  color: var(--muted-foreground);
+  font-size: 0.76rem;
+}
+
 .studio-drawer-overlay {
   position: fixed;
   inset: 0;
@@ -2931,6 +3184,17 @@ h3 {
   .studio-product-editor,
   .studio-drawer .studio-product-editor {
     grid-template-columns: 1fr;
+  }
+
+  .builder-grid,
+  .builder-field-grid,
+  .builder-color-row,
+  .builder-preset-notes {
+    grid-template-columns: 1fr;
+  }
+
+  .builder-preview-panel {
+    position: static;
   }
 
   .studio-editor-sidebar,

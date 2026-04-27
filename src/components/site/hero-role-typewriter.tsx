@@ -2,16 +2,17 @@
 
 import { useEffect, useState } from "react";
 
-const roles = [
+const defaultRoles = [
   "systems integrator",
   "systems consultant",
   "control systems partner",
   "software integration support",
 ];
 
-export function HeroRoleTypewriter() {
+export function HeroRoleTypewriter({ roles = defaultRoles }: { roles?: string[] }) {
+  const safeRoles = roles.length > 0 ? roles : defaultRoles;
   const [roleIndex, setRoleIndex] = useState(0);
-  const [characterCount, setCharacterCount] = useState(roles[0].length);
+  const [characterCount, setCharacterCount] = useState(safeRoles[0].length);
   const [isDeleting, setIsDeleting] = useState(true);
 
   useEffect(() => {
@@ -19,7 +20,7 @@ export function HeroRoleTypewriter() {
       return;
     }
 
-    const currentRole = roles[roleIndex];
+    const currentRole = safeRoles[roleIndex] ?? safeRoles[0];
     const pause = characterCount === currentRole.length && !isDeleting ? 1500 : characterCount === 0 ? 320 : 52;
     const speed = isDeleting ? 34 : pause;
 
@@ -27,7 +28,7 @@ export function HeroRoleTypewriter() {
       if (isDeleting) {
         if (characterCount === 0) {
           setIsDeleting(false);
-          setRoleIndex((current) => (current + 1) % roles.length);
+          setRoleIndex((current) => (current + 1) % safeRoles.length);
           return;
         }
 
@@ -44,9 +45,9 @@ export function HeroRoleTypewriter() {
     }, speed);
 
     return () => window.clearTimeout(timeout);
-  }, [characterCount, isDeleting, roleIndex]);
+  }, [characterCount, isDeleting, roleIndex, safeRoles]);
 
-  const visibleRole = roles[roleIndex].slice(0, characterCount);
+  const visibleRole = (safeRoles[roleIndex] ?? safeRoles[0]).slice(0, characterCount);
 
   return (
     <span className="title-prefix title-typewriter" aria-label="Eltronic roles">

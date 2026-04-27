@@ -53,6 +53,7 @@ Concise living log for the Eltronic standalone site/app. Add newest updates at t
 - Replaced large duplicate Studio page titles with compact action rows, shortened the About hero heading, tightened homepage hero spacing and added a role typewriter above the Eltronic wordmark.
 - Reduced the oversized About page approach quote card so it reads as supporting content instead of a dominant headline.
 - Added a protected WordPress/WooCommerce-style product backend under `/studio/classic/products`, plus a `Switch to new` button from the current Studio and `Switch to current` from the classic shell.
+- Added `/studio/builder`, a protected Website Builder for homepage theme, hero content, section visibility and section ordering, backed by the managed data layer.
 - Checked Vercel env vars on 2026-04-27; none are configured yet, so KV/Upstash persistence is still required before live admin/contact writes are trusted.
 
 ## Future Considerations
@@ -60,7 +61,7 @@ Concise living log for the Eltronic standalone site/app. Add newest updates at t
 - WordPress migration work is being considered for any content that is not publicly crawlable.
 - A possible temporary WordPress plugin could provide a controlled JSON/ZIP export from wp-admin.
 - Production persistence needs a Vercel KV/Upstash Redis connection before live admin writes and contact submissions should be trusted.
-- Future admin improvements could include image uploads, richer product template fields, and email notifications for new submissions.
+- Future admin improvements could include image uploads, per-page builder screens, richer product template fields, and email notifications for new submissions.
 - Keep AI-facing docs current when auth, route, storage or product-template behavior changes.
 
 ## Update Notes
