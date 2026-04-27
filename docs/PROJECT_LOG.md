@@ -33,7 +33,7 @@ Concise living log for the Eltronic standalone site/app. Add newest updates at t
 - Split public site chrome from Studio chrome with route groups.
 - Added Studio sidebar modes, dark/light mode, product table, quick-edit drawer, full product edit pages and ordered multi-image product galleries.
 - Added public `Solutions`, `Sectors`, and `Data & Specification` pages with reusable code-native technical visual modules.
-- Added public nav icons, product gallery SVG placeholders for every product template, and product detail spacing polish.
+- Added public nav icons and product detail spacing polish.
 - Replaced static product image cards with an interactive thumbnail gallery and zoom overlay, and tightened public nav icon alignment.
 - Moved public catalogue imagery into local `public/product-images` assets and removed public-facing migration/source-trace language.
 - Redesigned the public contact page with a dedicated enquiry layout and responsive form panel.
@@ -41,6 +41,7 @@ Concise living log for the Eltronic standalone site/app. Add newest updates at t
 - Refined public workflow copy to present complex delivery as professionally controlled and easy for customers to follow.
 - Reworked Studio product image editing into a visual preview/order manager and added outcome-led workflow cards with subtle active states.
 - Removed the sticky footer reveal experiment and returned the public footer to a clean static section.
+- Replaced the mobile public navigation with a compact hamburger menu, made the footer transparent/static again, and removed generated product-gallery placeholders so galleries rely on managed product images.
 - Checked Vercel env vars on 2026-04-27; none are configured yet, so KV/Upstash persistence is still required before live admin/contact writes are trusted.
 
 ## Future Considerations

@@ -18,7 +18,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           <Link className="brand-logo logo-text" href="/">
             Eltronic
           </Link>
-          <div className="nav-menu">
+          <div className="nav-menu desktop-nav">
             {navItems.map((item) => (
               <Link href={item.href} key={item.href}>
                 <NavIcon name={item.icon} />
@@ -26,6 +26,21 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
               </Link>
             ))}
           </div>
+          <details className="mobile-nav">
+            <summary className="mobile-menu-toggle" aria-label="Open main menu">
+              <span />
+              <span />
+              <span />
+            </summary>
+            <div className="mobile-nav-panel">
+              {navItems.map((item) => (
+                <Link href={item.href} key={item.href}>
+                  <NavIcon name={item.icon} />
+                  <span>{item.label}</span>
+                </Link>
+              ))}
+            </div>
+          </details>
         </nav>
       </header>
       {children}

@@ -282,16 +282,14 @@
     "templateChangeChecklist": [
       "src/content/products.ts#ProductTemplate",
       "src/lib/managed-data.ts#parseProductTemplate",
-      "src/lib/managed-data.ts#fallbackGallery",
       "src/components/studio/product-form.tsx template select",
       "src/app/(site)/products/[slug]/page.tsx#productTypeLabel",
       "docs/AI_FUNCTION_MAP.json",
       "docs/SITE_FUNCTIONS.md"
     ],
-    "galleryFallback": {
+    "galleryImages": {
       "function": "src/lib/managed-data.ts#getProductImages",
-      "assetDirectory": "public/product-gallery",
-      "behavior": "Appends template-aware local SVG placeholders after real images until each product has up to four unique gallery images."
+      "behavior": "Returns managed product.images in order, or product.image as the single fallback. Generated placeholder gallery assets are not appended."
     },
     "primaryImageAssets": "public/product-images"
   },
@@ -321,7 +319,8 @@
     "publicShell": "src/components/site/site-shell.tsx",
     "publicNavIcons": {
       "file": "src/components/site/site-shell.tsx",
-      "type": "inline SVG"
+      "type": "inline SVG",
+      "mobileBehavior": "Full desktop nav collapses to a native details hamburger menu under the mobile breakpoint."
     },
     "publicFooter": {
       "shellFile": "src/components/site/site-shell.tsx",
@@ -342,10 +341,6 @@
       "type": "code-native SVG",
       "variants": ["display", "network", "sectors", "data"]
     },
-    "productGalleryPlaceholders": {
-      "directory": "public/product-gallery",
-      "type": "local SVG image assets"
-    },
     "studioShell": "src/components/studio/studio-shell.tsx",
     "studioTheme": "dark/light mode stored in localStorage key eltronic-studio-theme",
     "components": [
@@ -364,7 +359,7 @@
       "file": "src/components/studio/product-image-manager.tsx",
       "parser": "src/lib/managed-data.ts#productFromFormData",
       "fields": ["imageSrc", "imageAlt"],
-      "behavior": "Visual image preview and ordering UI. Repeated imageSrc/imageAlt fields are saved in order; first image becomes product.image. Public /product-gallery/ fallback images are filtered out of the editor."
+      "behavior": "Visual image preview and ordering UI. Repeated imageSrc/imageAlt fields are saved in order; first image becomes product.image. Product galleries should use managed images from this UI or seed data only."
     }
   },
   "deployment": {

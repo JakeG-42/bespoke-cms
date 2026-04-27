@@ -30,7 +30,6 @@ Always verify current code before changing behavior. Treat this document as a ma
 - `src/components/site/technical-visuals.tsx`: code-native public-page technical visuals.
 - `src/components/site/product-media-gallery.tsx`: interactive product image selection and zoom.
 - `src/components/studio/product-image-manager.tsx`: Studio visual image preview/order editor.
-- `public/product-gallery`: generated SVG placeholder images appended to product galleries.
 - `public/product-images`: local product image assets used by the public catalogue.
 - `docs/AI_FUNCTION_MAP.json`: machine-readable feature map.
 
@@ -122,7 +121,7 @@ Public catalogue pages read through `getProducts()` and `getProductBySlug()` fro
 
 Admin product edits are handled by `saveProductAction()` in `src/app/studio/actions.ts`.
 
-Product gallery editing in Studio uses `src/components/studio/product-image-manager.tsx`, which posts ordered repeated `imageSrc` and `imageAlt` fields. Public fallback gallery assets under `/product-gallery/` are filtered out of the editor so they are not accidentally saved as real product media. `productFromFormData()` in `src/lib/managed-data.ts` keeps backward compatibility with legacy newline `images` form data, but the UI should stay visual rather than returning to textarea-based image ordering.
+Product gallery editing in Studio uses `src/components/studio/product-image-manager.tsx`, which posts ordered repeated `imageSrc` and `imageAlt` fields. Product galleries should be managed through seed data or Studio image fields only; generated fallback gallery assets are not part of the public media model. `productFromFormData()` in `src/lib/managed-data.ts` keeps backward compatibility with legacy newline `images` form data, but the UI should stay visual rather than returning to textarea-based image ordering.
 
 Admin product UI:
 
@@ -147,11 +146,11 @@ Product templates are currently:
 - `data-logger`
 - `module`
 
-Gallery fallback behavior:
+Gallery behavior:
 
-- `getProductImages(product)` appends local template-aware SVG placeholders from `public/product-gallery` until each gallery has up to four unique images.
-- Real images from `product.images` always come first.
-- The fallback exists to demonstrate the gallery on every product while real migrated product media is still incomplete.
+- `getProductImages(product)` returns real managed media only: ordered `product.images` first, or the primary `product.image` if no gallery images are set.
+- Generated placeholder gallery assets should not be appended to public product pages.
+- If a product needs multiple images, add them through Studio or seed data so the admin UI remains the source of truth.
 - Product detail pages render `ProductMediaGallery`, a client component with thumbnail switching, keyboard-friendly zoom, and previous/next controls.
 - Primary product images are local files under `public/product-images`; keep public pages off legacy media URLs.
 
@@ -188,7 +187,7 @@ Public page visuals are code-native SVG modules, not bitmap files:
 - Variants: `display`, `network`, `sectors`, `data`.
 - Preferred for now because visuals remain editable, versioned and deployable without a media library.
 
-The public main navigation uses inline SVG icons in `src/components/site/site-shell.tsx`.
+The public main navigation uses inline SVG icons in `src/components/site/site-shell.tsx`. Desktop shows the full nav; mobile uses a compact native `details` hamburger with the same links.
 
 The public footer is also rendered from `src/components/site/site-shell.tsx`. Keep it simple and static for now; the sticky reveal experiment made the footer appear behind content and was removed.
 

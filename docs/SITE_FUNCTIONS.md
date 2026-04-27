@@ -15,7 +15,7 @@ Concise living reference for how the current Eltronic Next.js site works.
 - Site page/module content: `src/content/site.ts`.
 - Managed data layer: `src/lib/managed-data.ts`.
 - Admin UI: `src/app/studio`.
-- Public navigation: brand link to `/`, plus icon-labelled links for `/products`, `/solutions`, `/software-it`, `/sectors`, `/data-specification`, `/about`, and `/contact`.
+- Public navigation: brand link to `/`, desktop icon-labelled links for `/products`, `/solutions`, `/software-it`, `/sectors`, `/data-specification`, `/about`, and `/contact`, plus a compact hamburger menu on mobile.
 - Fonts: `Tajawal` and `Fira_Code` are loaded through `next/font/google`.
 - UI system: public pages use custom CSS; admin uses Tailwind CSS v4 and shadcn-style local components under `src/components/ui`.
 - Technical visual modules: `src/components/site/technical-visuals.tsx` renders SVG-style imagery for public pages.
@@ -54,7 +54,7 @@ Each product currently has:
 - `template`: one of `hmi`, `data-logger`, or `module`.
 - `sourceUrl`: original crawl/source URL.
 - `image`: `{ src, alt }` used by listings and detail pages.
-- `images`: optional ordered gallery of `{ src, alt }`; if fewer than four images exist, `src/lib/managed-data.ts` appends local SVG placeholders from `public/product-gallery`.
+- `images`: optional ordered gallery of `{ src, alt }`; public product galleries use these managed images only, with `image` as the fallback primary image.
 - `summary`: short card/listing copy.
 - `description`: product detail intro copy.
 - `highlights`: list of product or template highlights.
@@ -69,7 +69,7 @@ Each product currently has:
 - `generateMetadata()` sets product-specific page title and description.
 - Unknown product slugs call `notFound()`.
 - The detail page displays family, category, name, description, template-specific heading, image, highlights, enquiry prompt, specifications, documents and variants where available.
-- Multiple product images render as an interactive ordered gallery on the detail page with selectable thumbnails and a zoom overlay. Placeholder SVGs are automatically appended per product template so every product can currently demonstrate gallery behavior.
+- Multiple product images render as an interactive ordered gallery on the detail page with selectable thumbnails and a zoom overlay. The gallery only uses managed product media from seed data or Studio edits.
 - Template headings are currently mapped in `src/app/(site)/products/[slug]/page.tsx`.
 
 ## Current Product Templates
@@ -115,4 +115,4 @@ Each product currently has:
 - WordPress migration/plugin work is being considered but is not implemented in the current app.
 - Image upload management is not implemented yet; product images currently use URLs.
 - Generated public-page imagery is currently code-native SVG, not bitmap media uploads.
-- Product gallery placeholders live in `public/product-gallery` and are intended to be replaced with real product images later through Studio.
+- Product galleries no longer append generated placeholder images; add real image URLs through Studio or seed product data.

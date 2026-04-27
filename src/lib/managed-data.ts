@@ -36,24 +36,6 @@ const featuredProductSlugs = [
   "eltronic-iq-can-bus-module",
 ];
 
-const fallbackGallery: Record<ProductTemplate, Array<{ src: string; altSuffix: string }>> = {
-  hmi: [
-    { src: "/product-gallery/hmi-interface.svg", altSuffix: "operator interface visual" },
-    { src: "/product-gallery/can-network.svg", altSuffix: "CANbus network visual" },
-    { src: "/product-gallery/machine-application.svg", altSuffix: "machine application visual" },
-  ],
-  "data-logger": [
-    { src: "/product-gallery/data-flow.svg", altSuffix: "data logging workflow visual" },
-    { src: "/product-gallery/can-network.svg", altSuffix: "CANbus network visual" },
-    { src: "/product-gallery/machine-application.svg", altSuffix: "machine application visual" },
-  ],
-  module: [
-    { src: "/product-gallery/module-io.svg", altSuffix: "I/O wiring visual" },
-    { src: "/product-gallery/can-network.svg", altSuffix: "CANbus network visual" },
-    { src: "/product-gallery/machine-application.svg", altSuffix: "machine application visual" },
-  ],
-};
-
 function getRedisConfig() {
   const url = process.env.KV_REST_API_URL ?? process.env.UPSTASH_REDIS_REST_URL;
   const token = process.env.KV_REST_API_TOKEN ?? process.env.UPSTASH_REDIS_REST_TOKEN;
@@ -190,17 +172,15 @@ export async function getFeaturedProducts() {
 
 export function getProductImages(product: Product): ProductImage[] {
   const images = Array.isArray(product.images)
-    ? product.images.filter((image) => image.src)
+    ? product.images.filter((image) => image.src && !image.src.startsWith("/product-gallery/"))
     : [];
-  const mergedImages = images.length > 0 ? images : [product.image].filter((image) => image?.src);
-  const fallbackImages = fallbackGallery[product.template].map((image) => ({
-    src: image.src,
-    alt: `${product.name} ${image.altSuffix}`,
-  }));
+  const mergedImages =
+    images.length > 0
+      ? images
+      : [product.image].filter((image) => image?.src && !image.src.startsWith("/product-gallery/"));
 
-  return [...mergedImages, ...fallbackImages]
+  return mergedImages
     .filter((image, index, gallery) => gallery.findIndex((item) => item.src === image.src) === index)
-    .slice(0, 4)
     .map((image) => ({
       src: image.src,
       alt: image.alt || product.name,
