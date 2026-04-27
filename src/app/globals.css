@@ -879,6 +879,159 @@ h3 {
   transform: translateY(-3px);
 }
 
+.about-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(320px, 0.82fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+
+.about-hero h1 {
+  max-width: 12ch;
+}
+
+.about-hero .technical-visual {
+  transform: rotate(1deg);
+}
+
+.about-intro-grid {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.82fr) minmax(0, 1.18fr);
+  gap: 1rem;
+  padding-top: 0;
+}
+
+.about-statement {
+  position: relative;
+  overflow: hidden;
+}
+
+.about-statement::after {
+  position: absolute;
+  right: -5rem;
+  bottom: -5rem;
+  width: 14rem;
+  height: 14rem;
+  content: "";
+  border: 1px solid rgba(139, 211, 255, 0.2);
+  border-radius: 999px;
+  background: rgba(139, 211, 255, 0.05);
+}
+
+.about-proof-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.about-proof-card,
+.about-capability-panel,
+.about-quote-card {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background:
+    linear-gradient(rgba(139, 211, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139, 211, 255, 0.04) 1px, transparent 1px),
+    rgba(23, 32, 51, 0.74);
+  background-size: 30px 30px;
+  box-shadow: var(--shadow-lg);
+}
+
+.about-proof-card {
+  min-height: 14rem;
+  padding: 1.2rem;
+  transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+
+.about-proof-card:hover {
+  border-color: rgba(139, 211, 255, 0.42);
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-3px);
+}
+
+.about-proof-card span,
+.about-quote-card span {
+  display: block;
+  margin-bottom: 0.8rem;
+  color: var(--accent);
+  font-family: var(--font-code), monospace;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.about-proof-card p,
+.about-capability-panel p,
+.about-quote-card p {
+  color: var(--text-secondary);
+}
+
+.about-capability-panel {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(1.5rem, 4vw, 3rem);
+  padding: clamp(1.25rem, 4vw, 2rem);
+}
+
+.about-capability-list {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-capability-list li {
+  display: flex;
+  gap: 0.7rem;
+  align-items: flex-start;
+  padding: 0.85rem;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  border-radius: 10px;
+  background: rgba(2, 6, 23, 0.3);
+  color: var(--text-secondary);
+}
+
+.about-capability-list li::before {
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-top: 0.55rem;
+  content: "";
+  border-radius: 999px;
+  background: var(--gradient-2);
+  box-shadow: var(--shadow-glow);
+  flex: 0 0 auto;
+}
+
+.about-sector-panel {
+  min-height: 100%;
+}
+
+.about-sector-panel .tag-row {
+  margin-top: 1.5rem;
+}
+
+.about-quote-card {
+  display: grid;
+  align-content: center;
+  min-height: 22rem;
+  padding: clamp(1.5rem, 5vw, 3rem);
+}
+
+.about-quote-card p {
+  max-width: 11ch;
+  margin: 0;
+  color: var(--text-primary);
+  font-size: clamp(2rem, 5vw, 4.25rem);
+  font-weight: 800;
+  line-height: 0.98;
+}
+
+.about-cta {
+  border-color: rgba(139, 211, 255, 0.28);
+}
+
 .cta-module {
   display: flex;
   align-items: center;
@@ -1845,6 +1998,9 @@ h3 {
 
 @media (max-width: 980px) {
   .hero,
+  .about-hero,
+  .about-intro-grid,
+  .about-capability-panel,
   .detail-hero,
   .detail-layout,
   .contact-hero,
@@ -1872,6 +2028,10 @@ h3 {
 
   .section-heading {
     display: grid;
+  }
+
+  .about-hero h1 {
+    max-width: 14ch;
   }
 }
 
@@ -1903,6 +2063,8 @@ h3 {
   }
 
   .capability-grid,
+  .about-proof-grid,
+  .about-capability-panel,
   .module-grid,
   .process-grid,
   .sector-grid,
@@ -1958,6 +2120,15 @@ h3 {
     max-width: 13ch;
     font-size: clamp(2.2rem, 11vw, 3.35rem);
     line-height: 1.02;
+  }
+
+  .about-quote-card {
+    min-height: 16rem;
+  }
+
+  .about-quote-card p {
+    max-width: 12ch;
+    font-size: clamp(2rem, 12vw, 3.1rem);
   }
 
   .cta-module {

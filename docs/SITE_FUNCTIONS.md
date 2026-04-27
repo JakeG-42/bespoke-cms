@@ -15,7 +15,7 @@ Concise living reference for how the current Eltronic Next.js site works.
 - Site page/module content: `src/content/site.ts`.
 - Managed data layer: `src/lib/managed-data.ts`.
 - Admin UI: `src/app/studio`.
-- Public navigation: brand link to `/`, desktop icon-labelled links for `/products`, `/solutions`, `/software-it`, `/sectors`, `/data-specification`, `/about`, and `/contact`, plus a compact hamburger menu on mobile.
+- Public navigation: brand link to `/`, desktop icon-labelled links for `/products`, `/solutions`, `/software-it`, `/about`, and `/contact`, plus a compact hamburger menu on mobile. `Sectors` and `Data & specification` remain reachable from page CTAs and the footer.
 - Fonts: `Tajawal` and `Fira_Code` are loaded through `next/font/google`.
 - UI system: public pages use custom CSS; admin uses Tailwind CSS v4 and shadcn-style local components under `src/components/ui`.
 - Technical visual modules: `src/components/site/technical-visuals.tsx` renders SVG-style imagery for public pages.
@@ -31,7 +31,7 @@ Concise living reference for how the current Eltronic Next.js site works.
 - `/software-it`: public service page for bespoke software, internal systems, API/shipping integrations, embedded services, servers and technical consultation.
 - `/sectors`: public sector page for agriculture, construction, logistics and industrial automation.
 - `/data-specification`: public resource page for data sheets, guides and product documents.
-- `/about`: placeholder page for company story, services, credentials, and trust-building content.
+- `/about`: company positioning page for Eltronic's machinery, product, integration and software approach.
 - `/contact`: quote/contact flow that stores submissions in the managed data layer.
 - `/studio/login`: password login for the admin area.
 - `/studio`: shadcn-styled admin dashboard.

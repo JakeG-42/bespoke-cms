@@ -188,7 +188,7 @@ Public page visuals are code-native SVG modules, not bitmap files:
 - Variants: `display`, `network`, `sectors`, `data`.
 - Preferred for now because visuals remain editable, versioned and deployable without a media library.
 
-The public main navigation uses inline SVG icons in `src/components/site/site-shell.tsx`. Desktop shows the full nav; mobile uses a compact native `details` hamburger with the same links.
+The public main navigation uses inline SVG icons in `src/components/site/site-shell.tsx`. Desktop shows the core customer journey links: Products, Solutions, Software, About and Contact. Mobile uses a compact native `details` hamburger with the same links. Keep secondary pages such as Sectors and Data & specification discoverable through page CTAs or footer links rather than crowding the primary nav.
 
 The public footer is also rendered from `src/components/site/site-shell.tsx`. Keep it simple and static for now; the sticky reveal experiment made the footer appear behind content and was removed.
 

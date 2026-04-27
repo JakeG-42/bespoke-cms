@@ -3,9 +3,7 @@ import Link from "next/link";
 const navItems = [
   { href: "/products", label: "Products", icon: "products" },
   { href: "/solutions", label: "Solutions", icon: "solutions" },
-  { href: "/software-it", label: "Software & Systems", icon: "software" },
-  { href: "/sectors", label: "Sectors", icon: "sectors" },
-  { href: "/data-specification", label: "Data", icon: "data" },
+  { href: "/software-it", label: "Software", icon: "software" },
   { href: "/about", label: "About", icon: "about" },
   { href: "/contact", label: "Contact", icon: "contact" },
 ] as const;
@@ -48,6 +46,8 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         <div className="footer-container">
           <p>© 2026 Eltronic</p>
           <div className="footer-links">
+            <Link href="/sectors">Sectors</Link>
+            <Link href="/data-specification">Data & specification</Link>
             <a href="tel:+447935239421">+44(0) 79 3523 9421</a>
             <a href="mailto:sales@eltronic.co.uk">sales@eltronic.co.uk</a>
           </div>
@@ -88,24 +88,6 @@ function NavIcon({ name }: { name: (typeof navItems)[number]["icon"] }) {
       <svg {...commonProps}>
         <path d="M5 6h14v9H5z" />
         <path d="M8 19h8M10 15v4M14 15v4M9 10l2 2 4-5" />
-      </svg>
-    );
-  }
-
-  if (name === "sectors") {
-    return (
-      <svg {...commonProps}>
-        <circle cx="12" cy="12" r="3.2" />
-        <path d="M12 4v4.8M12 15.2V20M4 12h4.8M15.2 12H20M6.3 6.3l3.4 3.4M14.3 14.3l3.4 3.4" />
-      </svg>
-    );
-  }
-
-  if (name === "data") {
-    return (
-      <svg {...commonProps}>
-        <path d="M6 4h9l3 3v13H6V4Z" />
-        <path d="M15 4v4h4M8.5 12h7M8.5 15h7M8.5 18h4" />
       </svg>
     );
   }

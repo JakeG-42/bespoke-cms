@@ -1,44 +1,202 @@
+import Link from "next/link";
+import { TechnicalVisual } from "@/components/site/technical-visuals";
+import { sectorModules, workflowModules } from "@/content/site";
+
 export const metadata = {
   title: "About | Eltronic",
-  description: "About Eltronic systems integration and machinery solutions.",
+  description: "About Eltronic engineering, product supply, systems integration and software support for machinery projects.",
 };
+
+const strengths = [
+  {
+    code: "machine.context",
+    title: "We start with the machine",
+    summary:
+      "The right answer depends on environment, operators, protocols, duty cycle, support needs and what already exists on site.",
+  },
+  {
+    code: "practical.integration",
+    title: "Products become working systems",
+    summary:
+      "Displays, CAN data, I/O, harnesses, software and documentation are treated as one integration problem, not separate boxes.",
+  },
+  {
+    code: "customer.clarity",
+    title: "Complex work made clear",
+    summary:
+      "Customers should understand the route, the risks and the next decision without needing to translate engineering noise.",
+  },
+  {
+    code: "long.term",
+    title: "Built for support",
+    summary:
+      "A useful system is maintainable after delivery, with sensible handover, diagnostics and room for future improvement.",
+  },
+];
+
+const capabilities = [
+  "Rugged HMI displays and operator interfaces",
+  "CANbus, CAN-FD, data logging and diagnostics",
+  "Custom harnesses, wiring and control integration",
+  "Embedded services, APIs, dashboards and internal systems",
+  "Specification support, documentation and lifecycle improvement",
+];
 
 export default function AboutPage() {
   return (
     <main className="page">
-      <section className="section">
-        <p className="code-kicker">about.eltronic</p>
-        <h1>Systems integration for machinery.</h1>
-        <p className="lede">
-          Eltronic AG Limited specialises in mobile and stationary machinery
-          solutions: intelligent touch screens, custom harnesses, software and
-          control-system integration.
-        </p>
+      <section className="about-hero section">
+        <div>
+          <p className="code-kicker">about.eltronic</p>
+          <h1>Practical engineering for machines, screens and the systems around them.</h1>
+          <p className="lede">
+            Eltronic supports mobile and stationary machinery projects with
+            rugged HMI displays, CAN data, bespoke integration and software
+            systems that reduce friction between hardware, operators and
+            business workflows.
+          </p>
+          <div className="actions">
+            <Link className="button" href="/contact">
+              Start a project conversation
+            </Link>
+            <Link className="button secondary" href="/products">
+              Browse products
+            </Link>
+          </div>
+        </div>
+
+        <TechnicalVisual label="Eltronic machine, data and systems architecture" variant="network" />
+      </section>
+
+      <section className="about-intro-grid section">
+        <article className="about-statement panel">
+          <span className="section-number">why.eltronic</span>
+          <h2>Not just a catalogue. Not just code. The useful bit in the middle.</h2>
+          <p>
+            A product only matters once it is specified correctly, wired into the
+            real machine, configured around the operator and supported by clear
+            information. That is the space Eltronic works in.
+          </p>
+          <p>
+            The work can involve an HMI display, CAN logging, a control module,
+            a custom workflow, an internal system or all of them together. The
+            aim is the same: make the technical path controlled, understandable
+            and reliable.
+          </p>
+        </article>
+
+        <div className="about-proof-grid">
+          {strengths.map((item) => (
+            <article className="about-proof-card" key={item.code}>
+              <span>{item.code}</span>
+              <h3>{item.title}</h3>
+              <p>{item.summary}</p>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section className="section">
-        <div className="capability-grid">
-          <article className="panel">
-            <h3>HMI solutions</h3>
+        <div className="section-heading">
+          <div>
+            <span className="section-number">what.we.do</span>
+            <h2>Engineering support across the whole system.</h2>
+          </div>
+          <p>
+            Customers can come in through a product requirement, a machine
+            problem, a workflow bottleneck or a systems integration need.
+          </p>
+        </div>
+        <div className="about-capability-panel">
+          <div>
+            <h3>Core capability</h3>
             <p>
-              Rugged touch screen interfaces with CAN-Bus, Ethernet and serial
-              communications for demanding operating environments.
+              Eltronic sits between product supply, machine integration and
+              practical software delivery, helping customers make good technical
+              decisions without overcomplicating the project.
             </p>
-          </article>
-          <article className="panel">
-            <h3>Bespoke integration</h3>
+          </div>
+          <ul className="about-capability-list">
+            {capabilities.map((capability) => (
+              <li key={capability}>{capability}</li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="section-heading">
+          <div>
+            <span className="section-number">how.we.work</span>
+            <h2>Structured enough for control. Flexible enough for real projects.</h2>
+          </div>
+          <p>
+            Machinery projects rarely move in perfect straight lines. The work
+            stays calm when discovery, specification, delivery and support are
+            handled deliberately.
+          </p>
+        </div>
+        <div className="process-grid">
+          {workflowModules.map((step) => (
+            <article className="process-card" key={step.step} tabIndex={0}>
+              <strong>{step.step}</strong>
+              <h3>{step.title}</h3>
+              <p>{step.summary}</p>
+              <small className="process-outcome">
+                <span>Outcome</span>
+                {step.outcome}
+              </small>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="split-module reverse">
+          <div className="panel about-sector-panel">
+            <span className="section-number">where.it.fits</span>
+            <h2>Built around practical environments.</h2>
             <p>
-              Custom software and control-system integration around the needs
-              of each project, machine and operator workflow.
+              Agriculture, construction, logistics and industrial automation all
+              have different pressures. The common thread is reliability,
+              operator clarity and systems that can be maintained.
             </p>
-          </article>
-          <article className="panel">
-            <h3>Support and reliability</h3>
+            <div className="tag-row">
+              {sectorModules.map((sector) => (
+                <span className="tag" key={sector.title}>
+                  {sector.title}
+                </span>
+              ))}
+            </div>
+            <div className="actions">
+              <Link className="button secondary" href="/sectors">
+                View sectors
+              </Link>
+            </div>
+          </div>
+          <div className="about-quote-card">
+            <span>Eltronic approach</span>
             <p>
-              A product-led approach across agriculture, construction, mining,
-              logistics and industrial automation.
+              Make the technical work robust, and make the customer experience
+              simple enough to move forward with confidence.
             </p>
-          </article>
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="cta-module about-cta">
+          <div>
+            <span className="section-number">next.step</span>
+            <h2>Bring the machine, product or workflow problem.</h2>
+            <p>
+              We can help shape the route from early specification through to
+              hardware, software, integration and support.
+            </p>
+          </div>
+          <Link className="button" href="/contact">
+            Start an enquiry
+          </Link>
         </div>
       </section>
     </main>
