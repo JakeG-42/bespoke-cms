@@ -137,6 +137,11 @@ export async function saveContactNotificationSettingsAction(formData: FormData) 
 
   const returnTo = getReturnTo(formData, "/studio/settings");
   const settings = contactNotificationSettingsFromFormData(formData);
+  const invalidRecipients = settings.recipients.filter((recipient) => !isEmailAddress(recipient));
+
+  if (invalidRecipients.length > 0) {
+    redirectWithError(`Invalid notification recipient: ${invalidRecipients[0]}`, returnTo);
+  }
 
   try {
     await updateContactNotificationSettings(settings);
@@ -147,6 +152,10 @@ export async function saveContactNotificationSettingsAction(formData: FormData) 
 
   const separator = returnTo.includes("?") ? "&" : "?";
   redirect(`${returnTo}${separator}saved=notifications`);
+}
+
+function isEmailAddress(value: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
 
 export async function updateSubmissionStatusAction(formData: FormData) {

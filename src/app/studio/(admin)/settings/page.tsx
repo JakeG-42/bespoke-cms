@@ -8,14 +8,22 @@ import { Label } from "@/components/ui/label";
 import { getContactEmailDeliveryStatus } from "@/lib/email-notifications";
 import { getContactNotificationSettings } from "@/lib/managed-data";
 
+type StudioSettingsPageProps = {
+  searchParams?: Promise<{
+    error?: string;
+    saved?: string;
+  }>;
+};
+
 export const metadata = {
   title: "Settings | Eltronic Studio",
 };
 
-export default async function StudioSettingsPage() {
-  const [notificationSettings, deliveryStatus] = await Promise.all([
+export default async function StudioSettingsPage({ searchParams }: StudioSettingsPageProps) {
+  const [notificationSettings, deliveryStatus, params] = await Promise.all([
     getContactNotificationSettings(),
     Promise.resolve(getContactEmailDeliveryStatus()),
+    searchParams,
   ]);
   const recipients = notificationSettings.recipients.join(", ");
 
@@ -35,12 +43,22 @@ export default async function StudioSettingsPage() {
               <div>
                 <CardTitle>Email notifications</CardTitle>
                 <CardDescription>
-                  Send contact form alerts for enquiries, captcha failures and honeypot spam.
+                  Choose who receives contact form alerts for enquiries, captcha failures and honeypot spam.
                 </CardDescription>
               </div>
             </div>
           </CardHeader>
           <CardContent>
+            {params?.saved === "notifications" ? (
+              <div className="mb-4 rounded-2xl border border-emerald-400/30 bg-emerald-500/10 p-4 text-sm text-emerald-100">
+                Email notification settings saved. Future submissions will use these recipients.
+              </div>
+            ) : null}
+            {params?.error ? (
+              <div className="mb-4 rounded-2xl border border-red-400/30 bg-red-500/10 p-4 text-sm text-red-100">
+                {params.error}
+              </div>
+            ) : null}
             <form action={saveContactNotificationSettingsAction} className="grid gap-4">
               <input name="returnTo" type="hidden" value="/studio/settings" />
               <div className="grid gap-2">
@@ -63,10 +81,11 @@ export default async function StudioSettingsPage() {
                   defaultValue={recipients}
                   id="notificationRecipients"
                   name="notificationRecipients"
-                  placeholder="jakub@gajosz.com"
+                  placeholder="admin@example.com, owner@example.com"
                 />
                 <p className="mb-0 text-xs text-muted-foreground">
-                  Comma-separated list. The default recipient is <code>jakub@gajosz.com</code>.
+                  Enter one or more email addresses, separated by commas. Changes apply to future submissions
+                  immediately.
                 </p>
               </div>
               <div className="rounded-2xl border border-border bg-background/45 p-4 text-sm text-muted-foreground">
@@ -76,6 +95,13 @@ export default async function StudioSettingsPage() {
                 </strong>
                 . Sender: <code>{deliveryStatus.from || "CONTACT_NOTIFICATION_FROM not set"}</code>.
               </div>
+              {deliveryStatus.from.includes("onboarding@resend.dev") ? (
+                <div className="rounded-2xl border border-amber-400/30 bg-amber-500/10 p-4 text-sm text-amber-100">
+                  Temporary sender active: until the Eltronic domain is verified in Resend, this sender can only
+                  deliver to the Resend account email. After domain verification, admins can use any normal recipient
+                  inbox here.
+                </div>
+              ) : null}
               <Button className="w-full sm:w-fit" type="submit">
                 Save email settings
               </Button>
