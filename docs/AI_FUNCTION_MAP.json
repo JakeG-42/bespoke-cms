@@ -353,7 +353,7 @@
     },
     "productMediaGallery": {
       "file": "src/components/site/product-media-gallery.tsx",
-      "behavior": "Client-side selected image state, thumbnail switching, keyboard-friendly zoom overlay, previous/next controls."
+      "behavior": "Client-side selected image state, thumbnail switching, touch swipe and desktop click-drag switching, keyboard-friendly zoom overlay, previous/next controls."
     },
     "publicTechnicalVisuals": {
       "file": "src/components/site/technical-visuals.tsx",
@@ -383,7 +383,7 @@
     "studioProductForm": {
       "file": "src/components/studio/product-form.tsx",
       "sections": ["Product data", "Inventory, pricing and tags", "Product modules", "Public copy", "Images and gallery", "Technical content", "Variables and variants"],
-      "behavior": "Native collapsible details/summary sections. Saves admin-only SKU, price, tags, module switches and enhanced variant rows without displaying them publicly yet."
+      "behavior": "WooCommerce-style two-column editor with collapsible details/summary sections. Main product fields sit left; publish, commerce and module controls sit in a sticky sidebar on desktop. Saves admin-only SKU, price, tags, module switches and enhanced variant rows without displaying them publicly yet."
     }
   },
   "deployment": {

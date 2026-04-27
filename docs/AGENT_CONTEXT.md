@@ -143,7 +143,7 @@ Product form parsing uses `productFromFormData()`:
 - Documents: `Label | URL` per line.
 - Variants: preferred format is `Name | SKU | Price | Details | Article number` per line. Legacy `Name | Details | Article number` rows are still accepted.
 
-The Studio product form uses native `details`/`summary` sections for a WooCommerce-style editing flow. Keep sections collapsible when adding new product-management panels so the form remains manageable in the quick-edit drawer.
+The Studio product form uses a WooCommerce-style two-column editing flow: main product sections on the left, with publish, commerce and module controls in a sticky sidebar on desktop. Keep sections collapsible when adding new product-management panels so the form remains manageable in the quick-edit drawer.
 
 Product templates are currently:
 

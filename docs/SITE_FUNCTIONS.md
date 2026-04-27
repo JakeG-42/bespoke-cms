@@ -74,7 +74,7 @@ Each product currently has:
 - `generateMetadata()` sets product-specific page title and description.
 - Unknown product slugs call `notFound()`.
 - The detail page displays family, category, name, description, template-specific heading, image, highlights, enquiry prompt, specifications, documents and variants where available.
-- Multiple product images render as an interactive ordered gallery on the detail page with selectable thumbnails and a zoom overlay. The gallery only uses managed product media from seed data or Studio edits.
+- Multiple product images render as an interactive ordered gallery on the detail page with selectable thumbnails, touch swipe/mobile gestures, desktop click-drag switching and a zoom overlay. The gallery only uses managed product media from seed data or Studio edits.
 - Template headings are currently mapped in `src/app/(site)/products/[slug]/page.tsx`.
 
 ## Current Product Templates
@@ -93,7 +93,7 @@ Each product currently has:
 - Studio has a sidebar, dashboard, products, enquiries and settings modes.
 - Studio has browser-local dark/light mode stored in `localStorage`.
 - Product management is table-first with full edit pages and a quick-edit right drawer.
-- Product forms are WooCommerce-style collapsible sections so image, technical, module and variant panels can be shown/hidden while editing.
+- Product forms use a WooCommerce-style two-column editor: main content sections on the left, with a sticky publish/commerce/module sidebar on desktop. Sections remain collapsible so image, technical, module and variant panels can be shown/hidden while editing.
 - Product forms support newline-based editing for highlights, specs, documents and variants.
 - Product management includes admin-only SKU, price, tags and module enable/disable settings.
 - Product image editing uses a visual preview/order manager with repeated `imageSrc` and `imageAlt` fields. The first image is saved as the primary image.
