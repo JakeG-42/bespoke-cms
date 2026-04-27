@@ -43,6 +43,7 @@ Concise living log for the Eltronic standalone site/app. Add newest updates at t
 - Removed the sticky footer reveal experiment and returned the public footer to a clean static section.
 - Replaced the mobile public navigation with a compact hamburger menu, made the footer transparent/static again, and removed generated product-gallery placeholders so galleries rely on managed product images.
 - Kept product cards in a two-column grid on mobile and added explicit managed `IMAGES COMING SOON` placeholder images to seed product galleries.
+- Restored the public grid background by keeping the site shell transparent instead of covering the body background.
 - Checked Vercel env vars on 2026-04-27; none are configured yet, so KV/Upstash persistence is still required before live admin/contact writes are trusted.
 
 ## Future Considerations

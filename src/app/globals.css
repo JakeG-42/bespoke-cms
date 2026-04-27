@@ -149,7 +149,7 @@ h3 {
 
 .site-shell {
   min-height: 100vh;
-  background: var(--bg-dark);
+  background: transparent;
 }
 
 .main-header {
