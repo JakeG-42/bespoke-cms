@@ -2,7 +2,15 @@ import { Redis } from "@upstash/redis";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import path from "path";
 
-import { products as seededProducts, type Product, type ProductImage, type ProductTemplate } from "@/content/products";
+import {
+  productModuleDefinitions,
+  products as seededProducts,
+  type Product,
+  type ProductImage,
+  type ProductModules,
+  type ProductTemplate,
+  type ProductVariant,
+} from "@/content/products";
 
 const DATA_KEY = "eltronic:managed-data:v1";
 const LOCAL_DATA_PATH = path.join(process.cwd(), ".data", "eltronic-data.json");
@@ -72,10 +80,19 @@ function normalizeProducts(products: Product[]) {
 
     return {
       ...product,
-      image: images[0],
+      image: images[0] ?? product.image,
       images,
+      tags: Array.isArray(product.tags) ? product.tags.filter(Boolean) : [],
+      modules: normalizeProductModules(product.modules),
     };
   });
+}
+
+function normalizeProductModules(modules?: Partial<ProductModules>): ProductModules {
+  return productModuleDefinitions.reduce((current, module) => {
+    current[module.key] = modules?.[module.key] ?? true;
+    return current;
+  }, {} as ProductModules);
 }
 
 function getRedisClient() {
@@ -302,11 +319,7 @@ export function productFromFormData(formData: FormData): Product {
   const name = String(formData.get("name") ?? "").trim();
   const slug = slugify(String(formData.get("slug") || name));
   const documents = parseRows(formData.get("documents"), 2).map(([label, url]) => ({ label, url }));
-  const variants = parseRows(formData.get("variants"), 3).map(([variantName, details, articleNumber]) => ({
-    name: variantName,
-    details,
-    articleNumber: articleNumber || undefined,
-  }));
+  const variants = parseProductVariants(formData.get("variants"));
   const parsedImages = parseProductImages(formData, name);
   const legacyImages = parseRows(formData.get("images"), 2).map(([src, alt]) => ({
     src,
@@ -331,6 +344,10 @@ export function productFromFormData(formData: FormData): Product {
     family: String(formData.get("family") ?? "").trim(),
     template: parseProductTemplate(formData.get("template")),
     sourceUrl: String(formData.get("sourceUrl") ?? "").trim(),
+    sku: String(formData.get("sku") ?? "").trim() || undefined,
+    price: String(formData.get("price") ?? "").trim() || undefined,
+    tags: parseTags(formData.get("tags")),
+    modules: parseProductModules(formData),
     image: primaryImage,
     images,
     summary: String(formData.get("summary") ?? "").trim(),
@@ -341,6 +358,47 @@ export function productFromFormData(formData: FormData): Product {
     variants: variants.length > 0 ? variants : undefined,
     enquiryPrompt: String(formData.get("enquiryPrompt") ?? "").trim(),
   };
+}
+
+function parseTags(value: FormDataEntryValue | null) {
+  return String(value ?? "")
+    .split(",")
+    .map((tag) => tag.trim())
+    .filter(Boolean);
+}
+
+function parseProductModules(formData: FormData): ProductModules {
+  const enabledModules = new Set(formData.getAll("enabledModules").map((value) => String(value)));
+
+  return productModuleDefinitions.reduce((current, module) => {
+    current[module.key] = enabledModules.has(module.key);
+    return current;
+  }, {} as ProductModules);
+}
+
+function parseProductVariants(value: FormDataEntryValue | null): ProductVariant[] {
+  return parseLines(value)
+    .map((line) => line.split("|").map((cell) => cell.trim()))
+    .map((cells) => {
+      const [name, second = "", third = "", fourth = "", fifth = ""] = cells;
+
+      if (cells.length >= 5) {
+        return {
+          name,
+          sku: second || undefined,
+          price: third || undefined,
+          details: fourth,
+          articleNumber: fifth || undefined,
+        };
+      }
+
+      return {
+        name,
+        details: second,
+        articleNumber: third || undefined,
+      };
+    })
+    .filter((variant) => variant.name && (variant.details || variant.sku || variant.price || variant.articleNumber));
 }
 
 function parseProductImages(formData: FormData, fallbackAlt: string): ProductImage[] {

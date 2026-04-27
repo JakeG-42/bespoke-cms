@@ -1,4 +1,5 @@
 import { ShieldCheck } from "lucide-react";
+import type { ReactNode } from "react";
 
 import { saveProductAction } from "@/app/studio/actions";
 import { ProductImageManager } from "@/components/studio/product-image-manager";
@@ -6,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import type { Product } from "@/content/products";
+import { productModuleDefinitions, type Product, type ProductModuleKey } from "@/content/products";
 
 const inputGridClass = "grid gap-2";
 const selectClass =
@@ -30,14 +31,11 @@ export function ProductForm({
       <input name="previousSlug" type="hidden" value={product?.slug ?? ""} />
       <input name="returnTo" type="hidden" value={returnTo} />
 
-      <div className="studio-form-section">
-        <div className="studio-form-section-header">
-          <div>
-            <p className="studio-eyebrow">product.data</p>
-            <h2>Product data</h2>
-          </div>
-          <p>Core catalogue fields, similar to the main product panel in a commerce CMS.</p>
-        </div>
+      <ProductFormSection
+        eyebrow="product.data"
+        title="Product data"
+        description="Core catalogue fields, similar to the main product panel in a commerce CMS."
+      >
         <div className="grid gap-4 md:grid-cols-2">
           <div className={inputGridClass}>
             <Label htmlFor={`${formId}-name`}>Name</Label>
@@ -73,16 +71,64 @@ export function ProductForm({
             <Input id={`${formId}-enquiry`} name="enquiryPrompt" defaultValue={product?.enquiryPrompt} />
           </div>
         </div>
-      </div>
+      </ProductFormSection>
 
-      <div className="studio-form-section">
-        <div className="studio-form-section-header">
-          <div>
-            <p className="studio-eyebrow">public.copy</p>
-            <h2>Public copy</h2>
+      <ProductFormSection
+        eyebrow="commerce.data"
+        title="Inventory, pricing and tags"
+        description="Admin-only commerce-style fields. These are saved now but not displayed on the public product pages yet."
+      >
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className={inputGridClass}>
+            <Label htmlFor={`${formId}-sku`}>SKU</Label>
+            <Input id={`${formId}-sku`} name="sku" defaultValue={product?.sku} placeholder="Internal product code" />
           </div>
-          <p>The short listing copy and the longer product-page introduction.</p>
+          <div className={inputGridClass}>
+            <Label htmlFor={`${formId}-price`}>Price</Label>
+            <Input id={`${formId}-price`} name="price" defaultValue={product?.price} placeholder="POA, £0.00, or internal guide" />
+          </div>
         </div>
+        <div className={inputGridClass}>
+          <Label htmlFor={`${formId}-tags`}>Tags</Label>
+          <Input
+            id={`${formId}-tags`}
+            name="tags"
+            defaultValue={product?.tags?.join(", ")}
+            placeholder="hmi, canbus, rugged, topcon"
+          />
+          <p className="studio-field-hint">Comma-separated tags for filtering, grouping and future admin workflows.</p>
+        </div>
+      </ProductFormSection>
+
+      <ProductFormSection
+        eyebrow="module.controls"
+        title="Product modules"
+        description="Enable or disable product-page modules. Stored for the backend now; public rendering can be wired to these switches later."
+        defaultOpen={false}
+      >
+        <div className="studio-module-grid">
+          {productModuleDefinitions.map((module) => (
+            <label className="studio-module-toggle" key={module.key}>
+              <input
+                defaultChecked={isModuleEnabled(product, module.key)}
+                name="enabledModules"
+                type="checkbox"
+                value={module.key}
+              />
+              <span>
+                <strong>{module.label}</strong>
+                <small>{module.description}</small>
+              </span>
+            </label>
+          ))}
+        </div>
+      </ProductFormSection>
+
+      <ProductFormSection
+        eyebrow="public.copy"
+        title="Public copy"
+        description="The short listing copy and the longer product-page introduction."
+      >
         <div className={inputGridClass}>
           <Label htmlFor={`${formId}-summary`}>Summary</Label>
           <Textarea id={`${formId}-summary`} name="summary" defaultValue={product?.summary} required />
@@ -91,20 +137,23 @@ export function ProductForm({
           <Label htmlFor={`${formId}-description`}>Description</Label>
           <Textarea id={`${formId}-description`} name="description" defaultValue={product?.description} />
         </div>
-      </div>
+      </ProductFormSection>
 
-      <div className="studio-form-section">
+      <ProductFormSection
+        eyebrow="product.media"
+        title="Images and gallery"
+        description="Preview, edit and order the image gallery. The first image becomes the primary product image."
+        defaultOpen={!product}
+      >
         <ProductImageManager images={editableImages(product)} />
-      </div>
+      </ProductFormSection>
 
-      <div className="studio-form-section">
-        <div className="studio-form-section-header">
-          <div>
-            <p className="studio-eyebrow">technical.content</p>
-            <h2>Technical content</h2>
-          </div>
-          <p>Structured supporting information shown on the product detail page.</p>
-        </div>
+      <ProductFormSection
+        eyebrow="technical.content"
+        title="Technical content"
+        description="Structured supporting information for detailed product specifications and documents."
+        defaultOpen={false}
+      >
         <div className={inputGridClass}>
           <Label htmlFor={`${formId}-source`}>Source URL</Label>
           <Input id={`${formId}-source`} name="sourceUrl" defaultValue={product?.sourceUrl} />
@@ -125,16 +174,63 @@ export function ProductForm({
           <Label htmlFor={`${formId}-docs`}>Documents, one per line as Label | URL</Label>
           <Textarea id={`${formId}-docs`} name="documents" defaultValue={documentsToText(product?.documents)} />
         </div>
+      </ProductFormSection>
+
+      <ProductFormSection
+        eyebrow="product.variables"
+        title="Variables and variants"
+        description="Commerce-style product options. Saved for the admin now; public rendering can be enabled later."
+        defaultOpen={false}
+      >
         <div className={inputGridClass}>
-          <Label htmlFor={`${formId}-variants`}>Variants, one per line as Name | Details | Article number</Label>
-          <Textarea id={`${formId}-variants`} name="variants" defaultValue={variantsToText(product?.variants)} />
+          <Label htmlFor={`${formId}-variants`}>One per line as Name | SKU | Price | Details | Article number</Label>
+          <Textarea
+            id={`${formId}-variants`}
+            name="variants"
+            defaultValue={variantsToText(product?.variants)}
+            placeholder="BASIC with OPUS Projektor | OPUSA3EN1CANB000 | POA | I.MX35, 128MB RAM | OPUSA3EN1CANB000"
+          />
+          <p className="studio-field-hint">
+            Older rows with Name | Details | Article number are still accepted when saving.
+          </p>
         </div>
+      </ProductFormSection>
+
+      <div className="studio-form-actions">
+        <Button type="submit">
+          <ShieldCheck className="size-4" />
+          {submitLabel ?? (product ? "Save product" : "Create product")}
+        </Button>
       </div>
-      <Button type="submit">
-        <ShieldCheck className="size-4" />
-        {submitLabel ?? (product ? "Save product" : "Create product")}
-      </Button>
     </form>
+  );
+}
+
+function ProductFormSection({
+  children,
+  defaultOpen = true,
+  description,
+  eyebrow,
+  title,
+}: {
+  children: ReactNode;
+  defaultOpen?: boolean;
+  description: string;
+  eyebrow: string;
+  title: string;
+}) {
+  return (
+    <details className="studio-form-section studio-form-disclosure" open={defaultOpen}>
+      <summary className="studio-form-section-summary">
+        <span>
+          <span className="studio-eyebrow">{eyebrow}</span>
+          <strong>{title}</strong>
+          <small>{description}</small>
+        </span>
+        <span className="studio-disclosure-state">Show / hide</span>
+      </summary>
+      <div className="studio-form-section-body">{children}</div>
+    </details>
   );
 }
 
@@ -146,6 +242,10 @@ function editableImages(product?: Product) {
   const images = Array.isArray(product.images) && product.images.length > 0 ? product.images : [product.image];
 
   return images.filter((image) => image?.src && !image.src.startsWith("/product-gallery/"));
+}
+
+function isModuleEnabled(product: Product | undefined, key: ProductModuleKey) {
+  return product?.modules?.[key] ?? true;
 }
 
 function linesToText(lines?: string[]) {
@@ -163,7 +263,9 @@ function documentsToText(documents?: Product["documents"]) {
 function variantsToText(variants?: Product["variants"]) {
   return (
     variants
-      ?.map((variant) => `${variant.name} | ${variant.details} | ${variant.articleNumber ?? ""}`)
+      ?.map((variant) =>
+        [variant.name, variant.sku ?? "", variant.price ?? "", variant.details, variant.articleNumber ?? ""].join(" | "),
+      )
       .join("\n") ?? ""
   );
 }

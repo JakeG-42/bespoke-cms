@@ -263,6 +263,15 @@
       "family",
       "template",
       "sourceUrl",
+      "sku",
+      "price",
+      "tags[]",
+      "modules.gallery",
+      "modules.highlights",
+      "modules.specifications",
+      "modules.documents",
+      "modules.variants",
+      "modules.enquiry",
       "image.src",
       "image.alt",
       "images[].src",
@@ -275,6 +284,8 @@
       "documents[].label",
       "documents[].url",
       "variants[].name",
+      "variants[].sku",
+      "variants[].price",
       "variants[].details",
       "variants[].articleNumber",
       "enquiryPrompt"
@@ -368,6 +379,11 @@
       "parser": "src/lib/managed-data.ts#productFromFormData",
       "fields": ["imageSrc", "imageAlt"],
       "behavior": "Visual image preview and ordering UI. Repeated imageSrc/imageAlt fields are saved in order; first image becomes product.image. Product galleries should use managed images from this UI or seed data only."
+    },
+    "studioProductForm": {
+      "file": "src/components/studio/product-form.tsx",
+      "sections": ["Product data", "Inventory, pricing and tags", "Product modules", "Public copy", "Images and gallery", "Technical content", "Variables and variants"],
+      "behavior": "Native collapsible details/summary sections. Saves admin-only SKU, price, tags, module switches and enhanced variant rows without displaying them publicly yet."
     }
   },
   "deployment": {

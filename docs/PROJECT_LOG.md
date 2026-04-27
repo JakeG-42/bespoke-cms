@@ -46,6 +46,7 @@ Concise living log for the Eltronic standalone site/app. Add newest updates at t
 - Restored the public grid background by keeping the site shell transparent instead of covering the body background.
 - Reworked the About page into a stronger company positioning page and simplified primary navigation to the main customer journeys.
 - Added a subtle public ambient background with floating syntax glyphs and a soft pointer-follow glow.
+- Upgraded Studio product management with collapsible WooCommerce-style sections plus admin-only SKU, price, tags, enhanced variants and product module switches.
 - Checked Vercel env vars on 2026-04-27; none are configured yet, so KV/Upstash persistence is still required before live admin/contact writes are trusted.
 
 ## Future Considerations

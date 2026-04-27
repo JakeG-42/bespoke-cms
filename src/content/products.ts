@@ -15,9 +15,47 @@ export type ProductDocument = {
   url: string;
 };
 
+export const productModuleDefinitions = [
+  {
+    key: "gallery",
+    label: "Gallery",
+    description: "Main product images and thumbnail gallery.",
+  },
+  {
+    key: "highlights",
+    label: "Highlights",
+    description: "Bulleted selling points or feature notes.",
+  },
+  {
+    key: "specifications",
+    label: "Technical data",
+    description: "Structured specification table.",
+  },
+  {
+    key: "documents",
+    label: "Documents",
+    description: "Downloads, data sheets and support links.",
+  },
+  {
+    key: "variants",
+    label: "Variables and variants",
+    description: "Product options, SKUs, prices and article numbers.",
+  },
+  {
+    key: "enquiry",
+    label: "Enquiry CTA",
+    description: "Product-specific enquiry prompt and quote route.",
+  },
+] as const;
+
+export type ProductModuleKey = (typeof productModuleDefinitions)[number]["key"];
+export type ProductModules = Record<ProductModuleKey, boolean>;
+
 export type ProductVariant = {
   name: string;
   details: string;
+  sku?: string;
+  price?: string;
   articleNumber?: string;
 };
 
@@ -28,6 +66,10 @@ export type Product = {
   family: string;
   template: ProductTemplate;
   sourceUrl: string;
+  sku?: string;
+  price?: string;
+  tags?: string[];
+  modules?: ProductModules;
   image: ProductImage;
   images?: ProductImage[];
   summary: string;

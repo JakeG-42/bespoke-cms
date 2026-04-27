@@ -54,6 +54,10 @@ Each product currently has:
 - `family`: product family label.
 - `template`: one of `hmi`, `data-logger`, or `module`.
 - `sourceUrl`: original crawl/source URL.
+- `sku`: optional admin/internal stock keeping unit; not displayed publicly yet.
+- `price`: optional admin/internal price or price note; not displayed publicly yet.
+- `tags`: optional admin/product-management tags.
+- `modules`: admin module switches for gallery, highlights, specifications, documents, variants and enquiry; stored but not wired into public rendering yet.
 - `image`: `{ src, alt }` used by listings and detail pages.
 - `images`: optional ordered gallery of `{ src, alt }`; public product galleries use these managed images only, with `image` as the fallback primary image. Seed products currently include three managed `IMAGES COMING SOON` placeholders so the gallery and Studio image manager have multiple images to work with.
 - `summary`: short card/listing copy.
@@ -61,7 +65,7 @@ Each product currently has:
 - `highlights`: list of product or template highlights.
 - `specifications`: list of `{ label, value }` rows shown on detail pages.
 - `documents`: optional list of data sheet/document links.
-- `variants`: optional order/variant list.
+- `variants`: optional order/variant list with optional SKU, price and article number.
 - `enquiryPrompt`: detail-page call-to-action label.
 
 ## Product Detail Behavior
@@ -89,7 +93,9 @@ Each product currently has:
 - Studio has a sidebar, dashboard, products, enquiries and settings modes.
 - Studio has browser-local dark/light mode stored in `localStorage`.
 - Product management is table-first with full edit pages and a quick-edit right drawer.
+- Product forms are WooCommerce-style collapsible sections so image, technical, module and variant panels can be shown/hidden while editing.
 - Product forms support newline-based editing for highlights, specs, documents and variants.
+- Product management includes admin-only SKU, price, tags and module enable/disable settings.
 - Product image editing uses a visual preview/order manager with repeated `imageSrc` and `imageAlt` fields. The first image is saved as the primary image.
 - Template assignment is managed with a select field on each product.
 - Contact submissions can be reviewed, statused as `new`, `reviewed`, `replied`, or `archived`, and deleted.

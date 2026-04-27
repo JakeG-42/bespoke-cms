@@ -135,12 +135,15 @@ Admin product UI:
 
 Product form parsing uses `productFromFormData()`:
 
+- Core admin fields: `sku`, `price`, comma-separated `tags`, and `enabledModules` checkboxes are saved into the product record but are not displayed publicly yet.
 - Images: visual Studio manager posts repeated `imageSrc` and `imageAlt` fields.
 - Image order: component state/order controls public gallery order; the first image becomes the primary product image.
 - Highlights: one item per line.
 - Specifications: `Label | Value` per line.
 - Documents: `Label | URL` per line.
-- Variants: `Name | Details | Article number` per line.
+- Variants: preferred format is `Name | SKU | Price | Details | Article number` per line. Legacy `Name | Details | Article number` rows are still accepted.
+
+The Studio product form uses native `details`/`summary` sections for a WooCommerce-style editing flow. Keep sections collapsible when adding new product-management panels so the form remains manageable in the quick-edit drawer.
 
 Product templates are currently:
 

@@ -60,8 +60,10 @@ export default async function StudioProductsPage({ searchParams }: ProductsPageP
               <thead>
                 <tr>
                   <th>Product</th>
+                  <th>Inventory</th>
                   <th>Template</th>
                   <th>Family</th>
+                  <th>Tags</th>
                   <th>Images</th>
                   <th>Actions</th>
                 </tr>
@@ -89,9 +91,24 @@ export default async function StudioProductsPage({ searchParams }: ProductsPageP
                         </div>
                       </td>
                       <td>
+                        <span className="studio-product-meta">
+                          <strong>{product.sku || "No SKU"}</strong>
+                          <small>{product.price || "No price"}</small>
+                        </span>
+                      </td>
+                      <td>
                         <Badge variant="outline">{product.template}</Badge>
                       </td>
                       <td>{product.family}</td>
+                      <td>
+                        <span className="studio-tag-list">
+                          {(product.tags && product.tags.length > 0 ? product.tags : ["Untagged"]).map((tag) => (
+                            <Badge key={tag} variant="secondary">
+                              {tag}
+                            </Badge>
+                          ))}
+                        </span>
+                      </td>
                       <td>
                         <span className="inline-flex items-center gap-2">
                           <Images className="size-4 text-primary" />
