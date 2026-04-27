@@ -37,7 +37,7 @@ const tests = [
 if (runValidSubmission) {
   tests.push({
     name: "valid human-like submission passes captcha",
-    expectedLocationPart: isLocalBaseUrl(baseUrl) ? "sent=1" : "error=storage",
+    expectedLocationPart: "sent=1",
     makeFields: ({ answer }) => ({
       captchaAnswer: String(answer),
       website: "",
@@ -127,4 +127,3 @@ function fail(message) {
   console.error(`FAIL ${message}`);
   process.exit(1);
 }
-

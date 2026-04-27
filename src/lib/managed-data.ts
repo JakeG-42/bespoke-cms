@@ -26,6 +26,7 @@ const DATA_KEY = "eltronic:managed-data:v1";
 const LOCAL_DATA_PATH = path.join(process.cwd(), ".data", "eltronic-data.json");
 const POSTGRES_TABLE_NAME = "eltronic_managed_data";
 const BLOCKED_SUBMISSION_DEDUPE_WINDOW_MS = 5000;
+const DEFAULT_CONTACT_NOTIFICATION_TO = "jakub@gajosz.com";
 
 export type ContactSubmissionStatus = "new" | "reviewed" | "replied" | "archived" | "blocked";
 export type ContactSubmissionType = "enquiry" | "captcha_failed" | "honeypot_spam";
@@ -139,8 +140,21 @@ function normalizeData(data: Partial<ManagedData> | null | undefined): ManagedDa
 function getDefaultContactNotificationSettings(): ContactNotificationSettings {
   return {
     mode: "immediate",
-    recipients: ["jakub@gajosz.com"],
+    recipients: getDefaultContactNotificationRecipients(),
   };
+}
+
+function getDefaultContactNotificationRecipients() {
+  const envRecipients = parseContactNotificationRecipients(process.env.CONTACT_NOTIFICATION_TO);
+
+  return envRecipients.length > 0 ? envRecipients : [DEFAULT_CONTACT_NOTIFICATION_TO];
+}
+
+function parseContactNotificationRecipients(value?: string) {
+  return (value ?? "")
+    .split(",")
+    .map((recipient) => recipient.trim())
+    .filter(Boolean);
 }
 
 function normalizeContactNotificationSettings(settings?: {

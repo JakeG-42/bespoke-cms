@@ -62,6 +62,7 @@ Concise living log for the Eltronic standalone site/app. Add newest updates at t
 - Added the Resend API key and temporary sender to Vercel; delivery to `jakub@gajosz.com` is pending Resend domain verification and a domain-based sender address.
 - Switched email delivery from raw fetch to the official `resend` package and added an onboarding test mode for Resend's first-email sample.
 - Confirmed the Resend onboarding test delivered to `jakubgajosz1999@gmail.com`, though it landed in spam. Before launch, verify the Eltronic domain in Resend and update the sender to an Eltronic-domain address.
+- Fixed live contact notification delivery during the temporary Resend setup by switching Vercel `CONTACT_NOTIFICATION_TO` and the persisted Studio notification recipient to `jakubgajosz1999@gmail.com`; a configured email test and a live enquiry submission test passed.
 - Added `npm run storage:check` to verify Neon/Postgres or Upstash/Vercel Redis credentials by writing, reading and deleting a short-lived test key before trusting live admin/contact persistence.
 - Connected Neon database `eltronic_db_1` on Vercel; the app supports the prefixed env vars injected by the integration.
 - Deployed Neon-backed storage support to production deployment `dpl_DfWPHsfjnjTYoAuB8zkHqFRzni2j`; `npm run storage:check` passes and the safe contact bot tester saved two blocked records in Neon.

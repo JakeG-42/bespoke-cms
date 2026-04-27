@@ -8,7 +8,7 @@ import {
   type ContactSubmission,
 } from "@/lib/managed-data";
 
-const DEFAULT_CONTACT_NOTIFICATION_TO = "jakub@gajosz.com";
+const FALLBACK_CONTACT_NOTIFICATION_TO = "jakub@gajosz.com";
 
 type EmailNotificationResult = "sent" | "skipped" | "failed";
 
@@ -106,7 +106,8 @@ async function sendResendEmail({
   const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.CONTACT_NOTIFICATION_FROM;
   const settings = await getContactNotificationSettings();
-  const to = settings.recipients.length > 0 ? settings.recipients : parseRecipientList(DEFAULT_CONTACT_NOTIFICATION_TO);
+  const fallbackRecipients = parseRecipientList(process.env.CONTACT_NOTIFICATION_TO ?? FALLBACK_CONTACT_NOTIFICATION_TO);
+  const to = settings.recipients.length > 0 ? settings.recipients : fallbackRecipients;
 
   if (!apiKey || !from || to.length === 0) {
     return "skipped";
