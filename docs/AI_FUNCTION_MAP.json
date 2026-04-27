@@ -323,10 +323,10 @@
       "file": "src/components/site/site-shell.tsx",
       "type": "inline SVG"
     },
-    "publicFooterReveal": {
+    "publicFooter": {
       "shellFile": "src/components/site/site-shell.tsx",
       "styleFile": "src/app/globals.css",
-      "behavior": "CSS-only sticky footer reveal beneath the main page surface with subtle gradient/grid treatment."
+      "behavior": "Simple static public footer. Sticky/reveal behavior was removed after causing the footer to appear behind page content."
     },
     "publicWorkflowCopy": {
       "contentFile": "src/content/site.ts",

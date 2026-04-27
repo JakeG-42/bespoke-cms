@@ -190,7 +190,7 @@ Public page visuals are code-native SVG modules, not bitmap files:
 
 The public main navigation uses inline SVG icons in `src/components/site/site-shell.tsx`.
 
-The public footer is also rendered from `src/components/site/site-shell.tsx`. Its reveal effect is CSS-only in `src/app/globals.css`: the main page surface sits above a sticky footer with subtle gradient/grid treatment.
+The public footer is also rendered from `src/components/site/site-shell.tsx`. Keep it simple and static for now; the sticky reveal experiment made the footer appear behind content and was removed.
 
 Workflow/process copy for public machine integration and Software & Systems pages lives in `src/content/site.ts`. Keep it professional: complex engineering should be presented as controlled, clear and easy for the customer to move through, not as if the work itself is basic.
 

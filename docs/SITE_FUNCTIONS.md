@@ -19,7 +19,7 @@ Concise living reference for how the current Eltronic Next.js site works.
 - Fonts: `Tajawal` and `Fira_Code` are loaded through `next/font/google`.
 - UI system: public pages use custom CSS; admin uses Tailwind CSS v4 and shadcn-style local components under `src/components/ui`.
 - Technical visual modules: `src/components/site/technical-visuals.tsx` renders SVG-style imagery for public pages.
-- Public footer: `src/components/site/site-shell.tsx` renders the footer; `src/app/globals.css` gives it a subtle sticky reveal beneath the main page surface.
+- Public footer: `src/components/site/site-shell.tsx` renders a simple static footer; avoid sticky/reveal footer effects unless they are tested across full-page layouts.
 - AI context pack: future agents should start with `docs/AGENT_CONTEXT.md` and `docs/AI_FUNCTION_MAP.json`.
 
 ## Current Routes
