@@ -313,8 +313,8 @@ h3 {
   display: block;
   align-self: center;
   flex: 0 0 auto;
-  width: 1.05rem;
-  height: 1.05rem;
+  width: 1.12rem;
+  height: 1.12rem;
   color: var(--primary);
   stroke: currentColor;
   stroke-linecap: round;
