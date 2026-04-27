@@ -31,41 +31,46 @@
     ]
   },
   "auth": {
-    "id": "studio-single-admin-cookie-auth",
-    "purpose": "Protect the Eltronic Studio admin area and server actions.",
-    "temporaryCredentials": {
-      "username": "admin",
-      "password": "password",
-      "securityNote": "Temporary testing defaults only. Override with environment variables before wider sharing."
+    "id": "studio-managed-user-role-auth",
+    "purpose": "Protect the Eltronic Studio admin area and server actions with managed users and roles.",
+    "seededAccounts": {
+      "bootstrapAdmin": "Temporary super-admin account with username admin; delete manually after permanent account is tested.",
+      "permanentSuperAdmin": "Jake's email account is seeded as a super-admin. Plaintext seeded passwords are never documented or returned."
     },
     "env": {
-      "username": "ELTRONIC_ADMIN_USERNAME",
-      "password": "ELTRONIC_ADMIN_PASSWORD",
       "secret": "ELTRONIC_ADMIN_SECRET",
+      "alternateSecrets": ["AUTH_SECRET", "NEXTAUTH_SECRET"],
       "fallbackSecret": "temporary-eltronic-admin-secret"
     },
     "files": {
       "authUtility": "src/lib/admin-auth.ts",
+      "userModel": "src/lib/admin-user-model.ts",
       "loginPage": "src/app/studio/login/page.tsx",
       "loginAction": "src/app/studio/login/actions.ts",
-      "adminGuards": "src/app/studio/(admin)/layout.tsx"
+      "adminGuards": "src/app/studio/(admin)/layout.tsx",
+      "usersPage": "src/app/studio/(admin)/users/page.tsx",
+      "accountPage": "src/app/studio/(admin)/account/page.tsx"
     },
     "functions": {
-      "verify": "verifyAdminCredentials(username, password)",
-      "createSession": "setAdminSession()",
+      "verify": "verifyAdminCredentials(identifier, password)",
+      "createSession": "setAdminSession(user)",
       "destroySession": "clearAdminSession()",
-      "guard": "isAdminAuthenticated()"
+      "currentUser": "getCurrentAdminUser()",
+      "guard": "isAdminAuthenticated()",
+      "roleGuard": "requireAdminRole(roles)"
     },
     "session": {
       "cookieName": "eltronic_admin_session",
-      "valueShape": "<issuedAt>.<signature>",
-      "signature": "HMAC-SHA256(issuedAt, adminSecret)",
+      "valueShape": "<userId>.<sessionVersion>.<issuedAt>.<signature>",
+      "signature": "HMAC-SHA256(userId.sessionVersion.issuedAt, adminSecret)",
       "maxAgeSeconds": 604800,
-      "flags": ["HttpOnly", "SameSite=Lax", "Secure in production"]
+      "flags": ["HttpOnly", "SameSite=Lax", "Secure in production"],
+      "invalidation": "Password changes and resets bump sessionVersion for that user."
     },
-    "futureExtension": {
-      "testUsers": "Extend src/lib/admin-auth.ts with an AdminUser list/source, keep verifyAdminCredentials as the public API, and sign a user-aware session payload.",
-      "roles": "Add role to session payload and expose getCurrentAdminUser() while keeping isAdminAuthenticated() for simple guards."
+    "roles": {
+      "super_admin": "Full control including user management.",
+      "admin": "Full control including user management for now.",
+      "moderator": "Enquiry moderation and own account only."
     }
   },
   "storage": {
@@ -113,6 +118,13 @@
       "result": "Neon database eltronic_db_1 connected with prefixed environment variables; storage smoke test passed and production deployment dpl_DfWPHsfjnjTYoAuB8zkHqFRzni2j is live"
     },
     "exports": [
+      "getAdminUsers",
+      "getPublicAdminUsers",
+      "getAdminUserById",
+      "findAdminUserByIdentifier",
+      "saveAdminUser",
+      "updateOwnAdminAccount",
+      "deleteAdminUser",
       "getProducts",
       "getProductBySlug",
       "getProductFamilies",
@@ -242,6 +254,18 @@
       "guard": "isAdminAuthenticated()"
     },
     {
+      "path": "/studio/users",
+      "file": "src/app/studio/(admin)/users/page.tsx",
+      "kind": "admin-user-management",
+      "guard": "getCurrentAdminUser() plus super_admin/admin role"
+    },
+    {
+      "path": "/studio/account",
+      "file": "src/app/studio/(admin)/account/page.tsx",
+      "kind": "admin-own-account",
+      "guard": "getCurrentAdminUser()"
+    },
+    {
       "path": "/studio/settings",
       "file": "src/app/studio/(admin)/settings/page.tsx",
       "kind": "admin-settings",
@@ -278,6 +302,24 @@
       "file": "src/app/studio/actions.ts",
       "authRequired": true,
       "effect": "Deletes one contact submission."
+    },
+    {
+      "id": "saveAdminUserAction",
+      "file": "src/app/studio/actions.ts",
+      "authRequired": true,
+      "effect": "Creates or updates one Studio user, including role, status and optional password reset."
+    },
+    {
+      "id": "deleteAdminUserAction",
+      "file": "src/app/studio/actions.ts",
+      "authRequired": true,
+      "effect": "Deletes one Studio user while preventing removal of the final active admin/super-admin."
+    },
+    {
+      "id": "saveOwnAccountAction",
+      "file": "src/app/studio/actions.ts",
+      "authRequired": true,
+      "effect": "Lets the current Studio user update profile fields or change password after current-password verification."
     },
     {
       "id": "logoutAction",
@@ -340,7 +382,7 @@
     ],
     "galleryImages": {
       "function": "src/lib/managed-data.ts#getProductImages",
-      "behavior": "Returns managed product.images in order, or product.image as the single fallback. Placeholder gallery assets must be explicit seed/Studio image entries, not hidden fallback appends.",
+      "behavior": "Returns managed product.images in order, or product.image as the single fallback. Launch placeholder image assets are filtered from public output.",
       "seedPlaceholders": "public/product-images/placeholders/images-coming-soon-*.svg"
     },
     "primaryImageAssets": "public/product-images"

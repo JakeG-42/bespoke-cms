@@ -58,6 +58,8 @@ Concise living reference for how the current Eltronic Next.js site works.
 - `/studio/classic/products/[slug]/edit`: WordPress/WooCommerce-style edit product editor.
 - `/studio/submissions`: contact submission inbox.
 - `/studio/settings`: Studio settings and notes.
+- `/studio/users`: protected user management for Studio roles and password resets.
+- `/studio/account`: protected self-service profile/password page for the current Studio user.
 
 ## Product Data Model
 
@@ -76,7 +78,7 @@ Each product currently has:
 - `tags`: optional admin/product-management tags.
 - `modules`: admin module switches for gallery, highlights, specifications, documents, variants and enquiry; stored but not wired into public rendering yet.
 - `image`: `{ src, alt }` used by listings and detail pages.
-- `images`: optional ordered gallery of `{ src, alt }`; public product galleries use these managed images only, with `image` as the fallback primary image. Seed products currently include three managed `IMAGES COMING SOON` placeholders so the gallery and Studio image manager have multiple images to work with.
+- `images`: optional ordered gallery of `{ src, alt }`; public product galleries use managed images only, with `image` as the fallback primary image. Launch placeholder images are filtered out of public galleries/sitemaps.
 - `summary`: short card/listing copy.
 - `description`: product detail intro copy.
 - `highlights`: list of product or template highlights.
@@ -152,11 +154,15 @@ Each product currently has:
 ## Admin Behavior
 
 - `/studio` requires an admin session cookie.
-- Temporary login is `admin` / `password`.
-- Production can override this with `ELTRONIC_ADMIN_USERNAME`, `ELTRONIC_ADMIN_PASSWORD`, and `ELTRONIC_ADMIN_SECRET`.
-- Auth is implemented in `src/lib/admin-auth.ts` with HMAC-signed credential comparisons and a signed 7-day `eltronic_admin_session` cookie.
+- Studio auth uses managed users stored in the managed data layer under `adminUsers`.
+- Seeded super-admins include the temporary bootstrap `admin` user and Jake's permanent super-admin email account. Delete the bootstrap account manually once the permanent account is tested.
+- Passwords are salted `scrypt` hashes, not plaintext.
+- Auth is implemented in `src/lib/admin-auth.ts` and `src/lib/admin-user-model.ts` with signed 7-day `eltronic_admin_session` cookies.
+- Session cookies include user id, session version and issue time; password resets bump the session version and invalidate old sessions for that user.
+- Roles are `super_admin`, `admin`, and `moderator`. Super admin/admin currently have full control; moderator can manage enquiries and their own account.
 - Studio is separate from the public site shell; public header/footer do not render in admin routes.
 - Studio has a sidebar, dashboard, products, enquiries and settings modes.
+- Studio includes user and account management routes.
 - Studio includes a Website Builder mode for homepage theme/content controls.
 - Studio includes a Template Editor mode for inspecting whitelisted source files.
 - Studio has browser-local dark/light mode stored in `localStorage`.
@@ -193,4 +199,4 @@ Each product currently has:
 - WordPress migration/plugin work is being considered but is not implemented in the current app.
 - Image upload management is not implemented yet; product images currently use URLs.
 - Generated public-page imagery is currently code-native SVG, not bitmap media uploads.
-- Product galleries do not append hidden fallback images; any placeholders should be explicit seed/Studio image entries so they are visible in the admin image manager.
+- Product galleries do not append hidden fallback images; placeholder launch assets are filtered from public output and should be replaced with real product media before public launch.

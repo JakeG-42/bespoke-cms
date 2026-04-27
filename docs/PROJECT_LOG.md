@@ -74,6 +74,9 @@ Concise living log for the Eltronic standalone site/app. Add newest updates at t
 - Deployed Neon-backed storage support to production deployment `dpl_DfWPHsfjnjTYoAuB8zkHqFRzni2j`; `npm run storage:check` passes and the safe contact bot tester saved two blocked records in Neon.
 - Added SEO foundations: shared metadata helpers, dynamic `/sitemap.xml`, `/robots.txt`, favicon/manifest, Open Graph image, public page canonical metadata, noindex Studio metadata and structured data for products/projects.
 - Added `/projects` and `/projects/[slug]` case-study scaffolding plus `docs/PROJECT_CASE_STUDY_TEMPLATE.md` so future project write-ups with photos can be added cleanly.
+- Created local offline backups in `/Users/jake/Documents/Eltronic_backups` and branched `dev` from `main` for launch-hardening work.
+- Added managed Studio users with `super_admin`, `admin` and `moderator` roles, hashed passwords, session-version invalidation, `/studio/users` and `/studio/account`.
+- Cleaned launch-facing content issues: removed public Studio footer link, filtered placeholder gallery images from public output, tightened I&Q CAN-Bus module copy, softened empty Projects/Data/Contact copy and added `docs/LAUNCH_CHECKLIST.md`.
 
 ## Future Considerations
 

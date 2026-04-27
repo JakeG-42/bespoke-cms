@@ -42,66 +42,54 @@ Always verify current code before changing behavior. Treat this document as a ma
 - `public/product-images/placeholders`: explicit seed gallery placeholders that appear in Studio like normal managed images.
 - `docs/AI_FUNCTION_MAP.json`: machine-readable feature map.
 - `docs/PROJECT_CASE_STUDY_TEMPLATE.md`: checklist and object shape for future project write-ups.
+- `docs/LAUNCH_CHECKLIST.md`: pre-domain public launch checklist and manual media/content tasks.
 
 ## Auth Model
 
-Auth is intentionally simple at this stage: one admin login, no database-backed users yet.
+Auth now uses managed Studio users with roles, stored in the existing managed data JSON/Neon record.
 
 - Login page: `src/app/studio/login/page.tsx`.
 - Login action: `src/app/studio/login/actions.ts`.
 - Auth utility: `src/lib/admin-auth.ts`.
-- Studio guard: `src/app/studio/(admin)/layout.tsx` calls `isAdminAuthenticated()`.
+- User model and password hashing: `src/lib/admin-user-model.ts`.
+- Studio guard: `src/app/studio/(admin)/layout.tsx` calls `getCurrentAdminUser()`.
 - Admin mutations: `src/app/studio/actions.ts` calls `requireAdminAction()` before writes.
+- User management page: `src/app/studio/(admin)/users/page.tsx`.
+- Own-account page: `src/app/studio/(admin)/account/page.tsx`.
 
 ### Credential Sources
 
-Credentials can be overridden by environment variables:
+Studio users are stored under `adminUsers` in `src/lib/managed-data.ts`. The first normalized data read seeds two super-admin users:
 
-- `ELTRONIC_ADMIN_USERNAME`
-- `ELTRONIC_ADMIN_PASSWORD`
-- `ELTRONIC_ADMIN_SECRET`
+- Bootstrap `admin` user with the temporary legacy password.
+- Jake's permanent super-admin email account.
 
-Current temporary defaults are:
-
-- login: `admin`
-- password: `password`
-
-The defaults are for testing only. Replace them before sharing the admin URL beyond the project team.
+Only salted `scrypt` password hashes are stored in source/data. Do not add plaintext passwords to docs or code. Keep `ELTRONIC_ADMIN_SECRET`, `AUTH_SECRET`, or `NEXTAUTH_SECRET` strong because it signs session cookies.
 
 ### Verification Flow
 
-`verifyAdminCredentials(username, password)` compares the provided username and password against configured values.
+`verifyAdminCredentials(identifier, password)` looks up an active managed user by username or email.
 
-- Values are HMAC-signed with SHA-256 using the admin secret.
-- Signed values are compared with `timingSafeEqual`.
-- This avoids plain string comparison timing leaks, but it is still a simple single-user auth system.
-- No user record is currently stored.
-- No role or permission model exists yet.
+- Passwords are verified with salted `scrypt` hashes and `timingSafeEqual`.
+- Roles are `super_admin`, `admin`, and `moderator`.
+- Super admin and admin currently have full control, including user resets.
+- Moderator can access enquiries/moderation and their own account.
 
 ### Session Cookie
 
 Successful login calls `setAdminSession()`.
 
 - Cookie name: `eltronic_admin_session`.
-- Cookie value shape: `<issuedAt>.<signature>`.
-- Signature: HMAC-SHA256 of `issuedAt`.
+- Cookie value shape: `<userId>.<sessionVersion>.<issuedAt>.<signature>`.
+- Signature: HMAC-SHA256 of `userId.sessionVersion.issuedAt`.
 - Max age: 7 days.
 - Flags: `HttpOnly`, `SameSite=Lax`, `Secure` in production.
-- Validation: `isAdminAuthenticated()` checks cookie presence, expiry and signature.
+- Validation: `getCurrentAdminUser()` checks cookie presence, expiry, signature, active status and matching user `sessionVersion`.
+- Password changes or admin resets bump `sessionVersion`, invalidating old sessions for that user.
 
-### Future Test Users
+### Launch Note
 
-If Jake asks to inject test users later, do not bolt a second auth system beside this one. Extend `src/lib/admin-auth.ts` so the rest of the app can keep calling the same functions.
-
-Recommended path:
-
-- Add an `AdminUser` type with `username`, `passwordHash` or `password`, and optional `role`.
-- Replace `getAdminUsername()` and `getAdminPassword()` with `getAdminUsers()`.
-- Keep `verifyAdminCredentials(username, password)` as the public verification API.
-- Make the session payload include a user id or username, then sign the payload instead of only `issuedAt`.
-- Keep `isAdminAuthenticated()` available for simple guards.
-- Optionally add `getCurrentAdminUser()` if role-aware UI is needed.
-- Update `docs/AI_FUNCTION_MAP.json` when the auth model changes.
+Keep the bootstrap `admin` account until Jake has tested the permanent super-admin account, then delete it manually from `/studio/users`.
 
 ## Managed Data Model
 
@@ -117,6 +105,8 @@ Storage selection:
 
 The `.data/` folder is gitignored because it can contain contact submissions and edited content.
 
+Managed data also stores Studio users under `adminUsers`; this means Neon/JSON persistence is required for user changes to survive deployment.
+
 ## Studio Layout
 
 Studio is intentionally separate from the public site chrome.
@@ -124,7 +114,7 @@ Studio is intentionally separate from the public site chrome.
 - Public pages live under the `(site)` route group and use `src/components/site/site-shell.tsx`.
 - Studio pages live under `src/app/studio/(admin)` and use `src/components/studio/studio-shell.tsx`.
 - `/studio/login` is outside the protected admin route group.
-- Studio navigation modes are real routes: `/studio`, `/studio/products`, `/studio/submissions`, and `/studio/settings`.
+- Studio navigation modes are real routes: `/studio`, `/studio/products`, `/studio/submissions`, `/studio/users`, `/studio/account`, and `/studio/settings`.
 - Studio theme is browser-local and toggled by `src/components/studio/studio-shell.tsx`.
 
 ## Product Management

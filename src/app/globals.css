@@ -2431,6 +2431,27 @@ h3 {
   margin-top: auto;
 }
 
+.studio-user-chip {
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--muted) 58%, transparent);
+}
+
+.studio-user-chip strong {
+  color: var(--foreground);
+  font-size: 0.9rem;
+}
+
+.studio-user-chip span {
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: capitalize;
+}
+
 .studio-workspace {
   min-width: 0;
 }

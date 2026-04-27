@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ComponentType } from "react";
 import {
   Boxes,
   ChevronDown,
@@ -16,27 +16,39 @@ import {
   Paintbrush,
   Settings,
   Sun,
+  UserCircle,
+  Users,
 } from "lucide-react";
 
 import { logoutAction } from "@/app/studio/actions";
 import { Button } from "@/components/ui/button";
+import type { AdminRole, PublicAdminUser } from "@/lib/admin-user-model";
 import { cn } from "@/lib/utils";
 
-const navItems = [
-  { href: "/studio", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/studio/builder", label: "Builder", icon: Paintbrush },
-  { href: "/studio/templates", label: "Templates", icon: FileCode2 },
-  { href: "/studio/products", label: "Products", icon: Boxes },
-  { href: "/studio/submissions", label: "Enquiries", icon: Inbox },
-  { href: "/studio/settings", label: "Settings", icon: Settings },
+const navItems: Array<{
+  href: string;
+  icon: ComponentType<{ className?: string }>;
+  label: string;
+  roles: AdminRole[];
+}> = [
+  { href: "/studio", label: "Dashboard", icon: LayoutDashboard, roles: ["super_admin", "admin", "moderator"] },
+  { href: "/studio/builder", label: "Builder", icon: Paintbrush, roles: ["super_admin", "admin"] },
+  { href: "/studio/templates", label: "Templates", icon: FileCode2, roles: ["super_admin", "admin"] },
+  { href: "/studio/products", label: "Products", icon: Boxes, roles: ["super_admin", "admin"] },
+  { href: "/studio/submissions", label: "Enquiries", icon: Inbox, roles: ["super_admin", "admin", "moderator"] },
+  { href: "/studio/users", label: "Users", icon: Users, roles: ["super_admin", "admin"] },
+  { href: "/studio/account", label: "Account", icon: UserCircle, roles: ["super_admin", "admin", "moderator"] },
+  { href: "/studio/settings", label: "Settings", icon: Settings, roles: ["super_admin", "admin"] },
 ];
 
 export function StudioShell({
   children,
+  currentUser,
   storageConfigured,
   storageMode,
 }: {
   children: React.ReactNode;
+  currentUser: PublicAdminUser;
   storageConfigured: boolean;
   storageMode: string;
 }) {
@@ -68,6 +80,7 @@ export function StudioShell({
           <Link href="/">Visit site</Link>
           <Link href="/studio/classic/products/new">+ New</Link>
           <span className="wp-admin-bar-spacer" />
+          <Link href="/studio/account">{currentUser.displayName}</Link>
           {!storageConfigured ? <span>{storageMode}</span> : null}
           <Link href="/studio/products">Switch to current</Link>
           <form action={logoutAction}>
@@ -104,7 +117,7 @@ export function StudioShell({
           <span>Appearance</span>
           <Link href="/studio/templates">Theme File Editor</Link>
           <span>Plugins</span>
-          <span>Users</span>
+          <Link href="/studio/users">Users</Link>
           <span>Tools</span>
           <span>Settings</span>
         </aside>
@@ -135,6 +148,10 @@ export function StudioShell({
 
         <nav className="studio-nav" aria-label="Studio navigation">
           {navItems.map((item) => {
+            if (!item.roles.includes(currentUser.role)) {
+              return null;
+            }
+
             const Icon = item.icon;
             const active = item.href === "/studio" ? pathname === item.href : pathname.startsWith(item.href);
 
@@ -148,6 +165,10 @@ export function StudioShell({
         </nav>
 
         <div className="studio-sidebar-footer">
+          <div className="studio-user-chip">
+            <strong>{currentUser.displayName}</strong>
+            <span>{currentUser.role.replace("_", " ")}</span>
+          </div>
           <Button asChild className="w-full justify-start" variant="ghost">
             <Link href="/">
               <Home className="size-4" />
@@ -235,6 +256,8 @@ function currentModeLabel(pathname: string) {
   if (pathname.startsWith("/studio/templates")) return "Template Editor";
   if (pathname.startsWith("/studio/products")) return "Products";
   if (pathname.startsWith("/studio/submissions")) return "Enquiries";
+  if (pathname.startsWith("/studio/users")) return "Users";
+  if (pathname.startsWith("/studio/account")) return "Account";
   if (pathname.startsWith("/studio/settings")) return "Settings";
 
   return "Dashboard";

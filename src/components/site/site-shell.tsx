@@ -68,7 +68,6 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
               <Link href="/products">Products</Link>
               <Link href="/solutions">Solutions</Link>
               <Link href="/software-it">Software & Systems</Link>
-              <Link href="/projects">Projects</Link>
             </details>
 
             <details className="footer-group" open>
@@ -90,7 +89,6 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
 
           <div className="footer-bottom">
             <p>© 2026 Eltronic. Systems integration and software engineering.</p>
-            <Link href="/studio">Studio</Link>
           </div>
         </div>
       </footer>
