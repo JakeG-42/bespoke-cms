@@ -162,7 +162,8 @@
       "path": "/contact",
       "file": "src/app/(site)/contact/page.tsx",
       "kind": "public-form",
-      "action": "src/app/contact/actions.ts#submitContactFormAction"
+      "action": "src/app/contact/actions.ts#submitContactFormAction",
+      "antiSpam": "src/lib/contact-captcha.ts local signed maths captcha plus hidden website honeypot"
     },
     {
       "path": "/studio/login",
@@ -249,7 +250,7 @@
       "id": "submitContactFormAction",
       "file": "src/app/contact/actions.ts",
       "authRequired": false,
-      "effect": "Validates public contact form input, stores a contact submission, redirects to success/error state."
+      "effect": "Validates public contact form input, verifies signed maths captcha and honeypot, stores a contact submission, redirects to success/error state."
     }
   ],
   "productModel": {
@@ -308,6 +309,7 @@
   "contactSubmissionModel": {
     "typeFile": "src/lib/managed-data.ts",
     "typeName": "ContactSubmission",
+    "antiSpam": "src/lib/contact-captcha.ts signs a short-lived math challenge; src/app/contact/actions.ts rejects invalid captcha answers and populated website honeypot values before storage.",
     "statuses": ["new", "reviewed", "replied", "archived"],
     "fields": [
       "id",

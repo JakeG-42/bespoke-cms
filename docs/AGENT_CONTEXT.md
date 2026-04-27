@@ -29,6 +29,7 @@ Always verify current code before changing behavior. Treat this document as a ma
 - `src/content/site.ts`: public services, software/IT, sector, workflow and resource module content.
 - `src/content/site-builder.ts`: Website Builder defaults for homepage theme, hero and section controls.
 - `src/lib/template-editor.ts`: whitelisted Studio Template Editor file registry/read-write helpers.
+- `src/lib/contact-captcha.ts`: local signed maths captcha for contact anti-spam.
 - `src/components/site/technical-visuals.tsx`: code-native public-page technical visuals.
 - `src/components/site/ambient-background.tsx`: subtle public-only floating syntax glyphs.
 - `src/components/site/product-media-gallery.tsx`: interactive product image selection and zoom.
@@ -178,6 +179,8 @@ If adding a new template, update:
 The public contact form uses `submitContactFormAction()` in `src/app/contact/actions.ts`.
 
 Submissions are stored through `createContactSubmission()` in `src/lib/managed-data.ts` and displayed in `/studio`.
+
+Before storage, the contact action verifies a local maths captcha from `src/lib/contact-captcha.ts` and checks the hidden `website` honeypot field. The captcha token is HMAC-signed and short-lived. Keep this third-party-free unless Jake explicitly asks for an external captcha service.
 
 Statuses:
 

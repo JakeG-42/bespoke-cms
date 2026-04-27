@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { createMathCaptcha } from "@/lib/contact-captcha";
 import { getProducts } from "@/lib/managed-data";
 import { submitContactFormAction } from "@/app/contact/actions";
 
@@ -20,13 +21,18 @@ export const dynamic = "force-dynamic";
 export default async function ContactPage({ searchParams }: ContactPageProps) {
   const params = await searchParams;
   const products = await getProducts();
+  const captcha = createMathCaptcha();
   const selectedProduct = params?.product ?? "";
   const errorMessage =
     params?.error === "required"
       ? "Please add your name, email and message before sending."
       : params?.error === "storage"
         ? "The message could not be stored because persistent storage is not configured yet. Please email sales@eltronic.co.uk for now."
-        : null;
+        : params?.error === "captcha"
+          ? "Please solve the quick anti-spam question before sending."
+          : params?.error === "spam"
+            ? "The message could not be sent. Please email sales@eltronic.co.uk if this continues."
+            : null;
 
   return (
     <main className="page">
@@ -108,6 +114,26 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
               placeholder="Tell us about the equipment, operating environment, control requirements or product you want to specify."
               required
             />
+          </label>
+
+          <div className="captcha-panel">
+            <label className="field-label">
+              <span>Anti-spam check</span>
+              <input name="captchaToken" type="hidden" value={captcha.token} />
+              <input
+                aria-label={captcha.question}
+                inputMode="numeric"
+                name="captchaAnswer"
+                placeholder={captcha.question}
+                required
+              />
+            </label>
+            <p>This is a simple local check. No third-party captcha script is loaded.</p>
+          </div>
+
+          <label aria-hidden="true" className="contact-honeypot" tabIndex={-1}>
+            <span>Website</span>
+            <input autoComplete="off" name="website" tabIndex={-1} />
           </label>
 
           <Button type="submit" size="lg">
