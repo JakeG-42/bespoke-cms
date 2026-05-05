@@ -1,16 +1,47 @@
 import type { Config, Data } from "@puckeditor/core";
 
 export type BuilderSectionEffect = "borderPulse" | "glow" | "lift" | "none";
+export type BuilderBorderStyle = "dashed" | "none" | "solid";
+export type BuilderFontWeight = "bold" | "heavy" | "medium" | "regular";
+export type BuilderHoverEffect = "border" | "brighten" | "glow" | "lift" | "none" | "scale";
 export type BuilderScrollAnimation = "fadeUp" | "none" | "scaleIn" | "slideLeft";
+export type BuilderSectionShadow = "none" | "soft" | "strong";
+export type BuilderSectionWidth = "default" | "full" | "narrow" | "wide";
 export type BuilderTextAlign = "center" | "left";
 
 export type BuilderAdvancedStyle = {
   accentColor?: string;
   backgroundColor?: string;
+  bodySize?: number;
+  elementBorderColor?: string;
+  elementBorderRadius?: number;
+  elementBorderStyle?: BuilderBorderStyle;
+  elementBorderWidth?: number;
+  elementGap?: number;
+  elementPadding?: number;
   effect?: BuilderSectionEffect;
+  eyebrowSize?: number;
   fontFamily?: "code" | "display" | "sans";
+  fontWeight?: BuilderFontWeight;
+  headingSize?: number;
+  hoverBackgroundColor?: string;
+  hoverBorderColor?: string;
+  hoverEffect?: BuilderHoverEffect;
+  hoverTextColor?: string;
+  lineHeight?: number;
   opacity?: number;
   scrollAnimation?: BuilderScrollAnimation;
+  sectionBorderColor?: string;
+  sectionBorderRadius?: number;
+  sectionBorderStyle?: BuilderBorderStyle;
+  sectionBorderWidth?: number;
+  sectionPaddingBottom?: number;
+  sectionPaddingTop?: number;
+  sectionPaddingX?: number;
+  sectionShadow?: BuilderSectionShadow;
+  sectionWidth?: BuilderSectionWidth;
+  subheadingSize?: number;
+  surfaceColor?: string;
   textAlign?: BuilderTextAlign;
   textColor?: string;
 };

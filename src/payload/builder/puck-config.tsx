@@ -3,9 +3,12 @@ import type { CSSProperties, ReactNode } from "react";
 import type {
   BuilderAdvancedStyle,
   BuilderConfig,
+  BuilderHoverEffect,
   BuilderProduct,
+  BuilderSectionShadow,
   BuilderRootProps,
   BuilderSectionEffect,
+  BuilderSectionWidth,
 } from "./types";
 
 const alignmentOptions = [
@@ -26,10 +29,32 @@ const effectOptions = [
   { label: "Border pulse", value: "borderPulse" },
 ] as const;
 
+const borderStyleOptions = [
+  { label: "None", value: "none" },
+  { label: "Solid", value: "solid" },
+  { label: "Dashed", value: "dashed" },
+] as const;
+
 const fontOptions = [
   { label: "Display", value: "display" },
   { label: "Sans", value: "sans" },
   { label: "Technical code", value: "code" },
+] as const;
+
+const fontWeightOptions = [
+  { label: "Regular", value: "regular" },
+  { label: "Medium", value: "medium" },
+  { label: "Bold", value: "bold" },
+  { label: "Heavy", value: "heavy" },
+] as const;
+
+const hoverOptions = [
+  { label: "None", value: "none" },
+  { label: "Lift", value: "lift" },
+  { label: "Glow", value: "glow" },
+  { label: "Brighten", value: "brighten" },
+  { label: "Scale", value: "scale" },
+  { label: "Border colour", value: "border" },
 ] as const;
 
 const scrollOptions = [
@@ -39,47 +64,218 @@ const scrollOptions = [
   { label: "Scale in", value: "scaleIn" },
 ] as const;
 
+const shadowOptions = [
+  { label: "None", value: "none" },
+  { label: "Soft", value: "soft" },
+  { label: "Strong", value: "strong" },
+] as const;
+
+const widthOptions = [
+  { label: "Narrow", value: "narrow" },
+  { label: "Default", value: "default" },
+  { label: "Wide", value: "wide" },
+  { label: "Full width", value: "full" },
+] as const;
+
 const sharedDesignFields = {
   accentColor: {
-    label: "Accent colour",
+    label: "Colour: accent",
     placeholder: "#8bd3ff",
     type: "text",
   },
   backgroundColor: {
-    label: "Background colour",
+    label: "Colour: section background",
     placeholder: "rgba(23, 32, 51, 0.78)",
     type: "text",
   },
-  effect: {
-    label: "Effect",
-    options: effectOptions,
-    type: "select",
+  surfaceColor: {
+    label: "Colour: cards/media surface",
+    placeholder: "rgba(23, 32, 51, 0.78)",
+    type: "text",
+  },
+  textColor: {
+    label: "Colour: text",
+    placeholder: "#f1f5f9",
+    type: "text",
   },
   fontFamily: {
-    label: "Font",
+    label: "Type: font",
     options: fontOptions,
     type: "select",
   },
+  fontWeight: {
+    label: "Type: heading weight",
+    options: fontWeightOptions,
+    type: "select",
+  },
+  headingSize: {
+    label: "Type: heading size (rem)",
+    max: 7,
+    min: 0.8,
+    step: 0.1,
+    type: "number",
+  },
+  subheadingSize: {
+    label: "Type: subheading size (rem)",
+    max: 3,
+    min: 0.7,
+    step: 0.05,
+    type: "number",
+  },
+  bodySize: {
+    label: "Type: body size (rem)",
+    max: 2,
+    min: 0.65,
+    step: 0.05,
+    type: "number",
+  },
+  eyebrowSize: {
+    label: "Type: eyebrow size (rem)",
+    max: 1.6,
+    min: 0.55,
+    step: 0.05,
+    type: "number",
+  },
+  lineHeight: {
+    label: "Type: line height",
+    max: 2.2,
+    min: 0.9,
+    step: 0.05,
+    type: "number",
+  },
+  textAlign: {
+    label: "Type: text alignment",
+    options: alignmentOptions,
+    type: "select",
+  },
+  sectionWidth: {
+    label: "Layout: section width",
+    options: widthOptions,
+    type: "select",
+  },
+  sectionPaddingTop: {
+    label: "Layout: padding top (rem)",
+    max: 10,
+    min: 0,
+    step: 0.25,
+    type: "number",
+  },
+  sectionPaddingBottom: {
+    label: "Layout: padding bottom (rem)",
+    max: 10,
+    min: 0,
+    step: 0.25,
+    type: "number",
+  },
+  sectionPaddingX: {
+    label: "Layout: padding sides (rem)",
+    max: 8,
+    min: 0,
+    step: 0.25,
+    type: "number",
+  },
+  elementPadding: {
+    label: "Layout: card/CTA padding (rem)",
+    max: 5,
+    min: 0,
+    step: 0.1,
+    type: "number",
+  },
+  elementGap: {
+    label: "Layout: gap (rem)",
+    max: 5,
+    min: 0,
+    step: 0.1,
+    type: "number",
+  },
+  sectionBorderStyle: {
+    label: "Section border: style",
+    options: borderStyleOptions,
+    type: "select",
+  },
+  sectionBorderWidth: {
+    label: "Section border: width (px)",
+    max: 12,
+    min: 0,
+    step: 1,
+    type: "number",
+  },
+  sectionBorderRadius: {
+    label: "Section border: radius (px)",
+    max: 80,
+    min: 0,
+    step: 1,
+    type: "number",
+  },
+  sectionBorderColor: {
+    label: "Section border: colour",
+    placeholder: "rgba(139, 211, 255, 0.24)",
+    type: "text",
+  },
+  elementBorderStyle: {
+    label: "Element border: style",
+    options: borderStyleOptions,
+    type: "select",
+  },
+  elementBorderWidth: {
+    label: "Element border: width (px)",
+    max: 12,
+    min: 0,
+    step: 1,
+    type: "number",
+  },
+  elementBorderRadius: {
+    label: "Element border: radius (px)",
+    max: 80,
+    min: 0,
+    step: 1,
+    type: "number",
+  },
+  elementBorderColor: {
+    label: "Element border: colour",
+    placeholder: "rgba(139, 211, 255, 0.24)",
+    type: "text",
+  },
+  effect: {
+    label: "Effect: section",
+    options: effectOptions,
+    type: "select",
+  },
+  sectionShadow: {
+    label: "Effect: shadow",
+    options: shadowOptions,
+    type: "select",
+  },
   opacity: {
-    label: "Opacity",
+    label: "Effect: opacity",
     max: 1,
     min: 0.2,
     step: 0.05,
     type: "number",
   },
   scrollAnimation: {
-    label: "On scroll",
+    label: "Effect: on scroll",
     options: scrollOptions,
     type: "select",
   },
-  textAlign: {
-    label: "Text alignment",
-    options: alignmentOptions,
+  hoverEffect: {
+    label: "On hover: effect",
+    options: hoverOptions,
     type: "select",
   },
-  textColor: {
-    label: "Text colour",
-    placeholder: "#f1f5f9",
+  hoverBackgroundColor: {
+    label: "On hover: background",
+    placeholder: "rgba(139, 211, 255, 0.12)",
+    type: "text",
+  },
+  hoverTextColor: {
+    label: "On hover: text",
+    placeholder: "#ffffff",
+    type: "text",
+  },
+  hoverBorderColor: {
+    label: "On hover: border",
+    placeholder: "#8bd3ff",
     type: "text",
   },
 } as const;
@@ -87,32 +283,114 @@ const sharedDesignFields = {
 const defaultDesign: Required<BuilderAdvancedStyle> = {
   accentColor: "#8bd3ff",
   backgroundColor: "",
+  bodySize: 1,
+  elementBorderColor: "",
+  elementBorderRadius: 8,
+  elementBorderStyle: "solid",
+  elementBorderWidth: 1,
+  elementGap: 1,
+  elementPadding: 1.15,
   effect: "none",
+  eyebrowSize: 0.76,
   fontFamily: "display",
+  fontWeight: "heavy",
+  headingSize: 3.2,
+  hoverBackgroundColor: "",
+  hoverBorderColor: "",
+  hoverEffect: "none",
+  hoverTextColor: "",
+  lineHeight: 1.7,
   opacity: 1,
   scrollAnimation: "none",
+  sectionBorderColor: "",
+  sectionBorderRadius: 0,
+  sectionBorderStyle: "none",
+  sectionBorderWidth: 0,
+  sectionPaddingBottom: 0,
+  sectionPaddingTop: 0,
+  sectionPaddingX: 0,
+  sectionShadow: "none",
+  sectionWidth: "default",
+  subheadingSize: 1.12,
+  surfaceColor: "",
   textAlign: "left",
   textColor: "",
 };
 
+const fontWeightMap = {
+  bold: 700,
+  heavy: 850,
+  medium: 600,
+  regular: 400,
+} as const;
+
+const sectionWidthMap: Record<BuilderSectionWidth, string> = {
+  default: "1180px",
+  full: "100%",
+  narrow: "820px",
+  wide: "1400px",
+};
+
+function cssRem(value: number | undefined) {
+  return typeof value === "number" && Number.isFinite(value) ? `${value}rem` : undefined;
+}
+
+function cssPx(value: number | undefined) {
+  return typeof value === "number" && Number.isFinite(value) ? `${value}px` : undefined;
+}
+
+function cssNumber(value: number | undefined) {
+  return typeof value === "number" && Number.isFinite(value) ? String(value) : undefined;
+}
+
 function getSectionStyle(style: BuilderAdvancedStyle = {}) {
   return {
     "--builder-accent": style.accentColor || "var(--primary)",
+    "--builder-body-size": cssRem(style.bodySize),
+    "--builder-element-border-color": style.elementBorderColor || "color-mix(in srgb, var(--builder-accent) 18%, transparent)",
+    "--builder-element-border-radius": cssPx(style.elementBorderRadius),
+    "--builder-element-border-style": style.elementBorderStyle ?? "solid",
+    "--builder-element-border-width": cssPx(style.elementBorderWidth),
+    "--builder-element-gap": cssRem(style.elementGap),
+    "--builder-element-padding": cssRem(style.elementPadding),
+    "--builder-eyebrow-size": cssRem(style.eyebrowSize),
+    "--builder-font-weight": style.fontWeight ? fontWeightMap[style.fontWeight] : undefined,
+    "--builder-heading-size": cssRem(style.headingSize),
+    "--builder-hover-bg": style.hoverBackgroundColor || "color-mix(in srgb, var(--builder-accent) 14%, var(--builder-section-bg))",
+    "--builder-hover-border": style.hoverBorderColor || "color-mix(in srgb, var(--builder-accent) 64%, transparent)",
+    "--builder-hover-text": style.hoverTextColor || "var(--builder-section-text)",
+    "--builder-line-height": cssNumber(style.lineHeight),
+    "--builder-section-border-color": style.sectionBorderColor || "color-mix(in srgb, var(--builder-accent) 24%, transparent)",
+    "--builder-section-border-radius": cssPx(style.sectionBorderRadius),
+    "--builder-section-border-style": style.sectionBorderStyle ?? "none",
+    "--builder-section-border-width": cssPx(style.sectionBorderWidth),
     "--builder-section-bg": style.backgroundColor || "transparent",
+    "--builder-section-padding-bottom": cssRem(style.sectionPaddingBottom),
+    "--builder-section-padding-top": cssRem(style.sectionPaddingTop),
+    "--builder-section-padding-x": cssRem(style.sectionPaddingX),
     "--builder-section-text": style.textColor || "var(--text-primary)",
+    "--builder-section-width": sectionWidthMap[style.sectionWidth ?? "default"],
+    "--builder-subheading-size": cssRem(style.subheadingSize),
+    "--builder-surface-fill": style.surfaceColor || "rgba(var(--builder-surface), var(--builder-surface-opacity))",
     opacity: style.opacity ?? 1,
   } as CSSProperties;
 }
 
 function getSectionClassName(style: BuilderAdvancedStyle = {}, className = "") {
   const effect: BuilderSectionEffect = style.effect ?? "none";
+  const hoverEffect: BuilderHoverEffect = style.hoverEffect ?? "none";
+  const sectionShadow: BuilderSectionShadow = style.sectionShadow ?? "none";
+  const sectionWidth: BuilderSectionWidth = style.sectionWidth ?? "default";
 
   return [
     "puck-section",
     `puck-align-${style.textAlign ?? "left"}`,
     `puck-font-${style.fontFamily ?? "display"}`,
     `puck-effect-${effect}`,
+    `puck-hover-${hoverEffect}`,
     `puck-scroll-${style.scrollAnimation ?? "none"}`,
+    `puck-shadow-${sectionShadow}`,
+    `puck-width-${sectionWidth}`,
     className,
   ]
     .filter(Boolean)
@@ -183,6 +461,7 @@ function Root({ children, ...props }: BuilderRootProps & { children: ReactNode }
           "--builder-accent": props.accentColor || "#8bd3ff",
           "--builder-bg": props.backgroundColor || "#020617",
           "--builder-surface": props.surfaceColor || "23, 32, 51",
+          "--builder-surface-fill": `rgba(${props.surfaceColor || "23, 32, 51"}, ${props.surfaceOpacity ?? 0.78})`,
           "--builder-surface-opacity": String(props.surfaceOpacity ?? 0.78),
           "--builder-text": props.textColor || "#f1f5f9",
         } as CSSProperties
@@ -221,6 +500,7 @@ export const builderConfig: BuilderConfig = {
         accentColor: "#fbbf24",
         body: "Add a clear next step for visitors.",
         effect: "glow",
+        elementPadding: 2.6,
         eyebrow: "Ready",
         heading: "Start the conversation",
         primaryLabel: "Contact Eltronic",
@@ -418,8 +698,11 @@ export const builderConfig: BuilderConfig = {
     HeroBlock: {
       defaultProps: {
         ...defaultDesign,
+        bodySize: 1.16,
+        elementGap: 1.6,
         effect: "glow",
         eyebrow: "Eltronic",
+        headingSize: 5.2,
         heading: "Engineer a more connected operation",
         imageAlt: "",
         imageUrl: "",
@@ -558,6 +841,8 @@ export const builderConfig: BuilderConfig = {
       defaultProps: {
         ...defaultDesign,
         body: "Add body copy here. Keep sections focused and easy to scan.",
+        bodySize: 1.08,
+        sectionWidth: "narrow",
       },
       fields: {
         body: { contentEditable: true, label: "Body", type: "textarea" },
