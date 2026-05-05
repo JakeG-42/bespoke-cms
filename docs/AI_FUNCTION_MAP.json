@@ -6,6 +6,8 @@
     "framework": "Next.js App Router",
     "productionUrl": "https://project-5v5cr.vercel.app",
     "adminUrl": "https://project-5v5cr.vercel.app/studio",
+    "payloadConsoleUrl": "https://project-5v5cr.vercel.app/console",
+    "payloadSandboxUrl": "https://project-5v5cr.vercel.app/v2",
     "vercelProject": "project-5v5cr"
   },
   "agentInstructions": {
@@ -137,6 +139,43 @@
       "updateSubmissionStatus",
       "deleteSubmission",
       "productFromFormData"
+    ]
+  },
+  "payloadConsole": {
+    "id": "payload-console",
+    "purpose": "Add Payload CMS beside the current public site and custom Studio for a future Payload-backed version of the site.",
+    "routes": {
+      "admin": "/console",
+      "api": "/console-api",
+      "sandbox": "/v2",
+      "graphQL": "disabled"
+    },
+    "files": {
+      "config": "payload.config.ts",
+      "routeGroup": "src/app/(payload)",
+      "collections": "src/payload/collections",
+      "sandboxPage": "src/app/(site)/v2/page.tsx",
+      "generatedTypes": "src/payload-types.ts"
+    },
+    "database": {
+      "adapter": "@payloadcms/db-postgres",
+      "sameNeonDatabase": true,
+      "schema": "payload",
+      "schemaEnvOverride": "PAYLOAD_DATABASE_SCHEMA",
+      "preferredUrlEnv": "PAYLOAD_DATABASE_URL",
+      "fallbackUrlEnv": "DATABASE_URL, POSTGRES_URL, DATABASE_URL_UNPOOLED, POSTGRES_URL_NON_POOLING, or integration-prefixed variants"
+    },
+    "auth": {
+      "collection": "console-users",
+      "secretEnv": "PAYLOAD_SECRET",
+      "fallbackSecrets": ["ELTRONIC_ADMIN_SECRET", "AUTH_SECRET", "NEXTAUTH_SECRET"],
+      "localDevelopmentFallback": "local-development-payload-secret"
+    },
+    "collections": ["console-users", "pages"],
+    "notes": [
+      "The current public site and /studio still read/write through the existing managed-data layer.",
+      "The /v2 sandbox reads a Payload page with slug home when present and otherwise renders a placeholder.",
+      "PAYLOAD_SECRET is configured in Vercel for Production and the dev Preview branch; keep it present before treating Console auth as production-ready."
     ]
   },
   "routes": [

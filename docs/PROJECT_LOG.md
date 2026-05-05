@@ -13,6 +13,7 @@ Concise living log for the Eltronic standalone site/app. Add newest updates at t
 - Admin: `/studio` is a password-protected shadcn/Tailwind admin for products, templates and contact submissions.
 - Contact handling: `/contact` now stores enquiries through the managed data layer.
 - SEO: sitemap, robots rules, canonical metadata, structured data and project/case-study scaffolding are in place.
+- Payload CMS has been added as Eltronic Console at `/console`, with API routes under `/console-api` and an isolated `payload` schema in the existing Neon database.
 
 ## What Has Happened So Far
 
@@ -79,6 +80,7 @@ Concise living log for the Eltronic standalone site/app. Add newest updates at t
 - Cleaned launch-facing content issues: removed public Studio footer link, filtered placeholder gallery images from public output, tightened I&Q CAN-Bus module copy, softened empty Projects/Data/Contact copy and added `docs/LAUNCH_CHECKLIST.md`.
 - Added repeatable generated product gallery assets: 33 technical SVG illustrations across 11 products, a `src/content/product-gallery-assets.json` manifest, `npm run images:products`, and `npm run images:products:sync` to sync the gallery paths into Neon managed product records.
 - Added Studio submission bulk actions, auto-refresh, an authenticated submission summary API and coloured sidebar `+N` enquiry badges; also grouped and reduced the Studio sidebar navigation.
+- Added Payload CMS alongside the existing site and Studio: `/console` for the CMS admin, `/console-api` for REST, disabled GraphQL, `console-users` and `pages` collections, a hidden `/v2` sandbox page and a separate `payload` Postgres schema in the existing Neon database. Configured `PAYLOAD_SECRET` in Vercel for Production and the `dev` Preview branch.
 
 ## Future Considerations
 

@@ -12,6 +12,8 @@ Always verify current code before changing behavior. Treat this document as a ma
 
 - Production site: `https://project-5v5cr.vercel.app`
 - Admin portal: `https://project-5v5cr.vercel.app/studio`
+- Payload Console: `https://project-5v5cr.vercel.app/console`
+- Payload sandbox: `https://project-5v5cr.vercel.app/v2`
 - Vercel project: `project-5v5cr`
 - GitHub repo: `JakeG-42/eltronic`
 
@@ -19,6 +21,10 @@ Always verify current code before changing behavior. Treat this document as a ma
 
 - `src/lib/admin-auth.ts`: admin credential and cookie session logic.
 - `src/lib/managed-data.ts`: product/submission storage abstraction.
+- `payload.config.ts`: Payload CMS config mounted as Eltronic Console.
+- `src/payload/collections`: Payload Console collections.
+- `src/app/(payload)`: Payload Console admin/API route group.
+- `src/app/(site)/v2/page.tsx`: hidden Payload-backed sandbox page.
 - `src/app/studio/(admin)/layout.tsx`: protected Studio shell wrapper.
 - `src/app/studio/(admin)/page.tsx`: Studio dashboard.
 - `src/app/studio/(admin)/products/page.tsx`: product table and quick-edit drawer.
@@ -109,6 +115,26 @@ Storage selection:
 The `.data/` folder is gitignored because it can contain contact submissions and edited content.
 
 Managed data also stores Studio users under `adminUsers`; this means Neon/JSON persistence is required for user changes to survive deployment.
+
+## Payload Console
+
+Payload CMS is installed alongside the existing site and Studio rather than replacing them.
+
+- Console admin route: `/console`.
+- Payload REST route: `/console-api`.
+- Payload GraphQL is disabled in `payload.config.ts`.
+- Experimental Payload-backed page route: `/v2`, marked noindex and excluded in robots.
+- Payload collections live in `src/payload/collections`; the initial collections are `console-users` and `pages`.
+- `next.config.ts` is wrapped with `withPayload()`.
+- `tsconfig.json` maps `@payload-config` to `payload.config.ts`.
+- The previous app-wide root layout was split so `(site)`, `/studio` and `(payload)` can each own the correct root layout boundary. Public URLs are unchanged.
+
+Payload uses the same Neon database as the current app but stores its tables under a separate Postgres schema:
+
+- Schema: `payload`.
+- Config env override: `PAYLOAD_DATABASE_SCHEMA`.
+- Preferred DB env: `PAYLOAD_DATABASE_URL`; falls back to the same Neon/Postgres env discovery used by managed data.
+- `PAYLOAD_SECRET` is configured in Vercel for Production and the `dev` Preview branch. Local development falls back to a development-only secret unless a local `PAYLOAD_SECRET` is added.
 
 ## Studio Layout
 
@@ -285,6 +311,8 @@ Before relying on live admin writes, configure persistent database env vars in V
 
 - `DATABASE_URL` or integration-prefixed `eltronic_db_1_DATABASE_URL`
 - Fallback Redis support still accepts `KV_REST_API_URL` and `KV_REST_API_TOKEN`
+- Payload Console can reuse the same Neon database through `PAYLOAD_DATABASE_URL` or the existing prefixed Neon env vars, but keeps its tables in the `payload` Postgres schema.
+- Keep `PAYLOAD_SECRET` configured before treating `/console` as production-ready.
 
 As of 2026-04-27, the Neon database `eltronic_db_1` is connected to Vercel and injects prefixed env vars such as `eltronic_db_1_DATABASE_URL`. `npm run storage:check` passes locally after pulling Vercel env vars, production deployment `dpl_DfWPHsfjnjTYoAuB8zkHqFRzni2j` is live, and the safe contact bot tester confirmed blocked attempts are saved in Neon.
 
