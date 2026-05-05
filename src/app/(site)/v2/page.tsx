@@ -1,31 +1,40 @@
 import type { Metadata } from "next";
 import config from "@payload-config";
 import { getPayload } from "payload";
-import type { Page } from "@/payload-types";
+
+import { PayloadPageRenderer } from "@/components/payload/payload-page-renderer";
+import type { Page, Product } from "@/payload-types";
 
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Eltronic v2",
+  title: "New Eltronic",
   robots: {
     index: false,
     follow: false,
   },
 };
 
-type HeroBlock = Extract<Page["layout"][number], { blockType: "hero" }>;
-
 async function getPayloadHomePage(): Promise<Page | null> {
   try {
     const payload = await getPayload({ config });
     const result = await payload.find({
       collection: "pages",
-      depth: 0,
+      depth: 2,
       limit: 1,
       where: {
-        slug: {
-          equals: "home",
-        },
+        and: [
+          {
+            slug: {
+              equals: "home",
+            },
+          },
+          {
+            status: {
+              equals: "published",
+            },
+          },
+        ],
       },
     });
 
@@ -36,19 +45,67 @@ async function getPayloadHomePage(): Promise<Page | null> {
   }
 }
 
+async function getFeaturedProducts(): Promise<Product[]> {
+  try {
+    const payload = await getPayload({ config });
+    const featured = await payload.find({
+      collection: "products",
+      depth: 1,
+      limit: 6,
+      sort: "-updatedAt",
+      where: {
+        and: [
+          {
+            status: {
+              equals: "published",
+            },
+          },
+          {
+            featured: {
+              equals: true,
+            },
+          },
+        ],
+      },
+    });
+
+    if (featured.docs.length) {
+      return featured.docs;
+    }
+
+    const fallback = await payload.find({
+      collection: "products",
+      depth: 1,
+      limit: 6,
+      sort: "-updatedAt",
+      where: {
+        status: {
+          equals: "published",
+        },
+      },
+    });
+
+    return fallback.docs;
+  } catch (error) {
+    console.error("Unable to load Payload products for v2.", error);
+    return [];
+  }
+}
+
 export default async function PayloadV2Page() {
-  const page = await getPayloadHomePage();
-  const hero = page?.layout.find((block): block is HeroBlock => block.blockType === "hero");
+  const [page, featuredProducts] = await Promise.all([getPayloadHomePage(), getFeaturedProducts()]);
+
+  if (page) {
+    return <PayloadPageRenderer featuredProducts={featuredProducts} page={page} />;
+  }
 
   return (
-    <main className="page">
-      <section className="panel">
-        <p className="code-kicker">Payload sandbox</p>
-        <h1>{hero?.heading ?? page?.title ?? "Eltronic v2"}</h1>
+    <main className="page payload-page">
+      <section className="panel payload-empty-page">
+        <p className="code-kicker">Payload site</p>
+        <h1>New Eltronic</h1>
         <p className="lede">
-          {hero?.lede ??
-            page?.summary ??
-            "This is the blank Payload-backed version space. The current Eltronic site and Studio are still running separately."}
+          Create and publish a Payload page with the slug <code>home</code> to control this subdomain.
         </p>
       </section>
     </main>
