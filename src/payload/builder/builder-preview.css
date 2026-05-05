@@ -84,6 +84,35 @@
   color: #0f172a;
 }
 
+.visual-builder-view .Puck [class*="_ObjectField_"] {
+  border-radius: 8px;
+}
+
+.puck-range-field {
+  display: grid;
+  gap: 0.55rem;
+  color: #334155;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.puck-range-field span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.puck-range-field strong {
+  color: #0f172a;
+  font-size: 0.78rem;
+}
+
+.puck-range-field input {
+  width: 100%;
+  accent-color: #2271b1;
+}
+
 .wysiwyg-cell-button {
   display: inline-flex;
   align-items: center;
@@ -507,7 +536,7 @@
 .puck-hover-scale.puck-cta:hover,
 .puck-hover-scale.puck-hero:hover,
 .puck-hover-scale.puck-rich-section:hover {
-  transform: scale(1.018);
+  transform: scale(var(--builder-hover-scale, 1.02));
 }
 
 .puck-hover-border .puck-card:hover,

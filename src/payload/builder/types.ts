@@ -4,15 +4,72 @@ export type BuilderSectionEffect = "borderPulse" | "glow" | "lift" | "none";
 export type BuilderBorderStyle = "dashed" | "none" | "solid";
 export type BuilderFontWeight = "bold" | "heavy" | "medium" | "regular";
 export type BuilderHoverEffect = "border" | "brighten" | "glow" | "lift" | "none" | "scale";
+export type BuilderHoverScaleMode = "enlarge" | "shrink";
 export type BuilderScrollAnimation = "fadeUp" | "none" | "scaleIn" | "slideLeft";
 export type BuilderSectionShadow = "none" | "soft" | "strong";
 export type BuilderSectionWidth = "default" | "full" | "narrow" | "wide";
 export type BuilderTextAlign = "center" | "left";
 
+export type BuilderColorControls = {
+  accentColor?: string;
+  backgroundColor?: string;
+  surfaceColor?: string;
+  textColor?: string;
+};
+
+export type BuilderTypographyControls = {
+  bodySize?: number;
+  eyebrowSize?: number;
+  fontFamily?: "code" | "display" | "sans";
+  fontWeight?: BuilderFontWeight;
+  headingSize?: number;
+  lineHeight?: number;
+  subheadingSize?: number;
+  textAlign?: BuilderTextAlign;
+};
+
+export type BuilderSpacingControls = {
+  elementGap?: number;
+  elementPadding?: number;
+  sectionPaddingBottom?: number;
+  sectionPaddingTop?: number;
+  sectionPaddingX?: number;
+  sectionWidth?: BuilderSectionWidth;
+};
+
+export type BuilderBorderControls = {
+  elementBorderColor?: string;
+  elementBorderRadius?: number;
+  elementBorderStyle?: BuilderBorderStyle;
+  elementBorderWidth?: number;
+  sectionBorderColor?: string;
+  sectionBorderRadius?: number;
+  sectionBorderStyle?: BuilderBorderStyle;
+  sectionBorderWidth?: number;
+};
+
+export type BuilderEffectControls = {
+  effect?: BuilderSectionEffect;
+  opacity?: number;
+  scrollAnimation?: BuilderScrollAnimation;
+  sectionShadow?: BuilderSectionShadow;
+};
+
+export type BuilderHoverControls = {
+  hoverBackgroundColor?: string;
+  hoverBorderColor?: string;
+  hoverEffect?: BuilderHoverEffect;
+  hoverScaleAmount?: number;
+  hoverScaleMode?: BuilderHoverScaleMode;
+  hoverTextColor?: string;
+};
+
 export type BuilderAdvancedStyle = {
   accentColor?: string;
   backgroundColor?: string;
   bodySize?: number;
+  borderControls?: BuilderBorderControls;
+  colorControls?: BuilderColorControls;
   elementBorderColor?: string;
   elementBorderRadius?: number;
   elementBorderStyle?: BuilderBorderStyle;
@@ -20,13 +77,17 @@ export type BuilderAdvancedStyle = {
   elementGap?: number;
   elementPadding?: number;
   effect?: BuilderSectionEffect;
+  effectControls?: BuilderEffectControls;
   eyebrowSize?: number;
   fontFamily?: "code" | "display" | "sans";
   fontWeight?: BuilderFontWeight;
   headingSize?: number;
   hoverBackgroundColor?: string;
   hoverBorderColor?: string;
+  hoverControls?: BuilderHoverControls;
   hoverEffect?: BuilderHoverEffect;
+  hoverScaleAmount?: number;
+  hoverScaleMode?: BuilderHoverScaleMode;
   hoverTextColor?: string;
   lineHeight?: number;
   opacity?: number;
@@ -40,10 +101,12 @@ export type BuilderAdvancedStyle = {
   sectionPaddingX?: number;
   sectionShadow?: BuilderSectionShadow;
   sectionWidth?: BuilderSectionWidth;
+  spacingControls?: BuilderSpacingControls;
   subheadingSize?: number;
   surfaceColor?: string;
   textAlign?: BuilderTextAlign;
   textColor?: string;
+  typographyControls?: BuilderTypographyControls;
 };
 
 export type BuilderLink = {

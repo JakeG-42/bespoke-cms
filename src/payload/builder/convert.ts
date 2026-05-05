@@ -53,8 +53,73 @@ function linkFields(value: unknown) {
   };
 }
 
-function blockDesign(block: UnknownRecord): BuilderAdvancedStyle {
+function valueOrFallback(value: unknown, fallback: unknown) {
+  return typeof value === "undefined" ? fallback : value;
+}
+
+function groupedDesignProps(props: UnknownRecord): BuilderAdvancedStyle {
+  const borderControls = relationDoc(props.borderControls) ?? {};
+  const colorControls = relationDoc(props.colorControls) ?? {};
+  const effectControls = relationDoc(props.effectControls) ?? {};
+  const hoverControls = relationDoc(props.hoverControls) ?? {};
+  const spacingControls = relationDoc(props.spacingControls) ?? {};
+  const typographyControls = relationDoc(props.typographyControls) ?? {};
+
   return {
+    ...props,
+    borderControls: {
+      elementBorderColor: valueOrFallback(borderControls.elementBorderColor, valueOrFallback(props.elementBorderColor, "")),
+      elementBorderRadius: valueOrFallback(borderControls.elementBorderRadius, valueOrFallback(props.elementBorderRadius, 8)),
+      elementBorderStyle: valueOrFallback(borderControls.elementBorderStyle, valueOrFallback(props.elementBorderStyle, "solid")),
+      elementBorderWidth: valueOrFallback(borderControls.elementBorderWidth, valueOrFallback(props.elementBorderWidth, 1)),
+      sectionBorderColor: valueOrFallback(borderControls.sectionBorderColor, valueOrFallback(props.sectionBorderColor, "")),
+      sectionBorderRadius: valueOrFallback(borderControls.sectionBorderRadius, valueOrFallback(props.sectionBorderRadius, 0)),
+      sectionBorderStyle: valueOrFallback(borderControls.sectionBorderStyle, valueOrFallback(props.sectionBorderStyle, "none")),
+      sectionBorderWidth: valueOrFallback(borderControls.sectionBorderWidth, valueOrFallback(props.sectionBorderWidth, 0)),
+    },
+    colorControls: {
+      accentColor: valueOrFallback(colorControls.accentColor, valueOrFallback(props.accentColor, "#8bd3ff")),
+      backgroundColor: valueOrFallback(colorControls.backgroundColor, valueOrFallback(props.backgroundColor, "")),
+      surfaceColor: valueOrFallback(colorControls.surfaceColor, valueOrFallback(props.surfaceColor, "")),
+      textColor: valueOrFallback(colorControls.textColor, valueOrFallback(props.textColor, "")),
+    },
+    effectControls: {
+      effect: valueOrFallback(effectControls.effect, valueOrFallback(props.effect, "none")),
+      opacity: valueOrFallback(effectControls.opacity, valueOrFallback(props.opacity, 1)),
+      scrollAnimation: valueOrFallback(effectControls.scrollAnimation, valueOrFallback(props.scrollAnimation, "none")),
+      sectionShadow: valueOrFallback(effectControls.sectionShadow, valueOrFallback(props.sectionShadow, "none")),
+    },
+    hoverControls: {
+      hoverBackgroundColor: valueOrFallback(hoverControls.hoverBackgroundColor, valueOrFallback(props.hoverBackgroundColor, "")),
+      hoverBorderColor: valueOrFallback(hoverControls.hoverBorderColor, valueOrFallback(props.hoverBorderColor, "")),
+      hoverEffect: valueOrFallback(hoverControls.hoverEffect, valueOrFallback(props.hoverEffect, "none")),
+      hoverScaleAmount: valueOrFallback(hoverControls.hoverScaleAmount, valueOrFallback(props.hoverScaleAmount, 2)),
+      hoverScaleMode: valueOrFallback(hoverControls.hoverScaleMode, valueOrFallback(props.hoverScaleMode, "enlarge")),
+      hoverTextColor: valueOrFallback(hoverControls.hoverTextColor, valueOrFallback(props.hoverTextColor, "")),
+    },
+    spacingControls: {
+      elementGap: valueOrFallback(spacingControls.elementGap, valueOrFallback(props.elementGap, 1)),
+      elementPadding: valueOrFallback(spacingControls.elementPadding, valueOrFallback(props.elementPadding, 1.15)),
+      sectionPaddingBottom: valueOrFallback(spacingControls.sectionPaddingBottom, valueOrFallback(props.sectionPaddingBottom, 0)),
+      sectionPaddingTop: valueOrFallback(spacingControls.sectionPaddingTop, valueOrFallback(props.sectionPaddingTop, 0)),
+      sectionPaddingX: valueOrFallback(spacingControls.sectionPaddingX, valueOrFallback(props.sectionPaddingX, 0)),
+      sectionWidth: valueOrFallback(spacingControls.sectionWidth, valueOrFallback(props.sectionWidth, "default")),
+    },
+    typographyControls: {
+      bodySize: valueOrFallback(typographyControls.bodySize, valueOrFallback(props.bodySize, 1)),
+      eyebrowSize: valueOrFallback(typographyControls.eyebrowSize, valueOrFallback(props.eyebrowSize, 0.76)),
+      fontFamily: valueOrFallback(typographyControls.fontFamily, valueOrFallback(props.fontFamily, "display")),
+      fontWeight: valueOrFallback(typographyControls.fontWeight, valueOrFallback(props.fontWeight, "heavy")),
+      headingSize: valueOrFallback(typographyControls.headingSize, valueOrFallback(props.headingSize, 3.2)),
+      lineHeight: valueOrFallback(typographyControls.lineHeight, valueOrFallback(props.lineHeight, 1.7)),
+      subheadingSize: valueOrFallback(typographyControls.subheadingSize, valueOrFallback(props.subheadingSize, 1.12)),
+      textAlign: valueOrFallback(typographyControls.textAlign, valueOrFallback(props.textAlign, "left")),
+    },
+  } as BuilderAdvancedStyle;
+}
+
+function blockDesign(block: UnknownRecord): BuilderAdvancedStyle {
+  return groupedDesignProps({
     accentColor: "#8bd3ff",
     backgroundColor: backgroundMap[asString(block.backgroundStyle, "default")] ?? "",
     effect: "none",
@@ -63,7 +128,7 @@ function blockDesign(block: UnknownRecord): BuilderAdvancedStyle {
     scrollAnimation: "none",
     textAlign: asString(block.alignment, "left") === "center" ? "center" : "left",
     textColor: "",
-  };
+  });
 }
 
 function lexicalToText(value: unknown): string {
@@ -117,7 +182,16 @@ export function normalizeBuilderData(value: unknown): BuilderData | null {
   }
 
   return {
-    content: value.content.filter(isRecord) as BuilderData["content"],
+    content: value.content.filter(isRecord).map((item) => {
+      if (!isRecord(item.props)) {
+        return item;
+      }
+
+      return {
+        ...item,
+        props: groupedDesignProps(item.props),
+      };
+    }) as BuilderData["content"],
     root: value.root as BuilderData["root"],
     zones: isRecord(value.zones) ? (value.zones as BuilderData["zones"]) : {},
   };
