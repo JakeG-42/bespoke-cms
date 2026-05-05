@@ -124,16 +124,17 @@ function normalizeHandle(value: unknown, fallback: string) {
 }
 
 function uniqueMenus(menus: BuilderMenu[]) {
-  const seen = new Set<string>();
+  const byHandle = new Map<string, BuilderMenu>();
 
-  return menus.filter((menu) => {
-    if (seen.has(menu.handle)) {
-      return false;
+  for (const menu of menus) {
+    const existing = byHandle.get(menu.handle);
+
+    if (!existing || (!existing.items.length && menu.items.length)) {
+      byHandle.set(menu.handle, menu);
     }
+  }
 
-    seen.add(menu.handle);
-    return true;
-  });
+  return Array.from(byHandle.values());
 }
 
 function uniqueThemes(themes: BuilderTheme[]) {

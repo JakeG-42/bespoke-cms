@@ -3,7 +3,7 @@
     "name": "Bespoke CMS",
     "type": "white-label CMS, CRM and visual-builder platform",
     "primaryAdminRoute": "/console",
-    "previewRoute": "/v2",
+    "previewRoute": "/preview",
     "vercelProject": "bespoke-cms"
   },
   "content": {

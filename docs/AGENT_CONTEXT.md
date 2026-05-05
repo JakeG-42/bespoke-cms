@@ -6,7 +6,7 @@ This repository is the white-label Bespoke CMS product. It is no longer tied to 
 
 - Next.js application with Payload CMS mounted at `/console`.
 - Public starter site routes live under `src/app/(site)`.
-- Payload-built preview routes live under `/v2`.
+- Payload-built preview routes live under `/preview`; `/v2` is a legacy redirect.
 - Legacy Studio routes still exist for older internal tooling while the Payload Console becomes the primary admin surface.
 - Database objects for Payload use the `payload` schema.
 

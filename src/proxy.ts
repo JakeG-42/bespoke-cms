@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 
 const PAYLOAD_SITE_HOSTS = new Set(["app.example.com"]);
 
-const PASSTHROUGH_PREFIXES = ["/_next", "/api", "/console", "/console-api", "/studio", "/v2"];
+const PASSTHROUGH_PREFIXES = ["/_next", "/api", "/console", "/console-api", "/preview", "/studio", "/v2"];
 const PUBLIC_FILE_PATTERN = /\.(?:avif|css|gif|ico|jpg|jpeg|js|json|map|png|svg|txt|webmanifest|webp|xml)$/i;
 
 function getHostname(request: NextRequest) {
@@ -22,7 +22,7 @@ export function proxy(request: NextRequest) {
   }
 
   const url = request.nextUrl.clone();
-  url.pathname = request.nextUrl.pathname === "/" ? "/v2" : `/v2${request.nextUrl.pathname}`;
+  url.pathname = request.nextUrl.pathname === "/" ? "/preview" : `/preview${request.nextUrl.pathname}`;
 
   return NextResponse.rewrite(url);
 }

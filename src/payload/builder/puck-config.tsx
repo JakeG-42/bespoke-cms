@@ -452,17 +452,79 @@ function textValue(value: unknown, fallback = "") {
   return typeof value === "string" ? value : fallback;
 }
 
+function getInternalLinkBasePath(metadata: unknown) {
+  if (typeof metadata !== "object" || metadata === null || !("internalLinkBasePath" in metadata)) {
+    return "";
+  }
+
+  const basePath = (metadata as { internalLinkBasePath?: unknown }).internalLinkBasePath;
+
+  return typeof basePath === "string" ? basePath.replace(/\/+$/, "") : "";
+}
+
+function previewHref(url: string | undefined, metadata: unknown) {
+  const href = textValue(url).trim();
+
+  if (!href) {
+    return "";
+  }
+
+  if (
+    href.startsWith("#") ||
+    href.startsWith("//") ||
+    /^[a-z][a-z0-9+.-]*:/i.test(href)
+  ) {
+    return href;
+  }
+
+  const basePath = getInternalLinkBasePath(metadata);
+
+  if (!basePath) {
+    return href;
+  }
+
+  if (href === "/") {
+    return basePath;
+  }
+
+  if (href === basePath || href.startsWith(`${basePath}/`)) {
+    return href;
+  }
+
+  if (href === "/v2") {
+    return basePath;
+  }
+
+  if (href.startsWith("/v2/")) {
+    return `${basePath}${href.slice(3)}`;
+  }
+
+  if (href.startsWith("/")) {
+    return `${basePath}${href}`;
+  }
+
+  return href;
+}
+
 function arrayValue<T>(value: T[] | unknown): T[] {
   return Array.isArray(value) ? value : [];
 }
 
-function BuilderButton({ link, secondary = false }: { link: { label?: string; url?: string }; secondary?: boolean }) {
+function BuilderButton({
+  link,
+  metadata,
+  secondary = false,
+}: {
+  link: { label?: string; url?: string };
+  metadata?: unknown;
+  secondary?: boolean;
+}) {
   if (!link.label || !link.url) {
     return null;
   }
 
   return (
-    <a className={`puck-button ${secondary ? "secondary" : ""}`} href={link.url}>
+    <a className={`puck-button ${secondary ? "secondary" : ""}`} href={previewHref(link.url, metadata)}>
       {link.label}
     </a>
   );
@@ -652,8 +714,8 @@ export const builderConfig: BuilderConfig = {
           <h2>{props.heading}</h2>
           {props.body ? <p>{props.body}</p> : null}
           <div className="puck-actions">
-            <BuilderButton link={{ label: props.primaryLabel, url: props.primaryUrl }} />
-            <BuilderButton link={{ label: props.secondaryLabel, url: props.secondaryUrl }} secondary />
+            <BuilderButton link={{ label: props.primaryLabel, url: props.primaryUrl }} metadata={props.puck.metadata} />
+            <BuilderButton link={{ label: props.secondaryLabel, url: props.secondaryUrl }} metadata={props.puck.metadata} secondary />
           </div>
         </section>
       ),
@@ -708,7 +770,7 @@ export const builderConfig: BuilderConfig = {
                 <article className="puck-card" key={`${textValue(card.title, "card")}-${index}`}>
                   <h3>{textValue(card.title, "Card")}</h3>
                   {textValue(card.body) ? <p>{textValue(card.body)}</p> : null}
-                  {textValue(card.url) ? <a href={textValue(card.url)}>View</a> : null}
+                  {textValue(card.url) ? <a href={previewHref(card.url, props.puck.metadata)}>View</a> : null}
                 </article>
               ))}
             </div>
@@ -758,7 +820,7 @@ export const builderConfig: BuilderConfig = {
             </div>
             <div className="puck-card-grid puck-columns-3">
               {documents.map((document, index) => (
-                <a className="puck-card" href={textValue(document.url, "#") || "#"} key={`${textValue(document.title, "document")}-${index}`}>
+                <a className="puck-card" href={previewHref(document.url, props.puck.metadata) || "#"} key={`${textValue(document.title, "document")}-${index}`}>
                   <h3>{textValue(document.title, "Document")}</h3>
                   {textValue(document.description) ? <p>{textValue(document.description)}</p> : null}
                 </a>
@@ -847,17 +909,17 @@ export const builderConfig: BuilderConfig = {
 
         return (
           <header className={getSectionClassName(headerProps, `puck-site-header ${props.sticky ? "puck-site-header-sticky" : ""}`)} style={getSectionStyle(headerProps)}>
-            <Link className="puck-site-brand" href="/">
+            <Link className="puck-site-brand" href={previewHref("/", props.puck.metadata)}>
               {textValue(props.brandLabel, "BESPOKE CMS")}
             </Link>
             <nav aria-label={menu?.title ?? "Site menu"} className="puck-menu puck-menu-horizontal">
               {(menu?.items ?? []).map((item, index) => (
-                <a href={item.url} key={`${item.label}-${index}`}>
+                <a href={previewHref(item.url, props.puck.metadata)} key={`${item.label}-${index}`}>
                   {item.label}
                 </a>
               ))}
             </nav>
-            <BuilderButton link={{ label: props.ctaLabel, url: props.ctaUrl }} />
+            <BuilderButton link={{ label: props.ctaLabel, url: props.ctaUrl }} metadata={props.puck.metadata} />
           </header>
         );
       },
@@ -902,8 +964,8 @@ export const builderConfig: BuilderConfig = {
             <h1>{props.heading}</h1>
             {props.lede ? <p>{props.lede}</p> : null}
             <div className="puck-actions">
-              <BuilderButton link={{ label: props.primaryLabel, url: props.primaryUrl }} />
-              <BuilderButton link={{ label: props.secondaryLabel, url: props.secondaryUrl }} secondary />
+              <BuilderButton link={{ label: props.primaryLabel, url: props.primaryUrl }} metadata={props.puck.metadata} />
+              <BuilderButton link={{ label: props.secondaryLabel, url: props.secondaryUrl }} metadata={props.puck.metadata} secondary />
             </div>
           </div>
           <BuilderMedia alt={props.imageAlt || props.heading} url={props.imageUrl} />
@@ -946,7 +1008,7 @@ export const builderConfig: BuilderConfig = {
             <div>
               <h2>{props.heading}</h2>
               {props.body ? <p>{props.body}</p> : null}
-              <BuilderButton link={{ label: props.linkLabel, url: props.linkUrl }} secondary />
+              <BuilderButton link={{ label: props.linkLabel, url: props.linkUrl }} metadata={props.puck.metadata} secondary />
             </div>
           </div>
         </section>
@@ -989,7 +1051,7 @@ export const builderConfig: BuilderConfig = {
             ) : null}
             <nav aria-label={menu?.title ?? "Menu"} className={`puck-menu puck-menu-${props.orientation ?? "horizontal"}`}>
               {items.map((item, index) => (
-                <a href={item.url} key={`${item.label}-${index}`}>
+                <a href={previewHref(item.url, props.puck.metadata)} key={`${item.label}-${index}`}>
                   {item.label}
                 </a>
               ))}
@@ -1042,7 +1104,7 @@ export const builderConfig: BuilderConfig = {
             </div>
             <div className={`puck-card-grid puck-columns-${props.columns ?? "3"}`}>
               {cards.map((product) => (
-                <a className="puck-card" href={`/products/${product.slug}`} key={product.slug}>
+                <a className="puck-card" href={previewHref(`/products/${product.slug}`, props.puck.metadata)} key={product.slug}>
                   <span className="puck-kicker">{product.family || "Product"}</span>
                   <h3>{product.name}</h3>
                   {product.summary ? <p>{product.summary}</p> : null}
@@ -1109,8 +1171,8 @@ export const builderConfig: BuilderConfig = {
             <h2>{textValue(props.heading, "Build a new section")}</h2>
             {textValue(props.body) ? <p>{textValue(props.body)}</p> : null}
             <div className="puck-actions">
-              <BuilderButton link={{ label: props.primaryLabel, url: props.primaryUrl }} />
-              <BuilderButton link={{ label: props.secondaryLabel, url: props.secondaryUrl }} secondary />
+              <BuilderButton link={{ label: props.primaryLabel, url: props.primaryUrl }} metadata={props.puck.metadata} />
+              <BuilderButton link={{ label: props.secondaryLabel, url: props.secondaryUrl }} metadata={props.puck.metadata} secondary />
             </div>
           </section>
         );

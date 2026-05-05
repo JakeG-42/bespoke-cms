@@ -18,7 +18,7 @@ function getNewSiteUrl() {
 }
 
 function getPreviewUrl(slug: unknown) {
-  const path = typeof slug === "string" && slug !== "home" ? `/${slug}` : "/";
+  const path = typeof slug === "string" && slug !== "home" ? `/preview/${slug}` : "/preview";
 
   return `${getNewSiteUrl()}${path}`;
 }

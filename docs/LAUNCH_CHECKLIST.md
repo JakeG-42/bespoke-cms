@@ -21,4 +21,4 @@ Use this for the white-label Bespoke CMS product.
 
 - Run `npm run lint`.
 - Run `npm run build`.
-- Check `/console`, `/v2`, `/products` and `/contact`.
+- Check `/console`, `/preview`, `/products` and `/contact`.

@@ -13,7 +13,8 @@ Concise reference for the white-label Bespoke CMS application.
 - `/contact`: enquiry form with anti-spam protection.
 - `/console`: Payload CMS console.
 - `/console/wysiwyg/:id`: visual page builder for a Payload page.
-- `/v2`: Payload-built preview site.
+- `/preview`: Payload-built preview site.
+- `/v2`: legacy redirect to `/preview`.
 - `/studio`: legacy internal admin tooling.
 
 ## Product Templates

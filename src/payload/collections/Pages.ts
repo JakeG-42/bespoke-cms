@@ -9,7 +9,7 @@ function getNewSiteUrl() {
 }
 
 function getPreviewPath(slug: unknown) {
-  return typeof slug === "string" && slug !== "home" ? `/${slug}` : "/";
+  return typeof slug === "string" && slug !== "home" ? `/preview/${slug}` : "/preview";
 }
 
 export const Pages: CollectionConfig = {
