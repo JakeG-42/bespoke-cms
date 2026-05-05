@@ -13,7 +13,7 @@ Always verify current code before changing behavior. Treat this document as a ma
 - Production site: `https://project-5v5cr.vercel.app`
 - Admin portal: `https://project-5v5cr.vercel.app/studio`
 - Payload Console: `https://project-5v5cr.vercel.app/console`
-- Payload sandbox: `https://project-5v5cr.vercel.app/v2`
+- Payload/new-site route: `https://project-5v5cr.vercel.app/v2` and `https://new.eltronic.co.uk`
 - Vercel project: `project-5v5cr`
 - GitHub repo: `JakeG-42/eltronic`
 
@@ -24,7 +24,7 @@ Always verify current code before changing behavior. Treat this document as a ma
 - `payload.config.ts`: Payload CMS config mounted as Eltronic Console.
 - `src/payload/collections`: Payload Console collections.
 - `src/app/(payload)`: Payload Console admin/API route group.
-- `src/app/(site)/v2/page.tsx`: hidden Payload-backed sandbox page.
+- `src/app/(new-site)/v2/[[...slug]]/page.tsx`: Payload-backed new-site route with its own layout, separate from the old public `SiteShell`.
 - `src/app/studio/(admin)/layout.tsx`: protected Studio shell wrapper.
 - `src/app/studio/(admin)/page.tsx`: Studio dashboard.
 - `src/app/studio/(admin)/products/page.tsx`: product table and quick-edit drawer.
@@ -123,14 +123,14 @@ Payload CMS is installed alongside the existing site and Studio rather than repl
 - Console admin route: `/console`.
 - Payload REST route: `/console-api`.
 - Payload GraphQL is disabled in `payload.config.ts`.
-- Experimental Payload-backed page route: `/v2`, marked noindex and excluded in robots.
+- Payload-backed new-site route: `/v2`, marked noindex and excluded in robots on the old domain. `new.eltronic.co.uk` rewrites to this route without using the old public header/footer.
 - Payload collections live in `src/payload/collections`; the CMS foundation includes admin-only `console-users`, `media`, `documents`, `product-categories`, `products`, `pages` and `posts`.
 - Payload globals live in `src/payload/globals`; current globals are `site-settings`, `navigation` and `footer`.
 - Page/post builder blocks live in `src/payload/blocks`; current blocks include hero, rich text, image/text, card grid, product grid, gallery, downloads, specification table and CTA band.
 - Jake and Dad are existing admins. The `editor` role remains available in Console users for future limited-access accounts, but no editor users are planned yet.
 - `next.config.ts` is wrapped with `withPayload()`.
 - `tsconfig.json` maps `@payload-config` to `payload.config.ts`.
-- The previous app-wide root layout was split so `(site)`, `/studio` and `(payload)` can each own the correct root layout boundary. Public URLs are unchanged.
+- The previous app-wide root layout was split so `(site)`, `(new-site)`, `/studio` and `(payload)` can each own the correct root layout boundary. Public URLs are unchanged.
 
 Payload uses the same Neon database as the current app but stores its tables under a separate Postgres schema:
 

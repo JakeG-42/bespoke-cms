@@ -4,7 +4,6 @@ import { SiteShell } from "@/components/site/site-shell";
 import { StructuredData } from "@/components/site/structured-data";
 import { body, code } from "@/app/fonts";
 import { organizationJsonLd, siteConfig, websiteJsonLd } from "@/lib/seo";
-import "@/payload/builder/builder-preview.css";
 import "../globals.css";
 
 export const metadata: Metadata = {

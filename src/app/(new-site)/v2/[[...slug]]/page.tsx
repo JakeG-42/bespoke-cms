@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import config from "@payload-config";
 import { getPayload } from "payload";
 
-import { PayloadPageRenderer } from "@/components/payload/payload-page-renderer";
 import { PuckBuilderRenderer } from "@/components/payload/puck-builder-renderer";
 import {
   applyThemeToBuilderData,
@@ -181,15 +180,23 @@ export default async function PayloadV2Page({ params }: PayloadV2PageProps) {
       return <PuckBuilderRenderer data={themedBuilderData} featuredProducts={productsToBuilderProducts(featuredProducts)} menus={menus} />;
     }
 
-    return <PayloadPageRenderer featuredProducts={featuredProducts} page={page} />;
+    return (
+      <main className="new-site-empty">
+        <section className="new-site-empty-panel">
+          <p>Payload page</p>
+          <h1>{page.title}</h1>
+          <p>Open this page in the WYSIWYG builder and publish visual builder data to control this route.</p>
+        </section>
+      </main>
+    );
   }
 
   return (
-    <main className="page payload-page">
-      <section className="panel payload-empty-page">
-        <p className="code-kicker">Payload site</p>
+    <main className="new-site-empty">
+      <section className="new-site-empty-panel">
+        <p>Payload site</p>
         <h1>New Eltronic</h1>
-        <p className="lede">
+        <p>
           Create and publish a Payload page with the slug <code>{slug}</code> to control this route.
         </p>
       </section>

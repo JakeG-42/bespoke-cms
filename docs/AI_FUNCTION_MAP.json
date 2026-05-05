@@ -7,7 +7,7 @@
     "productionUrl": "https://project-5v5cr.vercel.app",
     "adminUrl": "https://project-5v5cr.vercel.app/studio",
     "payloadConsoleUrl": "https://project-5v5cr.vercel.app/console",
-    "payloadSandboxUrl": "https://project-5v5cr.vercel.app/v2",
+    "payloadNewSiteUrl": "https://new.eltronic.co.uk",
     "vercelProject": "project-5v5cr"
   },
   "agentInstructions": {
@@ -154,7 +154,7 @@
       "config": "payload.config.ts",
       "routeGroup": "src/app/(payload)",
       "collections": "src/payload/collections",
-      "sandboxPage": "src/app/(site)/v2/page.tsx",
+      "sandboxPage": "src/app/(new-site)/v2/[[...slug]]/page.tsx",
       "generatedTypes": "src/payload-types.ts"
     },
     "database": {
@@ -186,7 +186,7 @@
     ],
     "notes": [
       "The current public site and /studio still read/write through the existing managed-data layer.",
-      "The /v2 sandbox reads a Payload page with slug home when present and otherwise renders a placeholder.",
+      "The /v2 route reads a Payload page with slug home when present and otherwise renders a placeholder. new.eltronic.co.uk rewrites to this isolated new-site route.",
       "Console users support admin and editor roles. Jake and Dad are admins; no editor users are planned yet.",
       "PAYLOAD_SECRET is configured in Vercel for Production and the dev Preview branch; keep it present before treating Console auth as production-ready."
     ]

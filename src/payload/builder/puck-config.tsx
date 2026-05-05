@@ -1040,7 +1040,7 @@ export const builderConfig: BuilderConfig = {
             </div>
             <div className={`puck-card-grid puck-columns-${props.columns ?? "3"}`}>
               {cards.map((product) => (
-                <a className="puck-card" href={`https://eltronic.co.uk/products/${product.slug}`} key={product.slug}>
+                <a className="puck-card" href={`/products/${product.slug}`} key={product.slug}>
                   <span className="puck-kicker">{product.family || "Product"}</span>
                   <h3>{product.name}</h3>
                   {product.summary ? <p>{product.summary}</p> : null}

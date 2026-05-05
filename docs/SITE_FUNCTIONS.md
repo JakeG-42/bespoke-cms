@@ -49,7 +49,7 @@ Concise living reference for how the current Eltronic Next.js site works.
 - `/contact`: quote/contact flow that stores submissions in the managed data layer.
 - `/sitemap.xml`: dynamic sitemap with static routes, managed product routes, product images and published project routes.
 - `/robots.txt`: crawler rules allowing the public site while excluding `/studio` and `/api`.
-- `/v2`: hidden Payload-backed sandbox page for a future rebuilt version of the site.
+- `/v2`: Payload-backed new-site route, also used by `new.eltronic.co.uk`.
 - `/studio/login`: password login for the admin area.
 - `/studio`: shadcn-styled admin dashboard.
 - `/studio/builder`: protected Website Builder for homepage theme, hero, section visibility and section order.
@@ -76,7 +76,7 @@ Concise living reference for how the current Eltronic Next.js site works.
 - Payload collections are being expanded into a full CMS: admin-only `console-users`, `media`, `documents`, `product-categories`, `products`, `pages` and `posts`.
 - Payload globals cover `site-settings`, `navigation` and `footer`.
 - Payload page/post building is block-based with hero, rich text, image/text, card grid, product grid, gallery, downloads, specification table and CTA band sections.
-- The `/v2` page reads a Payload page with slug `home` if one exists, otherwise it renders a safe placeholder. It is noindex and excluded from robots.
+- The `/v2` route reads a Payload page with slug `home` if one exists, otherwise it renders a safe placeholder. It has its own route-group layout and does not use the old public `SiteShell` header/footer. It is noindex and excluded from robots on the old domain.
 - `PAYLOAD_SECRET` is configured in Vercel for Production and the `dev` Preview branch; keep it present before relying on Console auth in production.
 
 ## Product Data Model
