@@ -91,6 +91,11 @@
   color: #155e85;
 }
 
+.visual-builder-action:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+}
+
 .visual-builder-action.primary {
   border-color: #2271b1;
   background: #2271b1;
@@ -120,6 +125,120 @@
 
 .visual-builder-header-status.saved {
   color: #065f46;
+}
+
+.visual-builder-dialog {
+  position: fixed;
+  z-index: 80;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(15, 23, 42, 0.52);
+}
+
+.visual-builder-dialog-panel {
+  display: grid;
+  width: min(100%, 28rem);
+  gap: 1rem;
+  padding: 1.1rem;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  border-radius: 8px;
+  background: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.3);
+}
+
+.visual-builder-dialog-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.visual-builder-dialog-header p,
+.visual-builder-dialog-header h2 {
+  margin: 0;
+}
+
+.visual-builder-dialog-header p {
+  color: #64748b;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.visual-builder-dialog-header h2 {
+  margin-top: 0.18rem;
+  font-size: 1.2rem;
+}
+
+.visual-builder-dialog-header button {
+  display: inline-grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid rgba(100, 116, 139, 0.24);
+  border-radius: 7px;
+  background: #ffffff;
+  color: #334155;
+  cursor: pointer;
+}
+
+.visual-builder-dialog-panel label {
+  display: grid;
+  gap: 0.38rem;
+  color: #334155;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.visual-builder-dialog-panel input {
+  width: 100%;
+  min-height: 2.55rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid rgba(100, 116, 139, 0.34);
+  border-radius: 7px;
+  color: #0f172a;
+  font: inherit;
+}
+
+.visual-builder-dialog-panel input:focus {
+  outline: 2px solid rgba(34, 113, 177, 0.3);
+  outline-offset: 1px;
+  border-color: #2271b1;
+}
+
+.visual-builder-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.55rem;
+  padding-top: 0.2rem;
+}
+
+.visual-builder-dialog-actions button {
+  min-height: 2.35rem;
+  padding: 0.45rem 0.78rem;
+  border: 1px solid rgba(100, 116, 139, 0.3);
+  border-radius: 7px;
+  background: #ffffff;
+  color: #334155;
+  font: inherit;
+  font-size: 0.84rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.visual-builder-dialog-actions button[type="submit"] {
+  border-color: #2271b1;
+  background: #2271b1;
+  color: #ffffff;
+}
+
+.visual-builder-dialog-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
 }
 
 .visual-builder-view .Puck {
