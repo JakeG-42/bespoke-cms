@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 
 const defaultRoles = [
-  "systems integrator",
-  "systems consultant",
-  "control systems partner",
-  "software integration support",
+  "white-label CMS",
+  "visual page builder",
+  "CRM workspace",
+  "commerce console",
 ];
 
 export function HeroRoleTypewriter({ roles = defaultRoles }: { roles?: string[] }) {
@@ -50,7 +50,7 @@ export function HeroRoleTypewriter({ roles = defaultRoles }: { roles?: string[] 
   const visibleRole = (safeRoles[roleIndex] ?? safeRoles[0]).slice(0, characterCount);
 
   return (
-    <span className="title-prefix title-typewriter" aria-label="Eltronic roles">
+    <span className="title-prefix title-typewriter" aria-label="Bespoke CMS roles">
       <span>{visibleRole || "\u00a0"}</span>
       <span className="typewriter-cursor" aria-hidden="true" />
     </span>

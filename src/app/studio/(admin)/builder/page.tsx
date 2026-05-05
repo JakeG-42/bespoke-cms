@@ -21,7 +21,7 @@ type BuilderPageProps = {
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Website Builder | Eltronic Studio",
+  title: "Website Builder | Bespoke Studio",
 };
 
 export default async function StudioBuilderPage({ searchParams }: BuilderPageProps) {

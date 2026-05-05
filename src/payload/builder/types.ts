@@ -146,7 +146,7 @@ export type BuilderRootProps = {
   themeId?: string;
   themeName?: string;
   textColor?: string;
-  themePreset?: "eltronicDark" | "precisionLight" | "signalContrast";
+  themePreset?: "platformDark" | "precisionLight" | "signalContrast";
 };
 
 export type BuilderTheme = {

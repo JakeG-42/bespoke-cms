@@ -5,12 +5,12 @@ import "@/payload/builder/builder-preview.css";
 import "./new-site.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://new.eltronic.co.uk"),
+  metadataBase: new URL("https://app.example.com"),
   title: {
-    default: "New Eltronic",
-    template: "%s | New Eltronic",
+    default: "Bespoke CMS",
+    template: "%s | Bespoke CMS",
   },
-  description: "The Payload-managed version of the new Eltronic website.",
+  description: "The Payload-managed version of the new Bespoke CMS website.",
   robots: {
     index: false,
     follow: false,

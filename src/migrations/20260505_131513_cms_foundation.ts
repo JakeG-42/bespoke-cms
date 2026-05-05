@@ -3,7 +3,7 @@ import { type MigrateDownArgs, type MigrateUpArgs, sql } from '@payloadcms/db-po
 export async function up({ db }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
    CREATE TYPE "payload"."enum_products_status" AS ENUM('draft', 'published');
-  CREATE TYPE "payload"."enum_products_template" AS ENUM('hmi', 'data-logger', 'module');
+  CREATE TYPE "payload"."enum_products_template" AS ENUM('website', 'commerce', 'workflow');
   CREATE TYPE "payload"."enum_pages_blocks_image_text_image_side" AS ENUM('left', 'right');
   CREATE TYPE "payload"."enum_pages_blocks_product_grid_mode" AS ENUM('featured', 'manual');
   CREATE TYPE "payload"."enum_posts_blocks_image_text_image_side" AS ENUM('left', 'right');
@@ -86,7 +86,7 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
   	"featured" boolean DEFAULT false,
   	"category_id" integer,
   	"family" varchar NOT NULL,
-  	"template" "payload"."enum_products_template" DEFAULT 'hmi' NOT NULL,
+  	"template" "payload"."enum_products_template" DEFAULT 'website' NOT NULL,
   	"summary" varchar NOT NULL,
   	"description" jsonb NOT NULL,
   	"enquiry_prompt" varchar DEFAULT 'Discuss this product' NOT NULL,
@@ -379,7 +379,7 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE "payload"."site_settings" (
   	"id" serial PRIMARY KEY NOT NULL,
-  	"site_name" varchar DEFAULT 'Eltronic' NOT NULL,
+  	"site_name" varchar DEFAULT 'Bespoke CMS' NOT NULL,
   	"strapline" varchar,
   	"contact_email" varchar,
   	"contact_phone" varchar,

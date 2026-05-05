@@ -8,7 +8,7 @@ import { getProductFamilies } from "@/lib/managed-data";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "New Product | Eltronic Studio",
+  title: "New Product | Bespoke Studio",
 };
 
 export default async function NewProductPage() {

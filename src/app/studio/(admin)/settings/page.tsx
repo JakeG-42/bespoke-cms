@@ -18,7 +18,7 @@ type StudioSettingsPageProps = {
 };
 
 export const metadata = {
-  title: "Settings | Eltronic Studio",
+  title: "Settings | Bespoke Studio",
 };
 
 export default async function StudioSettingsPage({ searchParams }: StudioSettingsPageProps) {
@@ -104,7 +104,7 @@ export default async function StudioSettingsPage({ searchParams }: StudioSetting
               </div>
               {deliveryStatus.from.includes("onboarding@resend.dev") ? (
                 <div className="rounded-2xl border border-amber-400/30 bg-amber-500/10 p-4 text-sm text-amber-100">
-                  Temporary sender active: until the Eltronic domain is verified in Resend, this sender can only
+                  Temporary sender active: until the Bespoke CMS domain is verified in Resend, this sender can only
                   deliver to the Resend account email. After domain verification, admins can use any normal recipient
                   inbox here.
                 </div>
@@ -157,7 +157,7 @@ export default async function StudioSettingsPage({ searchParams }: StudioSetting
           <CardContent>
             <p className="mb-0 text-sm text-muted-foreground">
               Use <code>/studio/users</code> to add users, reset passwords and assign roles. Keep
-              <code> ELTRONIC_ADMIN_SECRET</code> strong because it signs Studio session cookies.
+              <code> BESPOKE_CMS_ADMIN_SECRET</code> strong because it signs Studio session cookies.
             </p>
           </CardContent>
         </Card>

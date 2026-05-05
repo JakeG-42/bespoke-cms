@@ -11,8 +11,9 @@ import {
   type ContactSubmission,
 } from "@/lib/managed-data";
 
-const FALLBACK_CONTACT_NOTIFICATION_TO = "jakub@gajosz.com";
+const FALLBACK_CONTACT_NOTIFICATION_TO = "admin@example.com";
 const DIRECT_SMTP_TIMEOUT_MS = 8000;
+const FALLBACK_APP_URL = "https://app.example.com";
 
 type EmailTransport = "direct" | "resend";
 
@@ -208,7 +209,7 @@ async function sendDirectSmtpEmail({
 }): Promise<EmailNotificationResult> {
   const envelopeFrom = extractEmailAddress(from);
   const groupedRecipients = groupRecipientsByDomain(to);
-  const heloName = process.env.CONTACT_NOTIFICATION_HELO_NAME || getEmailDomain(envelopeFrom) || "eltronic.co.uk";
+  const heloName = process.env.CONTACT_NOTIFICATION_HELO_NAME || getEmailDomain(envelopeFrom) || "example.com";
 
   if (groupedRecipients.size === 0) {
     return "skipped";
@@ -245,7 +246,7 @@ async function sendDirectSmtpEmail({
           },
           from,
           headers: {
-            "X-Eltronic-Notification-Id": idempotencyKey,
+            "X-Bespoke-CMS-Notification-Id": idempotencyKey,
           },
           html,
           replyTo,
@@ -272,19 +273,19 @@ async function sendDirectSmtpEmail({
 
 function buildSubmissionSubject(submission: ContactSubmission) {
   if (submission.type === "captcha_failed") {
-    return `Eltronic blocked captcha attempt from ${submission.name}`;
+    return `Bespoke CMS blocked captcha attempt from ${submission.name}`;
   }
 
   if (submission.type === "honeypot_spam") {
-    return `Eltronic honeypot spam blocked from ${submission.name}`;
+    return `Bespoke CMS honeypot spam blocked from ${submission.name}`;
   }
 
-  return `New Eltronic enquiry from ${submission.name}`;
+  return `Bespoke CMS enquiry from ${submission.name}`;
 }
 
 function buildSubmissionEmailText(submission: ContactSubmission) {
   return [
-    `Eltronic website submission: ${formatSubmissionType(submission.type)}`,
+    `Bespoke CMS website submission: ${formatSubmissionType(submission.type)}`,
     "",
     `Type: ${formatSubmissionType(submission.type)}`,
     `Status: ${submission.status}`,
@@ -299,7 +300,7 @@ function buildSubmissionEmailText(submission: ContactSubmission) {
     submission.message,
     "",
     "Open Studio submissions:",
-    "https://project-5v5cr.vercel.app/studio/submissions",
+    getStudioSubmissionsUrl(),
   ].join("\n");
 }
 
@@ -341,7 +342,7 @@ function buildSubmissionEmailHtml(submission: ContactSubmission) {
           submission.message,
         )}</div>
         <p style="margin:22px 0 0;">
-          <a href="https://project-5v5cr.vercel.app/studio/submissions" style="display:inline-block;background:#0f172a;color:#ffffff;text-decoration:none;border-radius:999px;padding:11px 16px;font-size:14px;font-weight:700;">Open Studio submissions</a>
+          <a href="${escapeHtml(getStudioSubmissionsUrl())}" style="display:inline-block;background:#0f172a;color:#ffffff;text-decoration:none;border-radius:999px;padding:11px 16px;font-size:14px;font-weight:700;">Open Studio submissions</a>
         </p>
       </div>
     </div>
@@ -350,7 +351,7 @@ function buildSubmissionEmailHtml(submission: ContactSubmission) {
 }
 
 function buildDigestSubject(submissions: ContactSubmission[], mode: ContactNotificationMode) {
-  return `Eltronic ${mode === "weekly_digest" ? "weekly" : "daily"} contact report: ${submissions.length} record${submissions.length === 1 ? "" : "s"}`;
+  return `Bespoke CMS ${mode === "weekly_digest" ? "weekly" : "daily"} contact report: ${submissions.length} record${submissions.length === 1 ? "" : "s"}`;
 }
 
 function buildDigestEmailText(submissions: ContactSubmission[], mode: ContactNotificationMode) {
@@ -367,7 +368,7 @@ function buildDigestEmailText(submissions: ContactSubmission[], mode: ContactNot
       "",
     ]),
     "Open Studio submissions:",
-    "https://project-5v5cr.vercel.app/studio/submissions",
+    getStudioSubmissionsUrl(),
   ].join("\n");
 }
 
@@ -377,7 +378,7 @@ function buildDigestEmailHtml(submissions: ContactSubmission[], mode: ContactNot
   <body style="margin:0;background:#f8fafc;font-family:Arial,sans-serif;color:#0f172a;">
     <div style="max-width:720px;margin:0 auto;padding:28px;">
       <div style="background:#020617;color:#f8fafc;border-radius:20px;padding:24px;">
-        <p style="margin:0 0 8px;color:#67e8f9;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;">Eltronic ${mode === "weekly_digest" ? "weekly" : "daily"} report</p>
+        <p style="margin:0 0 8px;color:#67e8f9;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;">Bespoke CMS ${mode === "weekly_digest" ? "weekly" : "daily"} report</p>
         <h1 style="margin:0;font-size:24px;line-height:1.25;">${submissions.length} contact record${submissions.length === 1 ? "" : "s"}</h1>
       </div>
       ${submissions
@@ -396,7 +397,7 @@ function buildDigestEmailHtml(submissions: ContactSubmission[], mode: ContactNot
         })
         .join("")}
       <p style="margin:22px 0 0;">
-        <a href="https://project-5v5cr.vercel.app/studio/submissions" style="display:inline-block;background:#0f172a;color:#ffffff;text-decoration:none;border-radius:999px;padding:11px 16px;font-size:14px;font-weight:700;">Open Studio submissions</a>
+        <a href="${escapeHtml(getStudioSubmissionsUrl())}" style="display:inline-block;background:#0f172a;color:#ffffff;text-decoration:none;border-radius:999px;padding:11px 16px;font-size:14px;font-weight:700;">Open Studio submissions</a>
       </p>
     </div>
   </body>
@@ -412,6 +413,16 @@ function parseRecipientList(value: string) {
 
 function getEmailTransport(): EmailTransport {
   return process.env.CONTACT_NOTIFICATION_TRANSPORT === "direct" ? "direct" : "resend";
+}
+
+function getAppUrl() {
+  return (process.env.NEXT_PUBLIC_SITE_URL ?? process.env.VERCEL_PROJECT_PRODUCTION_URL ?? FALLBACK_APP_URL)
+    .replace(/^([^h])/, "https://$1")
+    .replace(/\/+$/, "");
+}
+
+function getStudioSubmissionsUrl() {
+  return `${getAppUrl()}/studio/submissions`;
 }
 
 function groupRecipientsByDomain(recipients: string[]) {

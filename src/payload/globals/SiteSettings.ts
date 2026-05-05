@@ -16,7 +16,7 @@ export const SiteSettings: GlobalConfig = {
     {
       name: "siteName",
       type: "text",
-      defaultValue: "Eltronic",
+      defaultValue: "Bespoke CMS",
       required: true,
     },
     {

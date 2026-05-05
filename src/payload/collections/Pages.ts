@@ -5,7 +5,7 @@ import { pageBlocks } from "../blocks/index.ts";
 import { seoFields, slugField, statusField } from "../fields.ts";
 
 function getNewSiteUrl() {
-  return (process.env.NEXT_PUBLIC_NEW_SITE_URL ?? "https://new.eltronic.co.uk").replace(/\/+$/, "");
+  return (process.env.NEXT_PUBLIC_NEW_SITE_URL ?? "https://app.example.com").replace(/\/+$/, "");
 }
 
 function getPreviewPath(slug: unknown) {

@@ -42,19 +42,19 @@ export const Products: CollectionConfig = {
     {
       name: "template",
       type: "select",
-      defaultValue: "hmi",
+      defaultValue: "website",
       options: [
         {
-          label: "HMI display",
-          value: "hmi",
+          label: "Website package",
+          value: "website",
         },
         {
-          label: "Data logger",
-          value: "data-logger",
+          label: "Commerce package",
+          value: "commerce",
         },
         {
-          label: "Control module",
-          value: "module",
+          label: "Workflow package",
+          value: "workflow",
         },
       ],
       required: true,

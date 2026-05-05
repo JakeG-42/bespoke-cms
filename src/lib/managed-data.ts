@@ -35,11 +35,11 @@ import {
   type AdminUserStatus,
 } from "@/lib/admin-user-model";
 
-const DATA_KEY = "eltronic:managed-data:v1";
-const LOCAL_DATA_PATH = path.join(process.cwd(), ".data", "eltronic-data.json");
-const POSTGRES_TABLE_NAME = "eltronic_managed_data";
+const DATA_KEY = "bespoke-cms:managed-data:v1";
+const LOCAL_DATA_PATH = path.join(process.cwd(), ".data", "bespoke-cms-data.json");
+const POSTGRES_TABLE_NAME = "bespoke_cms_managed_data";
 const BLOCKED_SUBMISSION_DEDUPE_WINDOW_MS = 5000;
-const DEFAULT_CONTACT_NOTIFICATION_TO = "jakub@gajosz.com";
+const DEFAULT_CONTACT_NOTIFICATION_TO = "admin@example.com";
 
 export type ContactSubmissionStatus = "new" | "reviewed" | "replied" | "archived" | "blocked";
 export type ContactSubmissionType = "enquiry" | "captcha_failed" | "honeypot_spam";
@@ -81,12 +81,7 @@ type ManagedData = {
   updatedAt: string;
 };
 
-const featuredProductSlugs = [
-  "autopi-can-fd-pro",
-  "topcon-opus-b6e",
-  "topcon-opus-a8s",
-  "eltronic-iq-can-bus-module",
-];
+const featuredProductSlugs = ["cms-starter-site", "commerce-catalogue", "crm-operations-workspace"];
 
 function getRedisConfig() {
   const url = process.env.KV_REST_API_URL ?? process.env.UPSTASH_REDIS_REST_URL;
@@ -192,7 +187,7 @@ function normalizeContactNotificationSettings(settings?: {
 
 function normalizeProducts(products: Product[]) {
   return products.map((storedProduct) => {
-    const product = normalizeLaunchProductContent(storedProduct);
+    const product = storedProduct;
     const images = getProductImages(product);
 
     return {
@@ -204,41 +199,6 @@ function normalizeProducts(products: Product[]) {
       modules: normalizeProductModules(product.modules),
     };
   });
-}
-
-function normalizeLaunchProductContent(product: Product): Product {
-  if (product.slug !== "eltronic-iq-can-bus-module") {
-    return product;
-  }
-
-  const containsUnfinishedCopy =
-    product.highlights.some((highlight) => /owned product page|technical data sections/i.test(highlight)) ||
-    product.variants?.some((variant) => /to be updated|tbu/i.test(`${variant.details} ${variant.articleNumber}`));
-
-  if (!containsUnfinishedCopy) {
-    return product;
-  }
-
-  return {
-    ...product,
-    summary:
-      "Application-specific CAN-Bus I/O expansion for control projects that need extra inputs, outputs or interface points.",
-    description:
-      "The I&Q CAN-Bus I/O Module supports control-system expansion where additional equipment inputs, outputs and CAN connectivity need to be specified around the application, enclosure, operator interface and support requirements.",
-    highlights: [
-      "CAN-Bus I/O expansion for application-specific control projects",
-      "Useful where additional signals, operator controls or interface points need to be brought into a wider system",
-      "Configuration, housing and connection details are confirmed during technical enquiry",
-    ],
-    specifications: [
-      { label: "Product family", value: "Eltronic CAN-Bus I/O expansion" },
-      { label: "Interface", value: "CAN-Bus control-system integration" },
-      { label: "Housing", value: "Specified around the operating environment" },
-      { label: "User interface", value: "Defined during project scoping" },
-      { label: "Configuration", value: "Confirmed against I/O, wiring and support requirements" },
-    ],
-    variants: undefined,
-  };
 }
 
 function normalizeProductDocuments(documents?: ProductDocument[]) {
@@ -339,7 +299,7 @@ type NeonSql = NeonQueryFunction<false, false>;
 
 async function ensurePostgresDataTable(sql: NeonSql) {
   await sql`
-    CREATE TABLE IF NOT EXISTS eltronic_managed_data (
+    CREATE TABLE IF NOT EXISTS bespoke_cms_managed_data (
       id text PRIMARY KEY,
       data jsonb NOT NULL,
       updated_at timestamptz NOT NULL DEFAULT now()
@@ -367,7 +327,7 @@ async function writePostgresManagedData(sql: NeonSql, data: ManagedData) {
   await ensurePostgresDataTable(sql);
   await sql.query(
     `
-      INSERT INTO eltronic_managed_data (id, data, updated_at)
+      INSERT INTO bespoke_cms_managed_data (id, data, updated_at)
       VALUES ($1, $2::jsonb, now())
       ON CONFLICT (id)
       DO UPDATE SET data = EXCLUDED.data, updated_at = now()
@@ -377,7 +337,7 @@ async function writePostgresManagedData(sql: NeonSql, data: ManagedData) {
 }
 
 function canWriteLocalData() {
-  return process.env.NODE_ENV !== "production" || process.env.ELTRONIC_ALLOW_LOCAL_WRITES === "true";
+  return process.env.NODE_ENV !== "production" || process.env.BESPOKE_CMS_ALLOW_LOCAL_WRITES === "true";
 }
 
 export function hasPersistentStorage() {
@@ -880,11 +840,11 @@ export function parseLines(value: FormDataEntryValue | null) {
 export function parseProductTemplate(value: FormDataEntryValue | null): ProductTemplate {
   const template = String(value ?? "");
 
-  if (template === "data-logger" || template === "module") {
+  if (template === "website" || template === "commerce" || template === "workflow") {
     return template;
   }
 
-  return "hmi";
+  return "website";
 }
 
 export function siteBuilderFromFormData(formData: FormData): SiteBuilderSettings {
@@ -1073,7 +1033,7 @@ function normalizeThemePreset(value: unknown): SiteThemePreset {
     return preset;
   }
 
-  return "eltronic";
+  return "platform";
 }
 
 function normalizeBackgroundStyle(value: unknown): SiteBackgroundStyle {

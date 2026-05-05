@@ -5,7 +5,7 @@
   margin-bottom: 1rem;
 }
 
-.eltronic-console-icon {
+.platform-console-icon {
   display: grid;
   position: relative;
   width: 2.35rem;
@@ -23,54 +23,54 @@
   box-shadow: inset 0 0 0 1px rgba(251, 191, 36, 0.12), 0 10px 24px rgba(2, 6, 23, 0.22);
 }
 
-.eltronic-console-icon::before,
-.eltronic-console-icon::after,
-.eltronic-console-icon span {
+.platform-console-icon::before,
+.platform-console-icon::after,
+.platform-console-icon span {
   content: "";
   position: absolute;
   border-radius: 2px;
 }
 
-.eltronic-console-icon::before {
+.platform-console-icon::before {
   width: 1.15rem;
   height: 1.15rem;
   border: 2px solid #8bd3ff;
 }
 
-.eltronic-console-icon::after {
+.platform-console-icon::after {
   width: 1.55rem;
   height: 2px;
   background: #fbbf24;
   box-shadow: 0 -0.52rem 0 rgba(251, 191, 36, 0.88), 0 0.52rem 0 rgba(251, 191, 36, 0.88);
 }
 
-.eltronic-console-icon span {
+.platform-console-icon span {
   width: 0.32rem;
   height: 0.32rem;
   background: #f8fafc;
   box-shadow: -0.72rem 0 0 #8bd3ff, 0.72rem 0 0 #8bd3ff;
 }
 
-.eltronic-console-logo {
+.platform-console-logo {
   display: inline-flex;
   align-items: center;
   gap: 0.72rem;
   color: var(--theme-elevation-950);
 }
 
-.eltronic-console-logo strong,
-.eltronic-console-logo span {
+.platform-console-logo strong,
+.platform-console-logo span {
   display: block;
   line-height: 1;
 }
 
-.eltronic-console-logo strong {
+.platform-console-logo strong {
   font-size: 1.28rem;
   font-weight: 900;
   letter-spacing: 0;
 }
 
-.eltronic-console-logo span {
+.platform-console-logo span {
   margin-top: 0.22rem;
   color: var(--theme-elevation-500);
   font-size: 0.72rem;
@@ -79,7 +79,7 @@
   text-transform: uppercase;
 }
 
-.app-header .eltronic-console-icon {
+.app-header .platform-console-icon {
   width: 1.85rem;
   height: 1.85rem;
   border-radius: 7px;
@@ -114,11 +114,11 @@
   margin-bottom: 1.45rem;
 }
 
-.login__brand .eltronic-console-logo {
+.login__brand .platform-console-logo {
   color: #f8fafc;
 }
 
-.login__brand .eltronic-console-logo span {
+.login__brand .platform-console-logo span {
   color: #8bd3ff;
 }
 

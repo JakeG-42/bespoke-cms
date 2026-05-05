@@ -169,12 +169,12 @@ function rootProps(page: PageLike): BuilderRootProps {
     fontFamily: "display",
     pagePaddingBottom: 0,
     pagePaddingTop: 0,
-    pageTitle: asString(page.title, "New Eltronic page"),
+    pageTitle: asString(page.title, "Bespoke CMS page"),
     sectionSpacing: "normal",
     surfaceColor: "23, 32, 51",
     surfaceOpacity: 0.78,
     textColor: "#f1f5f9",
-    themePreset: "eltronicDark",
+    themePreset: "platformDark",
   };
 }
 

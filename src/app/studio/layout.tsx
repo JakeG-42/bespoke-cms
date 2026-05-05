@@ -7,8 +7,8 @@ import "../globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: "Eltronic Studio",
-    template: "%s | Eltronic Studio",
+    default: "Bespoke Studio",
+    template: "%s | Bespoke Studio",
   },
   robots: {
     index: false,

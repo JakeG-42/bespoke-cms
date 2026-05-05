@@ -15,7 +15,7 @@ import type { BuilderProduct } from "@/payload/builder/types";
 import { VisualBuilderClient } from "./VisualBuilderClient";
 
 function getNewSiteUrl() {
-  return (process.env.NEXT_PUBLIC_NEW_SITE_URL ?? "https://new.eltronic.co.uk").replace(/\/+$/, "");
+  return (process.env.NEXT_PUBLIC_NEW_SITE_URL ?? "https://app.example.com").replace(/\/+$/, "");
 }
 
 function getPreviewUrl(slug: unknown) {
@@ -73,7 +73,7 @@ export async function WysiwygPageView({ initPageResult, params }: AdminViewServe
       <div className="visual-builder-view">
         <div className="visual-builder-toolbar">
           <div>
-            <p className="visual-builder-kicker">Eltronic WYSIWYG</p>
+            <p className="visual-builder-kicker">Bespoke CMS WYSIWYG</p>
             <h1>Select a page</h1>
             <Link href="/console/collections/pages">Back to pages</Link>
           </div>

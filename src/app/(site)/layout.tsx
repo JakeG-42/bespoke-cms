@@ -9,8 +9,8 @@ import "../globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: "Eltronic | Systems Integration, HMI & Software Engineering",
-    template: "%s | Eltronic",
+    default: "Bespoke CMS | White-label CMS, CRM and Page Builder",
+    template: "%s | Bespoke CMS",
   },
   description: siteConfig.description,
   applicationName: siteConfig.name,
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     canonical: siteConfig.url,
   },
   openGraph: {
-    title: "Eltronic | Systems Integration, HMI & Software Engineering",
+    title: "Bespoke CMS | White-label CMS, CRM and Page Builder",
     description: siteConfig.description,
     url: siteConfig.url,
     siteName: siteConfig.name,
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Eltronic | Systems Integration, HMI & Software Engineering",
+    title: "Bespoke CMS | White-label CMS, CRM and Page Builder",
     description: siteConfig.description,
   },
 };

@@ -58,8 +58,8 @@ export function ProductCatalogueBrowser({
           <p className="code-kicker">products.index</p>
           <h1 className="catalogue-title">Product catalogue</h1>
           <p className="lede catalogue-lede">
-            Rugged HMI displays, CAN-Bus data logging and control modules for
-            quote-led specification, integration and support.
+            Neutral starter packages for testing website, commerce and workflow
+            content inside the white-label console.
           </p>
         </div>
 
@@ -76,7 +76,7 @@ export function ProductCatalogueBrowser({
             <input
               aria-label="Search products"
               onChange={(event) => setQuery(event.target.value)}
-              placeholder="Search HMI, CAN-Bus, I/O..."
+              placeholder="Search CMS, commerce, workflow..."
               type="search"
               value={query}
             />

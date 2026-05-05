@@ -1,17 +1,17 @@
-export function EltronicConsoleIcon() {
+export function PlatformConsoleIcon() {
   return (
-    <div aria-hidden="true" className="eltronic-console-icon">
+    <div aria-hidden="true" className="platform-console-icon">
       <span />
     </div>
   );
 }
 
-export function EltronicConsoleLogo() {
+export function PlatformConsoleLogo() {
   return (
-    <div className="eltronic-console-logo">
-      <EltronicConsoleIcon />
+    <div className="platform-console-logo">
+      <PlatformConsoleIcon />
       <div>
-        <strong>Eltronic</strong>
+        <strong>Bespoke CMS</strong>
         <span>Console</span>
       </div>
     </div>

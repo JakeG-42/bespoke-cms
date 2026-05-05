@@ -17,7 +17,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       <header className="main-header">
         <nav className="nav-container" aria-label="Main navigation">
           <Link className="brand-logo logo-text" href="/">
-            Eltronic
+            Bespoke CMS
           </Link>
           <div className="nav-menu desktop-nav">
             {navItems.map((item) => (
@@ -51,7 +51,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           <div className="footer-main">
             <div className="footer-brand">
               <Link className="footer-logo gradient-text" href="/">
-                Eltronic
+                Bespoke CMS
               </Link>
             </div>
 
@@ -66,21 +66,21 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
               <h2 className="footer-group-title">Resources</h2>
               <Link href="/sectors">Sectors</Link>
               <Link href="/data-specification">Data & specification</Link>
-              <Link href="/about">About Eltronic</Link>
+              <Link href="/about">About Bespoke CMS</Link>
               <Link href="/contact">Start an enquiry</Link>
             </nav>
 
             <div className="footer-contact-card">
               <span className="section-number">contact.signal</span>
-              <h2>Have a system to discuss?</h2>
-              <p>Send the product, control or software problem and we will help shape the next step.</p>
-              <a href="mailto:sales@eltronic.co.uk">sales@eltronic.co.uk</a>
-              <a href="tel:+447935239421">+44 (0) 79 3523 9421</a>
+              <h2>Have a workspace to discuss?</h2>
+              <p>Send the CMS, CRM, catalogue or workflow idea and we will help shape the next step.</p>
+              <a href="mailto:hello@example.com">hello@example.com</a>
+              <a href="tel:+440000000000">+44 00 0000 0000</a>
             </div>
           </div>
 
           <div className="footer-bottom">
-            <p>© 2026 Eltronic. Systems integration and software engineering.</p>
+            <p>© 2026 Bespoke CMS. White-label CMS, CRM and page-building platform.</p>
           </div>
         </div>
       </footer>

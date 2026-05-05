@@ -11,13 +11,13 @@ import {
 } from "@/lib/admin-user-model";
 import { findAdminUserByIdentifier, getAdminUserById } from "@/lib/managed-data";
 
-const COOKIE_NAME = "eltronic_admin_session";
+const COOKIE_NAME = "bespoke_cms_admin_session";
 const SESSION_MAX_AGE_SECONDS = 60 * 60 * 24 * 7;
-const DEFAULT_ADMIN_SECRET = "temporary-eltronic-admin-secret";
+const DEFAULT_ADMIN_SECRET = "temporary-bespoke-cms-admin-secret";
 
 function getAdminSecret() {
   return (
-    process.env.ELTRONIC_ADMIN_SECRET ||
+    process.env.BESPOKE_CMS_ADMIN_SECRET ||
     process.env.AUTH_SECRET ||
     process.env.NEXTAUTH_SECRET ||
     DEFAULT_ADMIN_SECRET

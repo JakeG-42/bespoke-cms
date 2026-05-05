@@ -1,13 +1,11 @@
 {
-  "name": "eltronic",
+  "name": "bespoke-cms",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "email:check": "node scripts/check-email-notifications.mjs",
-    "images:products": "node scripts/generate-product-gallery-assets.mjs",
-    "images:products:sync": "node scripts/generate-product-gallery-assets.mjs --sync-managed-data",
     "payload": "payload",
     "payload:importmap": "payload generate:importmap",
     "payload:migrate": "payload migrate",

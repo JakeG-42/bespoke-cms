@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const DEFAULT_BASE_URL = "https://project-5v5cr.vercel.app";
+const DEFAULT_BASE_URL = "http://localhost:3000";
 
 const args = process.argv.slice(2);
 const flags = new Set(args.filter((arg) => arg.startsWith("--")));
@@ -90,9 +90,9 @@ async function submitContactForm(form, fields) {
 
   body.set(form.actionField, "");
   body.set("name", "Anti Spam Test");
-  body.set("company", "Eltronic Test");
+  body.set("company", "Bespoke CMS Test");
   body.set("email", "test@example.com");
-  body.set("productSlug", "autopi-can-fd-pro");
+  body.set("productSlug", "cms-starter-site");
   body.set("message", "Automated anti-spam test. Please ignore if this valid test was intentionally enabled.");
   body.set("captchaToken", form.token);
   body.set("captchaAnswer", fields.captchaAnswer);

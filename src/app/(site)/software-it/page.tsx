@@ -6,7 +6,7 @@ import { createPageMetadata } from "@/lib/seo";
 export const metadata = createPageMetadata({
   title: "Software & Systems",
   description:
-    "Full-stack software, internal systems, API integrations, embedded services, IoT workflows and technical consultation from Eltronic.",
+    "CMS, CRM, commerce, API integration and workflow automation modules for Bespoke CMS.",
   path: "/software-it",
 });
 
@@ -16,23 +16,22 @@ export default function SoftwareItPage() {
       <section className="hero compact-hero">
         <div className="hero-copy">
           <p className="code-kicker">software.systems</p>
-          <h1>Software engineering for connected operations.</h1>
+          <h1>Software modules for connected workspaces.</h1>
           <p className="lede">
-            Eltronic designs and builds the software layer around equipment,
-            people and business systems: internal platforms, APIs, embedded
-            services, device data, dashboards and the integrations that remove
-            manual work without making the operation harder to run.
+            Bespoke CMS brings content, customer data, catalogue records,
+            dashboards, APIs and automation into one reusable product foundation
+            without making the admin experience harder to run.
           </p>
           <div className="actions">
             <Link className="button" href="/contact">
               Discuss a system
             </Link>
             <Link className="button secondary" href="/solutions">
-              View control-system solutions
+              View platform modules
             </Link>
           </div>
         </div>
-        <TechnicalVisual label="Software, hardware and system integration" variant="network" />
+        <TechnicalVisual label="Software and workflow integration" variant="network" />
       </section>
 
       <section className="section">
@@ -42,9 +41,9 @@ export default function SoftwareItPage() {
             <h2>Capability across the stack</h2>
           </div>
           <p>
-            Work can sit in the browser, backend, database, device, gateway or
-            the systems between them. The priority is always the same: reliable
-            data, fewer errors and a workflow the customer can actually use.
+            Work can sit in the browser, backend, database, console, automation
+            layer or the systems between them. The priority is always the same:
+            reliable data, fewer errors and a workflow the customer can use.
           </p>
         </div>
         <div className="module-grid">
@@ -70,7 +69,7 @@ export default function SoftwareItPage() {
             <h2>Bring the problem, not the category.</h2>
             <p>
               You do not need to know whether the answer is an API, dashboard,
-              embedded service, database, device workflow or process change.
+              custom record, database, notification or process change.
               Describe where the work slows down, where data breaks, where
               errors enter or where people repeat the same task. We can shape
               the technical route from there.
@@ -89,8 +88,8 @@ export default function SoftwareItPage() {
             <h2>Complex delivery without confusion</h2>
           </div>
           <p>
-            Serious software work can cross hardware, users, data, hosting,
-            security and existing business tools. The customer experience should
+            Serious software work can cross users, data, hosting, security,
+            content, workflows and existing business tools. The customer experience should
             still feel controlled, transparent and practical from first scope to
             handover.
           </p>

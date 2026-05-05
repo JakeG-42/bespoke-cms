@@ -18,7 +18,7 @@ type StudioUsersPageProps = {
 };
 
 export const metadata = {
-  title: "Users | Eltronic Studio",
+  title: "Users | Bespoke Studio",
 };
 
 export default async function StudioUsersPage({ searchParams }: StudioUsersPageProps) {

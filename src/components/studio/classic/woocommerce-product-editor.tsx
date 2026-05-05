@@ -56,10 +56,10 @@ export function WooCommerceProductEditor({ families, product, returnTo }: WooCom
           <section className="wp-metabox wc-product-data-box">
             <header className="wp-metabox-header">
               <strong>Product data</strong>
-              <select className={inputClass} defaultValue={product?.template ?? "hmi"} name="template">
-                <option value="hmi">Simple product / HMI template</option>
-                <option value="data-logger">Variable product / Data logger template</option>
-                <option value="module">Grouped product / Control module template</option>
+              <select className={inputClass} defaultValue={product?.template ?? "website"} name="template">
+                <option value="website">Simple product / Website package</option>
+                <option value="commerce">Variable product / Commerce package</option>
+                <option value="workflow">Grouped product / Workflow package</option>
               </select>
               <label>
                 <input type="checkbox" /> Virtual
@@ -118,7 +118,7 @@ export function WooCommerceProductEditor({ families, product, returnTo }: WooCom
                       <input className={inputClass} placeholder="L x W x H" />
                     </Field>
                   </div>
-                  <p className="wp-help-text">Shipping controls are modelled for future use; Eltronic currently remains enquiry-led.</p>
+                  <p className="wp-help-text">Shipping controls are modelled for future use; Bespoke CMS currently remains enquiry-led.</p>
                 </Panel>
 
                 <Panel id="linked" title="Linked products">
@@ -140,7 +140,7 @@ export function WooCommerceProductEditor({ families, product, returnTo }: WooCom
                     </datalist>
                   </Field>
                   <Field label="Tags / attributes">
-                    <input className={inputClass} name="tags" placeholder="hmi, CAN-Bus, rugged" defaultValue={product?.tags?.join(", ")} />
+                    <input className={inputClass} name="tags" placeholder="cms, commerce, workflow" defaultValue={product?.tags?.join(", ")} />
                   </Field>
                   <p className="wp-help-text">Use tags now for filtering and future product attributes.</p>
                 </Panel>
@@ -222,7 +222,7 @@ export function WooCommerceProductEditor({ families, product, returnTo }: WooCom
                 <input type="radio" defaultChecked name="categoryPreset" /> Catalogue
               </label>
               <label>
-                <input type="radio" name="categoryPreset" /> HMI displays
+                <input type="radio" name="categoryPreset" /> Website packages
               </label>
               <label>
                 <input type="radio" name="categoryPreset" /> Data logging

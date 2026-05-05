@@ -6,7 +6,7 @@ import { submitContactFormAction } from "@/app/contact/actions";
 
 export const metadata = createPageMetadata({
   title: "Contact",
-  description: "Contact Eltronic for product and project enquiries.",
+  description: "Contact Bespoke CMS for platform, CMS, CRM and workflow enquiries.",
   path: "/contact",
 });
 
@@ -29,11 +29,11 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
     params?.error === "required"
       ? "Please add your name, email and message before sending."
       : params?.error === "storage"
-        ? "The message could not be sent right now. Please email sales@eltronic.co.uk if this continues."
+        ? "The message could not be sent right now. Please email hello@example.com if this continues."
         : params?.error === "captcha"
           ? "Please solve the quick anti-spam question before sending."
           : params?.error === "spam"
-            ? "The message could not be sent. Please email sales@eltronic.co.uk if this continues."
+            ? "The message could not be sent. Please email hello@example.com if this continues."
             : null;
 
   return (
@@ -41,29 +41,28 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
       <section className="contact-hero">
         <div className="contact-copy">
           <p className="code-kicker">project.enquiry</p>
-          <h1 className="contact-title">Talk through your technical project.</h1>
+          <h1 className="contact-title">Talk through your platform idea.</h1>
           <p className="lede">
-            Tell us what you are building, replacing or trying to control.
-            We will review the application and come back with a practical
-            next step.
+            Tell us what you want the CMS, CRM, catalogue or visual builder to
+            handle. We will review the workflow and shape a practical next step.
           </p>
 
           <div className="contact-card-grid">
-            <a className="contact-card" href="tel:+447935239421">
+            <a className="contact-card" href="tel:+440000000000">
               <span>Phone</span>
-              <strong>+44(0) 79 3523 9421</strong>
+              <strong>+44 00 0000 0000</strong>
             </a>
-            <a className="contact-card" href="mailto:sales@eltronic.co.uk">
+            <a className="contact-card" href="mailto:hello@example.com">
               <span>Email</span>
-              <strong>sales@eltronic.co.uk</strong>
+              <strong>hello@example.com</strong>
             </a>
           </div>
 
           <div className="contact-note">
             <span>Useful details</span>
             <p>
-              Product name, equipment type, CAN protocol, environment and timing
-              are enough to start. If you are not sure yet, send the rough idea.
+              Product area, workflow, users, permissions, current tools and
+              timing are enough to start. If you are not sure yet, send the rough idea.
             </p>
           </div>
         </div>
@@ -113,7 +112,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
             <textarea
               aria-label="Message"
               name="message"
-              placeholder="Tell us about the equipment, operating environment, control requirements or product you want to specify."
+              placeholder="Tell us about the content, workflow, CRM, catalogue or page-building problem you want to solve."
               required
             />
           </label>

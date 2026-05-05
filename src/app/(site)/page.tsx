@@ -169,7 +169,7 @@ function renderHomeSection(section: SiteBuilderSection, featuredProducts: Produc
   return (
     <section className="section" key={section.key}>
       <div className="split-module">
-        <TechnicalVisual label="Eltronic sector map" variant="sectors" />
+        <TechnicalVisual label="Bespoke CMS sector map" variant="sectors" />
         <div>
           <span className="section-number">{section.panelEyebrow || section.eyebrow}</span>
           <h2>{section.panelTitle || section.title}</h2>

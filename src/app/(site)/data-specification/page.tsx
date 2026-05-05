@@ -7,7 +7,7 @@ import { createPageMetadata } from "@/lib/seo";
 export const metadata = createPageMetadata({
   title: "Data & Specification",
   description:
-    "Product data sheets, guides, specification resources and enquiry support for Eltronic products.",
+    "Guides, setup notes and planning resources for Bespoke CMS packages.",
   path: "/data-specification",
 });
 
@@ -27,10 +27,10 @@ export default async function DataSpecificationPage() {
       <section className="hero compact-hero">
         <div className="hero-copy">
           <p className="code-kicker">data.specification</p>
-          <h1>Data sheets, guides and product evidence.</h1>
+          <h1>Guides, setup notes and product evidence.</h1>
           <p className="lede">
-            Product documents, technical notes and enquiry support collected
-            around the hardware and systems Eltronic can help specify.
+            Product documents, planning notes and enquiry support collected
+            around the CMS, commerce and workflow packages in this starter platform.
           </p>
           <div className="actions">
             <Link className="button" href="/products">

@@ -5,7 +5,7 @@ import { createPageMetadata } from "@/lib/seo";
 export const metadata = createPageMetadata({
   title: "Projects",
   description:
-    "Project write-ups from Eltronic covering control systems, software integration, connected hardware and operational workflow improvements.",
+    "Project write-ups from Bespoke CMS covering CMS, CRM, commerce and workflow improvements.",
   path: "/projects",
 });
 
@@ -21,8 +21,8 @@ export default function ProjectsPage() {
             <h1>Project write-ups</h1>
           </div>
           <p>
-            A home for practical examples of Eltronic work across control systems, full-stack software,
-            connected devices, APIs, dashboards and operational improvements.
+            A home for practical examples of Bespoke CMS work across content management,
+            customer records, APIs, dashboards and operational improvements.
           </p>
         </div>
       </section>

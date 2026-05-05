@@ -75,11 +75,11 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
   )
   VALUES
     (
-      'Eltronic Dark',
-      'eltronic-dark',
+      'Platform Dark',
+      'platform-dark',
       'active',
       true,
-      'Current Eltronic dark visual language for the Payload-built site.',
+      'Current Platform dark visual language for the Payload-built site.',
       '#020617',
       '#f1f5f9',
       '#8bd3ff',
@@ -93,7 +93,7 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
       'signal-light',
       'active',
       false,
-      'A lighter starter theme based on the current Eltronic structure, with fresh colours and typography.',
+      'A lighter starter theme based on the current Bespoke CMS structure, with fresh colours and typography.',
       '#f7f8fb',
       '#102033',
       '#0f766e',
@@ -136,7 +136,7 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
           "type": "SiteHeaderBlock",
           "props": {
             "id": "template-header",
-            "brandLabel": "ELTRONIC",
+            "brandLabel": "BESPOKE CMS",
             "menuHandle": "primary",
             "ctaLabel": "Contact",
             "ctaUrl": "/contact",
@@ -150,7 +150,7 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
             "id": "template-hero",
             "eyebrow": "Signal Light",
             "heading": "Build a clearer technical story",
-            "lede": "A lighter starter theme for the new Payload-built Eltronic site.",
+            "lede": "A lighter starter theme for the new Payload-built Bespoke CMS site.",
             "primaryLabel": "Start editing",
             "primaryUrl": "#",
             "secondaryLabel": "View products",

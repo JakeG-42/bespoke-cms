@@ -1,179 +1,179 @@
 export const serviceModules = [
   {
-    slug: "hmi-solutions",
-    title: "Touch screen HMI solutions",
-    eyebrow: "operator.interface",
+    slug: "content-management",
+    title: "Content management",
+    eyebrow: "content.system",
     summary:
-      "Rugged touch screens for demanding vehicle, plant and industrial environments, with CAN-Bus, Ethernet and serial communications.",
-    bullets: ["TOPCON OPUS display supply", "Operator workflow design", "CoDeSys, C/Qt and OPUS Projektor support"],
+      "Pages, posts, media, menus and SEO settings managed from a reusable console that can be branded for each client.",
+    bullets: ["Page builder blocks", "Media library", "Draft and published states"],
   },
   {
-    slug: "can-bus-integration",
-    title: "CAN-Bus integration and diagnostics",
-    eyebrow: "equipment.network",
+    slug: "visual-builder",
+    title: "Visual page building",
+    eyebrow: "builder.canvas",
     summary:
-      "Control-system integration, CAN data capture and diagnostics for mobile equipment, fixed installations and specialist vehicles.",
-    bullets: ["CANopen, CANfreestyle and J1939", "CAN-FD data logging", "Remote diagnostics and data workflows"],
+      "Reusable sections, themes and design controls for creating client pages without changing application code for every edit.",
+    bullets: ["Theme presets", "Spacing and colour controls", "Reusable CTA sections"],
   },
   {
-    slug: "bespoke-control",
-    title: "Bespoke control systems",
-    eyebrow: "project.specific",
+    slug: "business-workflows",
+    title: "Business workflows",
+    eyebrow: "ops.workspace",
     summary:
-      "Custom software, wiring, harnesses and integration around the application, not around a generic parts list.",
-    bullets: ["Custom harnesses", "Existing control-system integration", "Quote-led engineering support"],
+      "A foundation for CRM-style records, internal statuses, enquiries and custom operational modules inside the same product.",
+    bullets: ["Enquiry records", "Admin roles", "Workflow-ready data models"],
   },
 ];
 
 export const softwareServiceModules = [
   {
-    title: "Full-stack internal platforms",
-    code: "systems.backend",
+    title: "CMS and admin panels",
+    code: "systems.cms",
     summary:
-      "Admin portals, workflow tools, CRM extensions, dashboards and operational platforms built around the way the business actually runs.",
-    examples: ["Admin portals", "CRM extensions", "Quoting systems", "Operations dashboards"],
+      "Content models, editor workflows, media libraries and custom admin screens for managing sites and customer-facing content.",
+    examples: ["Pages", "Posts", "Media", "Menus"],
   },
   {
-    title: "Systems, API and data integration",
-    code: "integration.api",
+    title: "CRM and data workspaces",
+    code: "systems.crm",
     summary:
-      "Connect shipping, stock, CRM, customer portals, finance tools and third-party services so data moves cleanly without double entry.",
-    examples: ["Shipping workflows", "CRM automation", "Stock and order sync", "Customer portals"],
+      "Customer records, enquiries, internal statuses and operational views that can be shaped around a specific business process.",
+    examples: ["Contacts", "Pipelines", "Tasks", "Dashboards"],
   },
   {
-    title: "Embedded, IoT and device services",
-    code: "embedded.services",
+    title: "Commerce and catalogues",
+    code: "commerce.catalogue",
     summary:
-      "Software for connected hardware, controllers, screens, sensors and gateways, with practical protocols and reliable interfaces.",
-    examples: ["MQTT/HTTP services", "Device telemetry", "Edge gateways", "Command/status APIs"],
+      "Structured product records, package options, downloadable resources and quote-led journeys for flexible commercial content.",
+    examples: ["Products", "Packages", "Variants", "Downloads"],
   },
   {
-    title: "Backend platforms and infrastructure",
-    code: "platform.internal",
+    title: "Automation and integration",
+    code: "workflow.integrate",
     summary:
-      "Server-side engineering for databases, background jobs, secure access, reporting and internal services that need to keep running.",
-    examples: ["Internal servers", "Databases", "Scheduled jobs", "Secure access"],
+      "Hooks, notifications, background jobs and integrations that connect the console to the systems a client already uses.",
+    examples: ["Notifications", "Webhooks", "APIs", "Scheduled jobs"],
   },
   {
-    title: "Technical consultancy and process improvement",
-    code: "consult.efficiency",
+    title: "Theme and template systems",
+    code: "theme.template",
     summary:
-      "Practical technical guidance on what to build, what to integrate and where automation will reduce errors, rework and wasted time.",
-    examples: ["Workflow reviews", "Automation planning", "System selection", "Project scoping"],
+      "Whole-site themes, reusable templates and editable design settings that make the platform feel flexible without becoming chaotic.",
+    examples: ["Theme presets", "Page templates", "Reusable sections", "Custom CSS"],
   },
   {
-    title: "Lifecycle support and controlled change",
+    title: "Lifecycle support",
     code: "support.iterate",
     summary:
-      "Documentation, monitoring, maintenance and measured feature updates so systems remain understandable as the business changes.",
-    examples: ["Maintenance", "Monitoring", "Documentation", "Feature updates"],
+      "Documentation, migrations, monitoring and measured improvements so each installation can grow safely over time.",
+    examples: ["Docs", "Migrations", "Monitoring", "Feature updates"],
   },
 ];
 
 export const softwareWorkflowModules = [
   {
     step: "01",
-    title: "Operational and technical discovery",
+    title: "Model the workspace",
     summary:
-      "We map the real process, users, devices, existing systems, failure points and the places where time or accuracy is being lost.",
-    outcome: "A precise view of the work, the friction and the systems already in play.",
+      "Define the pages, records, roles and data relationships the client needs before adding visual complexity.",
+    outcome: "A clear content and data model that can be extended without rewrites.",
   },
   {
     step: "02",
-    title: "Architecture across software, data and devices",
+    title: "Build reusable controls",
     summary:
-      "We define the right route across interfaces, APIs, databases, embedded messaging, servers, access control and existing tools before anything is overbuilt.",
-    outcome: "A practical technical route with clear ownership, data flow and delivery boundaries.",
+      "Create editable blocks, templates and settings that make common updates simple for non-technical users.",
+    outcome: "A console that feels practical day to day, not just technically possible.",
   },
   {
     step: "03",
-    title: "Staged delivery and validation",
+    title: "Connect publishing and preview",
     summary:
-      "Work is delivered in controlled phases so useful value appears early while the wider system is tested against real users, data and operating conditions.",
-    outcome: "Usable progress early, with each phase tested against the real workflow.",
+      "Wire content, themes and page previews together so changes can be checked before they are promoted.",
+    outcome: "Safer editing with clearer handoff from admin screen to public page.",
   },
   {
     step: "04",
-    title: "Handover and continuous improvement",
+    title: "Iterate into product features",
     summary:
-      "Documentation, support and measured improvements keep the system understandable, maintainable and ready for future operational needs.",
-    outcome: "A system your team can run, support and improve without guesswork.",
+      "Add CRM, commerce, reporting and automation modules once the core CMS workflow is stable.",
+    outcome: "A white-label product that can grow from site builder into business platform.",
   },
 ];
 
 export const sectorModules = [
   {
-    title: "Agriculture and farming",
-    code: "sector.agri",
+    title: "Client websites",
+    code: "usecase.sites",
     summary:
-      "Display, monitoring and control solutions for harvesters, field collectors, spreaders and specialist agricultural equipment.",
-    examples: ["Potato harvester", "Strawberry harvester", "Hay block field collectors", "Salt spreader"],
+      "Reusable website builds where content, menus, themes and page sections need to be edited by a client team.",
+    examples: ["Brochure sites", "Landing pages", "Content hubs", "Service pages"],
   },
   {
-    title: "Construction and heavy equipment",
-    code: "sector.heavy",
+    title: "Internal teams",
+    code: "usecase.ops",
     summary:
-      "Rugged operator interfaces and CAN-Bus control for equipment working in vibration, dust, weather and long duty cycles.",
-    examples: ["Utility vehicles", "Construction equipment", "Recovery track safety", "Hydraulic systems"],
+      "Operational workspaces for teams that need structured records, statuses, notes and controlled access.",
+    examples: ["CRM views", "Enquiry tracking", "Task boards", "Admin dashboards"],
   },
   {
-    title: "Logistics and material handling",
-    code: "sector.logistics",
+    title: "Catalogue businesses",
+    code: "usecase.catalogue",
     summary:
-      "Interfaces, diagnostics and control integration for moving equipment, operator stations and fleet-facing assets.",
-    examples: ["Material handling", "Vehicle data", "Operator feedback", "Remote support"],
+      "Product or service catalogues where items, packages, documents and lead-generation CTAs need to be managed centrally.",
+    examples: ["Product pages", "Package pages", "Quote flows", "Resource libraries"],
   },
   {
-    title: "Manufacturing and industrial automation",
-    code: "sector.automation",
+    title: "White-label deployments",
+    code: "usecase.platform",
     summary:
-      "Fixed equipment and automation integration where reliability, clear operator control and maintainable systems matter.",
-    examples: ["Industrial HMIs", "Control panels", "Diagnostics", "Equipment retrofits"],
+      "Installations that need their own branding, themes, seed content and admin experience without forking the core product.",
+    examples: ["Client portals", "Partner sites", "Vertical templates", "Custom consoles"],
   },
 ];
 
 export const workflowModules = [
   {
     step: "01",
-    title: "Operational and technical discovery",
+    title: "Content and data discovery",
     summary:
-      "We build a clear picture of the operating environment, workflow, protocols, I/O and constraints before recommending hardware.",
-    outcome: "A grounded scope that reflects the real application, not a generic product list.",
+      "Map the records, pages, users and repeatable workflows that the installation needs to support.",
+    outcome: "A practical scope for CMS, CRM and commerce modules.",
   },
   {
     step: "02",
-    title: "Specification, architecture and risk planning",
+    title: "Theme and template setup",
     summary:
-      "HMI choice, CAN interfaces, harnessing, data requirements and support expectations are specified with practical risk and maintainability in mind.",
-    outcome: "A specification that makes decisions, responsibilities and constraints clear.",
+      "Choose the starting theme, create reusable templates and define which parts should be editable in the console.",
+    outcome: "A branded starting point that remains reusable across future clients.",
   },
   {
     step: "03",
-    title: "Controlled integration and validation",
+    title: "Build, preview and publish",
     summary:
-      "Software, wiring, configuration and testing are brought together in controlled stages so the finished system is reliable in the real environment.",
-    outcome: "A working integration proven through staged checks, not assumptions.",
+      "Create content and page sections in the editor, review the preview and publish when the layout is ready.",
+    outcome: "A clear loop from admin changes to public output.",
   },
   {
     step: "04",
-    title: "Handover and lifecycle support",
+    title: "Extend with custom modules",
     summary:
-      "Clear documentation, diagnostics and long-term support make the system easier to operate, maintain and improve after installation.",
-    outcome: "A maintainable system with a clear path for support, change and future upgrades.",
+      "Add client-specific records, integrations, automations and dashboards as the product requirements mature.",
+    outcome: "A platform that grows around real workflows instead of a one-off website.",
   },
 ];
 
 export const resourceModules = [
   {
-    title: "Product data sheets",
-    summary: "Technical documents for TOPCON OPUS displays, AutoPi data logging and Eltronic modules.",
+    title: "CMS guide",
+    summary: "Short reference notes for creating pages, posts, menus, themes and visual-builder sections.",
   },
   {
-    title: "Project enquiry support",
-    summary: "Use the product pages and contact form to start a quote-led discussion around the right hardware.",
+    title: "Theme notes",
+    summary: "Documentation for choosing, editing and extending whole-site themes and page templates.",
   },
   {
-    title: "Guides and specification notes",
-    summary: "A growing home for specification notes, project guides and support material.",
+    title: "Module planning",
+    summary: "A growing home for CRM, commerce and workflow module planning notes.",
   },
 ];

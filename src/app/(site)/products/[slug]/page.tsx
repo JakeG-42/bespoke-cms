@@ -140,7 +140,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 }
 
 const productTypeLabel = {
-  hmi: "HMI display",
-  "data-logger": "Data logging",
-  module: "Control module",
+  website: "Website package",
+  commerce: "Commerce package",
+  workflow: "Workflow package",
 };

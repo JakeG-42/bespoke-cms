@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Eltronic systems integration, HMI and software engineering";
+export const alt = "Bespoke CMS white-label CMS, CRM and visual builder platform";
 export const size = {
   width: 1200,
   height: 630,
@@ -37,7 +37,7 @@ export default function OpenGraphImage() {
           }}
         >
           <div style={{ color: "#67e8f9", display: "flex", fontSize: 30, letterSpacing: "0.18em" }}>
-            SYSTEMS.INTEGRATION
+            WHITE-LABEL.CONSOLE
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
             <div
@@ -48,17 +48,17 @@ export default function OpenGraphImage() {
                 display: "flex",
                 fontSize: 104,
                 fontWeight: 800,
-                letterSpacing: "-0.05em",
+                letterSpacing: 0,
                 lineHeight: 0.92,
               }}
             >
-              Eltronic
+              Bespoke CMS
             </div>
             <div style={{ color: "#cbd5e1", display: "flex", fontSize: 42, maxWidth: 850 }}>
-              Rugged HMI, CAN-Bus data, control integration and software systems.
+              CMS, CRM, commerce and visual page-building tools.
             </div>
           </div>
-          <div style={{ color: "#94a3b8", display: "flex", fontSize: 28 }}>eltronic.co.uk</div>
+          <div style={{ color: "#94a3b8", display: "flex", fontSize: 28 }}>example.com</div>
         </div>
       </div>
     ),

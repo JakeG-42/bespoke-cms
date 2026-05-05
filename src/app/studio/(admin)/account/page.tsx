@@ -17,7 +17,7 @@ type StudioAccountPageProps = {
 };
 
 export const metadata = {
-  title: "Account | Eltronic Studio",
+  title: "Account | Bespoke Studio",
 };
 
 export default async function StudioAccountPage({ searchParams }: StudioAccountPageProps) {

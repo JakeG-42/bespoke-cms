@@ -4,8 +4,8 @@ import { siteConfig } from "@/lib/seo";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Eltronic",
-    short_name: "Eltronic",
+    name: "Bespoke CMS",
+    short_name: "Bespoke CMS",
     description: siteConfig.description,
     start_url: "/",
     display: "standalone",

@@ -558,7 +558,7 @@ function withFullWidth<T extends BuilderAdvancedStyle & { fullWidth?: boolean }>
 function Root({ children, ...props }: BuilderRootProps & { children: ReactNode }) {
   return (
     <main
-      className={`puck-eltronic-page puck-theme-${props.themePreset ?? "eltronicDark"} puck-density-${
+      className={`puck-platform-page puck-theme-${props.themePreset ?? "platformDark"} puck-density-${
         props.sectionSpacing ?? "normal"
       } puck-font-${props.fontFamily ?? "display"}`}
       style={
@@ -617,7 +617,7 @@ export const builderConfig: BuilderConfig = {
         elementPadding: 2.6,
         eyebrow: "Ready",
         heading: "Start the conversation",
-        primaryLabel: "Contact Eltronic",
+        primaryLabel: "Contact Bespoke CMS",
         primaryUrl: "/contact",
         secondaryLabel: "",
         secondaryUrl: "",
@@ -814,7 +814,7 @@ export const builderConfig: BuilderConfig = {
     SiteHeaderBlock: {
       defaultProps: {
         ...defaultDesign,
-        brandLabel: "ELTRONIC",
+        brandLabel: "BESPOKE CMS",
         ctaLabel: "Contact",
         ctaUrl: "/contact",
         fullWidth: true,
@@ -848,7 +848,7 @@ export const builderConfig: BuilderConfig = {
         return (
           <header className={getSectionClassName(headerProps, `puck-site-header ${props.sticky ? "puck-site-header-sticky" : ""}`)} style={getSectionStyle(headerProps)}>
             <Link className="puck-site-brand" href="/">
-              {textValue(props.brandLabel, "ELTRONIC")}
+              {textValue(props.brandLabel, "BESPOKE CMS")}
             </Link>
             <nav aria-label={menu?.title ?? "Site menu"} className="puck-menu puck-menu-horizontal">
               {(menu?.items ?? []).map((item, index) => (
@@ -869,7 +869,7 @@ export const builderConfig: BuilderConfig = {
         elementGap: 1.6,
         effect: "glow",
         effectControls: { ...defaultDesign.effectControls, effect: "glow" },
-        eyebrow: "Eltronic",
+        eyebrow: "Bespoke CMS",
         headingSize: 5.2,
         heading: "Engineer a more connected operation",
         imageAlt: "",
@@ -1003,7 +1003,7 @@ export const builderConfig: BuilderConfig = {
         ...defaultDesign,
         columns: "3",
         heading: "Featured products",
-        intro: "Showcase selected Eltronic products.",
+        intro: "Showcase selected Bespoke CMS products.",
         mode: "featured",
       },
       fields: {
@@ -1201,19 +1201,19 @@ export const builderConfig: BuilderConfig = {
       fontFamily: "display",
       pagePaddingBottom: 0,
       pagePaddingTop: 0,
-      pageTitle: "New Eltronic page",
+      pageTitle: "Bespoke CMS page",
       sectionSpacing: "normal",
       surfaceColor: "23, 32, 51",
       surfaceOpacity: 0.78,
       textColor: "#f1f5f9",
-      themePreset: "eltronicDark",
+      themePreset: "platformDark",
     },
     fields: {
       pageTitle: { contentEditable: true, label: "Page title", type: "text" },
       themePreset: {
         label: "Theme",
         options: [
-          { label: "Eltronic dark", value: "eltronicDark" },
+          { label: "Platform dark", value: "platformDark" },
           { label: "Precision light", value: "precisionLight" },
           { label: "Signal contrast", value: "signalContrast" },
         ],

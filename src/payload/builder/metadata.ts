@@ -21,11 +21,11 @@ type UnknownRecord = Record<string, unknown>;
 
 export const fallbackBuilderThemes: BuilderTheme[] = [
   {
-    description: "Current Eltronic dark visual language for the Payload-built site.",
-    handle: "eltronic-dark",
-    id: "eltronic-dark",
+    description: "Current Platform dark visual language for the Payload-built site.",
+    handle: "platform-dark",
+    id: "platform-dark",
     isDefault: true,
-    name: "Eltronic Dark",
+    name: "Platform Dark",
     rootProps: {
       accentColor: "#8bd3ff",
       backgroundColor: "#020617",
@@ -34,10 +34,10 @@ export const fallbackBuilderThemes: BuilderTheme[] = [
       surfaceColor: "23, 32, 51",
       surfaceOpacity: 0.78,
       textColor: "#f1f5f9",
-      themeHandle: "eltronic-dark",
-      themeId: "eltronic-dark",
-      themeName: "Eltronic Dark",
-      themePreset: "eltronicDark",
+      themeHandle: "platform-dark",
+      themeId: "platform-dark",
+      themeName: "Platform Dark",
+      themePreset: "platformDark",
     },
   },
   {
@@ -165,7 +165,7 @@ function themeRootProps(theme: UnknownRecord, id: string, name: string, handle: 
     themeHandle: handle,
     themeId: id,
     themeName: name,
-    themePreset: handle === "signal-light" ? "precisionLight" : "eltronicDark",
+    themePreset: handle === "signal-light" ? "precisionLight" : "platformDark",
   };
 }
 
@@ -235,7 +235,7 @@ export function applyThemeToBuilderData(data: BuilderData, theme: BuilderTheme =
       props: {
         ...existingRootProps,
         ...theme.rootProps,
-        pageTitle: asString(existingRootProps.pageTitle, asString(theme.rootProps.pageTitle, "New Eltronic page")),
+        pageTitle: asString(existingRootProps.pageTitle, asString(theme.rootProps.pageTitle, "Bespoke CMS page")),
       },
     },
   } as BuilderData;

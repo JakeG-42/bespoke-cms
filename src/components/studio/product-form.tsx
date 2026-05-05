@@ -64,10 +64,10 @@ export function ProductForm({
             </div>
             <div className={inputGridClass}>
               <Label htmlFor={`${formId}-template`}>Template</Label>
-              <select className={selectClass} defaultValue={product?.template ?? "hmi"} id={`${formId}-template`} name="template">
-                <option value="hmi">HMI</option>
-                <option value="data-logger">Data logger</option>
-                <option value="module">Module</option>
+              <select className={selectClass} defaultValue={product?.template ?? "website"} id={`${formId}-template`} name="template">
+                <option value="website">Website package</option>
+                <option value="commerce">Commerce package</option>
+                <option value="workflow">Workflow package</option>
               </select>
             </div>
             <div className={inputGridClass}>
@@ -141,7 +141,7 @@ export function ProductForm({
               id={`${formId}-variants`}
               name="variants"
               defaultValue={variantsToText(product?.variants)}
-              placeholder="BASIC with OPUS Projektor | OPUSA3EN1CANB000 | POA | I.MX35, 128MB RAM | OPUSA3EN1CANB000"
+              placeholder="Starter | CMS-STARTER | POA | Core pages and theme setup"
             />
             <p className="studio-field-hint">
               Older rows with Name | Details | Article number are still accepted when saving.
@@ -158,7 +158,7 @@ export function ProductForm({
           <dl className="studio-editor-summary">
             <div>
               <dt>Template</dt>
-              <dd>{product?.template ?? "HMI default"}</dd>
+              <dd>{product?.template ?? "Website package"}</dd>
             </div>
             <div>
               <dt>Gallery</dt>
@@ -198,7 +198,7 @@ export function ProductForm({
               id={`${formId}-tags`}
               name="tags"
               defaultValue={product?.tags?.join(", ")}
-              placeholder="hmi, CAN-Bus, rugged, topcon"
+              placeholder="cms, commerce, workflow"
             />
             <p className="studio-field-hint">Comma-separated tags for filtering, grouping and future admin workflows.</p>
           </div>

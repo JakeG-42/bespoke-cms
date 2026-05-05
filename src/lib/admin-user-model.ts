@@ -20,7 +20,7 @@ export type PublicAdminUser = Omit<AdminUser, "passwordHash">;
 
 const ADMIN_PASSWORD_HASH =
   "scrypt$19e82fd0ef0495813f8db3273b273c9b$0bcd33284888aa5b9cbc9ec66e7de941cfc00de112b12ce603737c194208efce25db3a8f28fbb56ec6a3c775a7ef8a34b0c75d423dc3895a0078014ae342b2e2";
-const JAKUB_PASSWORD_HASH =
+const DEMO_ADMIN_PASSWORD_HASH =
   "scrypt$40f70718a72961c81ae9e247aae9bb1b$e8d4539f1472097674bf8fb41d6cb4d9a0af11a51cb9c0ea0ff52c7b02e1a714f42c2c672d3b76d36acb1356f991bf5823d44263652ef9ea0f75b585034c354e";
 const SEED_DATE = "2026-04-27T00:00:00.000Z";
 
@@ -40,7 +40,7 @@ export function createSeedAdminUsers(): AdminUser[] {
     {
       createdAt: SEED_DATE,
       displayName: "Default Admin",
-      email: "admin@eltronic.local",
+      email: "admin@example.com",
       id: "seed-admin",
       passwordHash: ADMIN_PASSWORD_HASH,
       role: "super_admin",
@@ -51,15 +51,15 @@ export function createSeedAdminUsers(): AdminUser[] {
     },
     {
       createdAt: SEED_DATE,
-      displayName: "Jakub Gajosz",
-      email: "jakub@gajosz.com",
-      id: "seed-jakub",
-      passwordHash: JAKUB_PASSWORD_HASH,
+      displayName: "Demo Admin",
+      email: "demo-admin@example.com",
+      id: "seed-demo-admin",
+      passwordHash: DEMO_ADMIN_PASSWORD_HASH,
       role: "super_admin",
-      sessionVersion: "seed-jakub-v1",
+      sessionVersion: "seed-demo-admin-v1",
       status: "active",
       updatedAt: SEED_DATE,
-      username: "jakub@gajosz.com",
+      username: "demo-admin@example.com",
     },
   ];
 }

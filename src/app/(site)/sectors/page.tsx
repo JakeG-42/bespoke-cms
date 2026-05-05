@@ -4,9 +4,9 @@ import { sectorModules } from "@/content/site";
 import { createPageMetadata } from "@/lib/seo";
 
 export const metadata = createPageMetadata({
-  title: "Sectors",
+  title: "Use cases",
   description:
-    "Eltronic application sectors including agriculture, construction, logistics and industrial automation.",
+    "Bespoke CMS use cases for client websites, catalogues, internal teams and white-label platform deployments.",
   path: "/sectors",
 });
 
@@ -16,21 +16,22 @@ export default function SectorsPage() {
       <section className="hero compact-hero">
         <div className="hero-copy">
           <p className="code-kicker">sectors.map</p>
-          <h1>Control systems for real working environments.</h1>
+          <h1>Use cases for reusable client workspaces.</h1>
           <p className="lede">
-            Eltronic supports specialist equipment across sectors where clear
-            operator feedback, reliable data and rugged control matter.
+            Bespoke CMS is designed for projects where content, page design,
+            products, enquiries and business records need to live in one
+            configurable console.
           </p>
           <div className="actions">
             <Link className="button" href="/contact">
-              Discuss your sector
+              Discuss your use case
             </Link>
             <Link className="button secondary" href="/solutions">
               View solutions
             </Link>
           </div>
         </div>
-        <TechnicalVisual label="Application sector map" variant="sectors" />
+        <TechnicalVisual label="White-label use case map" variant="sectors" />
       </section>
 
       <section className="section">
@@ -58,9 +59,9 @@ export default function SectorsPage() {
             <span className="section-number">sector.quote</span>
             <h2>Not seeing your exact application?</h2>
             <p>
-              The site is quote-led by design. If the project involves
-              specialist equipment, operator interfaces, CAN-Bus or control integration,
-              it is worth starting a conversation.
+              The starter platform is intentionally flexible. If the project
+              needs client-specific content, commerce, CRM records or internal
+              workflow tools, it is worth mapping the module shape early.
             </p>
           </div>
           <Link className="button" href="/contact">

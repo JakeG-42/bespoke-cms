@@ -948,7 +948,7 @@
           "typeSchema": "payload",
           "primaryKey": false,
           "notNull": true,
-          "default": "'hmi'"
+          "default": "'website'"
         },
         "summary": {
           "name": "summary",
@@ -6780,7 +6780,7 @@
           "type": "varchar",
           "primaryKey": false,
           "notNull": true,
-          "default": "'Eltronic'"
+          "default": "'Bespoke CMS'"
         },
         "strapline": {
           "name": "strapline",
@@ -7434,9 +7434,9 @@
       "name": "enum_products_template",
       "schema": "payload",
       "values": [
-        "hmi",
-        "data-logger",
-        "module"
+        "website",
+        "commerce",
+        "workflow"
       ]
     },
     "payload.enum_themes_status": {

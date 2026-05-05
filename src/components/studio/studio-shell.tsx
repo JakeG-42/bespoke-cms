@@ -76,7 +76,7 @@ export function StudioShell({
   const isClassicAdmin = pathname.startsWith("/studio/classic");
   const [theme, setTheme] = useState<"dark" | "light">(() => {
     if (typeof window !== "undefined") {
-      const savedTheme = window.localStorage.getItem("eltronic-studio-theme");
+      const savedTheme = window.localStorage.getItem("bespoke-cms-studio-theme");
 
       if (savedTheme === "light" || savedTheme === "dark") {
         return savedTheme;
@@ -87,7 +87,7 @@ export function StudioShell({
   });
 
   useEffect(() => {
-    window.localStorage.setItem("eltronic-studio-theme", theme);
+    window.localStorage.setItem("bespoke-cms-studio-theme", theme);
   }, [theme]);
 
   if (isClassicAdmin) {
@@ -95,7 +95,7 @@ export function StudioShell({
       <div className="wp-admin-clone">
         <header className="wp-admin-bar">
           <Link className="wp-admin-bar-brand" href="/studio/classic/products">
-            Eltronic
+            Bespoke CMS
           </Link>
           <Link href="/">Visit site</Link>
           <Link href="/studio/classic/products/new">+ New</Link>
@@ -111,7 +111,7 @@ export function StudioShell({
         <aside className="wp-admin-menu" aria-label="WordPress-style admin navigation">
           <Link className="wp-admin-menu-logo" href="/studio/classic/products">
             <span>W</span>
-            <strong>Eltronic Admin</strong>
+            <strong>Bespoke CMS Admin</strong>
           </Link>
           <ClassicMenuLink href="/studio/classic" pathname={pathname}>
             Dashboard
@@ -161,7 +161,7 @@ export function StudioShell({
         <Link className="studio-brand" href="/studio">
           <span className="studio-brand-mark">E</span>
           <span>
-            <strong>Eltronic</strong>
+            <strong>Bespoke CMS</strong>
             <small>Studio</small>
           </span>
         </Link>

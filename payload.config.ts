@@ -92,7 +92,7 @@ function getPayloadDatabaseUrl() {
 function getPayloadSecret() {
   const configuredSecret =
     getEnvValue("PAYLOAD_SECRET") ??
-    getEnvValue("ELTRONIC_ADMIN_SECRET") ??
+    getEnvValue("BESPOKE_CMS_ADMIN_SECRET") ??
     getEnvValue("AUTH_SECRET") ??
     getEnvValue("NEXTAUTH_SECRET");
 
@@ -109,8 +109,8 @@ export default buildConfig({
       afterNavLinks: ["/components/code-workspace/CodeWorkspaceNavLink#CodeWorkspaceNavLink"],
       beforeLogin: ["/components/brand/ConsoleBrand#ConsoleLoginIntro"],
       graphics: {
-        Icon: "/components/brand/ConsoleBrand#EltronicConsoleIcon",
-        Logo: "/components/brand/ConsoleBrand#EltronicConsoleLogo",
+        Icon: "/components/brand/ConsoleBrand#PlatformConsoleIcon",
+        Logo: "/components/brand/ConsoleBrand#PlatformConsoleLogo",
       },
       views: {
         codeWorkspace: {
@@ -136,7 +136,7 @@ export default buildConfig({
       importMapFile: path.resolve(dirname, "src/app/(payload)/console/importMap.js"),
     },
     meta: {
-      titleSuffix: "- Eltronic Console",
+      titleSuffix: "- Bespoke Console",
     },
     user: ConsoleUsers.slug,
   },

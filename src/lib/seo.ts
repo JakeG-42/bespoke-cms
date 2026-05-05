@@ -1,29 +1,27 @@
 import type { Metadata } from "next";
 
-const fallbackSiteUrl = "https://project-5v5cr.vercel.app";
+const fallbackSiteUrl = "https://app.example.com";
 
 export const siteConfig = {
-  name: "Eltronic",
+  name: "Bespoke CMS",
   url: (process.env.NEXT_PUBLIC_SITE_URL || fallbackSiteUrl).replace(/\/+$/, ""),
   description:
-    "Systems integration, rugged HMI displays, CAN-Bus data, full-stack software and connected equipment solutions.",
-  email: "sales@eltronic.co.uk",
-  phone: "+44 79 3523 9421",
+    "White-label CMS, CRM and visual page-building platform for reusable client websites and admin workspaces.",
+  email: "hello@example.com",
+  phone: "+44 00 0000 0000",
   locale: "en_GB",
   keywords: [
-    "Eltronic",
-    "HMI displays",
-    "CAN-Bus integration",
-    "CAN data logging",
-    "control systems",
-    "systems integration",
-    "embedded services",
-    "IoT software",
-    "full-stack software",
-    "internal business systems",
-    "API integration",
-    "industrial automation",
-    "mobile equipment controls",
+    "Bespoke CMS",
+    "white-label CMS",
+    "visual page builder",
+    "Payload CMS",
+    "admin console",
+    "CRM workspace",
+    "commerce catalogue",
+    "theme editor",
+    "content management",
+    "workflow automation",
+    "custom admin panel",
   ],
 };
 
@@ -78,7 +76,7 @@ export function organizationJsonLd() {
     email: siteConfig.email,
     telephone: siteConfig.phone,
     description: siteConfig.description,
-    areaServed: "United Kingdom",
+    areaServed: "Global",
     knowsAbout: siteConfig.keywords,
   };
 }

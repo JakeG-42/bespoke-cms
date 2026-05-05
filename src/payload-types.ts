@@ -160,7 +160,7 @@ export interface Product {
   featured?: boolean | null;
   category?: (number | null) | ProductCategory;
   family: string;
-  template: 'hmi' | 'data-logger' | 'module';
+  template: 'website' | 'commerce' | 'workflow';
   summary: string;
   description: {
     root: {
@@ -1516,7 +1516,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 export interface ThemeSetting {
   id: number;
   /**
-   * The active whole-website template for the new Payload-built Eltronic site.
+   * The active whole-website template for the new Payload-built Bespoke CMS site.
    */
   activeTemplate?: (number | null) | PageTemplate;
   /**

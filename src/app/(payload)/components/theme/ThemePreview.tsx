@@ -34,7 +34,7 @@ const defaultTheme: ThemePreviewData = {
   accentColor: "#8bd3ff",
   backgroundColor: "#020617",
   fontFamily: "display",
-  name: "Eltronic Dark",
+  name: "Platform Dark",
   sectionSpacing: "normal",
   surfaceColor: "23, 32, 51",
   surfaceOpacity: 0.78,

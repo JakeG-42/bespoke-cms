@@ -1,7 +1,7 @@
 import { createHmac, randomInt, timingSafeEqual } from "crypto";
 
 const CAPTCHA_MAX_AGE_MS = 20 * 60 * 1000;
-const DEFAULT_CAPTCHA_SECRET = "temporary-eltronic-captcha-secret";
+const DEFAULT_CAPTCHA_SECRET = "temporary-bespoke-cms-captcha-secret";
 
 type CaptchaPayload = {
   answer: number;
@@ -50,8 +50,8 @@ export function verifyMathCaptcha(token: string, submittedAnswer: string) {
 
 function getCaptchaSecret() {
   return (
-    process.env.ELTRONIC_CAPTCHA_SECRET ||
-    process.env.ELTRONIC_ADMIN_SECRET ||
+    process.env.BESPOKE_CMS_CAPTCHA_SECRET ||
+    process.env.BESPOKE_CMS_ADMIN_SECRET ||
     process.env.AUTH_SECRET ||
     process.env.NEXTAUTH_SECRET ||
     DEFAULT_CAPTCHA_SECRET

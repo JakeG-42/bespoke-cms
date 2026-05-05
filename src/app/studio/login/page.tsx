@@ -16,7 +16,7 @@ type LoginPageProps = {
 };
 
 export const metadata: Metadata = {
-  title: "Studio Login | Eltronic",
+  title: "Studio Login | Bespoke CMS",
   robots: {
     index: false,
     follow: false,
@@ -36,7 +36,7 @@ export default async function StudioLoginPage({ searchParams }: LoginPageProps) 
             <div className="mb-3 flex size-12 items-center justify-center rounded-2xl bg-primary/12 text-primary">
               <LockKeyhole className="size-5" />
             </div>
-            <CardTitle>Eltronic Studio</CardTitle>
+            <CardTitle>Bespoke Studio</CardTitle>
             <CardDescription>
               Sign in to manage products, templates, enquiries, users and launch settings.
             </CardDescription>
@@ -44,7 +44,7 @@ export default async function StudioLoginPage({ searchParams }: LoginPageProps) 
           <CardContent className="pt-6">
             {!configured ? (
               <div className="rounded-2xl border border-amber-300/30 bg-amber-300/10 p-4 text-sm text-amber-100">
-                Set <code>ELTRONIC_ADMIN_PASSWORD</code> and <code>ELTRONIC_ADMIN_SECRET</code> before
+                Set <code>BESPOKE_CMS_ADMIN_PASSWORD</code> and <code>BESPOKE_CMS_ADMIN_SECRET</code> before
                 using the production admin.
               </div>
             ) : null}

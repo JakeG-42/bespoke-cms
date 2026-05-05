@@ -25,7 +25,7 @@ type SubmissionsPageProps = {
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Enquiries | Eltronic Studio",
+  title: "Enquiries | Bespoke Studio",
 };
 
 export default async function SubmissionsPage({ searchParams }: SubmissionsPageProps) {

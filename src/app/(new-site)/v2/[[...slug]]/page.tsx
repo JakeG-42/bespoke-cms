@@ -65,14 +65,14 @@ export async function generateMetadata({ params }: PayloadV2PageProps): Promise<
   const { slug: segments } = await params;
   const slug = getSlugFromSegments(segments);
   const page = await getPayloadPage(slug);
-  const title = page?.seo?.title ?? page?.title ?? "New Eltronic";
-  const description = page?.seo?.description ?? page?.summary ?? "A Payload-managed preview of the next Eltronic website.";
+  const title = page?.seo?.title ?? page?.title ?? "Bespoke CMS";
+  const description = page?.seo?.description ?? page?.summary ?? "A Payload-managed preview of the next Bespoke CMS website.";
 
   return {
     title,
     description,
     alternates: {
-      canonical: `https://new.eltronic.co.uk${getPagePath(slug)}`,
+      canonical: `https://app.example.com${getPagePath(slug)}`,
     },
     robots: {
       index: false,
@@ -282,7 +282,7 @@ export default async function PayloadV2Page({ params }: PayloadV2PageProps) {
     <main className="new-site-empty">
       <section className="new-site-empty-panel">
         <p>Payload site</p>
-        <h1>New Eltronic</h1>
+        <h1>Bespoke CMS</h1>
         <p>
           Create and publish a Payload page with the slug <code>{slug}</code> to control this route.
         </p>

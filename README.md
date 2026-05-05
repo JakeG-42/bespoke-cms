@@ -1,6 +1,6 @@
-# Eltronic
+# Bespoke CMS
 
-Public website, product showcase and Studio admin for Eltronic.
+White-label CMS, CRM, commerce catalogue and visual page-builder platform.
 
 ## Local Development
 
@@ -14,5 +14,7 @@ Open `http://localhost:3000`.
 ## Project Shape
 
 - `src/app` contains the public Next.js routes.
-- `src/content/products.ts` is the first structured product data source.
-- Product pages support different templates through the `template` field.
+- `payload.config.ts` mounts Payload at `/console`.
+- `src/content/products.ts` contains neutral demo packages.
+- Product pages support `website`, `commerce` and `workflow` templates.
+- Keep seed content generic unless a client-specific fork is intentional.

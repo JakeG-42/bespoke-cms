@@ -6,9 +6,9 @@ import { existsSync, readFileSync } from "node:fs";
 import nodemailer from "nodemailer";
 import { Resend } from "resend";
 
-const DEFAULT_RECIPIENT = "jakub@gajosz.com";
+const DEFAULT_RECIPIENT = "admin@example.com";
 const DIRECT_SMTP_TIMEOUT_MS = 8000;
-const RESEND_ONBOARDING_RECIPIENT = "jakubgajosz1999@gmail.com";
+const RESEND_ONBOARDING_RECIPIENT = "admin@example.com";
 const args = new Set(process.argv.slice(2));
 const shouldSendOnboardingEmail = args.has("--onboarding");
 const shouldSend = args.has("--send");
@@ -33,7 +33,7 @@ if ((!shouldUseDirectSmtp && !apiKey) || !sendFrom) {
   console.error("  CONTACT_NOTIFICATION_FROM");
   console.error("");
   console.error("Optional:");
-  console.error("  CONTACT_NOTIFICATION_TO=jakub@gajosz.com");
+  console.error("  CONTACT_NOTIFICATION_TO=admin@example.com");
   console.error("  CONTACT_NOTIFICATION_TRANSPORT=direct");
   process.exit(1);
 }
@@ -52,9 +52,9 @@ if (!shouldSend) {
 if (shouldUseDirectSmtp) {
   await sendDirectSmtpEmail({
     from: sendFrom,
-    html: "<p>Eltronic direct SMTP notification test from the local checker.</p>",
-    subject: "Eltronic direct SMTP notification test",
-    text: "Eltronic direct SMTP notification test from the local checker.",
+    html: "<p>Bespoke CMS direct SMTP notification test from the local checker.</p>",
+    subject: "Bespoke CMS direct SMTP notification test",
+    text: "Bespoke CMS direct SMTP notification test from the local checker.",
     to: sendTo,
   });
   console.log("Direct SMTP test attempted without immediate SMTP failure.");
@@ -66,11 +66,11 @@ const { data, error } = await resend.emails.send({
   from: sendFrom,
   html: shouldSendOnboardingEmail
     ? "<p>Congrats on sending your <strong>first email</strong>!</p>"
-    : "<p>Eltronic email notification test from the local checker.</p>",
-  subject: shouldSendOnboardingEmail ? "Hello World" : "Eltronic email notification test",
+    : "<p>Bespoke CMS email notification test from the local checker.</p>",
+  subject: shouldSendOnboardingEmail ? "Hello World" : "Bespoke CMS email notification test",
   text: shouldSendOnboardingEmail
     ? "Congrats on sending your first email!"
-    : "Eltronic email notification test from the local checker.",
+    : "Bespoke CMS email notification test from the local checker.",
   to: sendTo,
 }, {
   idempotencyKey: `email-check-${Date.now()}`,
@@ -124,7 +124,7 @@ function parseRecipientList(value) {
 async function sendDirectSmtpEmail({ from, html, subject, text, to }) {
   const envelopeFrom = extractEmailAddress(from);
   const groupedRecipients = groupRecipientsByDomain(to);
-  const heloName = process.env.CONTACT_NOTIFICATION_HELO_NAME || getEmailDomain(envelopeFrom) || "eltronic.co.uk";
+  const heloName = process.env.CONTACT_NOTIFICATION_HELO_NAME || getEmailDomain(envelopeFrom) || "example.com";
 
   for (const [domain, recipients] of groupedRecipients) {
     const mxRecords = (await resolveMx(domain)).sort((a, b) => a.priority - b.priority);

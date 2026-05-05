@@ -6,7 +6,7 @@ import { createPageMetadata } from "@/lib/seo";
 export const metadata = createPageMetadata({
   title: "Solutions",
   description:
-    "HMI, CAN-Bus, harness, software and bespoke control-system integration solutions for specialist equipment.",
+    "Reusable CMS, CRM, commerce and visual-builder modules for white-label client workspaces.",
   path: "/solutions",
 });
 
@@ -16,11 +16,11 @@ export default function SolutionsPage() {
       <section className="hero compact-hero">
         <div className="hero-copy">
           <p className="code-kicker">solutions.stack</p>
-          <h1>Integrated systems for demanding applications.</h1>
+          <h1>Reusable modules for content, commerce and operations.</h1>
           <p className="lede">
-            Eltronic combines rugged operator interfaces, CAN-Bus integration,
-            custom software and project-specific harnessing for mobile and
-            stationary equipment.
+            Bespoke CMS combines Payload content models, a visual page builder,
+            theme editing, product records and workflow-ready data structures in
+            one white-label console.
           </p>
           <div className="actions">
             <Link className="button" href="/contact">
@@ -31,7 +31,7 @@ export default function SolutionsPage() {
             </Link>
           </div>
         </div>
-        <TechnicalVisual label="Control-system network" variant="network" />
+        <TechnicalVisual label="Content and workflow network" variant="network" />
       </section>
 
       <section className="section">
@@ -41,8 +41,8 @@ export default function SolutionsPage() {
             <h2>Core solution modules</h2>
           </div>
           <p>
-            A practical view of the services that sit around every successful
-            HMI, CAN-Bus or control-system project.
+            A practical view of the reusable pieces that sit around every
+            successful CMS, CRM or client workspace build.
           </p>
         </div>
         <div className="module-grid">
@@ -63,14 +63,14 @@ export default function SolutionsPage() {
 
       <section className="section">
         <div className="split-module reverse">
-          <TechnicalVisual label="HMI interface architecture" variant="display" />
+          <TechnicalVisual label="Page-builder interface architecture" variant="display" />
           <div>
             <span className="section-number">02</span>
-            <h2>From display choice to working system.</h2>
+            <h2>From template choice to working client site.</h2>
             <p className="lede">
-              The product catalogue gives the hardware options. The solution
-              work connects that hardware to CAN protocols, operator tasks,
-              environmental requirements and service expectations.
+              The starter packages give the reusable content patterns. The
+              builder connects those records to page templates, theme settings,
+              CTAs, preview routes and future workflow modules.
             </p>
             <div className="actions">
               <Link className="button secondary" href="/data-specification">
@@ -87,9 +87,9 @@ export default function SolutionsPage() {
             <span className="section-number">software.systems</span>
             <h2>Need the software layer around it too?</h2>
             <p>
-              Eltronic also builds internal platforms, API integrations,
-              embedded services, device data workflows, CRMs and server-side
-              systems that connect the technical work to daily operations.
+              Bespoke CMS can grow from content management into internal
+              platforms, API integrations, CRM records and operational
+              dashboards that connect the console to daily work.
             </p>
           </div>
           <Link className="button" href="/software-it">

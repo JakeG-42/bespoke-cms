@@ -9,7 +9,7 @@ import { getProducts, getStorageMode, getSubmissions } from "@/lib/managed-data"
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Studio | Eltronic",
+  title: "Studio | Bespoke CMS",
 };
 
 export default async function StudioDashboardPage() {
@@ -20,7 +20,7 @@ export default async function StudioDashboardPage() {
   return (
     <div className="grid gap-6">
       <section className="studio-page-header">
-        <p>A clean control room for product content, template assignment, ordered galleries and quote enquiries.</p>
+        <p>A clean workspace for product content, template assignment, ordered galleries and quote enquiries.</p>
         <div className="flex flex-wrap gap-3">
           <Button asChild>
             <Link href="/studio/products/new">

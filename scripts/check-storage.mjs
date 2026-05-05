@@ -115,18 +115,18 @@ async function checkPostgresStorage(connectionString) {
 
   try {
     await sql`
-      CREATE TABLE IF NOT EXISTS eltronic_storage_checks (
+      CREATE TABLE IF NOT EXISTS bespoke_cms_storage_checks (
         id text PRIMARY KEY,
         data jsonb NOT NULL,
         created_at timestamptz NOT NULL DEFAULT now()
       )
     `;
     await sql.query(
-      "INSERT INTO eltronic_storage_checks (id, data) VALUES ($1, $2::jsonb)",
+      "INSERT INTO bespoke_cms_storage_checks (id, data) VALUES ($1, $2::jsonb)",
       [key, JSON.stringify(payload)],
     );
-    const rows = await sql.query("SELECT data FROM eltronic_storage_checks WHERE id = $1 LIMIT 1", [key]);
-    await sql.query("DELETE FROM eltronic_storage_checks WHERE id = $1", [key]);
+    const rows = await sql.query("SELECT data FROM bespoke_cms_storage_checks WHERE id = $1 LIMIT 1", [key]);
+    await sql.query("DELETE FROM bespoke_cms_storage_checks WHERE id = $1", [key]);
 
     const storedPayload = rows[0]?.data;
 
@@ -145,7 +145,7 @@ async function checkPostgresStorage(connectionString) {
 
 async function checkRedisStorage(redisUrl, redisToken) {
   const redis = new Redis({ url: redisUrl, token: redisToken });
-  const key = `eltronic:storage-check:${Date.now()}`;
+  const key = `bespoke-cms:storage-check:${Date.now()}`;
   const payload = {
     checkedAt: new Date().toISOString(),
     source: "scripts/check-storage.mjs",

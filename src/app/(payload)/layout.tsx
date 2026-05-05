@@ -18,8 +18,8 @@ export const metadata: Metadata = {
   },
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: "Eltronic Console",
-    template: "%s | Eltronic Console",
+    default: "Bespoke Console",
+    template: "%s | Bespoke Console",
   },
   robots: {
     index: false,

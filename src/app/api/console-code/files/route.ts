@@ -23,7 +23,7 @@ export async function GET() {
   return NextResponse.json({
     mode: "read-only",
     readOnlyReason: "Vercel deployments are immutable, so repo source files can be browsed here but not edited in place.",
-    rootName: "Eltronic",
+    rootName: "Bespoke CMS",
     tree: await getRepoTree(),
   });
 }

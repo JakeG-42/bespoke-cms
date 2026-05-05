@@ -19,7 +19,7 @@ type ProductsPageProps = {
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Products | Eltronic Studio",
+  title: "Products | Bespoke Studio",
 };
 
 export default async function StudioProductsPage({ searchParams }: ProductsPageProps) {

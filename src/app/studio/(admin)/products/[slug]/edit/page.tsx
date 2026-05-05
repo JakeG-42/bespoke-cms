@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: EditProductPageProps) {
   const product = await getProductBySlug(slug);
 
   return {
-    title: product ? `Edit ${product.name} | Eltronic Studio` : "Edit Product | Eltronic Studio",
+    title: product ? `Edit ${product.name} | Bespoke Studio` : "Edit Product | Bespoke Studio",
   };
 }
 

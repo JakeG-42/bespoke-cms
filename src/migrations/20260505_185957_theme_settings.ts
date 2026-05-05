@@ -23,7 +23,7 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
   )
   SELECT
     (SELECT "id" FROM "payload"."page_templates" WHERE "handle" = 'signal-landing' LIMIT 1),
-    (SELECT "id" FROM "payload"."themes" WHERE "handle" = 'eltronic-dark' LIMIT 1),
+    (SELECT "id" FROM "payload"."themes" WHERE "handle" = 'platform-dark' LIMIT 1),
     now(),
     now()
   WHERE NOT EXISTS (SELECT 1 FROM "payload"."theme_settings");
@@ -36,7 +36,7 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
     ),
     "active_theme_id" = COALESCE(
       "active_theme_id",
-      (SELECT "id" FROM "payload"."themes" WHERE "handle" = 'eltronic-dark' LIMIT 1)
+      (SELECT "id" FROM "payload"."themes" WHERE "handle" = 'platform-dark' LIMIT 1)
     ),
     "updated_at" = now();`)
 }

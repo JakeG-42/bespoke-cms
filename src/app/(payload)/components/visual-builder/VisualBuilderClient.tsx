@@ -107,7 +107,7 @@ function createStarterBuilderData(title: string, theme: BuilderTheme): BuilderDa
         surfaceColor: "23, 32, 51",
         surfaceOpacity: 0.78,
         textColor: "#f1f5f9",
-        themePreset: "eltronicDark",
+        themePreset: "platformDark",
       },
     },
     zones: {},

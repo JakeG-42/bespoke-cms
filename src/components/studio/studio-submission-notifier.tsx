@@ -18,7 +18,7 @@ type SubmissionSummary = {
 
 type SubmissionDeltas = Partial<Record<keyof SubmissionCounts, number>>;
 
-const STORAGE_KEY = "eltronic-studio-submission-summary";
+const STORAGE_KEY = "bespoke-cms-studio-submission-summary";
 const POLL_INTERVAL_MS = 20000;
 
 export function StudioSubmissionNotifier() {

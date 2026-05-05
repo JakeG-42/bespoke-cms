@@ -1,4 +1,4 @@
-export type SiteThemePreset = "eltronic" | "halogen" | "graphite" | "clean";
+export type SiteThemePreset = "platform" | "halogen" | "graphite" | "clean";
 export type SiteBackgroundStyle = "grid" | "soft" | "minimal";
 export type SiteVisualDensity = "compact" | "balanced" | "spacious";
 export type SiteHeroVisualVariant = "display" | "network" | "sectors" | "data";
@@ -56,19 +56,19 @@ export const themePresetOptions: Array<{
   description: string;
 }> = [
   {
-    key: "eltronic",
-    label: "Eltronic grid",
-    description: "Current technical dark grid with cyan/magenta energy.",
+    key: "platform",
+    label: "Platform grid",
+    description: "Technical dark grid with bright product-console accents.",
   },
   {
     key: "halogen",
-    label: "Japanese halogen",
+    label: "Halogen",
     description: "Sharper magenta edges with warmer highlights.",
   },
   {
     key: "graphite",
     label: "Graphite lab",
-    description: "Quieter engineering feel with steel blue accents.",
+    description: "Quieter product feel with steel blue accents.",
   },
   {
     key: "clean",
@@ -79,7 +79,7 @@ export const themePresetOptions: Array<{
 
 export const defaultSiteBuilderSettings: SiteBuilderSettings = {
   theme: {
-    preset: "eltronic",
+    preset: "platform",
     accentColor: "#8bd3ff",
     secondaryColor: "#b7a3ff",
     highlightColor: "#fbbf24",
@@ -88,60 +88,60 @@ export const defaultSiteBuilderSettings: SiteBuilderSettings = {
   },
   home: {
     hero: {
-      brand: "Eltronic",
+      brand: "Bespoke CMS",
       titleSuffix: ";",
       rolePhrases: [
-        "systems integrator",
-        "systems consultant",
-        "control systems partner",
-        "software systems engineer",
+        "white-label CMS",
+        "visual site builder",
+        "CRM workspace",
+        "commerce-ready console",
       ],
       lede:
-        "Intelligent HMI displays, CAN data logging, custom harnesses and full-stack software integration for mobile equipment, fixed installations and specialist vehicles.",
-      primaryCtaLabel: "Browse products",
+        "A reusable CMS, CRM and visual builder platform for creating branded client workspaces without tying the product to one company.",
+      primaryCtaLabel: "Browse packages",
       primaryCtaHref: "/products",
-      secondaryCtaLabel: "Start an enquiry",
-      secondaryCtaHref: "/contact",
-      visualLabel: "HMI, CAN-Bus and control-system architecture",
+      secondaryCtaLabel: "Open console",
+      secondaryCtaHref: "/console",
+      visualLabel: "CMS, CRM and page-builder architecture",
       visualVariant: "display",
     },
     sections: [
       {
         key: "services",
-        label: "Application systems",
+        label: "Platform modules",
         enabled: true,
         order: 1,
         eyebrow: "01",
-        title: "Application-ready systems",
+        title: "Reusable CMS and workflow modules",
         summary:
-          "Rugged HMIs, CAN data capture and bespoke integration work come together around the operator, environment and project requirement.",
-        ctaLabel: "Explore solutions",
+          "Pages, products, posts, menus, media, themes and future CRM modules share one console while staying flexible for each client.",
+        ctaLabel: "Explore modules",
         ctaHref: "/solutions",
       },
       {
         key: "products",
-        label: "Featured products",
+        label: "Starter packages",
         enabled: true,
         order: 2,
         eyebrow: "02",
-        title: "Featured products",
-        summary: "A focused selection of displays, data logging tools and control modules for quote-led equipment projects.",
+        title: "Starter packages",
+        summary: "Neutral demo packages for websites, commerce catalogues and operational workspaces.",
       },
       {
         key: "software",
-        label: "Software CTA",
+        label: "Builder CTA",
         enabled: true,
         order: 3,
         eyebrow: "03",
-        title: "Software, systems and device integration",
+        title: "Content, themes and custom modules in one place",
         summary:
-          "Full-stack internal platforms, API integration, embedded services and technical consultancy for more efficient operations.",
-        ctaLabel: "Explore Software & Systems",
+          "Use the console to manage content and page design, then grow the same installation into CRM, reporting and automation tools.",
+        ctaLabel: "View platform areas",
         ctaHref: "/software-it",
-        panelEyebrow: "software.systems",
-        panelTitle: "Internal platforms, data and connected devices.",
+        panelEyebrow: "platform.builder",
+        panelTitle: "A WordPress-style console with product-specific control.",
         panelSummary:
-          "From shipping and CRM integrations to MQTT services, HTTP APIs, internal servers, dashboards and connected hardware workflows, Eltronic helps reduce errors, manual admin and wasted time.",
+          "Themes, templates, visual-builder blocks, custom CSS and code workspace tools sit beside structured content and future business data.",
       },
       {
         key: "workflow",
@@ -149,22 +149,22 @@ export const defaultSiteBuilderSettings: SiteBuilderSettings = {
         enabled: true,
         order: 4,
         eyebrow: "04",
-        title: "Complex projects, made straightforward",
-        summary: "The engineering can be detailed. The customer experience should still feel clear, structured and easy to move through.",
+        title: "Start with content, grow into operations",
+        summary: "The platform can begin as a CMS and expand into dashboards, CRM records and client-specific business workflows.",
       },
       {
         key: "sectors",
-        label: "Sectors",
+        label: "Use cases",
         enabled: true,
         order: 5,
         eyebrow: "05",
-        title: "Application sectors",
+        title: "White-label use cases",
         summary:
-          "Agriculture, construction, logistics and industrial automation each have different pressures around reliability, operator feedback and maintainable control systems.",
-        ctaLabel: "View sectors",
+          "Client sites, product catalogues, internal admin tools and partner portals can reuse the same foundation with different themes.",
+        ctaLabel: "View use cases",
         ctaHref: "/sectors",
         panelEyebrow: "05",
-        panelTitle: "Application sectors",
+        panelTitle: "White-label use cases",
       },
     ],
   },

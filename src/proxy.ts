@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 
-const PAYLOAD_SITE_HOSTS = new Set(["new.eltronic.co.uk"]);
+const PAYLOAD_SITE_HOSTS = new Set(["app.example.com"]);
 
 const PASSTHROUGH_PREFIXES = ["/_next", "/api", "/console", "/console-api", "/studio", "/v2"];
 const PUBLIC_FILE_PATTERN = /\.(?:avif|css|gif|ico|jpg|jpeg|js|json|map|png|svg|txt|webmanifest|webp|xml)$/i;
