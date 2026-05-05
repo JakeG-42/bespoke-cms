@@ -1,5 +1,6 @@
 import config from "@payload-config";
 import "@payloadcms/next/css";
+import "@puckeditor/core/puck.css";
 import { handleServerFunctions, RootLayout } from "@payloadcms/next/layouts";
 import type { Metadata } from "next";
 import type { ServerFunctionClient } from "payload";
@@ -7,6 +8,7 @@ import React from "react";
 
 import { siteConfig } from "@/lib/seo";
 import { importMap } from "./console/importMap.js";
+import "@/payload/builder/builder-preview.css";
 import "./custom.scss";
 
 export const metadata: Metadata = {

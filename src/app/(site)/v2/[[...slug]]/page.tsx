@@ -3,6 +3,7 @@ import config from "@payload-config";
 import { getPayload } from "payload";
 
 import { PayloadPageRenderer } from "@/components/payload/payload-page-renderer";
+import { PuckBuilderRenderer } from "@/components/payload/puck-builder-renderer";
 import type { Page, Product } from "@/payload-types";
 
 export const dynamic = "force-dynamic";
@@ -124,6 +125,10 @@ export default async function PayloadV2Page({ params }: PayloadV2PageProps) {
   const [page, featuredProducts] = await Promise.all([getPayloadPage(slug), getFeaturedProducts()]);
 
   if (page) {
+    if ("builderData" in page && page.builderData) {
+      return <PuckBuilderRenderer data={page.builderData} featuredProducts={featuredProducts} />;
+    }
+
     return <PayloadPageRenderer featuredProducts={featuredProducts} page={page} />;
   }
 
