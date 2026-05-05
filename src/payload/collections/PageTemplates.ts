@@ -11,7 +11,7 @@ export const PageTemplates: CollectionConfig = {
     update: adminsOnly,
   },
   admin: {
-    defaultColumns: ["name", "handle", "status", "theme", "updatedAt"],
+    defaultColumns: ["preview", "name", "handle", "status", "theme", "updatedAt"],
     group: "Theme",
     useAsTitle: "name",
   },
@@ -20,6 +20,18 @@ export const PageTemplates: CollectionConfig = {
     singular: "Website template",
   },
   fields: [
+    {
+      name: "preview",
+      type: "ui",
+      admin: {
+        components: {
+          Cell: "/components/theme/ThemePreview#TemplatePreviewCell",
+          Field: "/components/theme/ThemePreview#TemplatePreviewField",
+        },
+        disableListColumn: false,
+      },
+      label: "Preview",
+    },
     {
       name: "name",
       type: "text",

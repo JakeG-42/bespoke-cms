@@ -13,6 +13,16 @@ export const ThemeSettings: GlobalConfig = {
   },
   fields: [
     {
+      name: "preview",
+      type: "ui",
+      admin: {
+        components: {
+          Field: "/components/theme/ThemePreview#ThemeSettingsPreviewField",
+        },
+      },
+      label: "Preview",
+    },
+    {
       name: "activeTemplate",
       type: "relationship",
       admin: {

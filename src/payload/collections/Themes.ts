@@ -41,11 +41,23 @@ export const Themes: CollectionConfig = {
     update: adminsOnly,
   },
   admin: {
-    defaultColumns: ["name", "handle", "status", "isDefault", "updatedAt"],
+    defaultColumns: ["preview", "name", "handle", "status", "isDefault", "updatedAt"],
     group: "Theme",
     useAsTitle: "name",
   },
   fields: [
+    {
+      name: "preview",
+      type: "ui",
+      admin: {
+        components: {
+          Cell: "/components/theme/ThemePreview#ThemePreviewCell",
+          Field: "/components/theme/ThemePreview#ThemePreviewField",
+        },
+        disableListColumn: false,
+      },
+      label: "Preview",
+    },
     {
       name: "name",
       type: "text",
