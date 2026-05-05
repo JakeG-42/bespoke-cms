@@ -1,11 +1,20 @@
 import { postgresAdapter } from "@payloadcms/db-postgres";
+import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { existsSync, readFileSync } from "fs";
 import path from "path";
 import { buildConfig } from "payload";
 import { fileURLToPath } from "url";
 
 import { ConsoleUsers } from "./src/payload/collections/ConsoleUsers.ts";
+import { Documents } from "./src/payload/collections/Documents.ts";
+import { Media } from "./src/payload/collections/Media.ts";
 import { Pages } from "./src/payload/collections/Pages.ts";
+import { Posts } from "./src/payload/collections/Posts.ts";
+import { ProductCategories } from "./src/payload/collections/ProductCategories.ts";
+import { Products } from "./src/payload/collections/Products.ts";
+import { Footer } from "./src/payload/globals/Footer.ts";
+import { Navigation } from "./src/payload/globals/Navigation.ts";
+import { SiteSettings } from "./src/payload/globals/SiteSettings.ts";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -100,7 +109,7 @@ export default buildConfig({
     },
     user: ConsoleUsers.slug,
   },
-  collections: [ConsoleUsers, Pages],
+  collections: [ConsoleUsers, Media, Documents, ProductCategories, Products, Pages, Posts],
   db: postgresAdapter({
     pool: {
       connectionString: getPayloadDatabaseUrl(),
@@ -110,6 +119,8 @@ export default buildConfig({
   graphQL: {
     disable: true,
   },
+  editor: lexicalEditor(),
+  globals: [SiteSettings, Navigation, Footer],
   routes: {
     admin: "/console",
     api: "/console-api",

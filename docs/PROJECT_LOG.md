@@ -81,6 +81,7 @@ Concise living log for the Eltronic standalone site/app. Add newest updates at t
 - Added repeatable generated product gallery assets: 33 technical SVG illustrations across 11 products, a `src/content/product-gallery-assets.json` manifest, `npm run images:products`, and `npm run images:products:sync` to sync the gallery paths into Neon managed product records.
 - Added Studio submission bulk actions, auto-refresh, an authenticated submission summary API and coloured sidebar `+N` enquiry badges; also grouped and reduced the Studio sidebar navigation.
 - Added Payload CMS alongside the existing site and Studio: `/console` for the CMS admin, `/console-api` for REST, disabled GraphQL, `console-users` and `pages` collections, a hidden `/v2` sandbox page and a separate `payload` Postgres schema in the existing Neon database. Configured `PAYLOAD_SECRET` in Vercel for Production and the `dev` Preview branch.
+- Began turning Payload into the full Console CMS: admin/editor-capable users, media/documents, product categories, products, pages, posts, site settings, navigation/footer globals and reusable page-builder blocks. Jake and Dad are admins; no editor users are planned yet.
 
 ## Future Considerations
 

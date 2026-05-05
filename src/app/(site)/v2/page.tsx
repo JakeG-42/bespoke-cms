@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import config from "@payload-config";
 import { getPayload } from "payload";
+import type { Page } from "@/payload-types";
 
 export const dynamic = "force-dynamic";
 
@@ -12,13 +13,9 @@ export const metadata: Metadata = {
   },
 };
 
-type PayloadV2Page = {
-  body?: string | null;
-  heroHeading?: string | null;
-  title?: string | null;
-};
+type HeroBlock = Extract<Page["layout"][number], { blockType: "hero" }>;
 
-async function getPayloadHomePage(): Promise<PayloadV2Page | null> {
+async function getPayloadHomePage(): Promise<Page | null> {
   try {
     const payload = await getPayload({ config });
     const result = await payload.find({
@@ -41,14 +38,16 @@ async function getPayloadHomePage(): Promise<PayloadV2Page | null> {
 
 export default async function PayloadV2Page() {
   const page = await getPayloadHomePage();
+  const hero = page?.layout.find((block): block is HeroBlock => block.blockType === "hero");
 
   return (
     <main className="page">
       <section className="panel">
         <p className="code-kicker">Payload sandbox</p>
-        <h1>{page?.heroHeading ?? page?.title ?? "Eltronic v2"}</h1>
+        <h1>{hero?.heading ?? page?.title ?? "Eltronic v2"}</h1>
         <p className="lede">
-          {page?.body ??
+          {hero?.lede ??
+            page?.summary ??
             "This is the blank Payload-backed version space. The current Eltronic site and Studio are still running separately."}
         </p>
       </section>

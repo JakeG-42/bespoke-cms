@@ -124,7 +124,10 @@ Payload CMS is installed alongside the existing site and Studio rather than repl
 - Payload REST route: `/console-api`.
 - Payload GraphQL is disabled in `payload.config.ts`.
 - Experimental Payload-backed page route: `/v2`, marked noindex and excluded in robots.
-- Payload collections live in `src/payload/collections`; the initial collections are `console-users` and `pages`.
+- Payload collections live in `src/payload/collections`; the CMS foundation includes admin-only `console-users`, `media`, `documents`, `product-categories`, `products`, `pages` and `posts`.
+- Payload globals live in `src/payload/globals`; current globals are `site-settings`, `navigation` and `footer`.
+- Page/post builder blocks live in `src/payload/blocks`; current blocks include hero, rich text, image/text, card grid, product grid, gallery, downloads, specification table and CTA band.
+- Jake and Dad are existing admins. The `editor` role remains available in Console users for future limited-access accounts, but no editor users are planned yet.
 - `next.config.ts` is wrapped with `withPayload()`.
 - `tsconfig.json` maps `@payload-config` to `payload.config.ts`.
 - The previous app-wide root layout was split so `(site)`, `/studio` and `(payload)` can each own the correct root layout boundary. Public URLs are unchanged.

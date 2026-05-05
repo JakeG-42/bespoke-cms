@@ -4,8 +4,8 @@ import { adminsOnly, publishedOrAdmin } from "../access.ts";
 import { pageBlocks } from "../blocks/index.ts";
 import { seoFields, slugField, statusField } from "../fields.ts";
 
-export const Pages: CollectionConfig = {
-  slug: "pages",
+export const Posts: CollectionConfig = {
+  slug: "posts",
   access: {
     create: adminsOnly,
     delete: adminsOnly,
@@ -13,7 +13,7 @@ export const Pages: CollectionConfig = {
     update: adminsOnly,
   },
   admin: {
-    defaultColumns: ["title", "slug", "status", "updatedAt"],
+    defaultColumns: ["title", "slug", "status", "publishedAt"],
     group: "Content",
     useAsTitle: "title",
   },
@@ -27,11 +27,25 @@ export const Pages: CollectionConfig = {
     {
       name: "summary",
       type: "textarea",
-      admin: {
-        description: "Short internal/search summary.",
-      },
+      required: true,
     },
     statusField,
+    {
+      name: "publishedAt",
+      type: "date",
+      admin: {
+        date: {
+          pickerAppearance: "dayAndTime",
+        },
+      },
+      label: "Published at",
+    },
+    {
+      name: "featuredImage",
+      type: "upload",
+      label: "Featured image",
+      relationTo: "media",
+    },
     {
       name: "layout",
       type: "blocks",
