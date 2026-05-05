@@ -3,6 +3,12 @@ import type { CollectionConfig } from "payload";
 export const ConsoleUsers: CollectionConfig = {
   slug: "console-users",
   auth: true,
+  access: {
+    create: ({ req }) => Boolean(req.user),
+    delete: ({ req }) => Boolean(req.user),
+    read: ({ req }) => Boolean(req.user),
+    update: ({ req }) => Boolean(req.user),
+  },
   admin: {
     defaultColumns: ["email", "name", "role", "updatedAt"],
     group: "Console",
@@ -16,7 +22,10 @@ export const ConsoleUsers: CollectionConfig = {
     {
       name: "role",
       type: "select",
-      defaultValue: "editor",
+      admin: {
+        description: "Use Admin for now. Editor is available for future limited-access accounts.",
+      },
+      defaultValue: "admin",
       options: [
         {
           label: "Admin",

@@ -73,7 +73,9 @@ Concise living reference for how the current Eltronic Next.js site works.
 - The Console admin route is `/console`; the API route is `/console-api`.
 - Payload stores data in the same Neon database as the current app, but in the separate Postgres schema `payload`.
 - `PAYLOAD_DATABASE_URL` can override the DB connection. Without it, Payload falls back to the same standard/prefixed Neon environment variables used by the managed data layer.
-- The initial Payload collections are `console-users` and `pages`.
+- Payload collections are being expanded into a full CMS: admin-only `console-users`, `media`, `documents`, `product-categories`, `products`, `pages` and `posts`.
+- Payload globals cover `site-settings`, `navigation` and `footer`.
+- Payload page/post building is block-based with hero, rich text, image/text, card grid, product grid, gallery, downloads, specification table and CTA band sections.
 - The `/v2` page reads a Payload page with slug `home` if one exists, otherwise it renders a safe placeholder. It is noindex and excluded from robots.
 - `PAYLOAD_SECRET` is configured in Vercel for Production and the `dev` Preview branch; keep it present before relying on Console auth in production.
 
