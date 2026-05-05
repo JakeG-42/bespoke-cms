@@ -1,6 +1,6 @@
 "use client";
 
-import { Puck, type PuckAction } from "@puckeditor/core";
+import { blocksPlugin, outlinePlugin, Puck, type PuckAction } from "@puckeditor/core";
 import { ExternalLink, Plus } from "lucide-react";
 import { type ReactNode, useState } from "react";
 
@@ -10,6 +10,17 @@ import type { BuilderData, BuilderMenu, BuilderProduct } from "@/payload/builder
 type SaveState = "error" | "idle" | "saved" | "saving";
 
 const ROOT_ZONE = "root:default-zone";
+
+const editorPlugins = [
+  {
+    ...blocksPlugin(),
+    label: "Add blocks",
+  },
+  {
+    ...outlinePlugin(),
+    label: "Current page",
+  },
+];
 
 type VisualBuilderClientProps = {
   builderData: BuilderData;
@@ -120,6 +131,7 @@ export function VisualBuilderClient({
         }}
         metadata={{ featuredProducts, menus }}
         onPublish={save}
+        plugins={editorPlugins}
         renderHeaderActions={(props) =>
           renderHeaderActions({
             ...props,
@@ -128,6 +140,7 @@ export function VisualBuilderClient({
             saveState,
           })
         }
+        ui={{ plugin: { current: "outline" } }}
         viewports={[
           {
             height: "auto",
