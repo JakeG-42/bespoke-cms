@@ -59,6 +59,31 @@
   color: #065f46;
 }
 
+.visual-builder-view .Puck {
+  color: #1f2937;
+}
+
+.visual-builder-view .Puck [data-puck-drawer-item]:not(:hover),
+.visual-builder-view .Puck [data-puck-drawer-item]:not(:hover) [class*="_DrawerItem-draggable_"] {
+  color: #1f2937;
+}
+
+.visual-builder-view .Puck button[class*="_ComponentList-title_"]:not(:hover) {
+  color: #475569;
+}
+
+.visual-builder-view .Puck [class*="_Input-label_"],
+.visual-builder-view .Puck [class*="_SidebarSection-title_"],
+.visual-builder-view .Puck [class*="_Breadcrumbs-breadcrumbLabel_"] {
+  color: #334155;
+}
+
+.visual-builder-view .Puck input[class*="_Input-input_"],
+.visual-builder-view .Puck textarea[class*="_Input-input_"],
+.visual-builder-view .Puck select[class*="_Input-input_"] {
+  color: #0f172a;
+}
+
 .wysiwyg-cell-button {
   display: inline-flex;
   align-items: center;
