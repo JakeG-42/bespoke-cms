@@ -107,6 +107,11 @@ export default buildConfig({
   admin: {
     components: {
       afterNavLinks: ["/components/code-workspace/CodeWorkspaceNavLink#CodeWorkspaceNavLink"],
+      beforeLogin: ["/components/brand/ConsoleBrand#ConsoleLoginIntro"],
+      graphics: {
+        Icon: "/components/brand/ConsoleBrand#EltronicConsoleIcon",
+        Logo: "/components/brand/ConsoleBrand#EltronicConsoleLogo",
+      },
       views: {
         codeWorkspace: {
           Component: "/components/code-workspace/CodeWorkspaceView#CodeWorkspaceView",

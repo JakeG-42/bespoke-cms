@@ -29,7 +29,10 @@ import { ThemePreviewField as ThemePreviewField_ac77b5c0503c02d2f3a796dd252d513c
 import { TemplatePreviewCell as TemplatePreviewCell_ac77b5c0503c02d2f3a796dd252d513c } from '../components/theme/ThemePreview'
 import { TemplatePreviewField as TemplatePreviewField_ac77b5c0503c02d2f3a796dd252d513c } from '../components/theme/ThemePreview'
 import { ThemeSettingsPreviewField as ThemeSettingsPreviewField_ac77b5c0503c02d2f3a796dd252d513c } from '../components/theme/ThemePreview'
+import { EltronicConsoleIcon as EltronicConsoleIcon_5925d11dc95fafabeec200638335a25b } from '../components/brand/ConsoleBrand'
+import { EltronicConsoleLogo as EltronicConsoleLogo_5925d11dc95fafabeec200638335a25b } from '../components/brand/ConsoleBrand'
 import { CodeWorkspaceNavLink as CodeWorkspaceNavLink_e8d5604b26950d7a38a53c138155e152 } from '../components/code-workspace/CodeWorkspaceNavLink'
+import { ConsoleLoginIntro as ConsoleLoginIntro_5925d11dc95fafabeec200638335a25b } from '../components/brand/ConsoleBrand'
 import { CodeWorkspaceView as CodeWorkspaceView_40eca8cfb99f6a5d5b690e36c1ab1152 } from '../components/code-workspace/CodeWorkspaceView'
 import { WysiwygPageView as WysiwygPageView_c7efaa2257253e4183bd87449699e9e3 } from '../components/visual-builder/WysiwygPageView'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
@@ -67,7 +70,10 @@ export const importMap = {
   "/components/theme/ThemePreview#TemplatePreviewCell": TemplatePreviewCell_ac77b5c0503c02d2f3a796dd252d513c,
   "/components/theme/ThemePreview#TemplatePreviewField": TemplatePreviewField_ac77b5c0503c02d2f3a796dd252d513c,
   "/components/theme/ThemePreview#ThemeSettingsPreviewField": ThemeSettingsPreviewField_ac77b5c0503c02d2f3a796dd252d513c,
+  "/components/brand/ConsoleBrand#EltronicConsoleIcon": EltronicConsoleIcon_5925d11dc95fafabeec200638335a25b,
+  "/components/brand/ConsoleBrand#EltronicConsoleLogo": EltronicConsoleLogo_5925d11dc95fafabeec200638335a25b,
   "/components/code-workspace/CodeWorkspaceNavLink#CodeWorkspaceNavLink": CodeWorkspaceNavLink_e8d5604b26950d7a38a53c138155e152,
+  "/components/brand/ConsoleBrand#ConsoleLoginIntro": ConsoleLoginIntro_5925d11dc95fafabeec200638335a25b,
   "/components/code-workspace/CodeWorkspaceView#CodeWorkspaceView": CodeWorkspaceView_40eca8cfb99f6a5d5b690e36c1ab1152,
   "/components/visual-builder/WysiwygPageView#WysiwygPageView": WysiwygPageView_c7efaa2257253e4183bd87449699e9e3,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1

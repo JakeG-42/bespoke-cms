@@ -5,6 +5,410 @@
   margin-bottom: 1rem;
 }
 
+.eltronic-console-icon {
+  display: grid;
+  position: relative;
+  width: 2.35rem;
+  height: 2.35rem;
+  flex: 0 0 auto;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid rgba(139, 211, 255, 0.36);
+  border-radius: 8px;
+  background:
+    linear-gradient(rgba(139, 211, 255, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139, 211, 255, 0.12) 1px, transparent 1px),
+    #020617;
+  background-size: 9px 9px;
+  box-shadow: inset 0 0 0 1px rgba(251, 191, 36, 0.12), 0 10px 24px rgba(2, 6, 23, 0.22);
+}
+
+.eltronic-console-icon::before,
+.eltronic-console-icon::after,
+.eltronic-console-icon span {
+  content: "";
+  position: absolute;
+  border-radius: 2px;
+}
+
+.eltronic-console-icon::before {
+  width: 1.15rem;
+  height: 1.15rem;
+  border: 2px solid #8bd3ff;
+}
+
+.eltronic-console-icon::after {
+  width: 1.55rem;
+  height: 2px;
+  background: #fbbf24;
+  box-shadow: 0 -0.52rem 0 rgba(251, 191, 36, 0.88), 0 0.52rem 0 rgba(251, 191, 36, 0.88);
+}
+
+.eltronic-console-icon span {
+  width: 0.32rem;
+  height: 0.32rem;
+  background: #f8fafc;
+  box-shadow: -0.72rem 0 0 #8bd3ff, 0.72rem 0 0 #8bd3ff;
+}
+
+.eltronic-console-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.72rem;
+  color: var(--theme-elevation-950);
+}
+
+.eltronic-console-logo strong,
+.eltronic-console-logo span {
+  display: block;
+  line-height: 1;
+}
+
+.eltronic-console-logo strong {
+  font-size: 1.28rem;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+.eltronic-console-logo span {
+  margin-top: 0.22rem;
+  color: var(--theme-elevation-500);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.app-header .eltronic-console-icon {
+  width: 1.85rem;
+  height: 1.85rem;
+  border-radius: 7px;
+  transform: scale(0.92);
+  transform-origin: left center;
+}
+
+.template-minimal.login {
+  min-height: 100vh;
+  padding: clamp(1.25rem, 5vw, 3.5rem);
+  background:
+    linear-gradient(rgba(139, 211, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139, 211, 255, 0.055) 1px, transparent 1px),
+    radial-gradient(circle at 18% 18%, rgba(139, 211, 255, 0.18), transparent 28rem),
+    #020617;
+  background-size: 38px 38px, 38px 38px, auto, auto;
+}
+
+.template-minimal.login .template-minimal__wrap {
+  width: min(100%, 29rem);
+  padding: clamp(1.25rem, 4vw, 2rem);
+  border: 1px solid rgba(139, 211, 255, 0.2);
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.92);
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(16px);
+}
+
+.login__brand {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.45rem;
+}
+
+.login__brand .eltronic-console-logo {
+  color: #f8fafc;
+}
+
+.login__brand .eltronic-console-logo span {
+  color: #8bd3ff;
+}
+
+.console-login-intro {
+  margin-bottom: 1.15rem;
+  text-align: center;
+}
+
+.console-login-intro p,
+.console-login-intro h1 {
+  margin: 0;
+}
+
+.console-login-intro p {
+  color: #fbbf24;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.console-login-intro h1 {
+  margin-top: 0.35rem;
+  color: #f8fafc;
+  font-size: clamp(1.85rem, 6vw, 2.65rem);
+  line-height: 1;
+}
+
+.login__form {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.login__form label,
+.login__form .field-label {
+  color: #dbeafe;
+  font-weight: 750;
+}
+
+.login__form input {
+  border-color: rgba(139, 211, 255, 0.18);
+  background: rgba(2, 6, 23, 0.6);
+  color: #f8fafc;
+}
+
+.login__form input:focus {
+  border-color: #8bd3ff;
+  box-shadow: 0 0 0 3px rgba(139, 211, 255, 0.14);
+}
+
+.login__form a {
+  color: #8bd3ff;
+  font-size: 0.86rem;
+  font-weight: 750;
+}
+
+.login__form .btn,
+.login__form button[type="submit"] {
+  border-color: #8bd3ff;
+  border-radius: 7px;
+  background: #8bd3ff;
+  color: #020617;
+  font-weight: 900;
+}
+
+.template-default__wrap {
+  background: var(--theme-elevation-50);
+}
+
+.nav {
+  border-right: 1px solid var(--theme-elevation-150);
+  background: linear-gradient(180deg, var(--theme-elevation-0), var(--theme-elevation-50));
+}
+
+.nav__wrap {
+  gap: 0.95rem;
+  padding: 1rem 0.85rem;
+}
+
+.nav-group {
+  margin-bottom: 0.3rem;
+  padding: 0.72rem 0.65rem 0.62rem;
+  border: 1px solid var(--theme-elevation-150);
+  border-radius: 8px;
+  background: var(--theme-elevation-0);
+}
+
+.nav-group + .nav-group {
+  margin-top: 0.75rem;
+}
+
+.nav-group__toggle {
+  align-items: center;
+  min-height: 1.65rem;
+  margin-bottom: 0.45rem;
+  color: var(--theme-elevation-700);
+}
+
+.nav-group__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.73rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.nav-group__label::before {
+  content: "";
+  display: inline-block;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 999px;
+  background: var(--console-group-accent, #8bd3ff);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--console-group-accent, #8bd3ff) 16%, transparent);
+}
+
+.nav-group.Products {
+  --console-group-accent: #8bd3ff;
+}
+
+.nav-group.Content {
+  --console-group-accent: #22c55e;
+}
+
+.nav-group.Theme {
+  --console-group-accent: #fbbf24;
+}
+
+.nav-group.Assets {
+  --console-group-accent: #a78bfa;
+}
+
+.nav-group.Settings,
+.nav-group.Console {
+  --console-group-accent: #38bdf8;
+}
+
+.nav-group__content {
+  display: grid;
+  gap: 0.14rem;
+}
+
+.nav__link,
+.code-workspace-nav-link {
+  position: relative;
+  min-height: 2.25rem;
+  border-radius: 6px;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease,
+    transform 150ms ease;
+}
+
+.nav__link {
+  display: flex;
+  align-items: center;
+  gap: 0.68rem;
+  padding: 0.4rem 0.5rem;
+  color: var(--theme-elevation-700);
+  font-size: 0.9rem;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.nav__link::before {
+  --console-nav-icon: var(--console-nav-icon-default);
+  content: "";
+  width: 1.05rem;
+  height: 1.05rem;
+  flex: 0 0 auto;
+  background: currentColor;
+  opacity: 0.78;
+  -webkit-mask: var(--console-nav-icon) center / contain no-repeat;
+  mask: var(--console-nav-icon) center / contain no-repeat;
+}
+
+.nav__link:hover,
+.nav__link:focus-visible,
+.code-workspace-nav-link:hover,
+.code-workspace-nav-link.active {
+  background: color-mix(in srgb, var(--console-group-accent, #8bd3ff) 12%, var(--theme-elevation-100));
+  color: var(--theme-elevation-950);
+  transform: translateX(1px);
+}
+
+.nav__link:has(.nav__link-indicator),
+.nav__link[id^="nav-"]:not(a) {
+  background: color-mix(in srgb, var(--console-group-accent, #8bd3ff) 16%, var(--theme-elevation-100));
+  color: var(--theme-elevation-950);
+  font-weight: 800;
+}
+
+.nav__link-indicator {
+  left: -0.5rem;
+  width: 3px;
+  border-radius: 999px;
+  background: var(--console-group-accent, #8bd3ff);
+}
+
+#nav-products,
+#nav-product-categories {
+  --console-group-accent: #8bd3ff;
+}
+
+#nav-pages,
+#nav-posts {
+  --console-group-accent: #22c55e;
+}
+
+#nav-themes,
+#nav-page-templates,
+#nav-code-snippets,
+#nav-menus,
+#nav-global-theme-settings {
+  --console-group-accent: #fbbf24;
+}
+
+#nav-media,
+#nav-documents {
+  --console-group-accent: #a78bfa;
+}
+
+#nav-console-users,
+#nav-global-site-settings {
+  --console-group-accent: #38bdf8;
+}
+
+#nav-products {
+  --console-nav-icon: var(--console-nav-icon-box);
+}
+
+#nav-product-categories {
+  --console-nav-icon: var(--console-nav-icon-tags);
+}
+
+#nav-pages {
+  --console-nav-icon: var(--console-nav-icon-file);
+}
+
+#nav-posts {
+  --console-nav-icon: var(--console-nav-icon-article);
+}
+
+#nav-themes,
+#nav-page-templates,
+#nav-global-theme-settings {
+  --console-nav-icon: var(--console-nav-icon-palette);
+}
+
+#nav-code-snippets {
+  --console-nav-icon: var(--console-nav-icon-code);
+}
+
+#nav-menus {
+  --console-nav-icon: var(--console-nav-icon-menu);
+}
+
+#nav-media {
+  --console-nav-icon: var(--console-nav-icon-image);
+}
+
+#nav-documents {
+  --console-nav-icon: var(--console-nav-icon-document);
+}
+
+#nav-console-users {
+  --console-nav-icon: var(--console-nav-icon-user);
+}
+
+#nav-global-site-settings {
+  --console-nav-icon: var(--console-nav-icon-settings);
+}
+
+:root {
+  --console-nav-icon-default: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 4h16v16H4z'/%3E%3Cpath d='M8 8h8M8 12h8M8 16h5'/%3E%3C/svg%3E");
+  --console-nav-icon-article: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 4h14v16H5z'/%3E%3Cpath d='M8 8h8M8 12h8M8 16h5'/%3E%3C/svg%3E");
+  --console-nav-icon-box: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 8.5 12 4l8 4.5v7L12 20l-8-4.5v-7Z'/%3E%3Cpath d='m4 8.5 8 4.5 8-4.5M12 13v7'/%3E%3C/svg%3E");
+  --console-nav-icon-code: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m8 9-4 3 4 3M16 9l4 3-4 3M14 5l-4 14'/%3E%3C/svg%3E");
+  --console-nav-icon-document: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 3h8l4 4v14H6z'/%3E%3Cpath d='M14 3v5h5M9 13h6M9 17h6'/%3E%3C/svg%3E");
+  --console-nav-icon-file: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 3h8l4 4v14H6z'/%3E%3Cpath d='M14 3v5h5'/%3E%3C/svg%3E");
+  --console-nav-icon-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='5' width='16' height='14' rx='2'/%3E%3Ccircle cx='9' cy='10' r='2'/%3E%3Cpath d='m20 15-4-4-8 8'/%3E%3C/svg%3E");
+  --console-nav-icon-menu: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 7h14M5 12h14M5 17h14'/%3E%3C/svg%3E");
+  --console-nav-icon-palette: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 4a8 8 0 0 0 0 16h1.5a2 2 0 0 0 1.2-3.6 1.5 1.5 0 0 1 .9-2.7H17a3 3 0 0 0 2.9-3.7A8 8 0 0 0 12 4Z'/%3E%3Ccircle cx='8.5' cy='11' r='1'/%3E%3Ccircle cx='11' cy='8' r='1'/%3E%3Ccircle cx='14' cy='8.5' r='1'/%3E%3C/svg%3E");
+  --console-nav-icon-settings: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z'/%3E%3Cpath d='M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2 3.4-.2-.1a1.7 1.7 0 0 0-2 .4l-.1.1-3.9-2.3v-.2a1.7 1.7 0 0 0-1.6-1.1h-.2L8 21.6H4l-.1-.2a1.7 1.7 0 0 0-.6-2l-.1-.1 2-3.4.2.1a1.7 1.7 0 0 0 2-.4l.1-.1 3.9 2.3v.2a1.7 1.7 0 0 0 1.6 1.1h.2l1.8-3.4h4l.1.2Z'/%3E%3C/svg%3E");
+  --console-nav-icon-tags: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 10 14 4H5v9l6 6 9-9Z'/%3E%3Cpath d='M8 8h.01M17 17l3 3'/%3E%3C/svg%3E");
+  --console-nav-icon-user: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='8' r='3'/%3E%3Cpath d='M5 20c1-4 3.3-6 7-6s6 2 7 6'/%3E%3C/svg%3E");
+}
+
 .theme-preview-field-header {
   display: flex;
   align-items: flex-end;

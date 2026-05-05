@@ -12,6 +12,10 @@ import "@/payload/builder/builder-preview.css";
 import "./custom.scss";
 
 export const metadata: Metadata = {
+  icons: {
+    icon: "/console-icon.svg",
+    shortcut: "/console-icon.svg",
+  },
   metadataBase: new URL(siteConfig.url),
   title: {
     default: "Eltronic Console",
