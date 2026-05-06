@@ -462,7 +462,7 @@
   padding-top: 24px;
   padding-right: 48px;
   padding-bottom: 24px;
-  padding-left: 68px;
+  padding-left: 48px;
 }
 
 .puck-theme-andersenEV .puck-site-header:hover {
@@ -638,6 +638,7 @@
   grid-area: logo;
   justify-self: start;
   letter-spacing: 0;
+  margin-left: 20px;
   max-width: max-content;
 }
 
@@ -1460,6 +1461,10 @@
   .puck-theme-andersenEV .puck-site-topbar {
     padding-right: 20px;
     padding-left: 20px;
+  }
+
+  .puck-theme-andersenEV .puck-site-brand {
+    margin-left: 0;
   }
 
   .puck-site-header .puck-actions {
