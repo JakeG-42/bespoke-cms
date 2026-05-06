@@ -442,6 +442,8 @@
   background: rgba(255, 255, 255, 0.96);
   box-shadow: 0 10px 28px rgba(22, 27, 24, 0.06);
   backdrop-filter: blur(18px);
+  padding-right: clamp(1.5rem, 4vw, 4.5rem);
+  padding-left: clamp(1.5rem, 4vw, 4.5rem);
 }
 
 .puck-theme-andersenEV .puck-site-header:hover {
@@ -453,7 +455,9 @@
   color: #ffffff;
   font-size: 0.82rem;
   font-weight: 600;
-  min-height: 2.55rem;
+  min-height: 3.05rem;
+  padding-right: clamp(1.5rem, 4vw, 4.5rem);
+  padding-left: clamp(1.5rem, 4vw, 4.5rem);
 }
 
 .puck-theme-andersenEV .puck-site-topbar-status {
@@ -462,7 +466,11 @@
 }
 
 .puck-theme-andersenEV .puck-site-topbar-right {
+  display: inline-grid;
+  gap: 0.12rem;
   font-weight: 450;
+  line-height: 1.12;
+  text-align: right;
 }
 
 .puck-theme-andersenEV .puck-menu {
@@ -479,7 +487,7 @@
   border: 0;
   border-radius: 0;
   color: #1d221f;
-  font-size: 0.86rem;
+  font-size: 0.9rem;
   font-weight: 430;
   letter-spacing: 0;
 }
@@ -492,7 +500,7 @@
 }
 
 .puck-theme-andersenEV .puck-menu-dropdown {
-  top: calc(100% + 1.15rem);
+  top: calc(100% + 0.55rem);
   min-width: 13.5rem;
   padding: 0.68rem;
   border: 1px solid #e1dfd6;
@@ -836,11 +844,19 @@
 
 .puck-site-topbar-right {
   grid-column: 3;
-  display: inline-flex;
+  display: inline-grid;
   align-items: center;
   justify-self: end;
-  gap: 0.28rem;
+  gap: 0.12rem;
+  line-height: 1.12;
+  text-align: right;
   white-space: nowrap;
+}
+
+.puck-site-topbar-right > span:last-child {
+  display: inline-flex;
+  justify-content: flex-end;
+  gap: 0.28rem;
 }
 
 .puck-site-topbar-status {
@@ -914,6 +930,15 @@
   align-items: center;
 }
 
+.puck-menu-item::after {
+  position: absolute;
+  right: -0.45rem;
+  bottom: -0.9rem;
+  left: -0.45rem;
+  height: 1rem;
+  content: "";
+}
+
 .puck-menu-trigger {
   gap: 0.28rem;
 }
@@ -931,7 +956,7 @@
 .puck-menu-dropdown {
   position: absolute;
   z-index: 45;
-  top: calc(100% + 0.85rem);
+  top: calc(100% + 0.45rem);
   left: 50%;
   display: grid;
   min-width: 12rem;

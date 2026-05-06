@@ -955,8 +955,10 @@ export const builderConfig: BuilderConfig = {
                 </div>
                 <div className="puck-site-topbar-right">
                   <span>{textValue(props.topBarSalesLabel, "Sales")}</span>
-                  <span className="puck-site-topbar-status">{textValue(props.topBarStatusLabel, "Online")}</span>
-                  <span>{textValue(props.topBarPhone, "+44 1234 916133")}</span>
+                  <span>
+                    <span className="puck-site-topbar-status">{textValue(props.topBarStatusLabel, "Online")}</span>
+                    <span>{textValue(props.topBarPhone, "+44 1234 916133")}</span>
+                  </span>
                 </div>
               </div>
             ) : null}
