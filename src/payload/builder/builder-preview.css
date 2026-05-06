@@ -444,6 +444,10 @@
   backdrop-filter: blur(18px);
 }
 
+.puck-theme-andersenEV .puck-site-header:hover {
+  transform: none;
+}
+
 .puck-theme-andersenEV .puck-site-topbar {
   background: #050505;
   color: #ffffff;
@@ -1216,7 +1220,6 @@
 .puck-hover-lift.puck-cta:hover,
 .puck-hover-lift.puck-hero:hover,
 .puck-hover-lift.puck-menu-section:hover,
-.puck-hover-lift.puck-site-header:hover,
 .puck-hover-lift.puck-rich-section:hover {
   transform: translateY(-4px);
   box-shadow: 0 18px 44px rgba(0, 0, 0, 0.24);
@@ -1265,7 +1268,6 @@
 .puck-hover-scale.puck-cta:hover,
 .puck-hover-scale.puck-hero:hover,
 .puck-hover-scale.puck-menu-section:hover,
-.puck-hover-scale.puck-site-header:hover,
 .puck-hover-scale.puck-rich-section:hover {
   transform: scale(var(--builder-hover-scale, 1.02));
 }
