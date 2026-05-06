@@ -746,18 +746,18 @@
   position: relative;
   z-index: 2;
   align-self: center;
-  max-width: min(72rem, calc(100% - 2rem));
+  max-width: min(82rem, calc(100% - 2rem));
   padding: 4.75rem 5.5rem;
   color: #ffffff;
   text-shadow: 0 2px 18px rgba(0, 0, 0, 0.34);
 }
 
 .puck-theme-andersenEV .puck-hero h1 {
-  max-width: 18ch;
+  max-width: min(66rem, 100%);
   margin: 0 0 0.9rem;
   color: #ffffff;
   font-family: "Muli", Arial, Helvetica, sans-serif;
-  font-size: clamp(2.24rem, 3.36vw, 3.92rem);
+  font-size: clamp(1.79rem, 2.69vw, 3.14rem);
   font-weight: 700;
   letter-spacing: 0;
   line-height: 0.98;
@@ -1646,8 +1646,8 @@
   }
 
   .puck-theme-andersenEV .puck-hero h1 {
-    max-width: 15ch;
-    font-size: 1.75rem;
+    max-width: 100%;
+    font-size: 1.4rem;
   }
 
   .puck-theme-andersenEV .puck-hero-copy p {
