@@ -446,6 +446,9 @@
 
 .puck-theme-andersenEV .puck-site-header {
   min-height: 5.7rem;
+  width: 100%;
+  margin: 0;
+  box-sizing: border-box;
   align-items: center;
   border-bottom: 1px solid #e3e2dc;
   background: rgba(255, 255, 255, 0.96);
