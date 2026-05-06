@@ -1,6 +1,6 @@
-# Bespoke CMS
+# Andersen EV Help Centre
 
-White-label CMS, CRM, commerce catalogue and visual page-builder platform.
+Payload CMS and Puck-powered Help Centre for Andersen EV support content, visual page building and customer support workflows.
 
 ## Local Development
 
@@ -9,12 +9,20 @@ npm install
 npm run dev
 ```
 
-Open `http://localhost:3000`.
+Open `http://localhost:3000`. The public Help Centre is served from `/`; the admin console is at `/console`.
 
 ## Project Shape
 
-- `src/app` contains the public Next.js routes.
+- `src/app` contains the public Next.js routes and Payload admin route group.
 - `payload.config.ts` mounts Payload at `/console`.
-- `src/content/products.ts` contains neutral demo packages.
-- Product pages support `website`, `commerce` and `workflow` templates.
-- Keep seed content generic unless a client-specific fork is intentional.
+- `src/payload` contains collections, globals, blocks and Puck builder configuration.
+- `src/components/help-centre` contains the customer-facing AI helper UI.
+- `src/lib/help-centre` contains issue categories, priority rules and ticket-draft types.
+- Public content is intended to be edited through Payload and the Puck visual builder.
+
+## Key Routes
+
+- `/`: Payload/Puck-managed public Help Centre.
+- `/help-centre`: Help Centre page with AI helper.
+- `/console`: Payload admin console.
+- `/console/wysiwyg/:id`: Puck visual builder for a Payload page.

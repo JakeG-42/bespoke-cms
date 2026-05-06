@@ -1,36 +1,32 @@
 # Site Functions
 
-Concise reference for the white-label Bespoke CMS application.
+Concise reference for the Andersen EV Help Centre application.
 
 ## Routes
 
-- `/`: public starter site.
-- `/products`: demo package catalogue.
-- `/products/[slug]`: demo package detail page.
-- `/solutions`: reusable platform modules.
-- `/software-it`: CMS, CRM, commerce and integration areas.
-- `/sectors`: white-label use cases.
-- `/contact`: enquiry form with anti-spam protection.
+- `/`: public Help Centre site, rendered from Payload page data and Puck builder data.
+- `/help-centre`: Help Centre page with the AI helper block when published in Payload.
 - `/console`: Payload CMS console.
 - `/console/wysiwyg/:id`: visual page builder for a Payload page.
-- `/preview`: Payload-built preview site.
-- `/v2`: legacy redirect to `/preview`.
-- `/studio`: legacy internal admin tooling.
+- `/console-api`: Payload REST API.
 
-## Product Templates
+## Payload Content
 
-Starter products use neutral template values:
-
-- `website`
-- `commerce`
-- `workflow`
+- Pages manage slugs, SEO, structured blocks and hidden Puck `builderData`.
+- Posts can be used for help articles and advice content.
+- Menus manage editable navigation data for the Puck header.
+- Support tickets store AI-helper escalations and support-team summaries.
+- Themes and page templates control whole-site visual direction.
+- Code snippets provide scoped custom CSS where a managed override is safer than changing source code.
 
 ## Storage
 
 - Payload data uses the configured Postgres database and the `payload` schema.
-- Legacy managed data can use Postgres, Redis or local `.data/bespoke-cms-data.json`.
-- Contact notification defaults should use neutral placeholder recipients unless configured through environment variables.
+- Media and documents are managed through Payload collections.
 
-## Branding
+## AI Helper
 
-The default product brand is `Bespoke CMS`. Client-specific names, emails, domains or copied vendor catalogues should not be committed to this repo.
+- The assistant must only suggest safe customer-level troubleshooting.
+- It should collect customer details before creating a ticket.
+- It should categorise issue type, priority and complexity.
+- Electrical/install/hardware safety issues should be escalated instead of diagnosed in detail.

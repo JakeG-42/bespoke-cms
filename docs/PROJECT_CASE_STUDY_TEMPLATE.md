@@ -1,34 +1,40 @@
-# Module Planning Template
+# Help Article Template
 
-Use this neutral template when planning future white-label modules.
+Use this template for future Help Centre articles.
 
-## Module
+## Summary
 
-- Name:
-- Purpose:
-- Primary users:
-- Data records:
-- Permissions:
-- Public routes:
-- Console routes:
+- Article title:
+- Customer problem:
+- Safe customer-level checks:
+- Escalation trigger:
+- Related charger models:
 
-## Workflow
+## Page Fields
 
-- Create:
-- Review:
-- Publish or complete:
-- Archive:
+```ts
+{
+  title: "",
+  slug: "",
+  summary: "",
+  category: "Help Centre",
+  issueCategory: "",
+  priorityHint: "low | medium | high",
+  metaDescription: "",
+}
+```
 
-## Builder Needs
+## Content Structure
 
-- Reusable blocks:
-- Theme controls:
-- Preview behaviour:
-- Custom CSS/code needs:
+- What this article helps with.
+- Before you start.
+- Safe checks the customer can try.
+- When to stop and contact support.
+- What information support will need.
+- Related articles.
 
-## Integration Notes
+## Safety Notes
 
-- External APIs:
-- Notifications:
-- Background jobs:
-- Reporting:
+- Do not include wiring, internal charger, RCD, PEN fault, CT clamp, consumer-unit or electrical testing instructions.
+- Escalate burning smell, overheating, exposed wiring, repeated tripping or suspected hardware faults.
+- Do not promise warranty approval, refunds, replacements or engineer visits.

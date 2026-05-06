@@ -11,8 +11,8 @@ export function PlatformConsoleLogo() {
     <div className="platform-console-logo">
       <PlatformConsoleIcon />
       <div>
-        <strong>Bespoke CMS</strong>
-        <span>Console</span>
+        <strong>Andersen EV</strong>
+        <span>Help Centre Console</span>
       </div>
     </div>
   );
@@ -21,7 +21,7 @@ export function PlatformConsoleLogo() {
 export function ConsoleLoginIntro() {
   return (
     <div className="console-login-intro">
-      <p>Admin workspace</p>
+      <p>Help Centre workspace</p>
       <h1>Welcome back</h1>
     </div>
   );

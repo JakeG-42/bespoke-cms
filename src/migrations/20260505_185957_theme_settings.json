@@ -6883,7 +6883,7 @@
           "type": "varchar",
           "primaryKey": false,
           "notNull": true,
-          "default": "'Bespoke CMS'"
+          "default": "'Andersen EV Help Centre'"
         },
         "strapline": {
           "name": "strapline",

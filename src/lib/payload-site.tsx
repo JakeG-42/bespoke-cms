@@ -222,8 +222,8 @@ export async function generatePayloadSiteMetadata({
   try {
     const payload = await getPayload({ config });
     const page = await getPayloadPage(payload, slug);
-    const title = page?.seo?.title ?? page?.title ?? "Bespoke CMS";
-    const description = page?.seo?.description ?? page?.summary ?? "A Payload-managed website powered by Bespoke CMS.";
+    const title = page?.seo?.title ?? page?.title ?? "Andersen EV Help Centre";
+    const description = page?.seo?.description ?? page?.summary ?? "Customer support and troubleshooting content for Andersen EV charger customers.";
 
     return {
       title,
@@ -237,11 +237,11 @@ export async function generatePayloadSiteMetadata({
       },
     };
   } catch (error) {
-    console.error("Unable to generate Payload site metadata.", error);
+    console.error("Unable to generate Help Centre metadata.", error);
 
     return {
-      title: "Bespoke CMS",
-      description: "A Payload-managed website powered by Bespoke CMS.",
+      title: "Andersen EV Help Centre",
+      description: "Customer support and troubleshooting content for Andersen EV charger customers.",
       robots: {
         index: false,
         follow: false,
@@ -251,7 +251,7 @@ export async function generatePayloadSiteMetadata({
 }
 
 export async function PayloadSitePage({
-  emptyLabel = "Payload site",
+  emptyLabel = "Help Centre page",
   indexed = true,
   internalLinkBasePath = "",
   slug,
@@ -275,8 +275,8 @@ export async function PayloadSitePage({
 
   if (page) {
     return (
-      <main className="new-site-empty">
-        <section className="new-site-empty-panel">
+      <main className="public-site-empty">
+        <section className="public-site-empty-panel">
           <p>{emptyLabel}</p>
           <h1>{page.title}</h1>
           <p>Open this page in the WYSIWYG builder and publish visual builder data to control this route.</p>
@@ -286,13 +286,13 @@ export async function PayloadSitePage({
   }
 
   return (
-    <main className="new-site-empty">
-      <section className="new-site-empty-panel">
+    <main className="public-site-empty">
+      <section className="public-site-empty-panel">
         <p>{emptyLabel}</p>
-        <h1>Bespoke CMS</h1>
+        <h1>Andersen EV Help Centre</h1>
         <p>
           Create and publish a Payload page with the slug <code>{slug}</code> to control this route.
-          {indexed ? "" : " This preview path is hidden from search engines."}
+          {indexed ? "" : " This route is hidden from search engines."}
         </p>
       </section>
     </main>

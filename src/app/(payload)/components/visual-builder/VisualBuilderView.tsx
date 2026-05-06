@@ -13,14 +13,14 @@ import type { BuilderProduct } from "@/payload/builder/types";
 
 import { VisualBuilderClient } from "./VisualBuilderClient";
 
-function getNewSiteUrl() {
-  return (process.env.NEXT_PUBLIC_SITE_URL ?? process.env.NEXT_PUBLIC_NEW_SITE_URL ?? "https://app.example.com").replace(/\/+$/, "");
+function getPublicSiteUrl() {
+  return (process.env.NEXT_PUBLIC_SITE_URL ?? "https://help.andersen-ev.com").replace(/\/+$/, "");
 }
 
 function getPreviewUrl(slug: unknown) {
   const path = typeof slug === "string" && slug !== "home" ? `/${slug}` : "/";
 
-  return `${getNewSiteUrl()}${path}`;
+  return `${getPublicSiteUrl()}${path}`;
 }
 
 async function getFeaturedProducts(payload: Payload): Promise<BuilderProduct[]> {
@@ -64,7 +64,7 @@ export async function VisualBuilderView({ doc, initPageResult }: DocumentViewSer
       <div className="visual-builder-view">
         <div className="visual-builder-toolbar">
           <div>
-            <p className="visual-builder-kicker">Bespoke CMS WYSIWYG</p>
+            <p className="visual-builder-kicker">Andersen EV WYSIWYG</p>
             <h1>Sign in required</h1>
           </div>
         </div>

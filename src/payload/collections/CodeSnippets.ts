@@ -122,7 +122,7 @@ export const CodeSnippets: CollectionConfig = {
       name: "css",
       type: "code",
       admin: {
-        description: "Custom CSS for the new Payload site. JavaScript is intentionally not supported here.",
+        description: "Custom CSS for the Help Centre site. JavaScript is intentionally not supported here.",
         editorOptions: {
           minimap: {
             enabled: false,

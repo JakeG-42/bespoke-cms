@@ -1,17 +1,16 @@
 {
   "project": {
-    "name": "Bespoke CMS",
-    "type": "white-label CMS, CRM and visual-builder platform",
+    "name": "Andersen EV Help Centre",
+    "type": "Payload CMS, Puck visual-builder and AI support platform",
     "primaryAdminRoute": "/console",
-    "previewRoute": "/preview",
-    "vercelProject": "bespoke-cms"
+    "publicRoute": "/",
+    "helpCentreRoute": "/help-centre"
   },
   "content": {
-    "productTemplates": ["website", "commerce", "workflow"],
-    "seedPolicy": "Use neutral demo content only. Do not store real client, company, person or vendor names in defaults."
+    "primaryCollections": ["pages", "posts", "menus", "support-tickets", "themes", "page-templates", "media", "documents"],
+    "seedPolicy": "Use Andersen EV demo content only when requested. Do not store credentials, private customer data or real support transcripts."
   },
   "storage": {
-    "payloadSchema": "payload",
-    "managedDataFallback": ".data/bespoke-cms-data.json"
+    "payloadSchema": "payload"
   }
 }

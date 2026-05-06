@@ -428,7 +428,7 @@ export function ThemeSettingsPreviewField() {
     <div className="theme-preview-field">
       <div className="theme-preview-field-header">
         <p>Active website preview</p>
-        <span>This is the default template/theme used by the new Payload site.</span>
+        <span>This is the default template/theme used by the Help Centre.</span>
       </div>
       <div className="theme-preview-settings-grid">
         <TemplatePreviewCard template={{ ...selectedTemplate, theme: theme ?? selectedTemplate.theme }} />

@@ -1,27 +1,23 @@
 import type { Metadata } from "next";
 
-const fallbackSiteUrl = "https://app.example.com";
+const fallbackSiteUrl = "https://help.andersen-ev.com";
 
 export const siteConfig = {
-  name: "Bespoke CMS",
+  name: "Andersen EV Help Centre",
   url: (process.env.NEXT_PUBLIC_SITE_URL || fallbackSiteUrl).replace(/\/+$/, ""),
-  description:
-    "White-label CMS, CRM and visual page-building platform for reusable client websites and admin workspaces.",
-  email: "hello@example.com",
-  phone: "+44 00 0000 0000",
+  description: "Customer support, troubleshooting and help-centre content for Andersen EV charger customers.",
+  email: "support@andersen-ev.com",
+  phone: "+44 1234 916133",
   locale: "en_GB",
   keywords: [
-    "Bespoke CMS",
-    "white-label CMS",
-    "visual page builder",
+    "Andersen EV",
+    "EV charger help centre",
+    "EV charger support",
+    "home charger troubleshooting",
+    "Andersen charger support",
+    "electric vehicle charging help",
     "Payload CMS",
-    "admin console",
-    "CRM workspace",
-    "commerce catalogue",
-    "theme editor",
-    "content management",
-    "workflow automation",
-    "custom admin panel",
+    "AI support assistant",
   ],
 };
 

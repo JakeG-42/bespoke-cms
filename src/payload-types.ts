@@ -741,7 +741,7 @@ export interface CodeSnippet {
    */
   priority: number;
   /**
-   * Custom CSS for the new Payload site. JavaScript is intentionally not supported here.
+   * Custom CSS for the Help Centre site. JavaScript is intentionally not supported here.
    */
   css: string;
   /**
@@ -1608,7 +1608,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 export interface ThemeSetting {
   id: number;
   /**
-   * The active whole-website template for the new Payload-built Bespoke CMS site.
+   * The active whole-website template for the Help Centre.
    */
   activeTemplate?: (number | null) | PageTemplate;
   /**

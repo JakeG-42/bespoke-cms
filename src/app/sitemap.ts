@@ -31,7 +31,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: page.slug === "home" ? 1 : 0.72,
     }));
   } catch (error) {
-    console.error("Unable to generate Payload sitemap.", error);
+    console.error("Unable to generate Help Centre sitemap.", error);
 
     return [
       {

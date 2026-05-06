@@ -516,14 +516,6 @@ function previewHref(url: string | undefined, metadata: unknown) {
     return href;
   }
 
-  if (href === "/v2") {
-    return basePath;
-  }
-
-  if (href.startsWith("/v2/")) {
-    return `${basePath}${href.slice(3)}`;
-  }
-
   if (href.startsWith("/")) {
     return `${basePath}${href}`;
   }
@@ -709,7 +701,7 @@ export const builderConfig: BuilderConfig = {
         elementPadding: 2.6,
         eyebrow: "Ready",
         heading: "Start the conversation",
-        primaryLabel: "Contact Bespoke CMS",
+        primaryLabel: "Contact support",
         primaryUrl: "/contact",
         secondaryLabel: "",
         secondaryUrl: "",
@@ -908,7 +900,7 @@ export const builderConfig: BuilderConfig = {
         ...defaultDesign,
         brandImageAlt: "",
         brandImageUrl: "",
-        brandLabel: "BESPOKE CMS",
+        brandLabel: "ANDERSEN EV",
         ctaLabel: "Contact",
         ctaUrl: "/contact",
         fullWidth: true,
@@ -984,7 +976,7 @@ export const builderConfig: BuilderConfig = {
                   // eslint-disable-next-line @next/next/no-img-element -- Logo URLs are CMS-managed and may be external client assets.
                   <img alt={textValue(props.brandImageAlt, props.brandLabel || "Site logo")} className="puck-site-logo-image" src={textValue(props.brandImageUrl)} />
                 ) : (
-                  textValue(props.brandLabel, "BESPOKE CMS")
+                  textValue(props.brandLabel, "ANDERSEN EV")
                 )}
               </Link>
               <nav aria-label={menu?.title ?? "Site menu"} className="puck-menu puck-menu-horizontal">
@@ -1041,7 +1033,7 @@ export const builderConfig: BuilderConfig = {
         elementGap: 1.6,
         effect: "glow",
         effectControls: { ...defaultDesign.effectControls, effect: "glow" },
-        eyebrow: "Bespoke CMS",
+        eyebrow: "Andersen EV",
         headingSize: 5.2,
         heading: "Engineer a more connected operation",
         heroControls: {
@@ -1218,7 +1210,7 @@ export const builderConfig: BuilderConfig = {
         ...defaultDesign,
         columns: "3",
         heading: "Featured products",
-        intro: "Showcase selected Bespoke CMS products.",
+        intro: "Showcase selected charger models or support resources.",
         mode: "featured",
       },
       fields: {
@@ -1416,7 +1408,7 @@ export const builderConfig: BuilderConfig = {
       fontFamily: "display",
       pagePaddingBottom: 0,
       pagePaddingTop: 0,
-      pageTitle: "Bespoke CMS page",
+      pageTitle: "Andersen EV Help Centre page",
       sectionSpacing: "normal",
       surfaceColor: "23, 32, 51",
       surfaceOpacity: 0.78,

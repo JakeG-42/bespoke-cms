@@ -93,7 +93,7 @@ function getPayloadDatabaseUrl() {
 function getPayloadSecret() {
   const configuredSecret =
     getEnvValue("PAYLOAD_SECRET") ??
-    getEnvValue("BESPOKE_CMS_ADMIN_SECRET") ??
+    getEnvValue("ANDERSEN_HELP_CENTRE_ADMIN_SECRET") ??
     getEnvValue("AUTH_SECRET") ??
     getEnvValue("NEXTAUTH_SECRET");
 
@@ -137,7 +137,7 @@ export default buildConfig({
       importMapFile: path.resolve(dirname, "src/app/(payload)/console/importMap.js"),
     },
     meta: {
-      titleSuffix: "- Bespoke Console",
+      titleSuffix: "- Andersen Console",
     },
     user: ConsoleUsers.slug,
   },

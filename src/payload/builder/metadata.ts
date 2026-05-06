@@ -263,7 +263,7 @@ export function applyThemeToBuilderData(data: BuilderData, theme: BuilderTheme =
       props: {
         ...existingRootProps,
         ...theme.rootProps,
-        pageTitle: asString(existingRootProps.pageTitle, asString(theme.rootProps.pageTitle, "Bespoke CMS page")),
+        pageTitle: asString(existingRootProps.pageTitle, asString(theme.rootProps.pageTitle, "Andersen EV Help Centre page")),
       },
     },
   } as BuilderData;

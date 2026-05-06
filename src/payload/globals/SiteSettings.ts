@@ -16,7 +16,7 @@ export const SiteSettings: GlobalConfig = {
     {
       name: "siteName",
       type: "text",
-      defaultValue: "Bespoke CMS",
+      defaultValue: "Andersen EV Help Centre",
       required: true,
     },
     {

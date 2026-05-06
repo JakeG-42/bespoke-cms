@@ -379,7 +379,7 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE "payload"."site_settings" (
   	"id" serial PRIMARY KEY NOT NULL,
-  	"site_name" varchar DEFAULT 'Bespoke CMS' NOT NULL,
+  	"site_name" varchar DEFAULT 'Andersen EV Help Centre' NOT NULL,
   	"strapline" varchar,
   	"contact_email" varchar,
   	"contact_phone" varchar,

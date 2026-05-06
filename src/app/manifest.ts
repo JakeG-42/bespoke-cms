@@ -4,13 +4,13 @@ import { siteConfig } from "@/lib/seo";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Bespoke CMS",
-    short_name: "Bespoke CMS",
+    name: siteConfig.name,
+    short_name: "Andersen Help",
     description: siteConfig.description,
     start_url: "/",
     display: "standalone",
-    background_color: "#020617",
-    theme_color: "#c084fc",
+    background_color: "#ffffff",
+    theme_color: "#000000",
     icons: [
       {
         src: "/icon.svg",

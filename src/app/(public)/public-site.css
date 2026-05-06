@@ -45,11 +45,11 @@ p {
   margin-top: 0;
 }
 
-.new-site-body {
+.public-site-body {
   min-height: 100vh;
 }
 
-.new-site-empty {
+.public-site-empty {
   display: grid;
   min-height: 100vh;
   place-items: center;
@@ -61,7 +61,7 @@ p {
   background-size: 42px 42px;
 }
 
-.new-site-empty-panel {
+.public-site-empty-panel {
   width: min(100%, 42rem);
   padding: clamp(1.25rem, 4vw, 2.5rem);
   border: 1px solid rgba(139, 211, 255, 0.18);
@@ -70,12 +70,12 @@ p {
   box-shadow: 0 28px 80px rgba(0, 0, 0, 0.34);
 }
 
-.new-site-empty-panel p,
-.new-site-empty-panel h1 {
+.public-site-empty-panel p,
+.public-site-empty-panel h1 {
   margin: 0;
 }
 
-.new-site-empty-panel p:first-child {
+.public-site-empty-panel p:first-child {
   color: #8bd3ff;
   font-family: var(--font-code), monospace;
   font-size: 0.78rem;
@@ -84,21 +84,21 @@ p {
   text-transform: uppercase;
 }
 
-.new-site-empty-panel h1 {
+.public-site-empty-panel h1 {
   margin-top: 0.55rem;
   color: #f8fafc;
   font-size: clamp(2rem, 7vw, 4.8rem);
   line-height: 0.98;
 }
 
-.new-site-empty-panel p:last-child {
+.public-site-empty-panel p:last-child {
   margin-top: 1rem;
   max-width: 34rem;
   color: #cbd5e1;
   font-size: clamp(1rem, 2vw, 1.15rem);
 }
 
-.new-site-empty-panel code {
+.public-site-empty-panel code {
   color: #fbbf24;
   font-family: var(--font-code), monospace;
 }

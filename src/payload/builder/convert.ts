@@ -169,7 +169,7 @@ function rootProps(page: PageLike): BuilderRootProps {
     fontFamily: "display",
     pagePaddingBottom: 0,
     pagePaddingTop: 0,
-    pageTitle: asString(page.title, "Bespoke CMS page"),
+    pageTitle: asString(page.title, "Andersen EV Help Centre page"),
     sectionSpacing: "normal",
     surfaceColor: "23, 32, 51",
     surfaceOpacity: 0.78,

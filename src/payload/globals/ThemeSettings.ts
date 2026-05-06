@@ -26,7 +26,7 @@ export const ThemeSettings: GlobalConfig = {
       name: "activeTemplate",
       type: "relationship",
       admin: {
-        description: "The active whole-website template for the new Payload-built Bespoke CMS site.",
+        description: "The active whole-website template for the Help Centre.",
       },
       label: "Active website template",
       relationTo: "page-templates",
