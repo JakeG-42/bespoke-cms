@@ -1,6 +1,6 @@
 import type { CSSProperties, ReactNode } from "react";
 import type { CustomFieldRender } from "@puckeditor/core";
-import { Search, UserRound } from "lucide-react";
+import { ChevronDown, Search, UserRound } from "lucide-react";
 import Link from "next/link";
 
 import type {
@@ -603,6 +603,19 @@ function getMenu(metadata: Record<string, unknown>, handle: string | undefined) 
   return menus.find((menu) => menu.handle === handle) ?? menus[0] ?? null;
 }
 
+const placeholderSubmenus: Record<string, string[]> = {
+  "about": ["Our story", "Design philosophy", "Reviews", "Sustainability"],
+  "advice": ["EV guides", "Charging at home", "News", "FAQs"],
+  "charge points": ["Andersen Quartz", "Quartz Vision", "Andersen A3", "Andersen A2", "Compare models"],
+  "installation": ["Home installation", "Installation process", "Solar charging", "Grants"],
+  "partners": ["Affiliates", "Installers", "Fleet partners", "Become a partner"],
+  "promotions": ["Current offers", "Referral offer", "Grant updates", "Bundle savings"],
+};
+
+function getPlaceholderSubmenuItems(label: string) {
+  return placeholderSubmenus[label.trim().toLowerCase()] ?? [];
+}
+
 function withFullWidth<T extends BuilderAdvancedStyle & { fullWidth?: boolean }>(props: T): T {
   if (!props.fullWidth) {
     return props;
@@ -957,11 +970,27 @@ export const builderConfig: BuilderConfig = {
                 )}
               </Link>
               <nav aria-label={menu?.title ?? "Site menu"} className="puck-menu puck-menu-horizontal">
-                {(menu?.items ?? []).map((item, index) => (
-                  <a href={previewHref(item.url, props.puck.metadata)} key={`${item.label}-${index}`}>
-                    {item.label}
-                  </a>
-                ))}
+                {(menu?.items ?? []).map((item, index) => {
+                  const submenuItems = getPlaceholderSubmenuItems(item.label);
+
+                  return (
+                    <div className="puck-menu-item" key={`${item.label}-${index}`}>
+                      <a className="puck-menu-trigger" href={previewHref(item.url, props.puck.metadata)}>
+                        <span>{item.label}</span>
+                        {submenuItems.length ? <ChevronDown aria-hidden="true" className="puck-menu-chevron" size={13} strokeWidth={2} /> : null}
+                      </a>
+                      {submenuItems.length ? (
+                        <div className="puck-menu-dropdown">
+                          {submenuItems.map((submenuItem) => (
+                            <a href="#" key={submenuItem}>
+                              {submenuItem}
+                            </a>
+                          ))}
+                        </div>
+                      ) : null}
+                    </div>
+                  );
+                })}
               </nav>
               <div className="puck-site-actions">
                 {props.showSearchIcon ? (
