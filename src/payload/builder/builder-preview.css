@@ -460,7 +460,7 @@
   column-gap: clamp(24px, 2.8vw, 40px);
   row-gap: 16px;
   padding-top: 24px;
-  padding-right: 68px;
+  padding-right: 88px;
   padding-bottom: 24px;
   padding-left: 48px;
 }
@@ -638,7 +638,7 @@
   grid-area: logo;
   justify-self: start;
   letter-spacing: 0;
-  margin-left: 20px;
+  margin-left: 40px;
   max-width: max-content;
 }
 
