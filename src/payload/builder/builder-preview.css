@@ -533,8 +533,8 @@
 .puck-theme-andersenEV .puck-menu-chevron {
   width: 0.78rem;
   height: 0.78rem;
-  color: #1d221f;
-  opacity: 0.72;
+  color: #000000;
+  opacity: 1;
   stroke-linecap: square;
   stroke-linejoin: miter;
   stroke-width: 5px;
@@ -680,8 +680,10 @@
   display: grid;
   grid-template-columns: 1fr;
   align-items: stretch;
-  width: min(calc(100% - 96px), 1326px);
-  min-height: min(42.125rem, calc(100vh - 7rem));
+  width: calc(100% - 96px);
+  max-width: none;
+  min-height: 0;
+  aspect-ratio: 1326 / 674;
   margin: 0 auto 3rem;
   padding: 0;
   overflow: hidden;
@@ -1586,6 +1588,7 @@
 
   .puck-theme-andersenEV .puck-hero {
     width: calc(100% - 32px);
+    aspect-ratio: auto;
     min-height: 34rem;
     margin-bottom: 2rem;
     border-radius: 22px;
