@@ -449,15 +449,19 @@
   width: 100%;
   margin: 0;
   box-sizing: border-box;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) minmax(0, max-content);
+  grid-template-areas: "logo main-nav secondary-nav";
   align-items: center;
-  border-bottom: 1px solid #e3e2dc;
-  background: rgba(255, 255, 255, 0.96);
-  box-shadow: 0 10px 28px rgba(22, 27, 24, 0.06);
-  backdrop-filter: blur(18px);
-  gap: clamp(1.1rem, 2.4vw, 2.6rem);
-  padding-top: 1.35rem;
+  border-bottom: 0;
+  background: #ffffff;
+  box-shadow: none;
+  backdrop-filter: blur(2px);
+  column-gap: clamp(24px, 2.8vw, 40px);
+  row-gap: 16px;
+  padding-top: 24px;
   padding-right: 48px;
-  padding-bottom: 1.15rem;
+  padding-bottom: 24px;
   padding-left: 48px;
 }
 
@@ -489,15 +493,25 @@
 }
 
 .puck-theme-andersenEV .puck-menu {
+  grid-area: main-nav;
   align-items: center;
-  flex: 1 1 auto;
-  gap: clamp(1rem, 2.45vw, 2rem);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px clamp(24px, 2.8vw, 40px);
   justify-content: flex-start;
-  padding-top: 0.18rem;
+  min-width: 0;
+  padding-top: 0;
+}
+
+.puck-theme-andersenEV .puck-menu-item {
+  position: relative;
 }
 
 .puck-theme-andersenEV .puck-menu-trigger {
-  gap: 0.24rem;
+  align-items: center;
+  display: inline-flex;
+  gap: 10px;
+  line-height: 1.6;
 }
 
 .puck-theme-andersenEV .puck-menu a {
@@ -548,7 +562,8 @@
 .puck-theme-andersenEV .puck-menu a:focus-visible {
   background: transparent;
   color: #333333;
-  transform: translateY(-1px);
+  opacity: 0.7;
+  transform: none;
 }
 
 .puck-theme-andersenEV .puck-menu .puck-menu-dropdown a:hover,
@@ -559,18 +574,20 @@
 }
 
 .puck-theme-andersenEV .puck-site-actions {
+  grid-area: secondary-nav;
   display: inline-flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 0.52rem;
+  justify-self: end;
+  gap: 24px;
   white-space: nowrap;
 }
 
 .puck-theme-andersenEV .puck-site-icon-button {
   display: inline-grid;
   place-items: center;
-  width: 2rem;
-  height: 2rem;
+  width: 22px;
+  height: 22px;
   border: 0;
   border-radius: 999px;
   color: #111613;
@@ -585,22 +602,22 @@
 .puck-theme-andersenEV .puck-site-icon-button:hover,
 .puck-theme-andersenEV .puck-site-icon-button:focus-visible {
   background: #f4f4ef;
-  transform: translateY(-1px);
+  transform: none;
 }
 
 .puck-theme-andersenEV .puck-header-compare-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 2.35rem;
-  padding: 0.58rem 1.05rem;
+  padding: 12px 24px;
   border: 1px solid #111613;
   border-radius: 999px;
   background: #111613;
   color: #ffffff;
-  font-size: 0.72rem;
-  font-weight: 750;
+  font-size: 13px;
+  font-weight: 700;
   letter-spacing: 0;
+  line-height: 1.6;
   text-decoration: none;
   text-transform: uppercase;
   transition:
@@ -614,16 +631,20 @@
   background: #ffffff;
   border-color: #111613;
   color: #111613;
-  transform: translateY(-1px);
+  transform: none;
 }
 
 .puck-theme-andersenEV .puck-site-brand {
+  grid-area: logo;
+  justify-self: start;
   letter-spacing: 0;
+  max-width: max-content;
 }
 
-.puck-site-logo-image {
+.puck-theme-andersenEV .puck-site-logo-image {
   display: block;
-  width: min(8rem, 34vw);
+  width: 120px;
+  max-height: 47px;
   height: auto;
   object-fit: contain;
 }
