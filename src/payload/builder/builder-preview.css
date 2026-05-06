@@ -714,31 +714,32 @@
   position: relative;
   z-index: 2;
   align-self: center;
-  max-width: 38rem;
+  max-width: min(72rem, calc(100% - 2rem));
   padding: 4.75rem 5.5rem;
   color: #ffffff;
   text-shadow: 0 2px 18px rgba(0, 0, 0, 0.34);
 }
 
 .puck-theme-andersenEV .puck-hero h1 {
-  max-width: 10ch;
+  max-width: 18ch;
   margin: 0 0 0.9rem;
   color: #ffffff;
   font-family: "Muli", Arial, Helvetica, sans-serif;
-  font-size: 4.6rem;
+  font-size: clamp(3.2rem, 4.8vw, 5.6rem);
   font-weight: 700;
   letter-spacing: 0;
   line-height: 0.98;
 }
 
 .puck-theme-andersenEV .puck-hero-copy p {
-  max-width: 28rem;
+  max-width: 34rem;
   margin: 0;
   color: #ffffff;
   font-family: "Muli", Arial, Helvetica, sans-serif;
-  font-size: 1.3rem;
+  font-size: 1.18rem;
   font-weight: 400;
   line-height: 1.35;
+  white-space: pre-line;
 }
 
 .puck-theme-andersenEV .puck-hero .puck-actions {
@@ -1607,13 +1608,13 @@
   }
 
   .puck-theme-andersenEV .puck-hero h1 {
-    max-width: 11ch;
-    font-size: 2.9rem;
+    max-width: 15ch;
+    font-size: 2.5rem;
   }
 
   .puck-theme-andersenEV .puck-hero-copy p {
     max-width: 24rem;
-    font-size: 1.06rem;
+    font-size: 1rem;
   }
 
   .puck-site-header .puck-actions {
