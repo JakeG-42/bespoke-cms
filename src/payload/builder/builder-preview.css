@@ -454,7 +454,8 @@
 .puck-theme-andersenEV .puck-site-header {
   min-height: 5.7rem;
   width: 100%;
-  margin: 0;
+  max-width: 1440px;
+  margin: 0 auto;
   box-sizing: border-box;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) minmax(0, max-content);
@@ -470,6 +471,10 @@
   padding-right: 88px;
   padding-bottom: 24px;
   padding-left: 48px;
+}
+
+.puck-theme-andersenEV .puck-site-header-stack {
+  background: #ffffff;
 }
 
 .puck-theme-andersenEV .puck-site-header:hover {
