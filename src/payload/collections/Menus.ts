@@ -1,7 +1,6 @@
 import type { CollectionConfig } from "payload";
 
 import { adminsOnly } from "../access.ts";
-import { linkFields } from "../fields.ts";
 
 export const Menus: CollectionConfig = {
   slug: "menus",
@@ -50,7 +49,26 @@ export const Menus: CollectionConfig = {
       admin: {
         description: "Add, remove, rename and reorder the links in this menu.",
       },
-      fields: linkFields,
+      fields: [
+        {
+          name: "label",
+          type: "text",
+          required: true,
+        },
+        {
+          name: "url",
+          type: "text",
+          required: true,
+        },
+        {
+          name: "dropdownItems",
+          type: "textarea",
+          admin: {
+            description: "Optional dropdown links. Add one per line as: Label | /url",
+          },
+          label: "Dropdown items",
+        },
+      ],
       label: "Menu items",
     },
   ],

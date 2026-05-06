@@ -15,11 +15,11 @@ import type { BuilderProduct } from "@/payload/builder/types";
 import { VisualBuilderClient } from "./VisualBuilderClient";
 
 function getNewSiteUrl() {
-  return (process.env.NEXT_PUBLIC_NEW_SITE_URL ?? "https://app.example.com").replace(/\/+$/, "");
+  return (process.env.NEXT_PUBLIC_SITE_URL ?? process.env.NEXT_PUBLIC_NEW_SITE_URL ?? "https://app.example.com").replace(/\/+$/, "");
 }
 
 function getPreviewUrl(slug: unknown) {
-  const path = typeof slug === "string" && slug !== "home" ? `/preview/${slug}` : "/preview";
+  const path = typeof slug === "string" && slug !== "home" ? `/${slug}` : "/";
 
   return `${getNewSiteUrl()}${path}`;
 }

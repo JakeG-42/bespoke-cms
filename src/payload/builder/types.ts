@@ -122,6 +122,7 @@ export type BuilderProduct = {
 };
 
 export type BuilderMenuItem = {
+  children?: BuilderMenuItem[];
   label: string;
   url: string;
 };
@@ -211,6 +212,13 @@ export type BuilderComponents = {
   HeroBlock: BuilderAdvancedStyle & {
     eyebrow?: string;
     heading: string;
+    heroControls?: {
+      contentMaxWidth?: number;
+      contentPaddingX?: number;
+      cornerRadius?: number;
+      imagePosition?: string;
+      overlayOpacity?: number;
+    };
     imageAlt?: string;
     imageUrl?: string;
     lede?: string;
@@ -218,6 +226,10 @@ export type BuilderComponents = {
     primaryUrl?: string;
     secondaryLabel?: string;
     secondaryUrl?: string;
+  };
+  HelpCentreBlock: BuilderAdvancedStyle & {
+    intro?: string;
+    title?: string;
   };
   ImageTextBlock: BuilderAdvancedStyle & {
     body?: string;
@@ -283,6 +295,6 @@ export type BuilderComponents = {
   };
 };
 
-export type BuilderCategoryName = "commerce" | "content" | "media" | "navigation" | "structure";
+export type BuilderCategoryName = "commerce" | "content" | "media" | "navigation" | "structure" | "support";
 export type BuilderConfig = Config<BuilderComponents, BuilderRootProps, BuilderCategoryName>;
 export type BuilderData = Data<BuilderComponents, BuilderRootProps>;

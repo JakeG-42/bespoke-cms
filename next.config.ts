@@ -30,14 +30,6 @@ const nextConfig: NextConfig = {
       "./tsconfig.json",
       "./vercel.json",
     ],
-    "/studio/templates": [
-      "./src/app/**/*.tsx",
-      "./src/app/**/*.ts",
-      "./src/components/**/*.tsx",
-      "./src/content/**/*.ts",
-      "./src/lib/**/*.ts",
-      "./src/app/globals.css",
-    ],
   },
 };
 

@@ -719,7 +719,7 @@
   margin: 0 auto 3rem;
   padding: 0;
   overflow: hidden;
-  border-radius: 28px;
+  border-radius: var(--puck-hero-radius, 28px);
   background: #101511;
   color: #ffffff;
   font-family: "Muli", Arial, Helvetica, sans-serif;
@@ -731,6 +731,7 @@
   inset: 0;
   z-index: 1;
   pointer-events: none;
+  opacity: var(--puck-hero-overlay-opacity, 1);
   background:
     linear-gradient(90deg, rgba(9, 12, 10, 0.7) 0%, rgba(9, 12, 10, 0.42) 38%, rgba(9, 12, 10, 0.04) 72%),
     linear-gradient(0deg, rgba(9, 12, 10, 0.16), rgba(9, 12, 10, 0.16));
@@ -746,8 +747,8 @@
   position: relative;
   z-index: 2;
   align-self: center;
-  max-width: min(82rem, calc(100% - 2rem));
-  padding: 4.75rem 5.5rem;
+  max-width: min(var(--puck-hero-copy-width, 82rem), calc(100% - 2rem));
+  padding: 4.75rem var(--puck-hero-copy-padding-x, 5.5rem);
   color: #ffffff;
   text-shadow: 0 2px 18px rgba(0, 0, 0, 0.34);
 }
@@ -815,6 +816,7 @@
   aspect-ratio: auto;
   box-shadow: none;
   object-fit: cover;
+  object-position: var(--puck-hero-image-position, center);
 }
 
 .puck-theme-andersenEV .puck-hero > .puck-media-placeholder {
@@ -850,6 +852,262 @@
   background:
     linear-gradient(135deg, rgba(53, 91, 69, 0.12), rgba(255, 255, 255, 0.74)),
     #f0f1ec;
+}
+
+.puck-help-centre-section {
+  color: var(--builder-section-text);
+}
+
+.help-centre-chat {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(20rem, 0.6fr);
+  gap: clamp(1rem, 2vw, 1.5rem);
+  width: 100%;
+  font-family: "Muli", Arial, Helvetica, sans-serif;
+}
+
+.help-centre-chat-panel,
+.help-centre-ticket-panel {
+  border: 1px solid #e1dfd6;
+  border-radius: 24px;
+  background: #ffffff;
+  color: #111613;
+  box-shadow: 0 18px 42px rgba(22, 27, 24, 0.08);
+}
+
+.help-centre-chat-panel {
+  display: grid;
+  grid-template-rows: auto minmax(22rem, 1fr) auto;
+  min-height: 38rem;
+  overflow: hidden;
+}
+
+.help-centre-chat-intro {
+  padding: 1.5rem 1.5rem 1rem;
+  border-bottom: 1px solid #ebe9df;
+}
+
+.help-centre-chat-intro span,
+.help-centre-ticket-header span {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: #42634d;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.help-centre-chat-intro h2,
+.help-centre-ticket-header h3 {
+  margin: 0;
+  color: #111613;
+  font-size: clamp(1.45rem, 3vw, 2.35rem);
+  line-height: 1;
+}
+
+.help-centre-chat-intro p {
+  max-width: 48rem;
+  margin: 0.75rem 0 0;
+  color: #555b55;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.help-centre-messages {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 1.25rem;
+  overflow-y: auto;
+  background: #f7f7f2;
+}
+
+.help-centre-message {
+  width: min(88%, 42rem);
+  padding: 0.85rem 1rem;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 8px 20px rgba(22, 27, 24, 0.06);
+}
+
+.help-centre-message.user {
+  align-self: flex-end;
+  background: #111613;
+  color: #ffffff;
+}
+
+.help-centre-message span {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.help-centre-message p {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.45;
+  white-space: pre-line;
+}
+
+.help-centre-input-row {
+  display: flex;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-top: 1px solid #ebe9df;
+}
+
+.help-centre-input-row input,
+.help-centre-ticket-form input,
+.help-centre-ticket-form textarea {
+  width: 100%;
+  border: 1px solid #d8d7cf;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #111613;
+  font: inherit;
+}
+
+.help-centre-input-row input {
+  min-height: 3rem;
+  padding: 0 1rem;
+}
+
+.help-centre-input-row button,
+.help-centre-ticket-button,
+.help-centre-secondary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: 3rem;
+  border: 1px solid #111613;
+  border-radius: 999px;
+  background: #111613;
+  color: #ffffff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  transition:
+    background-color var(--andersen-hover-duration, 280ms) var(--andersen-hover-ease, ease),
+    color var(--andersen-hover-duration, 280ms) var(--andersen-hover-ease, ease);
+}
+
+.help-centre-input-row button {
+  flex: 0 0 auto;
+  padding: 0 1rem;
+}
+
+.help-centre-input-row button:hover,
+.help-centre-ticket-button:hover,
+.help-centre-secondary-button:hover {
+  background: #ffffff;
+  color: #111613;
+}
+
+.help-centre-input-row button:disabled,
+.help-centre-ticket-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.help-centre-ticket-panel {
+  align-self: start;
+  padding: 1.25rem;
+}
+
+.help-centre-ticket-header {
+  display: flex;
+  gap: 0.85rem;
+  align-items: flex-start;
+}
+
+.help-centre-ticket-meta {
+  display: grid;
+  gap: 0.6rem;
+  margin: 1.25rem 0;
+}
+
+.help-centre-ticket-meta div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.55rem;
+  border-bottom: 1px solid #ebe9df;
+}
+
+.help-centre-ticket-meta dt,
+.help-centre-ticket-meta dd {
+  margin: 0;
+  font-size: 0.88rem;
+}
+
+.help-centre-ticket-meta dt {
+  color: #646962;
+}
+
+.help-centre-ticket-meta dd {
+  color: #111613;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.help-centre-secondary-button,
+.help-centre-ticket-button {
+  width: 100%;
+}
+
+.help-centre-ticket-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.help-centre-ticket-form label {
+  display: grid;
+  gap: 0.35rem;
+  color: #555b55;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.help-centre-ticket-form label.wide,
+.help-centre-ticket-form .help-centre-safety-note,
+.help-centre-ticket-form .help-centre-ticket-button {
+  grid-column: 1 / -1;
+}
+
+.help-centre-ticket-form input {
+  min-height: 2.6rem;
+  padding: 0 0.85rem;
+}
+
+.help-centre-ticket-form textarea {
+  min-height: 6rem;
+  padding: 0.85rem;
+  border-radius: 18px;
+  resize: vertical;
+}
+
+.help-centre-safety-note,
+.help-centre-error {
+  margin: 0;
+  padding: 0.85rem;
+  border-radius: 16px;
+  background: #fff7ed;
+  color: #8a3b12;
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.help-centre-error {
+  margin-top: 1rem;
+  background: #fef2f2;
+  color: #991b1b;
 }
 
 .puck-theme-signalContrast {
@@ -1668,5 +1926,20 @@
   .puck-spec-table div {
     grid-template-columns: 1fr;
     gap: 0.25rem;
+  }
+
+  .help-centre-chat,
+  .help-centre-ticket-form {
+    grid-template-columns: 1fr;
+  }
+
+  .help-centre-chat-panel {
+    min-height: 34rem;
+  }
+
+  .help-centre-ticket-form label.wide,
+  .help-centre-ticket-form .help-centre-safety-note,
+  .help-centre-ticket-form .help-centre-ticket-button {
+    grid-column: auto;
   }
 }

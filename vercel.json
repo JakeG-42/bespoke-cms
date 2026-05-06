@@ -1,10 +1,4 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "crons": [
-    {
-      "path": "/api/contact-notifications/digest",
-      "schedule": "0 8 * * *"
-    }
-  ],
   "framework": "nextjs"
 }

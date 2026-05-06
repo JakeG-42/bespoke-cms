@@ -1,16 +1,15 @@
-import { redirect } from "next/navigation";
+import { permanentRedirect } from "next/navigation";
 
-type LegacyV2PageProps = {
+import { getPagePathFromSegments } from "@/lib/payload-site";
+
+type V2RedirectPageProps = {
   params: Promise<{
     slug?: string[];
   }>;
 };
 
-export const dynamic = "force-dynamic";
-
-export default async function LegacyV2Page({ params }: LegacyV2PageProps) {
+export default async function V2RedirectPage({ params }: V2RedirectPageProps) {
   const { slug } = await params;
-  const path = slug?.length ? `/preview/${slug.join("/")}` : "/preview";
 
-  redirect(path);
+  permanentRedirect(getPagePathFromSegments(slug));
 }

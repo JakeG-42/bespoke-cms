@@ -5,11 +5,11 @@ This repository is the white-label Bespoke CMS product. It is no longer tied to 
 ## Current Shape
 
 - Next.js application with Payload CMS mounted at `/console`.
-- Public starter site routes live under `src/app/(site)`.
-- Payload-built preview routes live under `/preview`; `/v2` is a legacy redirect.
-- Legacy Studio routes still exist for older internal tooling while the Payload Console becomes the primary admin surface.
+- The public website is Payload/Puck-managed from the root catch-all route.
+- `/preview` and `/v2` are compatibility redirects to the matching root URL.
+- Legacy Studio routes and the old hand-built public site have been removed.
 - Database objects for Payload use the `payload` schema.
-- Current Payload preview content is an explicitly requested Andersen EV help-centre demo for a customer pitch. It uses CMS-managed pages, menu records and an Andersen-styled theme.
+- Current Payload content is an explicitly requested Andersen EV help-centre demo for a customer pitch. It uses CMS-managed pages, menu records, support tickets and an Andersen-styled theme.
 
 ## Product Direction
 

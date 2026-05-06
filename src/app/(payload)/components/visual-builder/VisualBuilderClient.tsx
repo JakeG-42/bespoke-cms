@@ -368,7 +368,7 @@ export function VisualBuilderClient({
 
     setActiveBuilderData(data);
     setSaveState("saved");
-    setMessage("Saved to Payload. Refresh the preview tab to see the published page update.");
+    setMessage("Saved to Payload. Refresh the site tab to see the published page update.");
   }
 
   return (

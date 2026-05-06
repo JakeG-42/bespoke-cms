@@ -71,6 +71,7 @@ export interface Config {
     'product-categories': ProductCategory;
     pages: Page;
     posts: Post;
+    'support-tickets': SupportTicket;
     themes: Theme;
     'page-templates': PageTemplate;
     'code-snippets': CodeSnippet;
@@ -89,6 +90,7 @@ export interface Config {
     'product-categories': ProductCategoriesSelect<false> | ProductCategoriesSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
+    'support-tickets': SupportTicketsSelect<false> | SupportTicketsSelect<true>;
     themes: ThemesSelect<false> | ThemesSelect<true>;
     'page-templates': PageTemplatesSelect<false> | PageTemplatesSelect<true>;
     'code-snippets': CodeSnippetsSelect<false> | CodeSnippetsSelect<true>;
@@ -749,6 +751,50 @@ export interface CodeSnippet {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "support-tickets".
+ */
+export interface SupportTicket {
+  id: number;
+  title: string;
+  status: 'new' | 'in_review' | 'waiting_for_customer' | 'resolved';
+  category:
+    | 'wifi_connectivity'
+    | 'app_issue'
+    | 'charging_not_starting'
+    | 'charging_speed_load_management'
+    | 'solar_ct_energy_readings'
+    | 'cable_plug_issue'
+    | 'installation_issue'
+    | 'warranty_hardware_fault'
+    | 'order_delivery_sales'
+    | 'general_enquiry';
+  priority: 'low' | 'medium' | 'high';
+  complexity: 'simple' | 'medium' | 'complex';
+  customer?: {
+    name?: string | null;
+    email?: string | null;
+    phone?: string | null;
+    postcode?: string | null;
+    chargerModel?: string | null;
+    serialNumber?: string | null;
+    installerName?: string | null;
+    appVersion?: string | null;
+    phoneType?: string | null;
+  };
+  summary: string;
+  troubleshootingStepsTried?:
+    | {
+        step: string;
+        id?: string | null;
+      }[]
+    | null;
+  escalationReason?: string | null;
+  transcript?: unknown;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "menus".
  */
 export interface Menu {
@@ -765,6 +811,10 @@ export interface Menu {
     | {
         label: string;
         url: string;
+        /**
+         * Optional dropdown links. Add one per line as: Label | /url
+         */
+        dropdownItems?: string | null;
         id?: string | null;
       }[]
     | null;
@@ -840,6 +890,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'posts';
         value: number | Post;
+      } | null)
+    | ({
+        relationTo: 'support-tickets';
+        value: number | SupportTicket;
       } | null)
     | ({
         relationTo: 'themes';
@@ -1392,6 +1446,41 @@ export interface CodeSnippetsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "support-tickets_select".
+ */
+export interface SupportTicketsSelect<T extends boolean = true> {
+  title?: T;
+  status?: T;
+  category?: T;
+  priority?: T;
+  complexity?: T;
+  customer?:
+    | T
+    | {
+        name?: T;
+        email?: T;
+        phone?: T;
+        postcode?: T;
+        chargerModel?: T;
+        serialNumber?: T;
+        installerName?: T;
+        appVersion?: T;
+        phoneType?: T;
+      };
+  summary?: T;
+  troubleshootingStepsTried?:
+    | T
+    | {
+        step?: T;
+        id?: T;
+      };
+  escalationReason?: T;
+  transcript?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "menus_select".
  */
 export interface MenusSelect<T extends boolean = true> {
@@ -1402,6 +1491,7 @@ export interface MenusSelect<T extends boolean = true> {
     | {
         label?: T;
         url?: T;
+        dropdownItems?: T;
         id?: T;
       };
   updatedAt?: T;

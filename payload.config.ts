@@ -15,6 +15,7 @@ import { Pages } from "./src/payload/collections/Pages.ts";
 import { Posts } from "./src/payload/collections/Posts.ts";
 import { ProductCategories } from "./src/payload/collections/ProductCategories.ts";
 import { Products } from "./src/payload/collections/Products.ts";
+import { SupportTickets } from "./src/payload/collections/SupportTickets.ts";
 import { Themes } from "./src/payload/collections/Themes.ts";
 import { Footer } from "./src/payload/globals/Footer.ts";
 import { Navigation } from "./src/payload/globals/Navigation.ts";
@@ -140,7 +141,7 @@ export default buildConfig({
     },
     user: ConsoleUsers.slug,
   },
-  collections: [Products, ProductCategories, Pages, Posts, Themes, PageTemplates, CodeSnippets, Menus, Media, Documents, ConsoleUsers],
+  collections: [Products, ProductCategories, Pages, Posts, SupportTickets, Themes, PageTemplates, CodeSnippets, Menus, Media, Documents, ConsoleUsers],
   db: postgresAdapter({
     pool: {
       connectionString: getPayloadDatabaseUrl(),

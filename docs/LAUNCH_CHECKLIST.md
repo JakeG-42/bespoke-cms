@@ -6,6 +6,7 @@ Use this for the white-label Bespoke CMS product.
 
 - Set `NEXT_PUBLIC_SITE_URL` to the chosen product domain.
 - Set `PAYLOAD_SECRET` in Vercel for production.
+- Optional for the Help Centre AI helper: set `OPENAI_API_KEY` and, if needed, `OPENAI_MODEL`.
 - Confirm the Postgres database is connected and `PAYLOAD_DATABASE_SCHEMA=payload`.
 - Create the first real Payload admin account in `/console`.
 - Replace placeholder contact details with product-owned inboxes.
@@ -21,4 +22,4 @@ Use this for the white-label Bespoke CMS product.
 
 - Run `npm run lint`.
 - Run `npm run build`.
-- Check `/console`, `/preview`, `/products` and `/contact`.
+- Check `/`, `/help-centre`, `/console` and the `/preview` compatibility redirect.

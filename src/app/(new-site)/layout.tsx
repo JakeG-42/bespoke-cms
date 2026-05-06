@@ -10,11 +10,7 @@ export const metadata: Metadata = {
     default: "Bespoke CMS",
     template: "%s | Bespoke CMS",
   },
-  description: "The Payload-managed version of the new Bespoke CMS website.",
-  robots: {
-    index: false,
-    follow: false,
-  },
+  description: "A Payload-managed website powered by Bespoke CMS.",
 };
 
 export default function NewSiteLayout({

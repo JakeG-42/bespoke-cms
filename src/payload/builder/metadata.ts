@@ -13,6 +13,8 @@ import type {
 } from "./types";
 
 type LinkLike = {
+  children?: unknown;
+  dropdownItems?: unknown;
   label?: unknown;
   url?: unknown;
 };
@@ -103,8 +105,33 @@ function normalizeMenuItems(items: unknown): BuilderMenuItem[] {
       const link = item as LinkLike;
       const label = typeof link.label === "string" ? link.label.trim() : "";
       const url = typeof link.url === "string" ? link.url.trim() : "";
+      const children = [...normalizeMenuItems(link.children), ...parseDropdownItems(link.dropdownItems)];
 
-      return label && url ? { label, url } : null;
+      return label && url ? { children: children.length ? children : undefined, label, url } : null;
+    })
+    .filter((item): item is BuilderMenuItem => Boolean(item));
+}
+
+function parseDropdownItems(value: unknown): BuilderMenuItem[] {
+  if (typeof value !== "string") {
+    return [];
+  }
+
+  return value
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line): BuilderMenuItem | null => {
+      const [rawLabel, rawUrl] = line.split("|").map((part) => part.trim());
+
+      if (!rawLabel) {
+        return null;
+      }
+
+      return {
+        label: rawLabel,
+        url: rawUrl || "#",
+      };
     })
     .filter((item): item is BuilderMenuItem => Boolean(item));
 }

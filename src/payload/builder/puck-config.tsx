@@ -3,6 +3,7 @@ import type { CustomFieldRender } from "@puckeditor/core";
 import { ChevronDown, Search, UserRound } from "lucide-react";
 import Link from "next/link";
 
+import { HelpCentreChat } from "@/components/help-centre/HelpCentreChat";
 import type {
   BuilderAdvancedStyle,
   BuilderConfig,
@@ -427,6 +428,29 @@ function getSectionStyle(style: BuilderAdvancedStyle = {}) {
   } as CSSProperties;
 }
 
+function getHeroStyle(
+  props: BuilderAdvancedStyle & {
+    heroControls?: {
+      contentMaxWidth?: number;
+      contentPaddingX?: number;
+      cornerRadius?: number;
+      imagePosition?: string;
+      overlayOpacity?: number;
+    };
+  },
+) {
+  const heroControls = typeof props.heroControls === "object" && props.heroControls !== null ? props.heroControls : {};
+
+  return {
+    ...getSectionStyle(props),
+    "--puck-hero-copy-padding-x": cssRem(heroControls.contentPaddingX),
+    "--puck-hero-copy-width": cssRem(heroControls.contentMaxWidth),
+    "--puck-hero-image-position": heroControls.imagePosition || undefined,
+    "--puck-hero-overlay-opacity": cssNumber(heroControls.overlayOpacity),
+    "--puck-hero-radius": cssPx(heroControls.cornerRadius),
+  } as CSSProperties;
+}
+
 function getSectionClassName(style: BuilderAdvancedStyle = {}, className = "") {
   const design = getDesign(style);
   const effect: BuilderSectionEffect = design.effect ?? "none";
@@ -603,19 +627,6 @@ function getMenu(metadata: Record<string, unknown>, handle: string | undefined) 
   return menus.find((menu) => menu.handle === handle) ?? menus[0] ?? null;
 }
 
-const placeholderSubmenus: Record<string, string[]> = {
-  "about": ["Our story", "Design philosophy", "Reviews", "Sustainability"],
-  "advice": ["EV guides", "Charging at home", "News", "FAQs"],
-  "charge points": ["Andersen Quartz", "Quartz Vision", "Andersen A3", "Andersen A2", "Compare models"],
-  "installation": ["Home installation", "Installation process", "Solar charging", "Grants"],
-  "partners": ["Affiliates", "Installers", "Fleet partners", "Become a partner"],
-  "promotions": ["Current offers", "Referral offer", "Grant updates", "Bundle savings"],
-};
-
-function getPlaceholderSubmenuItems(label: string) {
-  return placeholderSubmenus[label.trim().toLowerCase()] ?? [];
-}
-
 function withFullWidth<T extends BuilderAdvancedStyle & { fullWidth?: boolean }>(props: T): T {
   if (!props.fullWidth) {
     return props;
@@ -679,6 +690,11 @@ export const builderConfig: BuilderConfig = {
       components: ["HeroBlock"],
       defaultExpanded: true,
       title: "Structure",
+    },
+    support: {
+      components: ["HelpCentreBlock"],
+      defaultExpanded: true,
+      title: "Support",
     },
   },
   components: {
@@ -973,7 +989,7 @@ export const builderConfig: BuilderConfig = {
               </Link>
               <nav aria-label={menu?.title ?? "Site menu"} className="puck-menu puck-menu-horizontal">
                 {(menu?.items ?? []).map((item, index) => {
-                  const submenuItems = getPlaceholderSubmenuItems(item.label);
+                  const submenuItems = item.children ?? [];
 
                   return (
                     <div className="puck-menu-item" key={`${item.label}-${index}`}>
@@ -986,8 +1002,8 @@ export const builderConfig: BuilderConfig = {
                       {submenuItems.length ? (
                         <div className="puck-menu-dropdown">
                           {submenuItems.map((submenuItem) => (
-                            <a href="#" key={submenuItem}>
-                              {submenuItem}
+                            <a href={previewHref(submenuItem.url, props.puck.metadata) || "#"} key={`${submenuItem.label}-${submenuItem.url}`}>
+                              {submenuItem.label}
                             </a>
                           ))}
                         </div>
@@ -1028,6 +1044,13 @@ export const builderConfig: BuilderConfig = {
         eyebrow: "Bespoke CMS",
         headingSize: 5.2,
         heading: "Engineer a more connected operation",
+        heroControls: {
+          contentMaxWidth: 82,
+          contentPaddingX: 5.5,
+          cornerRadius: 28,
+          imagePosition: "center",
+          overlayOpacity: 1,
+        },
         imageAlt: "",
         imageUrl: "",
         lede: "Build a clear technical story with reusable visual sections.",
@@ -1042,6 +1065,17 @@ export const builderConfig: BuilderConfig = {
         eyebrow: { contentEditable: true, label: "Eyebrow", type: "text" },
         heading: { contentEditable: true, label: "Heading", type: "text" },
         lede: { contentEditable: true, label: "Lead text", type: "textarea" },
+        heroControls: {
+          label: "Hero layout",
+          objectFields: {
+            contentMaxWidth: { label: "Copy width (rem)", max: 96, min: 20, step: 1, type: "number" },
+            contentPaddingX: { label: "Copy side padding (rem)", max: 10, min: 0, step: 0.25, type: "number" },
+            cornerRadius: { label: "Corner radius (px)", max: 80, min: 0, step: 1, type: "number" },
+            overlayOpacity: { label: "Overlay strength", max: 1, min: 0, step: 0.05, type: "number" },
+            imagePosition: { label: "Image position", placeholder: "center, 50% 40%, left center", type: "text" },
+          },
+          type: "object",
+        },
         imageUrl: { label: "Image URL", type: "text" },
         imageAlt: { label: "Image alt", type: "text" },
         primaryLabel: { label: "Primary label", type: "text" },
@@ -1052,7 +1086,7 @@ export const builderConfig: BuilderConfig = {
       },
       label: "Hero",
       render: (props) => (
-        <section className={getSectionClassName(props, "puck-hero")} style={getSectionStyle(props)}>
+        <section className={getSectionClassName(props, "puck-hero")} style={getHeroStyle(props)}>
           <div className="puck-hero-copy">
             {props.eyebrow ? <span className="puck-kicker">{props.eyebrow}</span> : null}
             <h1>{props.heading}</h1>
@@ -1063,6 +1097,31 @@ export const builderConfig: BuilderConfig = {
             </div>
           </div>
           <BuilderMedia alt={props.imageAlt || props.heading} url={props.imageUrl} />
+        </section>
+      ),
+    },
+    HelpCentreBlock: {
+      defaultProps: {
+        ...defaultDesign,
+        backgroundColor: "#ffffff",
+        colorControls: { ...defaultDesign.colorControls, backgroundColor: "#ffffff", textColor: "#111613" },
+        intro: "Troubleshoot common charger, app and connectivity issues. If the helper cannot resolve it safely, it will prepare a support ticket for the team.",
+        sectionPaddingBottom: 3,
+        sectionPaddingTop: 3,
+        sectionWidth: "wide",
+        spacingControls: { ...defaultDesign.spacingControls, sectionPaddingBottom: 3, sectionPaddingTop: 3, sectionWidth: "wide" },
+        textColor: "#111613",
+        title: "Help Centre",
+      },
+      fields: {
+        title: { contentEditable: true, label: "Title", type: "text" },
+        intro: { contentEditable: true, label: "Intro", type: "textarea" },
+        ...sharedDesignFields,
+      },
+      label: "Help Centre AI",
+      render: (props) => (
+        <section className={getSectionClassName(props, "puck-help-centre-section")} style={getSectionStyle(props)}>
+          <HelpCentreChat intro={props.intro} title={props.title} />
         </section>
       ),
     },

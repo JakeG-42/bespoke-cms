@@ -4,12 +4,12 @@ import { adminsOnly, publishedOrAdmin } from "../access.ts";
 import { pageBlocks } from "../blocks/index.ts";
 import { seoFields, slugField, statusField } from "../fields.ts";
 
-function getNewSiteUrl() {
-  return (process.env.NEXT_PUBLIC_NEW_SITE_URL ?? "https://app.example.com").replace(/\/+$/, "");
+function getSiteUrl() {
+  return (process.env.NEXT_PUBLIC_SITE_URL ?? process.env.NEXT_PUBLIC_NEW_SITE_URL ?? "https://app.example.com").replace(/\/+$/, "");
 }
 
-function getPreviewPath(slug: unknown) {
-  return typeof slug === "string" && slug !== "home" ? `/preview/${slug}` : "/preview";
+function getPagePath(slug: unknown) {
+  return typeof slug === "string" && slug !== "home" ? `/${slug}` : "/";
 }
 
 export const Pages: CollectionConfig = {
@@ -41,7 +41,7 @@ export const Pages: CollectionConfig = {
     },
     defaultColumns: ["wysiwyg", "title", "slug", "status", "updatedAt"],
     group: "Content",
-    preview: (doc) => `${getNewSiteUrl()}${getPreviewPath(doc.slug)}`,
+    preview: (doc) => `${getSiteUrl()}${getPagePath(doc.slug)}`,
     useAsTitle: "title",
   },
   fields: [
