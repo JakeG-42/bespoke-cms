@@ -432,6 +432,9 @@
 }
 
 .puck-theme-andersenEV {
+  --andersen-dropdown-duration: 300ms;
+  --andersen-hover-duration: 340ms;
+  --andersen-hover-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --builder-accent: #355b45;
   --builder-bg: #ffffff;
   --builder-section-text: #161b18;
@@ -528,6 +531,12 @@
   font-size: 15px;
   font-weight: 700;
   letter-spacing: 0;
+  transition:
+    background-color var(--andersen-hover-duration) var(--andersen-hover-ease),
+    border-color var(--andersen-hover-duration) var(--andersen-hover-ease),
+    color var(--andersen-hover-duration) var(--andersen-hover-ease),
+    opacity var(--andersen-hover-duration) var(--andersen-hover-ease),
+    transform var(--andersen-hover-duration) var(--andersen-hover-ease);
 }
 
 .puck-theme-andersenEV .puck-menu-chevron {
@@ -538,6 +547,7 @@
   stroke-linecap: square;
   stroke-linejoin: miter;
   stroke-width: 5px;
+  transition: transform var(--andersen-hover-duration) var(--andersen-hover-ease);
 }
 
 .puck-theme-andersenEV .puck-menu-dropdown {
@@ -548,6 +558,10 @@
   border-radius: 3px;
   background: #ffffff;
   box-shadow: 0 18px 38px rgba(22, 27, 24, 0.12);
+  transition:
+    opacity var(--andersen-dropdown-duration) var(--andersen-hover-ease),
+    transform var(--andersen-dropdown-duration) var(--andersen-hover-ease),
+    visibility var(--andersen-dropdown-duration) var(--andersen-hover-ease);
 }
 
 .puck-theme-andersenEV .puck-menu-dropdown a {
@@ -556,6 +570,10 @@
   color: #1d221f;
   font-size: 14px;
   font-weight: 400;
+  transition:
+    background-color var(--andersen-hover-duration) var(--andersen-hover-ease),
+    color var(--andersen-hover-duration) var(--andersen-hover-ease),
+    transform var(--andersen-hover-duration) var(--andersen-hover-ease);
 }
 
 .puck-theme-andersenEV .puck-menu-dropdown a:hover,
@@ -601,9 +619,10 @@
   font-size: 0.8rem;
   text-decoration: none;
   transition:
-    background-color 160ms ease,
-    border-color 160ms ease,
-    transform 160ms ease;
+    background-color var(--andersen-hover-duration) var(--andersen-hover-ease),
+    border-color var(--andersen-hover-duration) var(--andersen-hover-ease),
+    color var(--andersen-hover-duration) var(--andersen-hover-ease),
+    transform var(--andersen-hover-duration) var(--andersen-hover-ease);
 }
 
 .puck-theme-andersenEV .puck-site-icon-button:hover,
@@ -629,9 +648,10 @@
   text-decoration: none;
   text-transform: uppercase;
   transition:
-    background-color 160ms ease,
-    color 160ms ease,
-    transform 160ms ease;
+    background-color var(--andersen-hover-duration) var(--andersen-hover-ease),
+    border-color var(--andersen-hover-duration) var(--andersen-hover-ease),
+    color var(--andersen-hover-duration) var(--andersen-hover-ease),
+    transform var(--andersen-hover-duration) var(--andersen-hover-ease);
 }
 
 .puck-theme-andersenEV .puck-header-compare-button:hover,
@@ -662,6 +682,12 @@
   border-color: #111613;
   background: #111613;
   color: #ffffff;
+  transition:
+    background-color var(--andersen-hover-duration) var(--andersen-hover-ease),
+    border-color var(--andersen-hover-duration) var(--andersen-hover-ease),
+    box-shadow var(--andersen-hover-duration) var(--andersen-hover-ease),
+    color var(--andersen-hover-duration) var(--andersen-hover-ease),
+    transform var(--andersen-hover-duration) var(--andersen-hover-ease);
 }
 
 .puck-theme-andersenEV .puck-button.secondary {
@@ -757,6 +783,12 @@
   font-size: 0.92rem;
   font-weight: 700;
   letter-spacing: 0;
+  transition:
+    background-color var(--andersen-hover-duration) var(--andersen-hover-ease),
+    border-color var(--andersen-hover-duration) var(--andersen-hover-ease),
+    box-shadow var(--andersen-hover-duration) var(--andersen-hover-ease),
+    color var(--andersen-hover-duration) var(--andersen-hover-ease),
+    transform var(--andersen-hover-duration) var(--andersen-hover-ease);
 }
 
 .puck-theme-andersenEV .puck-hero .puck-button:hover,
