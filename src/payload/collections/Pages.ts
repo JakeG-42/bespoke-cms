@@ -80,7 +80,9 @@ export const Pages: CollectionConfig = {
       name: "layout",
       type: "blocks",
       blocks: pageBlocks,
-      required: true,
+      admin: {
+        description: "Legacy structured blocks. New pages are controlled by the Visual Builder data.",
+      },
     },
     {
       name: "wysiwyg",

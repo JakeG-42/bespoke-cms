@@ -1,6 +1,6 @@
 "use client";
 
-import { blocksPlugin, outlinePlugin, Puck, type PuckAction } from "@puckeditor/core";
+import { blocksPlugin, outlinePlugin, Puck, type PuckAction, usePuck } from "@puckeditor/core";
 import { ExternalLink, FilePlus2, Plus, X } from "lucide-react";
 import { type FormEvent, type ReactNode, useState } from "react";
 
@@ -371,6 +371,24 @@ export function VisualBuilderClient({
     setMessage("Saved to Payload. Refresh the site tab to see the published page update.");
   }
 
+  function HeaderActionsOverride({ children }: { children?: ReactNode }) {
+    const { appState, dispatch } = usePuck();
+
+    return renderHeaderActions({
+      children,
+      creatingPage,
+      dispatch,
+      message,
+      onOpenNewPage: () => setIsNewPageOpen(true),
+      onThemeChange: changeTheme,
+      previewUrl,
+      saveState,
+      selectedThemeId,
+      state: appState as HeaderActionsProps["state"],
+      themes,
+    });
+  }
+
   return (
     <div className="visual-builder-view">
       <Puck
@@ -386,20 +404,8 @@ export function VisualBuilderClient({
         key={`${pageId}-${selectedThemeId}`}
         metadata={{ featuredProducts, menus, pageTemplates, themes }}
         onPublish={save}
+        overrides={{ headerActions: HeaderActionsOverride }}
         plugins={editorPlugins}
-        renderHeaderActions={(props) =>
-          renderHeaderActions({
-            ...props,
-            creatingPage,
-            message,
-            onOpenNewPage: () => setIsNewPageOpen(true),
-            onThemeChange: changeTheme,
-            previewUrl,
-            saveState,
-            selectedThemeId,
-            themes,
-          })
-        }
         ui={{ plugin: { current: "outline" } }}
         viewports={[
           {

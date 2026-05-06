@@ -4,7 +4,7 @@ type UnknownRecord = Record<string, unknown>;
 
 type PageLike = {
   builderData?: unknown;
-  layout?: UnknownRecord[];
+  layout?: null | UnknownRecord[];
   slug?: unknown;
   title?: unknown;
 };
