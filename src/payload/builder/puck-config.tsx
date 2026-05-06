@@ -980,7 +980,7 @@ export const builderConfig: BuilderConfig = {
                       <a className="puck-menu-trigger" href={previewHref(item.url, props.puck.metadata)}>
                         <span>{item.label}</span>
                         {submenuItems.length ? (
-                          <ChevronDown aria-hidden="true" className="puck-menu-chevron" size={13} strokeLinecap="square" strokeLinejoin="miter" strokeWidth={6} />
+                          <ChevronDown aria-hidden="true" className="puck-menu-chevron" size={13} strokeLinecap="square" strokeLinejoin="miter" strokeWidth={5} />
                         ) : null}
                       </a>
                       {submenuItems.length ? (
