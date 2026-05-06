@@ -444,6 +444,64 @@
   backdrop-filter: blur(18px);
 }
 
+.puck-theme-andersenEV .puck-site-actions {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  white-space: nowrap;
+}
+
+.puck-theme-andersenEV .puck-site-icon-button {
+  display: inline-grid;
+  place-items: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  color: #111613;
+  text-decoration: none;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
+.puck-theme-andersenEV .puck-site-icon-button:hover,
+.puck-theme-andersenEV .puck-site-icon-button:focus-visible {
+  border-color: #d7d6ce;
+  background: #f4f4ef;
+  transform: translateY(-1px);
+}
+
+.puck-theme-andersenEV .puck-header-compare-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.55rem;
+  padding: 0.72rem 1.18rem;
+  border: 1px solid #111613;
+  border-radius: 999px;
+  background: #111613;
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.puck-theme-andersenEV .puck-header-compare-button:hover,
+.puck-theme-andersenEV .puck-header-compare-button:focus-visible {
+  background: #355b45;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
 .puck-theme-andersenEV .puck-site-brand {
   letter-spacing: 0;
 }
@@ -672,6 +730,51 @@
   letter-spacing: 0.04em;
   text-decoration: none;
   white-space: nowrap;
+}
+
+.puck-site-actions {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  white-space: nowrap;
+}
+
+.puck-site-icon-button {
+  display: inline-grid;
+  place-items: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  border: 1px solid color-mix(in srgb, var(--builder-section-text) 14%, transparent);
+  border-radius: 999px;
+  color: var(--builder-section-text);
+  text-decoration: none;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.puck-header-compare-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.55rem;
+  padding: 0.72rem 1.18rem;
+  border: 1px solid var(--builder-accent);
+  border-radius: 999px;
+  background: var(--builder-accent);
+  color: #020617;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
 }
 
 .puck-menu {

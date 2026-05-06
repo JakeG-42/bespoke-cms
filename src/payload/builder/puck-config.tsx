@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode } from "react";
 import type { CustomFieldRender } from "@puckeditor/core";
+import { Search, UserRound } from "lucide-react";
 import Link from "next/link";
 
 import type {
@@ -883,15 +884,23 @@ export const builderConfig: BuilderConfig = {
         ctaUrl: "/contact",
         fullWidth: true,
         menuHandle: "primary",
+        searchUrl: "#search",
         sectionPaddingX: 2,
+        showSearchIcon: false,
+        showUserIcon: false,
         spacingControls: { ...defaultDesign.spacingControls, sectionPaddingX: 2 },
         sticky: false,
+        userUrl: "#account",
       },
       fields: {
         brandImageUrl: { label: "Logo URL", type: "text" },
         brandImageAlt: { label: "Logo alt", type: "text" },
         brandLabel: { contentEditable: true, label: "Brand label", type: "text" },
         menuHandle: { label: "Menu", options: [{ label: "Primary navigation", value: "primary" }], type: "select" },
+        showSearchIcon: toggleField("Show search icon"),
+        searchUrl: { label: "Search URL", type: "text" },
+        showUserIcon: toggleField("Show user icon"),
+        userUrl: { label: "User URL", type: "text" },
         ctaLabel: { label: "CTA label", type: "text" },
         ctaUrl: { label: "CTA URL", type: "text" },
         fullWidth: toggleField("Full width header"),
@@ -928,7 +937,23 @@ export const builderConfig: BuilderConfig = {
                 </a>
               ))}
             </nav>
-            <BuilderButton link={{ label: props.ctaLabel, url: props.ctaUrl }} metadata={props.puck.metadata} />
+            <div className="puck-site-actions">
+              {props.showSearchIcon ? (
+                <a aria-label="Search" className="puck-site-icon-button" href={previewHref(props.searchUrl, props.puck.metadata)}>
+                  <Search aria-hidden="true" size={18} strokeWidth={2} />
+                </a>
+              ) : null}
+              {props.showUserIcon ? (
+                <a aria-label="Account" className="puck-site-icon-button" href={previewHref(props.userUrl, props.puck.metadata)}>
+                  <UserRound aria-hidden="true" size={18} strokeWidth={2} />
+                </a>
+              ) : null}
+              {props.ctaLabel && props.ctaUrl ? (
+                <a className="puck-header-compare-button" href={previewHref(props.ctaUrl, props.puck.metadata)}>
+                  {props.ctaLabel}
+                </a>
+              ) : null}
+            </div>
           </header>
         );
       },

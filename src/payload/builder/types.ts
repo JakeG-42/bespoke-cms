@@ -262,7 +262,11 @@ export type BuilderComponents = {
     ctaUrl?: string;
     fullWidth?: boolean;
     menuHandle?: string;
+    searchUrl?: string;
+    showSearchIcon?: boolean;
+    showUserIcon?: boolean;
     sticky?: boolean;
+    userUrl?: string;
   };
   SpecTableBlock: BuilderAdvancedStyle & {
     heading: string;
