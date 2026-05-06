@@ -753,14 +753,15 @@
 }
 
 .puck-theme-andersenEV .puck-hero h1 {
-  max-width: min(66rem, 100%);
+  max-width: 100%;
   margin: 0 0 0.9rem;
   color: #ffffff;
   font-family: "Muli", Arial, Helvetica, sans-serif;
-  font-size: clamp(1.79rem, 2.69vw, 3.14rem);
+  font-size: clamp(1.7rem, 2.55vw, 2.98rem);
   font-weight: 700;
   letter-spacing: 0;
   line-height: 0.98;
+  white-space: pre-line;
 }
 
 .puck-theme-andersenEV .puck-hero-copy p {
@@ -1647,7 +1648,7 @@
 
   .puck-theme-andersenEV .puck-hero h1 {
     max-width: 100%;
-    font-size: 1.4rem;
+    font-size: 1.32rem;
   }
 
   .puck-theme-andersenEV .puck-hero-copy p {
