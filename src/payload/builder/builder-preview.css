@@ -668,7 +668,108 @@
 }
 
 .puck-theme-andersenEV .puck-hero {
-  min-height: min(42rem, calc(100vh - 7rem));
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: stretch;
+  width: min(calc(100% - 96px), 1326px);
+  min-height: min(42.125rem, calc(100vh - 7rem));
+  margin: 0 auto 3rem;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 28px;
+  background: #101511;
+  color: #ffffff;
+}
+
+.puck-theme-andersenEV .puck-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(9, 12, 10, 0.7) 0%, rgba(9, 12, 10, 0.42) 38%, rgba(9, 12, 10, 0.04) 72%),
+    linear-gradient(0deg, rgba(9, 12, 10, 0.16), rgba(9, 12, 10, 0.16));
+}
+
+.puck-theme-andersenEV .puck-hero-copy,
+.puck-theme-andersenEV .puck-hero > .puck-media,
+.puck-theme-andersenEV .puck-hero > .puck-media-placeholder {
+  grid-area: 1 / 1;
+}
+
+.puck-theme-andersenEV .puck-hero-copy {
+  position: relative;
+  z-index: 2;
+  align-self: center;
+  max-width: 38rem;
+  padding: 4.75rem 5.5rem;
+  color: #ffffff;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.34);
+}
+
+.puck-theme-andersenEV .puck-hero h1 {
+  max-width: 10ch;
+  margin: 0 0 0.9rem;
+  color: #ffffff;
+  font-family: "Muli", Arial, Helvetica, sans-serif;
+  font-size: 4.6rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 0.98;
+}
+
+.puck-theme-andersenEV .puck-hero-copy p {
+  max-width: 28rem;
+  margin: 0;
+  color: #ffffff;
+  font-family: "Muli", Arial, Helvetica, sans-serif;
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: 1.35;
+}
+
+.puck-theme-andersenEV .puck-hero .puck-actions {
+  margin-top: 1.55rem;
+}
+
+.puck-theme-andersenEV .puck-hero .puck-button {
+  min-height: 3.1rem;
+  padding: 0.95rem 1.6rem;
+  border-color: #ffffff;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #111613;
+  font-family: "Muli", Arial, Helvetica, sans-serif;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.puck-theme-andersenEV .puck-hero .puck-button:hover,
+.puck-theme-andersenEV .puck-hero .puck-button:focus-visible {
+  background: transparent;
+  color: #ffffff;
+  transform: none;
+}
+
+.puck-theme-andersenEV .puck-hero > .puck-media,
+.puck-theme-andersenEV .puck-hero > .puck-media-placeholder {
+  z-index: 0;
+  height: 100%;
+  min-height: inherit;
+  border: 0;
+  border-radius: inherit;
+  aspect-ratio: auto;
+  box-shadow: none;
+  object-fit: cover;
+}
+
+.puck-theme-andersenEV .puck-hero > .puck-media-placeholder {
+  display: grid;
+  place-items: center;
 }
 
 .puck-theme-andersenEV .puck-card,
@@ -1466,6 +1567,35 @@
 
   .puck-theme-andersenEV .puck-site-brand {
     margin-left: 0;
+  }
+
+  .puck-theme-andersenEV .puck-hero {
+    width: calc(100% - 32px);
+    min-height: 34rem;
+    margin-bottom: 2rem;
+    border-radius: 22px;
+  }
+
+  .puck-theme-andersenEV .puck-hero::after {
+    background:
+      linear-gradient(0deg, rgba(9, 12, 10, 0.76) 0%, rgba(9, 12, 10, 0.42) 46%, rgba(9, 12, 10, 0.08) 100%),
+      linear-gradient(0deg, rgba(9, 12, 10, 0.16), rgba(9, 12, 10, 0.16));
+  }
+
+  .puck-theme-andersenEV .puck-hero-copy {
+    align-self: end;
+    max-width: none;
+    padding: 2rem;
+  }
+
+  .puck-theme-andersenEV .puck-hero h1 {
+    max-width: 11ch;
+    font-size: 2.9rem;
+  }
+
+  .puck-theme-andersenEV .puck-hero-copy p {
+    max-width: 24rem;
+    font-size: 1.06rem;
   }
 
   .puck-site-header .puck-actions {
