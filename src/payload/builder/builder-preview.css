@@ -433,11 +433,15 @@
 
 .puck-theme-andersenEV {
   --builder-accent: #355b45;
-  --builder-bg: #f6f7f2;
+  --builder-bg: #ffffff;
   --builder-section-text: #161b18;
   --builder-surface: 255, 255, 255;
   --builder-surface-fill: rgba(255, 255, 255, 0.95);
   --builder-text: #161b18;
+}
+
+.puck-theme-andersenEV.puck-platform-page {
+  background: #ffffff;
 }
 
 .puck-theme-andersenEV .puck-section {
@@ -684,6 +688,7 @@
   border-radius: 28px;
   background: #101511;
   color: #ffffff;
+  font-family: "Muli", Arial, Helvetica, sans-serif;
 }
 
 .puck-theme-andersenEV .puck-hero::after {
@@ -785,9 +790,16 @@
 }
 
 .puck-theme-andersenEV .puck-card h3,
-.puck-theme-andersenEV .puck-section h1,
-.puck-theme-andersenEV .puck-section h2 {
+.puck-theme-andersenEV .puck-section:not(.puck-hero) h1,
+.puck-theme-andersenEV .puck-section:not(.puck-hero) h2 {
   color: #111613;
+}
+
+.puck-theme-andersenEV .puck-hero .puck-hero-copy,
+.puck-theme-andersenEV .puck-hero .puck-hero-copy h1,
+.puck-theme-andersenEV .puck-hero .puck-hero-copy p {
+  color: #ffffff;
+  font-family: "Muli", Arial, Helvetica, sans-serif;
 }
 
 .puck-theme-andersenEV .puck-media,
