@@ -166,7 +166,7 @@ function themeRootProps(theme: UnknownRecord, id: string, name: string, handle: 
     themeHandle: handle,
     themeId: id,
     themeName: name,
-    themePreset: handle === "signal-light" ? "precisionLight" : "platformDark",
+    themePreset: handle === "andersen-help-centre" ? "andersenEV" : handle === "signal-light" ? "precisionLight" : "platformDark",
   };
 }
 

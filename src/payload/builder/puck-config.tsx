@@ -876,6 +876,8 @@ export const builderConfig: BuilderConfig = {
     SiteHeaderBlock: {
       defaultProps: {
         ...defaultDesign,
+        brandImageAlt: "",
+        brandImageUrl: "",
         brandLabel: "BESPOKE CMS",
         ctaLabel: "Contact",
         ctaUrl: "/contact",
@@ -886,6 +888,8 @@ export const builderConfig: BuilderConfig = {
         sticky: false,
       },
       fields: {
+        brandImageUrl: { label: "Logo URL", type: "text" },
+        brandImageAlt: { label: "Logo alt", type: "text" },
         brandLabel: { contentEditable: true, label: "Brand label", type: "text" },
         menuHandle: { label: "Menu", options: [{ label: "Primary navigation", value: "primary" }], type: "select" },
         ctaLabel: { label: "CTA label", type: "text" },
@@ -910,7 +914,12 @@ export const builderConfig: BuilderConfig = {
         return (
           <header className={getSectionClassName(headerProps, `puck-site-header ${props.sticky ? "puck-site-header-sticky" : ""}`)} style={getSectionStyle(headerProps)}>
             <Link className="puck-site-brand" href={previewHref("/", props.puck.metadata)}>
-              {textValue(props.brandLabel, "BESPOKE CMS")}
+              {textValue(props.brandImageUrl) ? (
+                // eslint-disable-next-line @next/next/no-img-element -- Logo URLs are CMS-managed and may be external client assets.
+                <img alt={textValue(props.brandImageAlt, props.brandLabel || "Site logo")} className="puck-site-logo-image" src={textValue(props.brandImageUrl)} />
+              ) : (
+                textValue(props.brandLabel, "BESPOKE CMS")
+              )}
             </Link>
             <nav aria-label={menu?.title ?? "Site menu"} className="puck-menu puck-menu-horizontal">
               {(menu?.items ?? []).map((item, index) => (
@@ -1276,6 +1285,7 @@ export const builderConfig: BuilderConfig = {
         label: "Theme",
         options: [
           { label: "Platform dark", value: "platformDark" },
+          { label: "Andersen EV", value: "andersenEV" },
           { label: "Precision light", value: "precisionLight" },
           { label: "Signal contrast", value: "signalContrast" },
         ],

@@ -423,6 +423,86 @@
   --builder-text: #112033;
 }
 
+.puck-theme-andersenEV {
+  --builder-accent: #355b45;
+  --builder-bg: #f6f7f2;
+  --builder-section-text: #161b18;
+  --builder-surface: 255, 255, 255;
+  --builder-surface-fill: rgba(255, 255, 255, 0.95);
+  --builder-text: #161b18;
+}
+
+.puck-theme-andersenEV .puck-section {
+  --builder-element-border-radius: 6px;
+}
+
+.puck-theme-andersenEV .puck-site-header {
+  min-height: 5.1rem;
+  border-bottom: 1px solid #e3e2dc;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 10px 28px rgba(22, 27, 24, 0.06);
+  backdrop-filter: blur(18px);
+}
+
+.puck-theme-andersenEV .puck-site-brand {
+  letter-spacing: 0;
+}
+
+.puck-site-logo-image {
+  display: block;
+  width: min(8rem, 34vw);
+  height: auto;
+  object-fit: contain;
+}
+
+.puck-theme-andersenEV .puck-menu a {
+  color: #1d221f;
+  font-weight: 650;
+}
+
+.puck-theme-andersenEV .puck-button {
+  border-color: #111613;
+  background: #111613;
+  color: #ffffff;
+}
+
+.puck-theme-andersenEV .puck-button.secondary {
+  background: transparent;
+  color: #111613;
+}
+
+.puck-theme-andersenEV .puck-kicker {
+  color: #42634d;
+  font-size: var(--builder-eyebrow-size, 0.72rem);
+}
+
+.puck-theme-andersenEV .puck-hero {
+  min-height: min(42rem, calc(100vh - 7rem));
+}
+
+.puck-theme-andersenEV .puck-card,
+.puck-theme-andersenEV .puck-cta,
+.puck-theme-andersenEV .puck-spec-table,
+.puck-theme-andersenEV .puck-builder-section-panel {
+  border-color: #e1dfd6;
+  background: #ffffff;
+  box-shadow: 0 18px 42px rgba(22, 27, 24, 0.08);
+}
+
+.puck-theme-andersenEV .puck-card h3,
+.puck-theme-andersenEV .puck-section h1,
+.puck-theme-andersenEV .puck-section h2 {
+  color: #111613;
+}
+
+.puck-theme-andersenEV .puck-media,
+.puck-theme-andersenEV .puck-media-placeholder {
+  border-color: #d7d6ce;
+  background:
+    linear-gradient(135deg, rgba(53, 91, 69, 0.12), rgba(255, 255, 255, 0.74)),
+    #f0f1ec;
+}
+
 .puck-theme-signalContrast {
   --builder-accent: #fbbf24;
   --builder-bg: #050505;

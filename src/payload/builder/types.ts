@@ -146,7 +146,7 @@ export type BuilderRootProps = {
   themeId?: string;
   themeName?: string;
   textColor?: string;
-  themePreset?: "platformDark" | "precisionLight" | "signalContrast";
+  themePreset?: "andersenEV" | "platformDark" | "precisionLight" | "signalContrast";
 };
 
 export type BuilderTheme = {
@@ -255,6 +255,8 @@ export type BuilderComponents = {
     variant?: "band" | "panel" | "plain";
   };
   SiteHeaderBlock: BuilderAdvancedStyle & {
+    brandImageAlt?: string;
+    brandImageUrl?: string;
     brandLabel?: string;
     ctaLabel?: string;
     ctaUrl?: string;
