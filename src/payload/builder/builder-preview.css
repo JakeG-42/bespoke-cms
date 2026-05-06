@@ -461,6 +461,7 @@
   grid-template-columns: auto minmax(0, 1fr) minmax(0, max-content);
   grid-template-areas: "logo main-nav secondary-nav";
   align-items: center;
+  border: 0;
   border-bottom: 0;
   background: #ffffff;
   box-shadow: none;
@@ -756,7 +757,7 @@
   margin: 0 0 0.9rem;
   color: #ffffff;
   font-family: "Muli", Arial, Helvetica, sans-serif;
-  font-size: clamp(3.2rem, 4.8vw, 5.6rem);
+  font-size: clamp(2.24rem, 3.36vw, 3.92rem);
   font-weight: 700;
   letter-spacing: 0;
   line-height: 0.98;
@@ -1646,7 +1647,7 @@
 
   .puck-theme-andersenEV .puck-hero h1 {
     max-width: 15ch;
-    font-size: 2.5rem;
+    font-size: 1.75rem;
   }
 
   .puck-theme-andersenEV .puck-hero-copy p {
