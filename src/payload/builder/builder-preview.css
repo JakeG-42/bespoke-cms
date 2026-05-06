@@ -446,16 +446,16 @@
 
 .puck-theme-andersenEV .puck-site-header {
   min-height: 5.7rem;
-  align-items: flex-start;
+  align-items: center;
   border-bottom: 1px solid #e3e2dc;
   background: rgba(255, 255, 255, 0.96);
   box-shadow: 0 10px 28px rgba(22, 27, 24, 0.06);
   backdrop-filter: blur(18px);
-  gap: clamp(1.5rem, 3vw, 3.1rem);
+  gap: clamp(1.1rem, 2.4vw, 2.6rem);
   padding-top: 1.35rem;
-  padding-right: clamp(2.25rem, 7vw, 7rem);
+  padding-right: clamp(0.75rem, 2vw, 1.5rem);
   padding-bottom: 1.15rem;
-  padding-left: clamp(2.25rem, 7vw, 7rem);
+  padding-left: clamp(0.75rem, 2vw, 1.5rem);
 }
 
 .puck-theme-andersenEV .puck-site-header:hover {
@@ -468,8 +468,8 @@
   font-size: 0.82rem;
   font-weight: 600;
   min-height: 3.05rem;
-  padding-right: clamp(2.25rem, 7vw, 7rem);
-  padding-left: clamp(2.25rem, 7vw, 7rem);
+  padding-right: clamp(0.75rem, 2vw, 1.5rem);
+  padding-left: clamp(0.75rem, 2vw, 1.5rem);
 }
 
 .puck-theme-andersenEV .puck-site-topbar-status {
@@ -486,10 +486,11 @@
 }
 
 .puck-theme-andersenEV .puck-menu {
+  align-items: center;
   flex: 1 1 auto;
-  gap: clamp(0.7rem, 2vw, 1.25rem);
+  gap: clamp(1rem, 2.45vw, 2rem);
   justify-content: flex-start;
-  padding-top: 0.5rem;
+  padding-top: 0.18rem;
 }
 
 .puck-theme-andersenEV .puck-menu-trigger {
@@ -504,7 +505,7 @@
   color: #1d221f;
   font-family: "Muli", Arial, Helvetica, sans-serif;
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0;
 }
 
