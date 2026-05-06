@@ -447,12 +447,18 @@
 .puck-theme-andersenEV .puck-site-topbar {
   background: #050505;
   color: #ffffff;
-  font-size: 0.74rem;
-  font-weight: 650;
+  font-size: 0.82rem;
+  font-weight: 600;
+  min-height: 2.55rem;
 }
 
 .puck-theme-andersenEV .puck-site-topbar-status {
   color: #48c06a;
+  font-weight: 450;
+}
+
+.puck-theme-andersenEV .puck-site-topbar-right {
+  font-weight: 450;
 }
 
 .puck-theme-andersenEV .puck-menu {
@@ -465,8 +471,8 @@
   border: 0;
   border-radius: 0;
   color: #1d221f;
-  font-size: 0.78rem;
-  font-weight: 600;
+  font-size: 0.86rem;
+  font-weight: 430;
   letter-spacing: 0;
 }
 
@@ -766,10 +772,10 @@
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
   min-height: 2.1rem;
-  padding: 0.32rem clamp(1rem, 3vw, 2rem);
+  padding: 0.48rem clamp(1rem, 3vw, 2rem);
   background: #050505;
   color: #ffffff;
-  font-size: 0.75rem;
+  font-size: 0.82rem;
   line-height: 1.2;
 }
 
