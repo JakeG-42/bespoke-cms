@@ -266,6 +266,12 @@ export type BuilderComponents = {
     showSearchIcon?: boolean;
     showUserIcon?: boolean;
     sticky?: boolean;
+    showTopBar?: boolean;
+    topBarCountryLabel?: string;
+    topBarFlag?: string;
+    topBarPhone?: string;
+    topBarSalesLabel?: string;
+    topBarStatusLabel?: string;
     userUrl?: string;
   };
   SpecTableBlock: BuilderAdvancedStyle & {

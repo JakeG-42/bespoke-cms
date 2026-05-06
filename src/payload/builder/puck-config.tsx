@@ -887,9 +887,15 @@ export const builderConfig: BuilderConfig = {
         searchUrl: "#search",
         sectionPaddingX: 2,
         showSearchIcon: false,
+        showTopBar: false,
         showUserIcon: false,
         spacingControls: { ...defaultDesign.spacingControls, sectionPaddingX: 2 },
         sticky: false,
+        topBarCountryLabel: "Made in the UK",
+        topBarFlag: "🇬🇧",
+        topBarPhone: "+44 1234 916133",
+        topBarSalesLabel: "Sales",
+        topBarStatusLabel: "Online",
         userUrl: "#account",
       },
       fields: {
@@ -905,6 +911,12 @@ export const builderConfig: BuilderConfig = {
         ctaUrl: { label: "CTA URL", type: "text" },
         fullWidth: toggleField("Full width header"),
         sticky: toggleField("Sticky header"),
+        showTopBar: toggleField("Show top bar"),
+        topBarFlag: { label: "Top bar flag", type: "text" },
+        topBarCountryLabel: { label: "Top bar country text", type: "text" },
+        topBarSalesLabel: { label: "Top bar sales label", type: "text" },
+        topBarStatusLabel: { label: "Top bar status label", type: "text" },
+        topBarPhone: { label: "Top bar phone", type: "text" },
         ...sharedDesignFields,
       },
       label: "Site header",
@@ -921,40 +933,55 @@ export const builderConfig: BuilderConfig = {
         const headerProps = withFullWidth(props);
 
         return (
-          <header className={getSectionClassName(headerProps, `puck-site-header ${props.sticky ? "puck-site-header-sticky" : ""}`)} style={getSectionStyle(headerProps)}>
-            <Link className="puck-site-brand" href={previewHref("/", props.puck.metadata)}>
-              {textValue(props.brandImageUrl) ? (
-                // eslint-disable-next-line @next/next/no-img-element -- Logo URLs are CMS-managed and may be external client assets.
-                <img alt={textValue(props.brandImageAlt, props.brandLabel || "Site logo")} className="puck-site-logo-image" src={textValue(props.brandImageUrl)} />
-              ) : (
-                textValue(props.brandLabel, "BESPOKE CMS")
-              )}
-            </Link>
-            <nav aria-label={menu?.title ?? "Site menu"} className="puck-menu puck-menu-horizontal">
-              {(menu?.items ?? []).map((item, index) => (
-                <a href={previewHref(item.url, props.puck.metadata)} key={`${item.label}-${index}`}>
-                  {item.label}
-                </a>
-              ))}
-            </nav>
-            <div className="puck-site-actions">
-              {props.showSearchIcon ? (
-                <a aria-label="Search" className="puck-site-icon-button" href={previewHref(props.searchUrl, props.puck.metadata)}>
-                  <Search aria-hidden="true" size={18} strokeWidth={2} />
-                </a>
-              ) : null}
-              {props.showUserIcon ? (
-                <a aria-label="Account" className="puck-site-icon-button" href={previewHref(props.userUrl, props.puck.metadata)}>
-                  <UserRound aria-hidden="true" size={18} strokeWidth={2} />
-                </a>
-              ) : null}
-              {props.ctaLabel && props.ctaUrl ? (
-                <a className="puck-header-compare-button" href={previewHref(props.ctaUrl, props.puck.metadata)}>
-                  {props.ctaLabel}
-                </a>
-              ) : null}
-            </div>
-          </header>
+          <div className={`puck-site-header-stack ${props.sticky ? "puck-site-header-stack-sticky" : ""}`}>
+            {props.showTopBar ? (
+              <div className="puck-site-topbar">
+                <div className="puck-site-topbar-center">
+                  {textValue(props.topBarFlag) ? <span aria-hidden="true">{props.topBarFlag}</span> : null}
+                  <span>{textValue(props.topBarCountryLabel, "Made in the UK")}</span>
+                </div>
+                <div className="puck-site-topbar-right">
+                  <span>{textValue(props.topBarSalesLabel, "Sales")}</span>
+                  <span className="puck-site-topbar-status">{textValue(props.topBarStatusLabel, "Online")}</span>
+                  <span>{textValue(props.topBarPhone, "+44 1234 916133")}</span>
+                </div>
+              </div>
+            ) : null}
+            <header className={getSectionClassName(headerProps, "puck-site-header")} style={getSectionStyle(headerProps)}>
+              <Link className="puck-site-brand" href={previewHref("/", props.puck.metadata)}>
+                {textValue(props.brandImageUrl) ? (
+                  // eslint-disable-next-line @next/next/no-img-element -- Logo URLs are CMS-managed and may be external client assets.
+                  <img alt={textValue(props.brandImageAlt, props.brandLabel || "Site logo")} className="puck-site-logo-image" src={textValue(props.brandImageUrl)} />
+                ) : (
+                  textValue(props.brandLabel, "BESPOKE CMS")
+                )}
+              </Link>
+              <nav aria-label={menu?.title ?? "Site menu"} className="puck-menu puck-menu-horizontal">
+                {(menu?.items ?? []).map((item, index) => (
+                  <a href={previewHref(item.url, props.puck.metadata)} key={`${item.label}-${index}`}>
+                    {item.label}
+                  </a>
+                ))}
+              </nav>
+              <div className="puck-site-actions">
+                {props.showSearchIcon ? (
+                  <a aria-label="Search" className="puck-site-icon-button" href={previewHref(props.searchUrl, props.puck.metadata)}>
+                    <Search aria-hidden="true" size={18} strokeWidth={2} />
+                  </a>
+                ) : null}
+                {props.showUserIcon ? (
+                  <a aria-label="Account" className="puck-site-icon-button" href={previewHref(props.userUrl, props.puck.metadata)}>
+                    <UserRound aria-hidden="true" size={18} strokeWidth={2} />
+                  </a>
+                ) : null}
+                {props.ctaLabel && props.ctaUrl ? (
+                  <a className="puck-header-compare-button" href={previewHref(props.ctaUrl, props.puck.metadata)}>
+                    {props.ctaLabel}
+                  </a>
+                ) : null}
+              </div>
+            </header>
+          </div>
         );
       },
     },

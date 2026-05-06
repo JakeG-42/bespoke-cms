@@ -444,22 +444,56 @@
   backdrop-filter: blur(18px);
 }
 
+.puck-theme-andersenEV .puck-site-topbar {
+  background: #050505;
+  color: #ffffff;
+  font-size: 0.74rem;
+  font-weight: 650;
+}
+
+.puck-theme-andersenEV .puck-site-topbar-status {
+  color: #48c06a;
+}
+
+.puck-theme-andersenEV .puck-menu {
+  gap: clamp(0.7rem, 2vw, 1.25rem);
+}
+
+.puck-theme-andersenEV .puck-menu a {
+  min-height: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  color: #1d221f;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.puck-theme-andersenEV .puck-menu a:hover,
+.puck-theme-andersenEV .puck-menu a:focus-visible {
+  background: transparent;
+  color: #355b45;
+  transform: translateY(-1px);
+}
+
 .puck-theme-andersenEV .puck-site-actions {
   display: inline-flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 0.6rem;
+  gap: 0.52rem;
   white-space: nowrap;
 }
 
 .puck-theme-andersenEV .puck-site-icon-button {
   display: inline-grid;
   place-items: center;
-  width: 2.35rem;
-  height: 2.35rem;
-  border: 1px solid transparent;
+  width: 2rem;
+  height: 2rem;
+  border: 0;
   border-radius: 999px;
   color: #111613;
+  font-size: 0.8rem;
   text-decoration: none;
   transition:
     background-color 160ms ease,
@@ -469,7 +503,6 @@
 
 .puck-theme-andersenEV .puck-site-icon-button:hover,
 .puck-theme-andersenEV .puck-site-icon-button:focus-visible {
-  border-color: #d7d6ce;
   background: #f4f4ef;
   transform: translateY(-1px);
 }
@@ -478,14 +511,14 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 2.55rem;
-  padding: 0.72rem 1.18rem;
-  border: 1px solid #111613;
+  min-height: 2.35rem;
+  padding: 0.58rem 1.05rem;
+  border: 0;
   border-radius: 999px;
   background: #111613;
   color: #ffffff;
-  font-size: 0.78rem;
-  font-weight: 800;
+  font-size: 0.72rem;
+  font-weight: 750;
   letter-spacing: 0;
   text-decoration: none;
   text-transform: uppercase;
@@ -511,11 +544,6 @@
   width: min(8rem, 34vw);
   height: auto;
   object-fit: contain;
-}
-
-.puck-theme-andersenEV .puck-menu a {
-  color: #1d221f;
-  font-weight: 650;
 }
 
 .puck-theme-andersenEV .puck-button {
@@ -716,11 +744,61 @@
   min-height: 4.5rem;
 }
 
+.puck-site-header-stack {
+  background: var(--builder-bg);
+}
+
+.puck-site-header-stack-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
+
 .puck-site-header-sticky {
   position: sticky;
   top: 0;
   z-index: 30;
   backdrop-filter: blur(16px);
+}
+
+.puck-site-topbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  min-height: 2.1rem;
+  padding: 0.32rem clamp(1rem, 3vw, 2rem);
+  background: #050505;
+  color: #ffffff;
+  font-size: 0.75rem;
+  line-height: 1.2;
+}
+
+.puck-site-topbar-center {
+  grid-column: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.42rem;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.puck-site-topbar-center span:first-child {
+  font-size: 0.92rem;
+  line-height: 1;
+}
+
+.puck-site-topbar-right {
+  grid-column: 3;
+  display: inline-flex;
+  align-items: center;
+  justify-self: end;
+  gap: 0.28rem;
+  white-space: nowrap;
+}
+
+.puck-site-topbar-status {
+  color: #48c06a;
 }
 
 .puck-site-brand {
@@ -1190,6 +1268,18 @@
   .puck-site-header {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .puck-site-topbar {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+    justify-items: center;
+  }
+
+  .puck-site-topbar-center,
+  .puck-site-topbar-right {
+    grid-column: auto;
+    justify-self: center;
   }
 
   .puck-site-header .puck-actions {
