@@ -51,6 +51,18 @@ export async function POST(request: Request) {
 }
 
 async function generateAssistantText(messages: ChatMessage[], knowledgeMatches: ReturnType<typeof getKnowledgeMatches>) {
+  const provider = getAiProvider();
+  const knowledgeContext = formatKnowledgeContext(knowledgeMatches);
+  const instructions = buildAiInstructions(knowledgeContext);
+
+  if (provider === "gemini") {
+    return generateGeminiText(messages, knowledgeMatches, instructions);
+  }
+
+  return generateOpenAiText(messages, knowledgeMatches, instructions);
+}
+
+async function generateOpenAiText(messages: ChatMessage[], knowledgeMatches: ReturnType<typeof getKnowledgeMatches>, instructions: string) {
   const apiKey = process.env.OPENAI_API_KEY || process.env.OPENAI_KEY || process.env.bespoke_cms;
 
   if (!apiKey) {
@@ -58,7 +70,6 @@ async function generateAssistantText(messages: ChatMessage[], knowledgeMatches: 
   }
 
   const model = process.env.OPENAI_MODEL || "gpt-4.1-mini";
-  const knowledgeContext = formatKnowledgeContext(knowledgeMatches);
   const response = await fetch("https://api.openai.com/v1/responses", {
     body: JSON.stringify({
       input: messages
@@ -67,19 +78,7 @@ async function generateAssistantText(messages: ChatMessage[], knowledgeMatches: 
           role: message.role === "assistant" ? "assistant" : "user",
           content: message.content,
         })),
-      instructions: `${HELP_CENTRE_SYSTEM_PROMPT}
-
-Use the Andersen help-centre knowledge base snippets below when they are relevant to the customer's question.
-
-Knowledge base rules:
-- Prefer these snippets over general EV charger knowledge.
-- If a snippet has an internal review note, do not reveal that internal label to the customer and do not present it as final policy. Say that details can vary and Andersen support can confirm where appropriate.
-- Do not reveal internal review-owner notes or review statuses.
-- If the snippets do not answer the question, say so briefly and ask a focused follow-up question or offer to create a ticket.
-- Keep answers concise and practical.
-
-Matched Andersen help-centre snippets:
-${knowledgeContext}`,
+      instructions,
       model,
     }),
     headers: {
@@ -109,6 +108,84 @@ ${knowledgeContext}`,
     fallbackKnowledgeReply(knowledgeMatches) ||
     fallbackAssistantReply(messages)
   );
+}
+
+async function generateGeminiText(messages: ChatMessage[], knowledgeMatches: ReturnType<typeof getKnowledgeMatches>, instructions: string) {
+  const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_AI_API_KEY || process.env.GOOGLE_API_KEY;
+
+  if (!apiKey) {
+    return fallbackKnowledgeReply(knowledgeMatches) || fallbackAssistantReply(messages);
+  }
+
+  const model = process.env.GEMINI_MODEL || "gemini-3-flash-preview";
+  const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
+    body: JSON.stringify({
+      contents: messages
+        .filter((message) => message.role !== "system")
+        .map((message) => ({
+          parts: [{ text: message.content }],
+          role: message.role === "assistant" ? "model" : "user",
+        })),
+      generationConfig: {
+        temperature: 0.35,
+      },
+      system_instruction: {
+        parts: [{ text: instructions }],
+      },
+    }),
+    headers: {
+      "Content-Type": "application/json",
+      "x-goog-api-key": apiKey,
+    },
+    method: "POST",
+  });
+
+  if (!response.ok) {
+    throw new Error(`Gemini API returned ${response.status}: ${await response.text()}`);
+  }
+
+  const result = (await response.json()) as {
+    candidates?: Array<{
+      content?: {
+        parts?: Array<{
+          text?: string;
+        }>;
+      };
+    }>;
+  };
+  const text = result.candidates?.flatMap((candidate) => candidate.content?.parts ?? []).map((part) => part.text ?? "").join("\n").trim();
+
+  return text || fallbackKnowledgeReply(knowledgeMatches) || fallbackAssistantReply(messages);
+}
+
+function getAiProvider() {
+  const configuredProvider = process.env.AI_PROVIDER?.trim().toLowerCase();
+
+  if (configuredProvider === "gemini" || configuredProvider === "google") {
+    return "gemini";
+  }
+
+  if (configuredProvider === "openai") {
+    return "openai";
+  }
+
+  return process.env.GEMINI_API_KEY || process.env.GOOGLE_AI_API_KEY || process.env.GOOGLE_API_KEY ? "gemini" : "openai";
+}
+
+function buildAiInstructions(knowledgeContext: string) {
+  return `${HELP_CENTRE_SYSTEM_PROMPT}
+
+Use the Andersen help-centre knowledge base snippets below when they are relevant to the customer's question.
+
+Knowledge base rules:
+- Prefer these snippets over general EV charger knowledge.
+- If a snippet has an internal review note, do not reveal that internal label to the customer and do not present it as final policy. Say that details can vary and Andersen support can confirm where appropriate.
+- Do not reveal internal review-owner notes or review statuses.
+- If the snippets do not answer the question, say so briefly and ask a focused follow-up question or offer to create a ticket.
+- Keep answers concise and practical.
+
+Matched Andersen help-centre snippets:
+${knowledgeContext}`;
 }
 
 function isChatMessage(value: unknown): value is ChatMessage {
