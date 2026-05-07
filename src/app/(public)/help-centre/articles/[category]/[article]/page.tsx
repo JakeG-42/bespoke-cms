@@ -45,7 +45,11 @@ export default async function HelpArticlePage({ params }: HelpArticlePageProps) 
 
   return (
     <>
-      {data.headerData ? <PuckBuilderRenderer data={data.headerData} featuredProducts={[]} menus={data.menus} /> : null}
+      {data.headerData ? (
+        <div className="help-article-header">
+          <PuckBuilderRenderer data={data.headerData} featuredProducts={[]} menus={data.menus} />
+        </div>
+      ) : null}
       <main className="help-article-page">
         <article className="help-article-shell">
           <Link className="help-article-back" href={`/help-centre#${data.article.sectionAnchor}`}>

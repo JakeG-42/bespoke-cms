@@ -1251,6 +1251,12 @@
   font-family: "Muli", Arial, Helvetica, sans-serif;
 }
 
+.help-article-header .puck-platform-page {
+  min-height: auto;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 .help-article-shell {
   width: min(880px, calc(100% - 96px));
   margin: 0 auto;
