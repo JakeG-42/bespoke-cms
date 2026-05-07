@@ -9,6 +9,8 @@ export type BuilderScrollAnimation = "fadeUp" | "none" | "scaleIn" | "slideLeft"
 export type BuilderSectionShadow = "none" | "soft" | "strong";
 export type BuilderSectionWidth = "default" | "full" | "narrow" | "wide";
 export type BuilderTextAlign = "center" | "left";
+export type BuilderHelpIcon = "howTo" | "installation" | "installers" | "product" | "setup" | "support" | "troubleshooting";
+export type BuilderHelpArticleStatus = "draft" | "needsConfirmation" | "ready";
 
 export type BuilderColorControls = {
   accentColor?: string;
@@ -234,12 +236,26 @@ export type BuilderComponents = {
   HelpCategoryGridBlock: BuilderAdvancedStyle & {
     categories?: {
       description?: string;
-      icon?: "howTo" | "installation" | "installers" | "product" | "setup" | "support" | "troubleshooting";
+      icon?: BuilderHelpIcon;
       title: string;
       url?: string;
     }[];
     columns?: "2" | "3";
     heading?: string;
+    intro?: string;
+  };
+  HelpFaqSectionBlock: BuilderAdvancedStyle & {
+    anchor?: string;
+    articles?: {
+      body?: string;
+      sourceUrl?: string;
+      status?: BuilderHelpArticleStatus;
+      summary?: string;
+      title: string;
+    }[];
+    eyebrow?: string;
+    heading: string;
+    icon?: BuilderHelpIcon;
     intro?: string;
   };
   ImageTextBlock: BuilderAdvancedStyle & {

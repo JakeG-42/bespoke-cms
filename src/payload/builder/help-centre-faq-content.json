@@ -1,0 +1,406 @@
+{
+  "sections": [
+    {
+      "anchor": "product",
+      "eyebrow": "Product",
+      "heading": "Product help",
+      "icon": "product",
+      "intro": "Model information, charger behaviour and product-specific guidance for Andersen owners.",
+      "articles": [
+        {
+          "title": "What do the LED light colours mean?",
+          "summary": "Use the charger status lights to understand what the unit is doing.",
+          "status": "needsConfirmation",
+          "sourceUrl": "https://support.andersen-ev.com/products/andersen-a2/status-lights/",
+          "body": "The current legacy Andersen A2 support content explains status lights for A2 units. For the new help centre, Andersen should keep legacy A2 guidance available for existing owners and create a separate confirmed table for current A3 and Quartz models.\n\nRecommended format:\n\n- Light colour or pattern\n- What it means\n- What the customer can safely check\n- When to contact Andersen support\n\nNeeds Andersen confirmation: exact LED states for A3 and Quartz."
+        },
+        {
+          "title": "How do I connect my car to the charger?",
+          "summary": "Basic safe steps for plugging in and starting a charge.",
+          "status": "draft",
+          "sourceUrl": "https://support.andersen-ev.com/products/andersen-a2/connecting-your-car/",
+          "body": "Unlock the vehicle, open the charging flap and connect the charging cable fully. Start the charge from the vehicle, the Andersen app or the vehicle's own app depending on your setup.\n\nIf charging does not begin, check whether a schedule is active, whether the charger is online, and whether the connector is fully seated. Do not force the plug into the vehicle."
+        },
+        {
+          "title": "How do I wind the tethered cable neatly?",
+          "summary": "Simple cable handling guidance for keeping the charger tidy.",
+          "status": "draft",
+          "sourceUrl": "https://support.andersen-ev.com/products/andersen-a2/winding-your-andersen/",
+          "body": "After charging, disconnect the cable safely and wind it back into the charger storage area without pulling, twisting or forcing the cable. Keep the plug clean and dry, and avoid leaving the cable where it can be driven over or become a trip hazard."
+        },
+        {
+          "title": "Is my charger compatible with smart tariffs?",
+          "summary": "Compatibility depends on charger model, app version, supplier and tariff.",
+          "status": "needsConfirmation",
+          "body": "Smart tariff compatibility depends on your charger model, Andersen app version, energy supplier and tariff provider. Andersen's current website promotes smart tariff support and app-based charging features, but each tariff should be checked before switching.\n\nBefore choosing a smart tariff, check:\n\n- Your Andersen charger model\n- Your vehicle compatibility\n- Your energy supplier and tariff provider\n- Whether the setup is controlled through the car, charger, supplier app or a third-party service"
+        },
+        {
+          "title": "Can I charge using excess solar?",
+          "summary": "Solar charging depends on charger model and property energy monitoring.",
+          "status": "needsConfirmation",
+          "body": "If your Andersen charger supports solar charging features, it may be possible to use excess solar generation to charge your vehicle during the day. The exact setup depends on your solar inverter, meter arrangement, charger model and whether additional monitoring hardware is required.\n\nRecommended support detail for the final article:\n\n- Solar-only mode, if supported\n- Solar-plus-grid mode, if supported\n- Fast-charge mode, if supported\n- Minimum charging current limitations\n- The effect of weather and household consumption on solar output"
+        },
+        {
+          "title": "Can I use battery storage with my Andersen charger?",
+          "summary": "Home batteries can affect how imported and exported energy is measured.",
+          "status": "needsConfirmation",
+          "body": "Battery storage can affect how your charger sees imported and exported energy. If you have home battery storage, tell Andersen during the survey so the installation team can consider the full electrical setup.\n\nSmart charging, solar charging and battery behaviour may need to be configured carefully to avoid unexpected charging from the battery or grid."
+        }
+      ]
+    },
+    {
+      "anchor": "support",
+      "eyebrow": "Support",
+      "heading": "Orders, payments and customer support",
+      "icon": "support",
+      "intro": "Sales, account and customer journey questions, from order placement through to support escalation.",
+      "articles": [
+        {
+          "title": "I have just placed my order. What happens next?",
+          "summary": "Andersen reviews the order and guides the customer toward survey and installation steps.",
+          "status": "needsConfirmation",
+          "body": "After placing your order, Andersen will review your order details and guide you through the next steps needed before installation. If you have purchased installation, you will be asked to complete a property survey so the installation team can check your electrical supply, preferred charger location, cable route and any property-specific requirements.\n\nOnce your survey has been reviewed and accepted, Andersen's bookings team will arrange your installation using the live installation diary.\n\nNeeds Andersen confirmation: exact email or SMS sequence, average time to receive the survey link, and whether the customer receives a named booking contact."
+        },
+        {
+          "title": "What is the lead time for installation?",
+          "summary": "Typical target is 2 to 3 weeks from survey acceptance, subject to checks.",
+          "status": "draft",
+          "body": "Andersen EV has an in-house nationwide network of professional electricians dedicated to installing Andersen home chargers. Installation is managed through a live diary by the internal bookings team.\n\nTypical target: chargers purchased with installation are usually installed within 2 to 3 weeks of survey acceptance.\n\nThis is a target rather than a guarantee. Lead times can change depending on location, DNO approval, survey outcome, stock, seasonal demand or additional works."
+        },
+        {
+          "title": "How do I contact Andersen EV?",
+          "summary": "Use the current Andersen website support, sales or live chat routes.",
+          "status": "needsConfirmation",
+          "body": "For order, installation, app or charger support, contact Andersen through the current website support route or live chat where available. Include your order number, charger serial number if you have one, postcode and a short description of the issue so the team can route your enquiry quickly.\n\nNeeds Andersen confirmation: final contact links, telephone numbers and opening hours."
+        },
+        {
+          "title": "What grants are available?",
+          "summary": "Grant eligibility depends on applicant type, property and current government rules.",
+          "status": "needsConfirmation",
+          "sourceUrl": "https://www.gov.uk/government/collections/government-grants-for-low-emission-vehicles",
+          "body": "You may be eligible for an EV chargepoint grant if you rent your home, own a flat, or are a residential landlord. Grant eligibility depends on the property, applicant type and current government rules.\n\nAndersen can help eligible customers with OZEV grant orders and may also run additional Andersen support offers from time to time.\n\nPublication warning: grants change over time. Always check current GOV.UK guidance and Andersen's current promotions before publishing offer values or deadlines."
+        },
+        {
+          "title": "What payment options are available?",
+          "summary": "Payment routes include cards, Andersen Easy Pay and PayPal where available.",
+          "status": "draft",
+          "sourceUrl": "https://andersen-ev.com/pages/ways-to-pay",
+          "body": "Andersen currently supports the following payment routes:\n\n- Full payment by major credit and debit cards, including American Express\n- Andersen Easy Pay\n- PayPal, including PayPal Pay in 3 where available from PayPal\n\nIf a customer wants to use another payment method, they should contact Andersen through the website live chat or sales channel."
+        },
+        {
+          "title": "What is Andersen Easy Pay?",
+          "summary": "A 36-month leasing plan with an initial payment and credit check.",
+          "status": "needsConfirmation",
+          "sourceUrl": "https://andersen-ev.com/pages/ways-to-pay",
+          "body": "Andersen Easy Pay is a 36-month leasing plan. After the initial lease term, customers can continue with the unit for a nominal payment of 1 GBP per year. Ownership of the unit does not transfer to the customer.\n\nImportant points to show clearly:\n\n- A hard credit check is required and may affect the customer's credit score\n- An initial payment of 400 GBP is required\n- The plan should be described as leasing, not a purchase finance plan\n\nNeeds Andersen confirmation: current monthly pricing, eligibility criteria, lender/legal wording and cancellation terms."
+        },
+        {
+          "title": "Can I use PayPal Pay in 3?",
+          "summary": "PayPal controls whether Pay in 3 is offered to a customer.",
+          "status": "draft",
+          "body": "If PayPal is available at checkout, customers are redirected to PayPal to complete payment. PayPal Pay in 3 availability is controlled by PayPal.\n\nIf the Pay in 3 option does not appear on the customer's PayPal account, they should contact PayPal directly."
+        },
+        {
+          "title": "Can I change my order before installation?",
+          "summary": "Customers should contact Andersen as early as possible before booking or installation.",
+          "status": "needsConfirmation",
+          "body": "Customers may want to change colours, finish, cable option, accessories or installation details before installation. Andersen should be contacted as soon as possible, ideally before the survey is accepted or the installation date is booked.\n\nNeeds Andersen confirmation: cut-off time for colour or product changes, whether changes affect lead time, and whether price differences are collected or refunded before installation."
+        },
+        {
+          "title": "What is Allstar or Rightcharge?",
+          "summary": "Holding copy for partner-linked orders.",
+          "status": "needsConfirmation",
+          "body": "Andersen may work with selected fleet, benefit or charge-payment partners. If your order is linked to Allstar, Rightcharge or another partner, please contact Andersen with your order number so the team can confirm the correct process for your account.\n\nNeeds Andersen confirmation from the relevant partner/process owner."
+        }
+      ]
+    },
+    {
+      "anchor": "installation",
+      "eyebrow": "Installation",
+      "heading": "Survey and installation",
+      "icon": "installation",
+      "intro": "Prepare for installation, understand the survey and learn what happens before the engineer arrives.",
+      "articles": [
+        {
+          "title": "I have submitted my survey. What happens next?",
+          "summary": "The installation team reviews your images and confirms the route to booking.",
+          "status": "draft",
+          "body": "The installation team reviews the images and information you submitted. This allows Andersen to confirm whether your installation can proceed as standard, whether additional works are needed, or whether a premium or physical survey is recommended.\n\nIf your installation requires permission from your Distribution Network Operator, Andersen may submit the DNO application on your behalf. You may receive an email from the DNO confirming that an application has been made for your property.\n\nOnce the survey is accepted and any required checks are complete, the bookings team will contact you to arrange the installation date."
+        },
+        {
+          "title": "Why do I need to complete a survey?",
+          "summary": "The survey helps Andersen check the charger location, cable route and electrical supply.",
+          "status": "draft",
+          "body": "The survey helps Andersen prepare for a smooth installation. It asks for information about where the charger should be installed, where the vehicle will be parked while charging, the likely cable route and key electrical information about the property.\n\nThe survey usually asks for photos of:\n\n- The electricity meter and meter box\n- The incoming supply and main fuse or cut-out\n- The consumer unit or fuse board\n- The proposed charger location\n- The route between the supply and charger location\n\nThese details help the installation team confirm whether the installation is standard, whether extra work is needed, and whether DNO permission or other checks are required."
+        },
+        {
+          "title": "Where do I find my MPAN number?",
+          "summary": "Your MPAN is usually on your electricity bill and is different from your meter serial number.",
+          "status": "draft",
+          "sourceUrl": "https://www.energynetworks.org/customers/find-my-network-operator",
+          "body": "Your MPAN number is usually found on your electricity bill. It may be labelled as Supply Number or simply S. It is different from your electricity meter serial number.\n\nIf you cannot find your MPAN on your bill, contact your electricity supplier or use your network operator's guidance."
+        },
+        {
+          "title": "What does my incoming supply look like?",
+          "summary": "The incoming supply is usually near the meter and main fuse or cut-out.",
+          "status": "draft",
+          "body": "Your incoming supply is where the electricity supply enters your property. It is usually near your electricity meter and main fuse or cut-out.\n\nAndersen may ask for photos showing the main fuse, meter, isolator if present and surrounding area.\n\nRecommended assets for the final page:\n\n- Meter and cut-out in an external meter box\n- Meter and cut-out in an internal cupboard\n- Consumer unit or fuse board separate from meter\n- Main fuse or cut-out close-up"
+        },
+        {
+          "title": "What is a DNO?",
+          "summary": "A DNO owns and operates the electricity network in your local area.",
+          "status": "draft",
+          "sourceUrl": "https://www.energynetworks.org/customers/find-my-network-operator",
+          "body": "A Distribution Network Operator, or DNO, owns and operates the electricity network in your local area. When a high-powered electrical device such as an EV charger is installed, the DNO may need to be notified or asked for approval so they can confirm the local supply is suitable."
+        },
+        {
+          "title": "Why have I received an email about a charger application?",
+          "summary": "It may relate to a DNO application Andersen made after your survey.",
+          "status": "draft",
+          "body": "When Andersen installs a charger at your property, Andersen may need to request permission from your Distribution Network Operator. If you receive an email saying an application has been received to fit a charger at your property after submitting your Andersen survey, it may relate to the application Andersen made on your behalf.\n\nIf the email says the DNO wants to carry out work at your property before installation, contact Andersen through the contact form or support channel so the team can advise on next steps."
+        },
+        {
+          "title": "Can Andersen run the cable under my floor?",
+          "summary": "Cable routes are assessed during the survey and depend on safe access.",
+          "status": "needsConfirmation",
+          "body": "Cable routes are assessed as part of your survey. In some properties, a cable route under a floor may be possible, but this depends on access, floor construction, safety, electrical regulations and whether the route can be inspected and installed without unreasonable disruption.\n\nAndersen will confirm what is possible after reviewing your survey or completing a physical survey."
+        },
+        {
+          "title": "What should I expect on installation day?",
+          "summary": "You will receive a slot and the engineer will complete installation, testing and app setup where possible.",
+          "status": "needsConfirmation",
+          "body": "You will be given either a morning or afternoon installation slot. Your engineer will call on the day to confirm when they expect to arrive.\n\nA standard installation usually takes around 4 hours, although some installations may take more or less time depending on the property. Your engineer can keep you updated while work is underway.\n\nBefore the engineer arrives, please clear access to:\n\n- The intended charger location\n- Your meter box and incoming supply\n- The consumer unit or fuse board if required\n- The cable route between the supply and charger\n\nOnce the charger is installed, the engineer will test the charger, connect it to your property Wi-Fi where possible, and help set up the Andersen EV app.\n\nNeeds Andersen confirmation: final testing and handover wording."
+        },
+        {
+          "title": "What is included in standard installation?",
+          "summary": "A concise summary of standard installation inclusions.",
+          "status": "needsConfirmation",
+          "body": "Standard installation includes:\n\n- A remote survey based on images and information supplied by the customer\n- Up to 15 m of cable run from supply to charge point\n- Connection to the mains incoming supply\n- Full electrical certification in accordance with BS 7671\n- Installation on a suitable permanent structure\n- Drilling through one wall\n- Installation up to 1.8 m in height\n- Up to 4 hours on site\n- Adaptive fuse/load management to dynamically monitor and control energy use\n- Up to 7 m of plastic trunking to conceal interior wiring\n- App setup and demo\n- Type A RCD protection\n- 40 A overcurrent protection\n\nRecommended page note: clearly list what is not included, such as long cable runs, groundworks, decorative making good, complex routing, non-standard heights, additional consumer unit work or DNO remedial works."
+        },
+        {
+          "title": "What is premium installation?",
+          "summary": "Premium installation starts with a physical survey and bespoke report.",
+          "status": "needsConfirmation",
+          "body": "Premium installation starts with a physical survey from Andersen's in-house installation team. A member of the team visits the property at a mutually agreed time, usually for up to an hour, and creates a bespoke survey report and quote.\n\nThis option is helpful where:\n\n- The customer cannot provide survey photos\n- The installation is complex\n- The cable route or supply arrangement needs to be checked in person\n- The customer wants an Andersen engineer to assess the property before installation\n\nThe full installation cost is confirmed after the survey. If the customer does not want to proceed with the quoted installation, installation can be removed from the order and the customer may use a third-party installer.\n\nNeeds Andersen confirmation: Mainland UK wording and final quote/refund process."
+        },
+        {
+          "title": "What is an SPD and do I need one?",
+          "summary": "Surge Protection Devices help protect equipment from voltage spikes.",
+          "status": "needsConfirmation",
+          "sourceUrl": "https://electrical.theiet.org/courses-resources-and-career-for-electrical-professionals/free-resources/consumer-guidance/surge-protective-devices/",
+          "body": "An SPD, or Surge Protection Device, helps protect the electrical installation and connected equipment from voltage spikes caused by events such as lightning strikes or grid fluctuations. It works by diverting excess voltage safely and limiting it to safer levels.\n\nFor EV charger installations, Andersen strongly recommends surge protection to help protect the charger, vehicle, property and customer.\n\nPublication warning: regulatory wording should be checked by Andersen's qualified electrical or compliance lead before publishing."
+        }
+      ]
+    },
+    {
+      "anchor": "how-do-i",
+      "eyebrow": "How do I?",
+      "heading": "App, account and everyday tasks",
+      "icon": "howTo",
+      "intro": "Step-by-step customer tasks for the Andersen app, account access, schedules and smart charging.",
+      "articles": [
+        {
+          "title": "How do I add a new charger to the Andersen app?",
+          "summary": "Create an account, scan the charger QR code or enter the serial number.",
+          "status": "needsConfirmation",
+          "sourceUrl": "https://support.andersen-ev.com/products/andersen-app/andersen-quick-start-guide/",
+          "body": "Download and open the Andersen app. Select Register, enter your email address, create a password, and enter your first and last name.\n\nAfter the account is created, select Set Up New Charger. Press Scan and scan the QR code on the courtesy card in your Welcome Pack, or manually enter the charger's serial number.\n\nYour charger should then appear in the app.\n\nNeeds Andersen confirmation: exact app button labels for iOS and Android."
+        },
+        {
+          "title": "I moved into a house with an Andersen charger. How do I set it up?",
+          "summary": "Support may need to remove the charger from the previous user's account.",
+          "status": "needsConfirmation",
+          "body": "Create or sign in to your Andersen app account, then contact Andersen support with the charger's serial number and proof that you are the current occupier or owner of the property.\n\nAndersen may need to remove the charger from the previous user's account before it can be added to yours."
+        },
+        {
+          "title": "Can I add more than one vehicle to the app?",
+          "summary": "Vehicle management depends on the app version and supported profiles.",
+          "status": "needsConfirmation",
+          "body": "The Andersen app may allow you to manage vehicle details for charging settings and cost tracking. If your vehicle is not shown or you need to manage more than one vehicle, contact Andersen support with the vehicle make, model, battery size and registration year so the team can advise or request an app update."
+        },
+        {
+          "title": "My tariff is not in the app.",
+          "summary": "Check the supplier and tariff name, then contact Andersen with the tariff details.",
+          "status": "needsConfirmation",
+          "body": "If your tariff is not listed, check that the supplier and tariff name match your energy bill exactly. If it is still missing, choose the closest available option only if Andersen support advises it, or contact Andersen with your supplier, tariff name, unit rates and standing charge."
+        },
+        {
+          "title": "My vehicle is not in the app.",
+          "summary": "Contact Andersen with the make, model, battery size and model year.",
+          "status": "needsConfirmation",
+          "body": "If your vehicle does not appear in the app, contact Andersen support with the make, model, battery size and model year. Andersen can advise whether the vehicle can be added or whether a similar vehicle profile can be used temporarily."
+        },
+        {
+          "title": "How can I stop other people using my charger?",
+          "summary": "Use app access or lock controls if available for your charger model.",
+          "status": "needsConfirmation",
+          "body": "Use the Andersen app's access or lock controls if available for your charger model. If the charger is installed in a shared or publicly accessible location, contact Andersen support for advice on app permissions, locking behaviour and whether any installation-level controls are suitable."
+        },
+        {
+          "title": "How can other people use my charger?",
+          "summary": "Shared access depends on charger model, app version and account setup.",
+          "status": "needsConfirmation",
+          "body": "Depending on your charger model and app version, you may be able to share access with other users or allow charging directly from the charger. For household or company car setups, Andersen support can advise the best way to manage multiple drivers."
+        },
+        {
+          "title": "How do I set up scheduled charging?",
+          "summary": "Set days and times in the app and avoid conflicting schedules in the vehicle.",
+          "status": "needsConfirmation",
+          "sourceUrl": "https://support.andersen-ev.com/products/andersen-app/how-to-set-up-schedules/",
+          "body": "Open the Andersen app, select your charger, then open the charging schedule or smart charging section. Choose the days and times you want charging to happen, then save the schedule.\n\nMake sure the vehicle is plugged in and the charger is online before the scheduled start time.\n\nCustomer tip: if the vehicle also has its own charging schedule, avoid setting conflicting schedules in both the car and the Andersen app."
+        },
+        {
+          "title": "How do I see past charges?",
+          "summary": "Open charging history or sessions in the Andersen app.",
+          "status": "needsConfirmation",
+          "body": "Open the Andersen app and select your charger. Go to charging history or sessions to view previous charges, including date, time, energy delivered and estimated cost where tariff information is available."
+        },
+        {
+          "title": "How do I export previous charge data?",
+          "summary": "Use the app export option if available in the current app version.",
+          "status": "needsConfirmation",
+          "body": "If export is available in your app version, open charging history and select the export option. Choose the date range and export format.\n\nThis can be useful for company car expense claims or tracking home charging costs."
+        },
+        {
+          "title": "How do I reset my Andersen account password?",
+          "summary": "Use the forgotten password route from the app login screen.",
+          "status": "needsConfirmation",
+          "body": "Open the Andersen app login screen and select the forgotten password option. Enter the email address linked to your Andersen account and follow the password reset email.\n\nCheck spam or junk folders if the email does not arrive."
+        },
+        {
+          "title": "How do I change my Andersen account email address?",
+          "summary": "Contact Andersen support so the team can verify and update the account.",
+          "status": "needsConfirmation",
+          "body": "For account security, contact Andersen support to change the email address linked to your account. Include your current account email, new email address, charger serial number and order details where available."
+        },
+        {
+          "title": "What is a smart tariff and how does it work?",
+          "summary": "Smart tariffs can schedule charging for lower-cost or lower-carbon periods.",
+          "status": "draft",
+          "body": "A smart tariff is an energy tariff that can offer cheaper electricity at certain times or can dynamically schedule charging when energy is cheaper or lower carbon.\n\nWith a compatible charger, vehicle and energy supplier, charging can be planned around those lower-cost periods.\n\nCustomers should check whether their charger, vehicle and energy supplier are compatible and whether the tariff is controlled through the car, charger, supplier app or a third-party service."
+        },
+        {
+          "title": "How do I connect my charger to a smart tariff?",
+          "summary": "Confirm compatibility and follow your supplier or tariff provider's setup steps.",
+          "status": "needsConfirmation",
+          "body": "First confirm your Andersen charger model and app are compatible with the chosen tariff. Then follow the setup steps from your energy supplier or tariff provider.\n\nYou may need to connect your Andersen account, vehicle account or charger details to the provider's app."
+        },
+        {
+          "title": "What if I need to charge urgently on a smart tariff?",
+          "summary": "Use the override, boost or charge-now option if supported.",
+          "status": "needsConfirmation",
+          "body": "Most smart tariff setups include an override, boost or charge-now option. Use this when you need the vehicle charged immediately.\n\nUrgent charging may happen outside the cheapest tariff window, so it may cost more than scheduled smart charging."
+        },
+        {
+          "title": "Tap Electric",
+          "summary": "Compatibility depends on model, vehicle, supplier and integration status.",
+          "status": "needsConfirmation",
+          "body": "Tap Electric may be used by some EV drivers to manage smart charging and tariffs. Compatibility depends on charger model, vehicle, energy supplier and current integration status.\n\nAndersen should confirm supported setup steps before publishing a public article."
+        }
+      ]
+    },
+    {
+      "anchor": "troubleshooting",
+      "eyebrow": "Troubleshooting",
+      "heading": "Common fixes and safe checks",
+      "icon": "troubleshooting",
+      "intro": "Safe customer-level checks for charging, app and connectivity issues. Electrical or installation concerns should be escalated.",
+      "articles": [
+        {
+          "title": "My car is charging slower than expected.",
+          "summary": "Slow charging can be caused by the car, schedules, load management or supply conditions.",
+          "status": "draft",
+          "sourceUrl": "https://support.andersen-ev.com/products/troubleshooting/charging/",
+          "body": "Possible causes:\n\n- The car's onboard charger limit is lower than the charger output\n- The car battery is nearly full and has reduced its charging speed\n- The vehicle has a charging schedule or current limit set\n- The Andersen app has a schedule, smart tariff setting or current limit active\n- Load management is reducing charge rate to protect the household supply\n- The property voltage or electrical supply is outside expected range\n- The cable or connector is not fully seated\n\nSuggested customer steps:\n\n- Check the car's own charging settings and schedule\n- Check the Andersen app for schedules, smart charging or current limits\n- Confirm the charger is online\n- Unplug and reconnect the charging cable\n- If safe, try charging again when household electrical load is lower\n- Contact Andersen support if the issue continues"
+        },
+        {
+          "title": "My charger is offline.",
+          "summary": "Check Wi-Fi, router, power and app reconnection steps.",
+          "status": "needsConfirmation",
+          "sourceUrl": "https://support.andersen-ev.com/products/troubleshooting/connectivity-wifi/",
+          "body": "Suggested customer steps:\n\n- Check whether the home Wi-Fi is working\n- Confirm the charger is within Wi-Fi range\n- Restart the home router\n- Check whether the charger has power\n- Perform a charger reboot only if instructed by Andersen support\n- Reconnect the charger to Wi-Fi through the Andersen app if required\n\nNeeds Andersen confirmation: current app path for Wi-Fi reconnect, A3/Quartz reset steps and when to escalate."
+        },
+        {
+          "title": "The reset button in the app does not work. What should I do?",
+          "summary": "Check phone connection, reopen the app, then contact support if unresolved.",
+          "status": "needsConfirmation",
+          "body": "If the app reset button does not respond, check that your phone has internet connection and that the charger is online. Close and reopen the app, then try again.\n\nIf the charger remains unresponsive, perform a hard reboot only using Andersen's approved process or contact Andersen support for guidance."
+        },
+        {
+          "title": "How do I perform a hard reboot on my charger?",
+          "summary": "Only follow Andersen-approved reset instructions for your charger model.",
+          "status": "needsConfirmation",
+          "body": "A hard reboot should only be carried out using Andersen's approved instructions for your charger model.\n\nIf your charger is unresponsive, contact Andersen support with the charger serial number and a description of the issue. Andersen will guide you through the correct reset process or arrange further support if needed."
+        },
+        {
+          "title": "What is a supply voltage error?",
+          "summary": "The charger has detected voltage outside its expected operating range.",
+          "status": "draft",
+          "body": "A supply voltage error means the charger has detected voltage outside the expected operating range. This may be caused by local grid conditions, property electrical issues, loose connections, high or low supply voltage, or temporary network fluctuations.\n\nSuggested customer action:\n\n- Stop charging if advised by the app or charger\n- Note the time and any app error message\n- Check whether other electrical devices in the property are behaving normally\n- Contact Andersen support\n\nIf the issue relates to the local electricity network, Andersen may advise contacting the DNO."
+        },
+        {
+          "title": "How do I resolve voltage issues?",
+          "summary": "Voltage issues should be escalated rather than investigated by the customer.",
+          "status": "draft",
+          "body": "Voltage issues should be treated carefully because they may involve the property supply or local electricity network. Customers should not open electrical equipment or attempt electrical repairs.\n\nRecommended steps:\n\n- Record the error message and time\n- Contact Andersen support\n- Andersen may ask for app screenshots or charger status information\n- If required, Andersen may advise contacting the DNO or arranging an electrician visit"
+        },
+        {
+          "title": "How do I release the cable from my car?",
+          "summary": "Stop the session, unlock the vehicle and never force the connector.",
+          "status": "needsConfirmation",
+          "sourceUrl": "https://support.andersen-ev.com/products/andersen-a2/connecting-your-car/",
+          "body": "Suggested customer steps:\n\n- Unlock the vehicle using the key or app\n- Stop the charge session in the vehicle or Andersen app\n- Wait a few seconds for the vehicle connector lock to release\n- Check the vehicle manual for the emergency cable release process\n- Do not force the connector\n\nNeeds Andersen confirmation: whether this should vary by tethered or untethered charger and vehicle lock behaviour."
+        }
+      ]
+    },
+    {
+      "anchor": "installers",
+      "eyebrow": "Installers",
+      "heading": "Installer resources and technical documents",
+      "icon": "installers",
+      "intro": "Quick access notes for installer manuals, product documents and technical review items.",
+      "articles": [
+        {
+          "title": "Where can I find installer manuals?",
+          "summary": "Create a quick-access article for manuals, data sheets and compliance documents.",
+          "status": "needsConfirmation",
+          "body": "Create a quick-access article with links to:\n\n- Andersen A3 installer manual\n- Andersen A2 installer manual\n- Andersen Quartz installer manual\n- Product data sheets\n- App setup guides\n- Warranty and compliance documents\n\nNeeds Andersen confirmation: current document URLs and whether installer-only documents should be public or gated."
+        },
+        {
+          "title": "Andersen A2 installation support",
+          "summary": "Legacy A2 installation content should be kept separate from current models.",
+          "status": "draft",
+          "sourceUrl": "https://support.andersen-ev.com/products/andersen-a2-installation/",
+          "body": "The older support site contains Andersen A2 installation content, including before-installation guidance, choosing a location, packaged parts, cable entry, manuals and adaptive fuse or solar installation notes.\n\nMigration note: keep legacy A2 support available for existing owners and installers, but do not reuse A2-only instructions for A3 or Quartz unless Andersen's product or technical team confirms they still apply."
+        },
+        {
+          "title": "Before installation checklist",
+          "summary": "Installer-facing preparation content should align with the customer survey and booking process.",
+          "status": "draft",
+          "sourceUrl": "https://support.andersen-ev.com/products/andersen-a2-installation/before-the-installation/",
+          "body": "Before installation, the customer should clear access to the intended charger location, meter box, incoming supply, consumer unit or fuse board if required, and cable route.\n\nInstaller-facing content should align with the customer survey checklist so the customer sees the same requirements before the appointment."
+        },
+        {
+          "title": "Packaged parts and product documents",
+          "summary": "Maintain current packaged parts lists by model.",
+          "status": "needsConfirmation",
+          "sourceUrl": "https://support.andersen-ev.com/products/andersen-a2-installation/list-of-packaged-parts/",
+          "body": "The support site includes an A2 packaged parts article. The new help centre should maintain separate packaged-parts or document references for current A3, Quartz and any legacy models.\n\nNeeds Andersen confirmation: current part lists, replacement/packaging differences and approved public wording."
+        },
+        {
+          "title": "Adaptive fuse and solar installation notes",
+          "summary": "Technical guidance should be reviewed before publication.",
+          "status": "needsConfirmation",
+          "sourceUrl": "https://support.andersen-ev.com/products/andersen-a2-installation/adaptive-fuse-and-solar-installation/",
+          "body": "The older support site includes adaptive fuse and solar installation content. This should be reviewed carefully before publication in the new help centre.\n\nDo not publish wiring, CT clamp, consumer unit or electrical testing instructions without approval from Andersen's qualified electrical or technical lead."
+        },
+        {
+          "title": "Content gaps for Andersen review",
+          "summary": "Items to confirm before the help centre goes fully live.",
+          "status": "needsConfirmation",
+          "body": "Priority content gaps:\n\n- Exact A3 and Quartz LED status light table\n- Current app screens and wording for setup, schedules, sharing, history and exports\n- Approved hard reboot instructions per model\n- Current smart tariff integrations and supported suppliers\n- Tap Electric setup and support ownership\n- Allstar and Rightcharge process\n- Whether installers always test with an Andersen EV or other test equipment\n- Current order-change policy before installation\n- Current grant wording, offer deadline and eligibility details\n- Full installation exclusions and non-standard cost examples\n- Approved customer-facing language for SPDs and regulations"
+        }
+      ]
+    }
+  ]
+}

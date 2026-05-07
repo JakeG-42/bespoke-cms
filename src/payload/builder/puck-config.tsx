@@ -10,6 +10,8 @@ import type {
   BuilderBorderControls,
   BuilderColorControls,
   BuilderEffectControls,
+  BuilderHelpArticleStatus,
+  BuilderHelpIcon,
   BuilderHoverEffect,
   BuilderHoverControls,
   BuilderMenu,
@@ -21,6 +23,7 @@ import type {
   BuilderSpacingControls,
   BuilderTypographyControls,
 } from "./types";
+import andersenHelpFaqContent from "./help-centre-faq-content.json";
 
 const alignmentOptions = [
   { label: "Left", value: "left" },
@@ -117,6 +120,39 @@ const helpCategoryIcons = {
   support: Headphones,
   troubleshooting: LifeBuoy,
 } as const;
+
+type HelpFaqArticle = {
+  body?: string;
+  sourceUrl?: string;
+  status?: BuilderHelpArticleStatus;
+  summary?: string;
+  title: string;
+};
+
+type HelpFaqSection = {
+  anchor?: string;
+  articles?: HelpFaqArticle[];
+  eyebrow?: string;
+  heading: string;
+  icon?: BuilderHelpIcon;
+  intro?: string;
+};
+
+const defaultHelpFaqSections = andersenHelpFaqContent.sections as HelpFaqSection[];
+const defaultHelpFaqSection = defaultHelpFaqSections[0] ?? {
+  anchor: "support",
+  articles: [],
+  eyebrow: "Support",
+  heading: "Help articles",
+  icon: "support",
+  intro: "Add customer support articles.",
+};
+
+const helpArticleStatusOptions = [
+  { label: "Ready", value: "ready" },
+  { label: "Draft", value: "draft" },
+  { label: "Needs confirmation", value: "needsConfirmation" },
+] as const;
 
 const defaultHelpCategories = [
   {
@@ -631,6 +667,54 @@ function HelpCategoryIcon({ icon }: { icon?: string }) {
   return <Icon aria-hidden="true" strokeWidth={1.8} />;
 }
 
+function getAnchorId(anchor: string | undefined) {
+  const normalized = textValue(anchor).replace(/^#/, "").trim();
+  return normalized || undefined;
+}
+
+function getHelpArticleStatus(status: BuilderHelpArticleStatus | undefined) {
+  if (status === "needsConfirmation") {
+    return "Needs confirmation";
+  }
+
+  if (status === "draft") {
+    return "Draft";
+  }
+
+  return "Ready";
+}
+
+function renderHelpArticleBody(body: string | undefined) {
+  const chunks = textValue(body)
+    .split(/\n{2,}/)
+    .map((chunk) => chunk.trim())
+    .filter(Boolean);
+
+  if (!chunks.length) {
+    return null;
+  }
+
+  return chunks.map((chunk, index) => {
+    const lines = chunk
+      .split("\n")
+      .map((line) => line.trim())
+      .filter(Boolean);
+    const isList = lines.length > 1 && lines.every((line) => line.startsWith("- "));
+
+    if (isList) {
+      return (
+        <ul key={`${chunk.slice(0, 12)}-${index}`}>
+          {lines.map((line) => (
+            <li key={line}>{line.replace(/^- /, "")}</li>
+          ))}
+        </ul>
+      );
+    }
+
+    return <p key={`${chunk.slice(0, 12)}-${index}`}>{lines.join(" ")}</p>;
+  });
+}
+
 function getFeaturedProducts(metadata: Record<string, unknown>): BuilderProduct[] {
   const products = metadata.featuredProducts;
 
@@ -754,7 +838,7 @@ export const builderConfig: BuilderConfig = {
       title: "Structure",
     },
     support: {
-      components: ["HelpCategoryGridBlock", "HelpCentreBlock"],
+      components: ["HelpCategoryGridBlock", "HelpFaqSectionBlock", "HelpCentreBlock"],
       defaultExpanded: true,
       title: "Support",
     },
@@ -1256,6 +1340,100 @@ export const builderConfig: BuilderConfig = {
                   {textValue(category.description) ? <span className="puck-help-category-description">{textValue(category.description)}</span> : null}
                 </a>
               ))}
+            </div>
+          </section>
+        );
+      },
+    },
+    HelpFaqSectionBlock: {
+      defaultProps: {
+        ...defaultDesign,
+        ...defaultHelpFaqSection,
+        backgroundColor: "#ffffff",
+        bodySize: 1,
+        colorControls: { ...defaultDesign.colorControls, backgroundColor: "#ffffff", textColor: "#032536", surfaceColor: "#f8faf9" },
+        elementBorderRadius: 18,
+        elementGap: 0.85,
+        elementPadding: 1.2,
+        fontFamily: "sans",
+        headingSize: 2.2,
+        hoverEffect: "lift",
+        sectionPaddingBottom: 1.75,
+        sectionPaddingTop: 1.75,
+        sectionWidth: "wide",
+        spacingControls: { ...defaultDesign.spacingControls, elementGap: 0.85, elementPadding: 1.2, sectionPaddingBottom: 1.75, sectionPaddingTop: 1.75, sectionWidth: "wide" },
+        surfaceColor: "#f8faf9",
+        textColor: "#032536",
+        typographyControls: { ...defaultDesign.typographyControls, bodySize: 1, fontFamily: "sans", headingSize: 2.2 },
+      },
+      fields: {
+        eyebrow: { contentEditable: true, label: "Eyebrow", type: "text" },
+        heading: { contentEditable: true, label: "Heading", type: "text" },
+        intro: { contentEditable: true, label: "Intro", type: "textarea" },
+        anchor: { label: "Anchor ID", placeholder: "installation", type: "text" },
+        icon: { label: "Icon", options: helpCategoryIconOptions, type: "select" },
+        articles: {
+          arrayFields: {
+            title: { label: "Question", type: "text" },
+            summary: { label: "Short summary", type: "textarea" },
+            body: { label: "Answer", type: "textarea" },
+            status: { label: "Status", options: helpArticleStatusOptions, type: "select" },
+            sourceUrl: { label: "Source URL", type: "text" },
+          },
+          defaultItemProps: {
+            body: "Add the answer here.",
+            sourceUrl: "",
+            status: "draft",
+            summary: "",
+            title: "New help article",
+          },
+          getItemSummary: (item) => item.title || "Help article",
+          label: "Articles",
+          type: "array",
+        },
+        ...sharedDesignFields,
+      },
+      label: "Help FAQ section",
+      render: (props) => {
+        const articles = arrayValue<NonNullable<typeof props.articles>[number]>(props.articles);
+        const sectionId = getAnchorId(props.anchor);
+
+        return (
+          <section className={getSectionClassName(props, "puck-help-faq-section")} id={sectionId} style={getSectionStyle(props)}>
+            <div className="puck-help-faq-header">
+              <span className="puck-help-faq-icon">
+                <HelpCategoryIcon icon={props.icon} />
+              </span>
+              <div>
+                {textValue(props.eyebrow) ? <span className="puck-help-faq-eyebrow">{textValue(props.eyebrow)}</span> : null}
+                <h2>{textValue(props.heading, "Help articles")}</h2>
+                {textValue(props.intro) ? <p>{textValue(props.intro)}</p> : null}
+              </div>
+            </div>
+            <div className="puck-help-faq-list">
+              {articles.map((article, index) => {
+                const status = article.status ?? "ready";
+
+                return (
+                  <details className={`puck-help-faq-card puck-help-faq-status-${status}`} key={`${textValue(article.title, "article")}-${index}`}>
+                    <summary>
+                      <span>
+                        <strong>{textValue(article.title, "Help article")}</strong>
+                        {textValue(article.summary) ? <em>{textValue(article.summary)}</em> : null}
+                      </span>
+                      <small>{getHelpArticleStatus(status)}</small>
+                    </summary>
+                    <div className="puck-help-faq-body">
+                      {renderHelpArticleBody(article.body)}
+                      {textValue(article.sourceUrl) ? (
+                        <a className="puck-help-faq-source" href={previewHref(article.sourceUrl, props.puck.metadata)} rel="noreferrer" target="_blank">
+                          Source
+                        </a>
+                      ) : null}
+                    </div>
+                  </details>
+                );
+              })}
             </div>
           </section>
         );
