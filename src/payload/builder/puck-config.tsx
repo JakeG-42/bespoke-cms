@@ -4,7 +4,7 @@ import { ChevronDown, CircleHelp, HardHat, Headphones, LifeBuoy, PlugZap, Search
 import Link from "next/link";
 
 import { HelpCentreChat } from "@/components/help-centre/HelpCentreChat";
-import { getHelpArticlePath } from "@/lib/help-centre/article-routing";
+import { getHelpArticlePath, getHelpCategoryPath } from "@/lib/help-centre/article-routing";
 import type {
   BuilderAdvancedStyle,
   BuilderConfig,
@@ -626,6 +626,22 @@ function previewHref(url: string | undefined, metadata: unknown) {
 
 function arrayValue<T>(value: T[] | unknown): T[] {
   return Array.isArray(value) ? value : [];
+}
+
+function shouldHideHelpArticleSections(metadata: unknown) {
+  return typeof metadata === "object" && metadata !== null && (metadata as { hideHelpArticleSections?: unknown }).hideHelpArticleSections === true;
+}
+
+function helpCategoryHref(category: { title?: string; url?: string }, metadata: unknown) {
+  const url = textValue(category.url).trim();
+
+  if (!url || url === "#" || url.startsWith("#")) {
+    const categorySlug = url.startsWith("#") ? url.slice(1) : category.title;
+
+    return previewHref(getHelpCategoryPath(categorySlug), metadata) || "#";
+  }
+
+  return previewHref(url, metadata) || "#";
 }
 
 function BuilderButton({
@@ -1290,7 +1306,7 @@ export const builderConfig: BuilderConfig = {
             ) : null}
             <div className={`puck-help-category-grid puck-help-category-columns-${props.columns ?? "2"}`}>
               {categories.map((category, index) => (
-                <a className="puck-help-category-card" href={previewHref(category.url, props.puck.metadata) || "#"} key={`${textValue(category.title, "topic")}-${index}`}>
+                <a className="puck-help-category-card" href={helpCategoryHref(category, props.puck.metadata)} key={`${textValue(category.title, "topic")}-${index}`}>
                   <span className="puck-help-category-icon">
                     <HelpCategoryIcon icon={category.icon} />
                   </span>
@@ -1353,6 +1369,10 @@ export const builderConfig: BuilderConfig = {
       },
       label: "Help article list",
       render: (props) => {
+        if (shouldHideHelpArticleSections(props.puck.metadata)) {
+          return <></>;
+        }
+
         const articles = arrayValue<NonNullable<typeof props.articles>[number]>(props.articles);
         const sectionId = getAnchorId(props.anchor);
 

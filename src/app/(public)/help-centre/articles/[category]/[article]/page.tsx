@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { PuckBuilderRenderer } from "@/components/payload/puck-builder-renderer";
+import { getHelpCategoryPath } from "@/lib/help-centre/article-routing";
 import { getHelpArticlePageData } from "@/lib/help-centre/articles";
 import { siteConfig } from "@/lib/seo";
 
@@ -52,7 +53,7 @@ export default async function HelpArticlePage({ params }: HelpArticlePageProps) 
       ) : null}
       <main className="help-article-page">
         <article className="help-article-shell">
-          <Link className="help-article-back" href={`/help-centre#${data.article.sectionAnchor}`}>
+          <Link className="help-article-back" href={getHelpCategoryPath(data.article.categorySlug)}>
             Back to {data.article.sectionHeading}
           </Link>
           <p className="help-article-kicker">{data.article.sectionHeading}</p>

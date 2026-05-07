@@ -8,14 +8,18 @@ export function PuckBuilderRenderer({
   customCss,
   data,
   featuredProducts,
+  hideHelpArticleSections = false,
   internalLinkBasePath = "",
   menus,
+  routeSlug,
 }: {
   customCss?: string;
   data: unknown;
   featuredProducts: BuilderProduct[];
+  hideHelpArticleSections?: boolean;
   internalLinkBasePath?: string;
   menus: BuilderMenu[];
+  routeSlug?: string;
 }) {
   const builderData = normalizeBuilderData(data);
 
@@ -26,7 +30,7 @@ export function PuckBuilderRenderer({
   return (
     <>
       {customCss ? <style data-payload-code-editor dangerouslySetInnerHTML={{ __html: safeStyleCss(customCss) }} /> : null}
-      <Render config={builderConfig} data={builderData} metadata={{ featuredProducts, internalLinkBasePath, menus }} />
+      <Render config={builderConfig} data={builderData} metadata={{ featuredProducts, hideHelpArticleSections, internalLinkBasePath, menus, routeSlug }} />
     </>
   );
 }

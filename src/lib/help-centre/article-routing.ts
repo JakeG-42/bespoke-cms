@@ -12,3 +12,7 @@ export function slugifyHelpArticle(value: string | undefined) {
 export function getHelpArticlePath(category: string | undefined, title: string | undefined) {
   return `/help-centre/articles/${slugifyHelpArticle(category)}/${slugifyHelpArticle(title)}`;
 }
+
+export function getHelpCategoryPath(category: string | undefined) {
+  return `/help-centre/${slugifyHelpArticle(category)}`;
+}

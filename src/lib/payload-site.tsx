@@ -267,8 +267,10 @@ export async function PayloadSitePage({
         customCss={customCss}
         data={themedBuilderData}
         featuredProducts={productsToBuilderProducts(featuredProducts)}
+        hideHelpArticleSections={slug === "help-centre"}
         internalLinkBasePath={internalLinkBasePath}
         menus={menus}
+        routeSlug={slug}
       />
     );
   }

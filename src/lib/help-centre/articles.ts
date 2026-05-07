@@ -27,13 +27,29 @@ export type HelpArticle = {
   title: string;
 };
 
+export type HelpCategory = {
+  articles: HelpArticle[];
+  description?: string;
+  heading: string;
+  icon?: string;
+  intro?: string;
+  slug: string;
+  title: string;
+};
+
 export type HelpArticlePageData = {
   article: HelpArticle | null;
   headerData: BuilderData | null;
   menus: Awaited<ReturnType<typeof getBuilderMenus>>;
 };
 
-export async function getHelpArticlePageData(categorySlug: string, articleSlug: string): Promise<HelpArticlePageData> {
+export type HelpCategoryPageData = {
+  category: HelpCategory | null;
+  headerData: BuilderData | null;
+  menus: Awaited<ReturnType<typeof getBuilderMenus>>;
+};
+
+async function getHelpCentreBuilderPageData() {
   const payload = await getPayload({ config });
   const [page, menus, themes, themeSettings] = await Promise.all([
     getHelpCentrePage(payload),
@@ -45,20 +61,59 @@ export async function getHelpArticlePageData(categorySlug: string, articleSlug: 
 
   if (!page || !builderData) {
     return {
-      article: null,
-      headerData: null,
+      builderData: null,
       menus,
     };
   }
 
   const theme = getPageBuilderTheme(page, themes, themeSettings.themeId);
   const themedBuilderData = normalizeBuilderData(applyThemeToBuilderData(builderData, theme)) ?? builderData;
-  const articles = extractHelpArticles(themedBuilderData);
+
+  return {
+    builderData: themedBuilderData,
+    menus,
+  };
+}
+
+export async function getHelpArticlePageData(categorySlug: string, articleSlug: string): Promise<HelpArticlePageData> {
+  const { builderData, menus } = await getHelpCentreBuilderPageData();
+
+  if (!builderData) {
+    return {
+      article: null,
+      headerData: null,
+      menus,
+    };
+  }
+
+  const articles = extractHelpArticles(builderData);
   const article = articles.find((item) => item.categorySlug === categorySlug && item.slug === articleSlug) ?? null;
-  const headerData = extractHeaderBuilderData(themedBuilderData);
+  const headerData = extractHeaderBuilderData(builderData);
 
   return {
     article,
+    headerData,
+    menus,
+  };
+}
+
+export async function getHelpCategoryPageData(categorySlug: string): Promise<HelpCategoryPageData> {
+  const { builderData, menus } = await getHelpCentreBuilderPageData();
+
+  if (!builderData) {
+    return {
+      category: null,
+      headerData: null,
+      menus,
+    };
+  }
+
+  const categories = extractHelpCategories(builderData);
+  const category = categories.find((item) => item.slug === categorySlug) ?? null;
+  const headerData = extractHeaderBuilderData(builderData);
+
+  return {
+    category,
     headerData,
     menus,
   };
@@ -91,6 +146,79 @@ export function extractHelpArticles(builderData: BuilderData): HelpArticle[] {
       };
     });
   });
+}
+
+export function extractHelpCategories(builderData: BuilderData): HelpCategory[] {
+  const categoryDetails = extractHelpCategoryDetails(builderData);
+
+  return builderData.content.flatMap((item) => {
+    if (item.type !== "HelpFaqSectionBlock" || !isRecord(item.props)) {
+      return [];
+    }
+
+    const sectionAnchor = stringValue(item.props.anchor) || slugifyHelpArticle(stringValue(item.props.heading));
+    const slug = slugifyHelpArticle(sectionAnchor);
+    const sectionHeading = stringValue(item.props.heading, "Help articles");
+    const articles = extractHelpArticles({
+      content: [item],
+      root: builderData.root,
+      zones: {},
+    });
+    const details = categoryDetails.get(slug);
+
+    return [
+      {
+        articles,
+        description: details?.description,
+        heading: sectionHeading,
+        icon: details?.icon ?? stringValue(item.props.icon),
+        intro: stringValue(item.props.intro),
+        slug,
+        title: details?.title || stringValue(item.props.eyebrow) || sectionHeading,
+      },
+    ];
+  });
+}
+
+function extractHelpCategoryDetails(builderData: BuilderData) {
+  const details = new Map<string, { description?: string; icon?: string; title: string }>();
+
+  builderData.content.forEach((item) => {
+    if (item.type !== "HelpCategoryGridBlock" || !isRecord(item.props)) {
+      return;
+    }
+
+    const categories = Array.isArray(item.props.categories) ? item.props.categories.filter(isRecord) : [];
+
+    categories.forEach((category) => {
+      const title = stringValue(category.title, "Help topic");
+      const slug = getCategorySlugFromBubble(category);
+
+      details.set(slug, {
+        description: stringValue(category.description),
+        icon: stringValue(category.icon),
+        title,
+      });
+    });
+  });
+
+  return details;
+}
+
+function getCategorySlugFromBubble(category: UnknownRecord) {
+  const url = stringValue(category.url).trim();
+
+  if (url.startsWith("#")) {
+    return slugifyHelpArticle(url.slice(1));
+  }
+
+  const pathMatch = url.match(/\/help-centre\/([^/?#]+)/);
+
+  if (pathMatch?.[1] && pathMatch[1] !== "articles") {
+    return slugifyHelpArticle(pathMatch[1]);
+  }
+
+  return slugifyHelpArticle(stringValue(category.title));
 }
 
 function extractHeaderBuilderData(builderData: BuilderData): BuilderData | null {
