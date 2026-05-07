@@ -1,6 +1,6 @@
 import type { CSSProperties, ReactNode } from "react";
 import type { CustomFieldRender } from "@puckeditor/core";
-import { ChevronDown, Search, UserRound } from "lucide-react";
+import { ChevronDown, CircleHelp, HardHat, Headphones, LifeBuoy, PlugZap, Search, Settings, UserRound, Wrench } from "lucide-react";
 import Link from "next/link";
 
 import { HelpCentreChat } from "@/components/help-centre/HelpCentreChat";
@@ -91,6 +91,70 @@ const widthOptions = [
 const menuOrientationOptions = [
   { label: "Horizontal", value: "horizontal" },
   { label: "Vertical", value: "vertical" },
+] as const;
+
+const helpCategoryColumnOptions = [
+  { label: "2 columns", value: "2" },
+  { label: "3 columns", value: "3" },
+] as const;
+
+const helpCategoryIconOptions = [
+  { label: "Product", value: "product" },
+  { label: "Support", value: "support" },
+  { label: "Installation", value: "installation" },
+  { label: "How do I", value: "howTo" },
+  { label: "Troubleshooting", value: "troubleshooting" },
+  { label: "Installers", value: "installers" },
+  { label: "Getting set up", value: "setup" },
+] as const;
+
+const helpCategoryIcons = {
+  howTo: CircleHelp,
+  installation: Wrench,
+  installers: HardHat,
+  product: PlugZap,
+  setup: Settings,
+  support: Headphones,
+  troubleshooting: LifeBuoy,
+} as const;
+
+const defaultHelpCategories = [
+  {
+    description: "Charger models, features and product details",
+    icon: "product",
+    title: "Product",
+    url: "#product",
+  },
+  {
+    description: "Contact routes, account questions and support options",
+    icon: "support",
+    title: "Support",
+    url: "#support",
+  },
+  {
+    description: "Getting ready, appointments and installation steps",
+    icon: "installation",
+    title: "Installation",
+    url: "#installation",
+  },
+  {
+    description: "Using the app, charging settings and everyday tasks",
+    icon: "howTo",
+    title: "How do I?",
+    url: "#how-do-i",
+  },
+  {
+    description: "Connectivity, charging issues and common fixes",
+    icon: "troubleshooting",
+    title: "Troubleshooting",
+    url: "#troubleshooting",
+  },
+  {
+    description: "Installer resources, setup checks and handover guidance",
+    icon: "installers",
+    title: "Installers",
+    url: "#installers",
+  },
 ] as const;
 
 function rangeField({ fallback, label, max, min, step }: { fallback: number; label: string; max: number; min: number; step: number }) {
@@ -561,6 +625,12 @@ function BuilderMedia({ alt, url }: { alt?: string; url?: string }) {
   return <img alt={alt || ""} className="puck-media" src={url} />;
 }
 
+function HelpCategoryIcon({ icon }: { icon?: string }) {
+  const Icon = helpCategoryIcons[icon as keyof typeof helpCategoryIcons] ?? CircleHelp;
+
+  return <Icon aria-hidden="true" strokeWidth={1.8} />;
+}
+
 function getFeaturedProducts(metadata: Record<string, unknown>): BuilderProduct[] {
   const products = metadata.featuredProducts;
 
@@ -684,7 +754,7 @@ export const builderConfig: BuilderConfig = {
       title: "Structure",
     },
     support: {
-      components: ["HelpCentreBlock"],
+      components: ["HelpCategoryGridBlock", "HelpCentreBlock"],
       defaultExpanded: true,
       title: "Support",
     },
@@ -1116,6 +1186,80 @@ export const builderConfig: BuilderConfig = {
           <HelpCentreChat intro={props.intro} title={props.title} />
         </section>
       ),
+    },
+    HelpCategoryGridBlock: {
+      defaultProps: {
+        ...defaultDesign,
+        backgroundColor: "#ffffff",
+        bodySize: 1.05,
+        categories: [...defaultHelpCategories],
+        colorControls: { ...defaultDesign.colorControls, backgroundColor: "#ffffff", textColor: "#032536", surfaceColor: "#f5f8fa" },
+        columns: "2",
+        elementBorderRadius: 10,
+        elementGap: 1.25,
+        elementPadding: 1.85,
+        fontFamily: "sans",
+        heading: "What can we help with?",
+        headingSize: 2.4,
+        hoverEffect: "lift",
+        intro: "Choose a topic to find setup guides, common fixes and support information.",
+        sectionPaddingBottom: 2.5,
+        sectionPaddingTop: 1,
+        sectionWidth: "wide",
+        spacingControls: { ...defaultDesign.spacingControls, elementGap: 1.25, elementPadding: 1.85, sectionPaddingBottom: 2.5, sectionPaddingTop: 1, sectionWidth: "wide" },
+        surfaceColor: "#f5f8fa",
+        textColor: "#032536",
+        typographyControls: { ...defaultDesign.typographyControls, bodySize: 1.05, fontFamily: "sans", headingSize: 2.4 },
+      },
+      fields: {
+        heading: { contentEditable: true, label: "Heading", type: "text" },
+        intro: { contentEditable: true, label: "Intro", type: "textarea" },
+        columns: { label: "Columns", options: helpCategoryColumnOptions, type: "select" },
+        categories: {
+          arrayFields: {
+            description: { label: "Description", type: "textarea" },
+            icon: { label: "Icon", options: helpCategoryIconOptions, type: "select" },
+            title: { label: "Title", type: "text" },
+            url: { label: "URL", type: "text" },
+          },
+          defaultItemProps: {
+            description: "Short description of this help topic.",
+            icon: "support",
+            title: "Support topic",
+            url: "#",
+          },
+          getItemSummary: (item) => item.title || "Help topic",
+          label: "Bubbles",
+          type: "array",
+        },
+        ...sharedDesignFields,
+      },
+      label: "Help category bubbles",
+      render: (props) => {
+        const categories = arrayValue<NonNullable<typeof props.categories>[number]>(props.categories);
+
+        return (
+          <section className={getSectionClassName(props, "puck-help-category-section")} style={getSectionStyle(props)}>
+            {textValue(props.heading) || textValue(props.intro) ? (
+              <div className="puck-help-category-heading">
+                {textValue(props.heading) ? <h2>{textValue(props.heading)}</h2> : null}
+                {textValue(props.intro) ? <p>{textValue(props.intro)}</p> : null}
+              </div>
+            ) : null}
+            <div className={`puck-help-category-grid puck-help-category-columns-${props.columns ?? "2"}`}>
+              {categories.map((category, index) => (
+                <a className="puck-help-category-card" href={previewHref(category.url, props.puck.metadata) || "#"} key={`${textValue(category.title, "topic")}-${index}`}>
+                  <span className="puck-help-category-icon">
+                    <HelpCategoryIcon icon={category.icon} />
+                  </span>
+                  <span className="puck-help-category-name">{textValue(category.title, "Support topic")}</span>
+                  {textValue(category.description) ? <span className="puck-help-category-description">{textValue(category.description)}</span> : null}
+                </a>
+              ))}
+            </div>
+          </section>
+        );
+      },
     },
     ImageTextBlock: {
       defaultProps: {

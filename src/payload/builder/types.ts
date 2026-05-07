@@ -231,6 +231,17 @@ export type BuilderComponents = {
     intro?: string;
     title?: string;
   };
+  HelpCategoryGridBlock: BuilderAdvancedStyle & {
+    categories?: {
+      description?: string;
+      icon?: "howTo" | "installation" | "installers" | "product" | "setup" | "support" | "troubleshooting";
+      title: string;
+      url?: string;
+    }[];
+    columns?: "2" | "3";
+    heading?: string;
+    intro?: string;
+  };
   ImageTextBlock: BuilderAdvancedStyle & {
     body?: string;
     heading: string;

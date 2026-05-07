@@ -858,6 +858,127 @@
   color: var(--builder-section-text);
 }
 
+.puck-help-category-section {
+  color: var(--builder-section-text);
+  font-family: "Muli", Arial, Helvetica, sans-serif;
+}
+
+.puck-help-category-heading {
+  display: grid;
+  gap: 0.65rem;
+  max-width: 50rem;
+  margin-bottom: clamp(1.4rem, 3vw, 2rem);
+}
+
+.puck-align-center .puck-help-category-heading {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.puck-help-category-heading h2,
+.puck-help-category-heading p {
+  margin: 0;
+}
+
+.puck-help-category-heading h2 {
+  color: var(--builder-section-text, #032536);
+  font-size: var(--builder-heading-size, clamp(2rem, 4vw, 3rem));
+  font-weight: var(--builder-font-weight, 850);
+  line-height: 1;
+}
+
+.puck-help-category-heading p {
+  color: color-mix(in srgb, var(--builder-section-text, #032536) 72%, transparent);
+  font-size: var(--builder-body-size, 1.05rem);
+  line-height: var(--builder-line-height, 1.55);
+}
+
+.puck-help-category-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--builder-element-gap, 1.25rem);
+}
+
+.puck-help-category-columns-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.puck-help-category-card {
+  display: grid;
+  align-content: start;
+  min-height: 12.5rem;
+  padding: var(--builder-element-padding, 1.85rem);
+  border: var(--builder-element-border-width, 0) var(--builder-element-border-style, solid) var(--builder-element-border-color, transparent);
+  border-radius: var(--builder-element-border-radius, 10px);
+  background: var(--builder-surface-fill, #f5f8fa);
+  color: var(--builder-section-text, #032536);
+  text-align: left;
+  text-decoration: none;
+  box-shadow: none;
+  transition:
+    background-color var(--andersen-hover-duration, 300ms) var(--andersen-hover-ease, ease),
+    border-color var(--andersen-hover-duration, 300ms) var(--andersen-hover-ease, ease),
+    box-shadow var(--andersen-hover-duration, 300ms) var(--andersen-hover-ease, ease),
+    color var(--andersen-hover-duration, 300ms) var(--andersen-hover-ease, ease),
+    transform var(--andersen-hover-duration, 300ms) var(--andersen-hover-ease, ease);
+}
+
+.puck-help-category-card:hover,
+.puck-help-category-card:focus-visible {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.12);
+  outline: 0;
+}
+
+.puck-help-category-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 3.1rem;
+  height: 3.1rem;
+  margin-bottom: 0.85rem;
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--builder-accent, #355b45);
+}
+
+.puck-help-category-icon svg {
+  width: 1.65rem;
+  height: 1.65rem;
+}
+
+.puck-help-category-name {
+  display: block;
+  color: inherit;
+  font-size: var(--builder-subheading-size, clamp(1.4rem, 3vw, 1.9rem));
+  font-weight: var(--builder-font-weight, 850);
+  line-height: 1.08;
+}
+
+.puck-help-category-description {
+  display: block;
+  max-width: 32rem;
+  margin-top: 0.75rem;
+  color: color-mix(in srgb, var(--builder-section-text, #032536) 76%, transparent);
+  font-size: var(--builder-body-size, 1.05rem);
+  line-height: 1.42;
+}
+
+.puck-theme-andersenEV .puck-help-category-section {
+  width: min(1170px, calc(100% - 96px));
+  padding-top: clamp(2rem, 4vw, 3rem);
+  padding-bottom: clamp(2rem, 4vw, 4rem);
+}
+
+.puck-theme-andersenEV .puck-help-category-card {
+  background: #f5f8fa;
+  color: #032536;
+}
+
+.puck-theme-andersenEV .puck-help-category-icon {
+  background: #ffffff;
+  color: #032536;
+}
+
 .help-centre-chat {
   display: grid;
   grid-template-columns: minmax(0, 1.4fr) minmax(20rem, 0.6fr);
@@ -1853,6 +1974,7 @@
   .puck-hero,
   .puck-split,
   .puck-card-grid,
+  .puck-help-category-grid,
   .puck-gallery {
     grid-template-columns: 1fr;
   }
@@ -1912,6 +2034,14 @@
   .puck-theme-andersenEV .puck-hero-copy p {
     max-width: 24rem;
     font-size: 1rem;
+  }
+
+  .puck-theme-andersenEV .puck-help-category-section {
+    width: calc(100% - 32px);
+  }
+
+  .puck-help-category-card {
+    min-height: auto;
   }
 
   .puck-site-header .puck-actions {
