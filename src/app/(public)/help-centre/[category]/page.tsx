@@ -46,12 +46,20 @@ export default async function HelpCategoryPage({ params }: HelpCategoryPageProps
 
   return (
     <>
-      {data.headerData ? (
+      {data.templateData ? (
+        <PuckBuilderRenderer
+          data={data.templateData}
+          featuredProducts={[]}
+          helpArticles={helpCategory.articles}
+          helpCategory={helpCategory}
+          menus={data.menus}
+        />
+      ) : data.headerData ? (
         <div className="help-category-header">
           <PuckBuilderRenderer data={data.headerData} featuredProducts={[]} menus={data.menus} />
         </div>
       ) : null}
-      <main className="help-category-page">
+      {!data.templateData ? <main className="help-category-page">
         <section className="help-category-shell">
           <Link className="help-article-back" href="/help-centre">
             Back to Help Centre
@@ -71,7 +79,7 @@ export default async function HelpCategoryPage({ params }: HelpCategoryPageProps
             ))}
           </div>
         </section>
-      </main>
+      </main> : null}
     </>
   );
 }

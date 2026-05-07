@@ -123,6 +123,28 @@ export type BuilderProduct = {
   summary?: string;
 };
 
+export type BuilderHelpCategory = {
+  description?: string;
+  heading?: string;
+  id?: number | string;
+  icon?: BuilderHelpIcon | string;
+  path: string;
+  slug: string;
+  title: string;
+};
+
+export type BuilderHelpArticle = {
+  body: string;
+  categorySlug: string;
+  path: string;
+  reviewStatus?: string;
+  sectionHeading?: string;
+  slug: string;
+  sourceUrl?: string;
+  summary?: string;
+  title: string;
+};
+
 export type BuilderMenuItem = {
   children?: BuilderMenuItem[];
   label: string;
@@ -232,6 +254,19 @@ export type BuilderComponents = {
   HelpCentreBlock: BuilderAdvancedStyle & {
     intro?: string;
     title?: string;
+  };
+  HelpArticleContentBlock: BuilderAdvancedStyle & {
+    backLabel?: string;
+    emptyMessage?: string;
+    showBackLink?: boolean;
+    showSourceUrl?: boolean;
+  };
+  HelpCategoryArticlesBlock: BuilderAdvancedStyle & {
+    backLabel?: string;
+    emptyMessage?: string;
+    heading?: string;
+    intro?: string;
+    showBackLink?: boolean;
   };
   HelpCategoryGridBlock: BuilderAdvancedStyle & {
     categories?: {

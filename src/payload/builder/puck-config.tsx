@@ -15,6 +15,8 @@ import type {
   BuilderHelpIcon,
   BuilderHoverEffect,
   BuilderHoverControls,
+  BuilderHelpArticle,
+  BuilderHelpCategory,
   BuilderMenu,
   BuilderProduct,
   BuilderSectionShadow,
@@ -708,6 +710,119 @@ function getFeaturedProducts(metadata: Record<string, unknown>): BuilderProduct[
   });
 }
 
+function getCurrentHelpCategory(metadata: Record<string, unknown>): BuilderHelpCategory | null {
+  const category = metadata.helpCategory;
+
+  if (!category || typeof category !== "object" || Array.isArray(category)) {
+    return null;
+  }
+
+  const value = category as Partial<BuilderHelpCategory>;
+
+  return typeof value.title === "string" && typeof value.slug === "string" && typeof value.path === "string" ? (value as BuilderHelpCategory) : null;
+}
+
+function getCurrentHelpArticle(metadata: Record<string, unknown>): BuilderHelpArticle | null {
+  const article = metadata.helpArticle;
+
+  if (!article || typeof article !== "object" || Array.isArray(article)) {
+    return null;
+  }
+
+  const value = article as Partial<BuilderHelpArticle>;
+
+  return typeof value.title === "string" && typeof value.slug === "string" && typeof value.path === "string" ? (value as BuilderHelpArticle) : null;
+}
+
+function getHelpArticles(metadata: Record<string, unknown>): BuilderHelpArticle[] {
+  const articles = metadata.helpArticles;
+
+  if (!Array.isArray(articles)) {
+    return [];
+  }
+
+  return articles.filter((article): article is BuilderHelpArticle => {
+    if (!article || typeof article !== "object" || Array.isArray(article)) {
+      return false;
+    }
+
+    const value = article as Partial<BuilderHelpArticle>;
+
+    return typeof value.title === "string" && typeof value.slug === "string" && typeof value.path === "string";
+  });
+}
+
+function sampleHelpCategory(): BuilderHelpCategory {
+  const section = defaultHelpFaqSections[0] ?? defaultHelpFaqSection;
+  const slug = textValue(section.anchor, "product");
+
+  return {
+    description: textValue(section.intro, "Article cards for this Help Centre category."),
+    heading: textValue(section.heading, "Product help"),
+    icon: section.icon,
+    path: getHelpCategoryPath(slug),
+    slug,
+    title: textValue(section.eyebrow, textValue(section.heading, "Product")),
+  };
+}
+
+function sampleHelpArticles(): BuilderHelpArticle[] {
+  const section = defaultHelpFaqSections[0] ?? defaultHelpFaqSection;
+  const categorySlug = textValue(section.anchor, "product");
+
+  return arrayValue<HelpFaqArticle>(section.articles).slice(0, 6).map((article) => ({
+    body: textValue(article.body),
+    categorySlug,
+    path: getHelpArticlePath(categorySlug, article.title),
+    reviewStatus: article.status,
+    sectionHeading: textValue(section.heading, "Product help"),
+    slug: article.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, ""),
+    sourceUrl: textValue(article.sourceUrl),
+    summary: textValue(article.summary),
+    title: textValue(article.title, "Help article"),
+  }));
+}
+
+function publicArticleChunks(body: string) {
+  return body
+    .split(/\n{2,}/)
+    .map((chunk) => chunk.trim())
+    .filter(Boolean)
+    .filter((chunk) => !/^(needs andersen confirmation|publication warning|recommended asset|recommended page note|recommended support detail|migration note|content gaps|suggested review owners)/i.test(chunk));
+}
+
+function ArticleBody({ body }: { body: string }) {
+  const chunks = publicArticleChunks(body);
+
+  if (!chunks.length) {
+    return <p>Article content is being prepared.</p>;
+  }
+
+  return (
+    <>
+      {chunks.map((chunk, index) => {
+        const lines = chunk
+          .split("\n")
+          .map((line) => line.trim())
+          .filter(Boolean);
+        const isList = lines.length > 1 && lines.every((line) => line.startsWith("- "));
+
+        if (isList) {
+          return (
+            <ul key={`${chunk.slice(0, 12)}-${index}`}>
+              {lines.map((line) => (
+                <li key={line}>{line.replace(/^- /, "")}</li>
+              ))}
+            </ul>
+          );
+        }
+
+        return <p key={`${chunk.slice(0, 12)}-${index}`}>{lines.join(" ")}</p>;
+      })}
+    </>
+  );
+}
+
 function getBuilderMenus(metadata: Record<string, unknown>): BuilderMenu[] {
   const menus = metadata.menus;
 
@@ -812,7 +927,7 @@ export const builderConfig: BuilderConfig = {
       title: "Structure",
     },
     support: {
-      components: ["HelpCategoryGridBlock", "HelpFaqSectionBlock", "HelpCentreBlock"],
+      components: ["HelpCategoryGridBlock", "HelpCategoryArticlesBlock", "HelpArticleContentBlock", "HelpFaqSectionBlock", "HelpCentreBlock"],
       defaultExpanded: true,
       title: "Support",
     },
@@ -1316,6 +1431,131 @@ export const builderConfig: BuilderConfig = {
               ))}
             </div>
           </section>
+        );
+      },
+    },
+    HelpCategoryArticlesBlock: {
+      defaultProps: {
+        ...defaultDesign,
+        backLabel: "Back to Help Centre",
+        backgroundColor: "#ffffff",
+        bodySize: 1.05,
+        colorControls: { ...defaultDesign.colorControls, backgroundColor: "#ffffff", textColor: "#032536", surfaceColor: "#f5f8fa" },
+        elementBorderRadius: 28,
+        elementGap: 1.25,
+        elementPadding: 1.65,
+        emptyMessage: "Articles are being prepared for this category.",
+        fontFamily: "sans",
+        heading: "",
+        headingSize: 4.8,
+        hoverEffect: "lift",
+        intro: "",
+        sectionPaddingBottom: 6,
+        sectionPaddingTop: 4.5,
+        sectionWidth: "wide",
+        showBackLink: true,
+        spacingControls: { ...defaultDesign.spacingControls, elementGap: 1.25, elementPadding: 1.65, sectionPaddingBottom: 6, sectionPaddingTop: 4.5, sectionWidth: "wide" },
+        surfaceColor: "#f5f8fa",
+        textColor: "#032536",
+        typographyControls: { ...defaultDesign.typographyControls, bodySize: 1.05, fontFamily: "sans", headingSize: 4.8 },
+      },
+      fields: {
+        backLabel: { contentEditable: true, label: "Back link label", type: "text" },
+        heading: { contentEditable: true, label: "Heading override", type: "text" },
+        intro: { contentEditable: true, label: "Intro override", type: "textarea" },
+        emptyMessage: { contentEditable: true, label: "Empty message", type: "textarea" },
+        showBackLink: toggleField("Show back link"),
+        ...sharedDesignFields,
+      },
+      label: "Category article cards",
+      render: (props) => {
+        const metadata = props.puck.metadata as Record<string, unknown>;
+        const category = getCurrentHelpCategory(metadata) ?? sampleHelpCategory();
+        const articles = getHelpArticles(metadata);
+        const cards = articles.length ? articles : sampleHelpArticles();
+        const heading = textValue(props.heading) || category.title;
+        const intro = textValue(props.intro) || category.description || "";
+
+        return (
+          <section className={getSectionClassName(props, "puck-help-category-template")} style={getSectionStyle(props)}>
+            {props.showBackLink ? (
+              <Link className="help-article-back" href="/help-centre">
+                {textValue(props.backLabel, "Back to Help Centre")}
+              </Link>
+            ) : null}
+            <p className="help-article-kicker">Help Centre</p>
+            <h1>{heading}</h1>
+            {intro ? <p className="help-category-summary">{intro}</p> : null}
+            <div className="help-category-article-grid">
+              {cards.length ? (
+                cards.map((article) => (
+                  <Link className="help-category-article-card" href={article.path} key={article.path}>
+                    <span className="help-category-article-label">{article.sectionHeading || category.heading || category.title}</span>
+                    <strong>{article.title}</strong>
+                    {article.summary ? <em>{article.summary}</em> : null}
+                    <small>Read article</small>
+                  </Link>
+                ))
+              ) : (
+                <p className="help-template-empty">{textValue(props.emptyMessage, "Articles are being prepared for this category.")}</p>
+              )}
+            </div>
+          </section>
+        );
+      },
+    },
+    HelpArticleContentBlock: {
+      defaultProps: {
+        ...defaultDesign,
+        backLabel: "Back to category",
+        backgroundColor: "#ffffff",
+        bodySize: 1.08,
+        colorControls: { ...defaultDesign.colorControls, backgroundColor: "#ffffff", textColor: "#032536", surfaceColor: "#ffffff" },
+        elementGap: 1,
+        emptyMessage: "Article content is being prepared.",
+        fontFamily: "sans",
+        headingSize: 4.4,
+        sectionPaddingBottom: 6,
+        sectionPaddingTop: 4.5,
+        sectionWidth: "narrow",
+        showBackLink: true,
+        showSourceUrl: true,
+        spacingControls: { ...defaultDesign.spacingControls, elementGap: 1, sectionPaddingBottom: 6, sectionPaddingTop: 4.5, sectionWidth: "narrow" },
+        textColor: "#032536",
+        typographyControls: { ...defaultDesign.typographyControls, bodySize: 1.08, fontFamily: "sans", headingSize: 4.4 },
+      },
+      fields: {
+        backLabel: { contentEditable: true, label: "Back link label", type: "text" },
+        emptyMessage: { contentEditable: true, label: "Empty message", type: "textarea" },
+        showBackLink: toggleField("Show back link"),
+        showSourceUrl: toggleField("Show source URL"),
+        ...sharedDesignFields,
+      },
+      label: "Article content",
+      render: (props) => {
+        const metadata = props.puck.metadata as Record<string, unknown>;
+        const category = getCurrentHelpCategory(metadata) ?? sampleHelpCategory();
+        const article = getCurrentHelpArticle(metadata) ?? sampleHelpArticles()[0];
+
+        return (
+          <article className={getSectionClassName(props, "puck-help-article-template")} style={getSectionStyle(props)}>
+            {props.showBackLink ? (
+              <Link className="help-article-back" href={category.path}>
+                {textValue(props.backLabel, `Back to ${category.title}`)}
+              </Link>
+            ) : null}
+            <p className="help-article-kicker">{article.sectionHeading || category.heading || category.title}</p>
+            <h1>{article.title}</h1>
+            {article.summary ? <p className="help-article-summary">{article.summary}</p> : null}
+            <div className="help-article-body">
+              <ArticleBody body={article.body || textValue(props.emptyMessage, "Article content is being prepared.")} />
+            </div>
+            {props.showSourceUrl && article.sourceUrl ? (
+              <a className="help-article-source" href={article.sourceUrl} rel="noreferrer" target="_blank">
+                Source reference
+              </a>
+            ) : null}
+          </article>
         );
       },
     },

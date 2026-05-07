@@ -1,5 +1,6 @@
 import andersenHelpFaqContent from "@/payload/builder/help-centre-faq-content.json";
 
+import { getPublishedHelpKnowledgeArticles } from "./articles";
 import type { ChatMessage, IssueCategory } from "./types";
 
 type RawArticle = {
@@ -17,6 +18,7 @@ type RawSection = {
 };
 
 export type HelpKnowledgeArticle = RawArticle & {
+  reviewStatus?: string;
   sectionAnchor?: string;
   sectionHeading: string;
 };
@@ -75,12 +77,13 @@ export const helpKnowledgeArticles: HelpKnowledgeArticle[] = sections.flatMap((s
   })),
 );
 
-export function getKnowledgeMatches(messages: ChatMessage[], category: IssueCategory, limit = 5): HelpKnowledgeMatch[] {
+export async function getKnowledgeMatches(messages: ChatMessage[], category: IssueCategory, limit = 5): Promise<HelpKnowledgeMatch[]> {
+  const articles = await getKnowledgeArticles();
   const query = conversationQuery(messages, category);
   const queryTokens = tokenize(query);
   const categoryTokens = new Set(categoryHints[category] ?? []);
 
-  return helpKnowledgeArticles
+  return articles
     .map((article) => ({
       article,
       score: scoreArticle(article, query, queryTokens, categoryTokens),
@@ -90,6 +93,15 @@ export function getKnowledgeMatches(messages: ChatMessage[], category: IssueCate
     .slice(0, limit);
 }
 
+async function getKnowledgeArticles() {
+  const articles = await getPublishedHelpKnowledgeArticles().catch((error) => {
+    console.error("Unable to load Payload help articles for AI knowledge base.", error);
+    return [];
+  });
+
+  return articles.length ? articles : helpKnowledgeArticles;
+}
+
 export function formatKnowledgeContext(matches: HelpKnowledgeMatch[]) {
   if (!matches.length) {
     return "No matching Andersen help-centre articles were found for the latest customer question.";
@@ -97,10 +109,11 @@ export function formatKnowledgeContext(matches: HelpKnowledgeMatch[]) {
 
   return matches
     .map(({ article }, index) => {
+      const status = article.status ?? article.reviewStatus;
       const statusNote =
-        article.status === "needsConfirmation"
+        status === "needsConfirmation"
           ? "Internal review note: this guidance needs Andersen confirmation before being stated as final policy."
-          : article.status === "draft"
+          : status === "draft"
             ? "Internal review note: draft help-centre content."
             : "Internal review note: ready.";
 
@@ -125,10 +138,11 @@ export function fallbackKnowledgeReply(matches: HelpKnowledgeMatch[]) {
     return "";
   }
 
+  const status = article.status ?? article.reviewStatus;
   const statusPrefix =
-    article.status === "needsConfirmation"
+    status === "needsConfirmation"
       ? "Based on the current Andersen help-centre notes, this can vary and Andersen support can confirm the final details. Current guidance is:\n\n"
-      : article.status === "draft"
+      : status === "draft"
         ? "Based on the current Andersen help-centre notes:\n\n"
         : "";
   const answer = firstUsefulChunks(article.body || article.summary || "", 2);

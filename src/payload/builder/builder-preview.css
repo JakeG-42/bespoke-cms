@@ -1363,6 +1363,43 @@
   content: " ->";
 }
 
+.puck-help-category-template {
+  color: #032536;
+  font-family: "Muli", Arial, Helvetica, sans-serif;
+}
+
+.puck-help-category-template h1,
+.puck-help-article-template h1 {
+  max-width: 780px;
+  margin: 0;
+  color: var(--builder-section-text, #032536);
+  font-size: var(--builder-heading-size, clamp(2.6rem, 6vw, 5rem));
+  font-weight: var(--builder-font-weight, 850);
+  line-height: 0.98;
+  letter-spacing: 0;
+}
+
+.puck-help-category-template .help-category-article-grid {
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+.puck-help-article-template {
+  color: #032536;
+  font-family: "Muli", Arial, Helvetica, sans-serif;
+}
+
+.puck-help-article-template .help-article-body {
+  max-width: 820px;
+}
+
+.help-template-empty {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: color-mix(in srgb, #032536 68%, transparent);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
 .help-article-shell {
   width: min(880px, calc(100% - 96px));
   margin: 0 auto;

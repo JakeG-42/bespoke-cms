@@ -1,6 +1,7 @@
 import config from "@payload-config";
-import { getPayload } from "payload";
+import { getPayload, type Payload } from "payload";
 
+import { normalizeBuilderData } from "@/payload/builder/convert";
 import {
   applyThemeToBuilderData,
   getBuilderMenus,
@@ -8,114 +9,265 @@ import {
   getBuilderThemes,
   getPageBuilderTheme,
 } from "@/payload/builder/metadata";
-import { normalizeBuilderData } from "@/payload/builder/convert";
-import type { BuilderData } from "@/payload/builder/types";
+import type { BuilderData, BuilderHelpArticle, BuilderHelpCategory } from "@/payload/builder/types";
 import type { Page } from "@/payload-types";
-import { getHelpArticlePath, slugifyHelpArticle } from "./article-routing";
+import { getHelpArticlePath, getHelpCategoryPath, slugifyHelpArticle } from "./article-routing";
 
 type UnknownRecord = Record<string, unknown>;
+const HELP_ARTICLES_COLLECTION = "help-articles" as unknown as "pages";
+const HELP_CATEGORIES_COLLECTION = "help-categories" as unknown as "pages";
 
-export type HelpArticle = {
-  body: string;
-  categorySlug: string;
-  path: string;
+export type HelpArticle = BuilderHelpArticle & {
   sectionAnchor: string;
   sectionHeading: string;
-  slug: string;
-  sourceUrl?: string;
-  summary?: string;
-  title: string;
 };
 
-export type HelpCategory = {
+export type HelpCategory = BuilderHelpCategory & {
   articles: HelpArticle[];
-  description?: string;
   heading: string;
-  icon?: string;
   intro?: string;
-  slug: string;
-  title: string;
 };
 
 export type HelpArticlePageData = {
   article: HelpArticle | null;
+  category: HelpCategory | null;
   headerData: BuilderData | null;
   menus: Awaited<ReturnType<typeof getBuilderMenus>>;
+  templateData: BuilderData | null;
 };
 
 export type HelpCategoryPageData = {
   category: HelpCategory | null;
   headerData: BuilderData | null;
   menus: Awaited<ReturnType<typeof getBuilderMenus>>;
+  templateData: BuilderData | null;
 };
 
-async function getHelpCentreBuilderPageData() {
+async function getHelpCentrePageData(payload: Payload, slug: string): Promise<Page | null> {
+  const result = await payload.find({
+    collection: "pages",
+    depth: 2,
+    limit: 1,
+    where: {
+      and: [
+        {
+          slug: {
+            equals: slug,
+          },
+        },
+        {
+          status: {
+            equals: "published",
+          },
+        },
+      ],
+    },
+  });
+
+  return result.docs[0] ?? null;
+}
+
+async function getSharedHelpData() {
   const payload = await getPayload({ config });
-  const [page, menus, themes, themeSettings] = await Promise.all([
-    getHelpCentrePage(payload),
+  const [helpCentrePage, categoryTemplatePage, articleTemplatePage, menus, themes, themeSettings] = await Promise.all([
+    getHelpCentrePageData(payload, "help-centre"),
+    getHelpCentrePageData(payload, "templates/help-category"),
+    getHelpCentrePageData(payload, "templates/help-article"),
     getBuilderMenus(payload),
     getBuilderThemes(payload),
     getBuilderThemeSettings(payload),
   ]);
-  const builderData = normalizeBuilderData(page?.builderData);
-
-  if (!page || !builderData) {
-    return {
-      builderData: null,
-      menus,
-    };
-  }
-
-  const theme = getPageBuilderTheme(page, themes, themeSettings.themeId);
-  const themedBuilderData = normalizeBuilderData(applyThemeToBuilderData(builderData, theme)) ?? builderData;
 
   return {
-    builderData: themedBuilderData,
+    articleTemplateData: getThemedBuilderData(articleTemplatePage, themes, themeSettings.themeId),
+    categoryTemplateData: getThemedBuilderData(categoryTemplatePage, themes, themeSettings.themeId),
+    fallbackBuilderData: getThemedBuilderData(helpCentrePage, themes, themeSettings.themeId),
     menus,
+    payload,
   };
 }
 
-export async function getHelpArticlePageData(categorySlug: string, articleSlug: string): Promise<HelpArticlePageData> {
-  const { builderData, menus } = await getHelpCentreBuilderPageData();
+function getThemedBuilderData(page: Page | null, themes: Awaited<ReturnType<typeof getBuilderThemes>>, activeThemeId?: string) {
+  const builderData = normalizeBuilderData(page?.builderData);
 
-  if (!builderData) {
-    return {
-      article: null,
-      headerData: null,
-      menus,
-    };
+  if (!page || !builderData) {
+    return null;
   }
 
-  const articles = extractHelpArticles(builderData);
-  const article = articles.find((item) => item.categorySlug === categorySlug && item.slug === articleSlug) ?? null;
-  const headerData = extractHeaderBuilderData(builderData);
+  const theme = getPageBuilderTheme(page, themes, activeThemeId);
+
+  return normalizeBuilderData(applyThemeToBuilderData(builderData, theme)) ?? builderData;
+}
+
+export async function getHelpArticlePageData(categorySlug: string, articleSlug: string): Promise<HelpArticlePageData> {
+  const { articleTemplateData, fallbackBuilderData, menus, payload } = await getSharedHelpData();
+  const category = await getHelpCategoryFromCollection(payload, categorySlug);
+  const article = category ? await getHelpArticleFromCollection(payload, category, articleSlug) : null;
+  const fallbackArticles = fallbackBuilderData ? extractHelpArticles(fallbackBuilderData) : [];
+  const fallbackArticle = fallbackArticles.find((item) => item.categorySlug === categorySlug && item.slug === articleSlug) ?? null;
+  const resolvedArticle = article ?? fallbackArticle;
+  const resolvedCategory =
+    category ?? (fallbackBuilderData ? extractHelpCategories(fallbackBuilderData).find((item) => item.slug === categorySlug) ?? null : null);
 
   return {
-    article,
-    headerData,
+    article: resolvedArticle,
+    category: resolvedCategory,
+    headerData: fallbackBuilderData ? extractHeaderBuilderData(fallbackBuilderData) : null,
     menus,
+    templateData: articleTemplateData,
   };
 }
 
 export async function getHelpCategoryPageData(categorySlug: string): Promise<HelpCategoryPageData> {
-  const { builderData, menus } = await getHelpCentreBuilderPageData();
-
-  if (!builderData) {
-    return {
-      category: null,
-      headerData: null,
-      menus,
-    };
-  }
-
-  const categories = extractHelpCategories(builderData);
-  const category = categories.find((item) => item.slug === categorySlug) ?? null;
-  const headerData = extractHeaderBuilderData(builderData);
+  const { categoryTemplateData, fallbackBuilderData, menus, payload } = await getSharedHelpData();
+  const category = await getHelpCategoryFromCollection(payload, categorySlug);
+  const fallbackCategory = fallbackBuilderData ? extractHelpCategories(fallbackBuilderData).find((item) => item.slug === categorySlug) ?? null : null;
 
   return {
-    category,
-    headerData,
+    category: category ?? fallbackCategory,
+    headerData: fallbackBuilderData ? extractHeaderBuilderData(fallbackBuilderData) : null,
     menus,
+    templateData: categoryTemplateData,
+  };
+}
+
+export async function getPublishedHelpKnowledgeArticles(): Promise<HelpArticle[]> {
+  const payload = await getPayload({ config });
+  const categoryResult = await payload.find({
+    collection: HELP_CATEGORIES_COLLECTION,
+    depth: 0,
+    limit: 100,
+    sort: "sortOrder",
+    where: {
+      status: {
+        equals: "published",
+      },
+    },
+  });
+  const categories = await Promise.all(categoryResult.docs.map((category) => getHelpCategoryWithArticles(payload, category as unknown as UnknownRecord)));
+
+  return categories.flatMap((category) => category.articles);
+}
+
+async function getHelpCategoryFromCollection(payload: Payload, categorySlug: string): Promise<HelpCategory | null> {
+  const result = await payload.find({
+    collection: HELP_CATEGORIES_COLLECTION,
+    depth: 0,
+    limit: 1,
+    where: {
+      and: [
+        {
+          slug: {
+            equals: categorySlug,
+          },
+        },
+        {
+          status: {
+            equals: "published",
+          },
+        },
+      ],
+    },
+  });
+
+  const category = result.docs[0];
+
+  return category ? getHelpCategoryWithArticles(payload, category as unknown as UnknownRecord) : null;
+}
+
+async function getHelpCategoryWithArticles(payload: Payload, categoryDoc: UnknownRecord): Promise<HelpCategory> {
+  const category = mapCategoryDoc(categoryDoc);
+  const articleResult = await payload.find({
+    collection: HELP_ARTICLES_COLLECTION,
+    depth: 0,
+    limit: 200,
+    sort: "sortOrder",
+    where: {
+      and: [
+        {
+          category: {
+            equals: categoryDoc.id,
+          },
+        },
+        {
+          status: {
+            equals: "published",
+          },
+        },
+      ],
+    },
+  });
+
+  return {
+    ...category,
+    articles: articleResult.docs.map((article) => mapArticleDoc(article as unknown as UnknownRecord, category)),
+  };
+}
+
+async function getHelpArticleFromCollection(payload: Payload, category: HelpCategory, articleSlug: string): Promise<HelpArticle | null> {
+  const result = await payload.find({
+    collection: HELP_ARTICLES_COLLECTION,
+    depth: 0,
+    limit: 1,
+    where: {
+      and: [
+        {
+          slug: {
+            equals: articleSlug,
+          },
+        },
+        {
+          category: {
+            equals: category.id,
+          },
+        },
+        {
+          status: {
+            equals: "published",
+          },
+        },
+      ],
+    },
+  });
+
+  const article = result.docs[0];
+
+  return article ? mapArticleDoc(article as unknown as UnknownRecord, category) : null;
+}
+
+function mapCategoryDoc(doc: UnknownRecord): HelpCategory {
+  const slug = stringValue(doc.slug, "category");
+  const title = stringValue(doc.title, "Help category");
+  const description = stringValue(doc.description);
+
+  return {
+    articles: [],
+    description,
+    heading: title,
+    id: typeof doc.id === "number" || typeof doc.id === "string" ? doc.id : undefined,
+    icon: stringValue(doc.icon),
+    intro: description,
+    path: getHelpCategoryPath(slug),
+    slug,
+    title,
+  };
+}
+
+function mapArticleDoc(doc: UnknownRecord, category: HelpCategory): HelpArticle {
+  const title = stringValue(doc.title, "Help article");
+  const slug = stringValue(doc.slug, slugifyHelpArticle(title));
+
+  return {
+    body: stringValue(doc.body),
+    categorySlug: category.slug,
+    path: getHelpArticlePath(category.slug, slug),
+    reviewStatus: stringValue(doc.reviewStatus),
+    sectionAnchor: category.slug,
+    sectionHeading: category.heading,
+    slug,
+    sourceUrl: stringValue(doc.sourceUrl),
+    summary: stringValue(doc.summary),
+    title,
   };
 }
 
@@ -131,15 +283,17 @@ export function extractHelpArticles(builderData: BuilderData): HelpArticle[] {
 
     return articles.map((article) => {
       const title = stringValue(article.title, "Help article");
+      const slug = slugifyHelpArticle(title);
       const body = stringValue(article.body);
 
       return {
         body,
         categorySlug: slugifyHelpArticle(sectionAnchor),
-        path: getHelpArticlePath(sectionAnchor, title),
+        path: getHelpArticlePath(sectionAnchor, slug),
+        reviewStatus: stringValue(article.status),
         sectionAnchor,
         sectionHeading,
-        slug: slugifyHelpArticle(title),
+        slug,
         sourceUrl: stringValue(article.sourceUrl),
         summary: stringValue(article.summary),
         title,
@@ -173,6 +327,7 @@ export function extractHelpCategories(builderData: BuilderData): HelpCategory[] 
         heading: sectionHeading,
         icon: details?.icon ?? stringValue(item.props.icon),
         intro: stringValue(item.props.intro),
+        path: getHelpCategoryPath(slug),
         slug,
         title: details?.title || stringValue(item.props.eyebrow) || sectionHeading,
       },
@@ -233,30 +388,6 @@ function extractHeaderBuilderData(builderData: BuilderData): BuilderData | null 
     root: builderData.root,
     zones: {},
   };
-}
-
-async function getHelpCentrePage(payload: Awaited<ReturnType<typeof getPayload>>): Promise<Page | null> {
-  const result = await payload.find({
-    collection: "pages",
-    depth: 2,
-    limit: 1,
-    where: {
-      and: [
-        {
-          slug: {
-            equals: "help-centre",
-          },
-        },
-        {
-          status: {
-            equals: "published",
-          },
-        },
-      ],
-    },
-  });
-
-  return result.docs[0] ?? null;
 }
 
 function isRecord(value: unknown): value is UnknownRecord {

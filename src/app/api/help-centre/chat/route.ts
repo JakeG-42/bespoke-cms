@@ -8,6 +8,7 @@ import {
   isUnsafeElectricalIssue,
 } from "@/lib/help-centre/support-rules";
 import { fallbackKnowledgeReply, formatKnowledgeContext, getKnowledgeMatches } from "@/lib/help-centre/knowledge-base";
+import type { HelpKnowledgeMatch } from "@/lib/help-centre/knowledge-base";
 import type { ChatMessage, ChatResponse } from "@/lib/help-centre/types";
 
 export const dynamic = "force-dynamic";
@@ -26,7 +27,7 @@ export async function POST(request: Request) {
   }
 
   const category = inferIssueCategory(messages);
-  const knowledgeMatches = getKnowledgeMatches(messages, category);
+  const knowledgeMatches = await getKnowledgeMatches(messages, category);
   const content = (await generateAssistantText(messages, knowledgeMatches).catch((error) => {
     console.error("Help Centre AI generation failed.", error);
     return fallbackKnowledgeReply(knowledgeMatches) || fallbackAssistantReply(messages);
@@ -50,7 +51,7 @@ export async function POST(request: Request) {
   return NextResponse.json(response);
 }
 
-async function generateAssistantText(messages: ChatMessage[], knowledgeMatches: ReturnType<typeof getKnowledgeMatches>) {
+async function generateAssistantText(messages: ChatMessage[], knowledgeMatches: HelpKnowledgeMatch[]) {
   const provider = getAiProvider();
   const knowledgeContext = formatKnowledgeContext(knowledgeMatches);
   const instructions = buildAiInstructions(knowledgeContext);
@@ -62,8 +63,8 @@ async function generateAssistantText(messages: ChatMessage[], knowledgeMatches: 
   return generateOpenAiText(messages, knowledgeMatches, instructions);
 }
 
-async function generateOpenAiText(messages: ChatMessage[], knowledgeMatches: ReturnType<typeof getKnowledgeMatches>, instructions: string) {
-  const apiKey = process.env.OPENAI_API_KEY || process.env.OPENAI_KEY || process.env.bespoke_cms;
+async function generateOpenAiText(messages: ChatMessage[], knowledgeMatches: HelpKnowledgeMatch[], instructions: string) {
+  const apiKey = process.env.OPENAI_API_KEY || process.env.OPENAI_KEY;
 
   if (!apiKey) {
     return fallbackKnowledgeReply(knowledgeMatches) || fallbackAssistantReply(messages);
@@ -110,7 +111,7 @@ async function generateOpenAiText(messages: ChatMessage[], knowledgeMatches: Ret
   );
 }
 
-async function generateGeminiText(messages: ChatMessage[], knowledgeMatches: ReturnType<typeof getKnowledgeMatches>, instructions: string) {
+async function generateGeminiText(messages: ChatMessage[], knowledgeMatches: HelpKnowledgeMatch[], instructions: string) {
   const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_AI_API_KEY || process.env.GOOGLE_API_KEY;
 
   if (!apiKey) {

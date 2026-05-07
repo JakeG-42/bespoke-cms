@@ -44,29 +44,50 @@ export default async function HelpArticlePage({ params }: HelpArticlePageProps) 
     notFound();
   }
 
+  const helpArticle = data.article;
+  const helpCategory =
+    data.category ??
+    ({
+      articles: [helpArticle],
+      description: helpArticle.summary,
+      heading: helpArticle.sectionHeading,
+      path: getHelpCategoryPath(helpArticle.categorySlug),
+      slug: helpArticle.categorySlug,
+      title: helpArticle.sectionHeading,
+    } as const);
+
   return (
     <>
-      {data.headerData ? (
+      {data.templateData ? (
+        <PuckBuilderRenderer
+          data={data.templateData}
+          featuredProducts={[]}
+          helpArticle={helpArticle}
+          helpArticles={helpCategory.articles}
+          helpCategory={helpCategory}
+          menus={data.menus}
+        />
+      ) : data.headerData ? (
         <div className="help-article-header">
           <PuckBuilderRenderer data={data.headerData} featuredProducts={[]} menus={data.menus} />
         </div>
       ) : null}
-      <main className="help-article-page">
+      {!data.templateData ? <main className="help-article-page">
         <article className="help-article-shell">
-          <Link className="help-article-back" href={getHelpCategoryPath(data.article.categorySlug)}>
-            Back to {data.article.sectionHeading}
+          <Link className="help-article-back" href={getHelpCategoryPath(helpArticle.categorySlug)}>
+            Back to {helpArticle.sectionHeading}
           </Link>
-          <p className="help-article-kicker">{data.article.sectionHeading}</p>
-          <h1>{data.article.title}</h1>
-          {data.article.summary ? <p className="help-article-summary">{data.article.summary}</p> : null}
-          <div className="help-article-body">{renderArticleBody(data.article.body)}</div>
-          {data.article.sourceUrl ? (
-            <a className="help-article-source" href={data.article.sourceUrl} rel="noreferrer" target="_blank">
+          <p className="help-article-kicker">{helpArticle.sectionHeading}</p>
+          <h1>{helpArticle.title}</h1>
+          {helpArticle.summary ? <p className="help-article-summary">{helpArticle.summary}</p> : null}
+          <div className="help-article-body">{renderArticleBody(helpArticle.body)}</div>
+          {helpArticle.sourceUrl ? (
+            <a className="help-article-source" href={helpArticle.sourceUrl} rel="noreferrer" target="_blank">
               Source reference
             </a>
           ) : null}
         </article>
-      </main>
+      </main> : null}
     </>
   );
 }

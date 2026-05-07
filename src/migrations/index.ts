@@ -7,6 +7,7 @@ import * as migration_20260505_181210_themes_and_templates from './20260505_1812
 import * as migration_20260505_185957_theme_settings from './20260505_185957_theme_settings';
 import * as migration_20260505_195112_code_snippets from './20260505_195112_code_snippets';
 import * as migration_20260506_232900_support_tickets_and_menu_dropdowns from './20260506_232900_support_tickets_and_menu_dropdowns';
+import * as migration_20260507_160500_help_articles_and_templates from './20260507_160500_help_articles_and_templates';
 
 export const migrations = [
   {
@@ -53,5 +54,10 @@ export const migrations = [
     up: migration_20260506_232900_support_tickets_and_menu_dropdowns.up,
     down: migration_20260506_232900_support_tickets_and_menu_dropdowns.down,
     name: '20260506_232900_support_tickets_and_menu_dropdowns'
+  },
+  {
+    up: migration_20260507_160500_help_articles_and_templates.up,
+    down: migration_20260507_160500_help_articles_and_templates.down,
+    name: '20260507_160500_help_articles_and_templates'
   },
 ];
