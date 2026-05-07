@@ -4,8 +4,10 @@ import {
   createTicketDraft,
   fallbackAssistantReply,
   HELP_CENTRE_SYSTEM_PROMPT,
+  inferIssueCategory,
   isUnsafeElectricalIssue,
 } from "@/lib/help-centre/support-rules";
+import { fallbackKnowledgeReply, formatKnowledgeContext, getKnowledgeMatches } from "@/lib/help-centre/knowledge-base";
 import type { ChatMessage, ChatResponse } from "@/lib/help-centre/types";
 
 export const dynamic = "force-dynamic";
@@ -23,9 +25,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "At least one chat message is required." }, { status: 400 });
   }
 
-  const content = (await generateAssistantText(messages).catch((error) => {
+  const category = inferIssueCategory(messages);
+  const knowledgeMatches = getKnowledgeMatches(messages, category);
+  const content = (await generateAssistantText(messages, knowledgeMatches).catch((error) => {
     console.error("Help Centre AI generation failed.", error);
-    return fallbackAssistantReply(messages);
+    return fallbackKnowledgeReply(knowledgeMatches) || fallbackAssistantReply(messages);
   })).trim();
   const nextMessages = [
     ...messages,
@@ -46,14 +50,15 @@ export async function POST(request: Request) {
   return NextResponse.json(response);
 }
 
-async function generateAssistantText(messages: ChatMessage[]) {
+async function generateAssistantText(messages: ChatMessage[], knowledgeMatches: ReturnType<typeof getKnowledgeMatches>) {
   const apiKey = process.env.OPENAI_API_KEY;
 
   if (!apiKey) {
-    return fallbackAssistantReply(messages);
+    return fallbackKnowledgeReply(knowledgeMatches) || fallbackAssistantReply(messages);
   }
 
   const model = process.env.OPENAI_MODEL || "gpt-5.4-mini";
+  const knowledgeContext = formatKnowledgeContext(knowledgeMatches);
   const response = await fetch("https://api.openai.com/v1/responses", {
     body: JSON.stringify({
       input: messages
@@ -62,7 +67,19 @@ async function generateAssistantText(messages: ChatMessage[]) {
           role: message.role === "assistant" ? "assistant" : "user",
           content: message.content,
         })),
-      instructions: HELP_CENTRE_SYSTEM_PROMPT,
+      instructions: `${HELP_CENTRE_SYSTEM_PROMPT}
+
+Use the Andersen help-centre knowledge base snippets below when they are relevant to the customer's question.
+
+Knowledge base rules:
+- Prefer these snippets over general EV charger knowledge.
+- If a snippet has an internal review note, do not reveal that internal label to the customer and do not present it as final policy. Say that details can vary and Andersen support can confirm where appropriate.
+- Do not reveal internal review-owner notes or review statuses.
+- If the snippets do not answer the question, say so briefly and ask a focused follow-up question or offer to create a ticket.
+- Keep answers concise and practical.
+
+Matched Andersen help-centre snippets:
+${knowledgeContext}`,
       model,
     }),
     headers: {
@@ -86,7 +103,12 @@ async function generateAssistantText(messages: ChatMessage[]) {
     output_text?: string;
   };
 
-  return result.output_text || result.output?.flatMap((item) => item.content ?? []).map((item) => item.text ?? "").join("\n").trim() || fallbackAssistantReply(messages);
+  return (
+    result.output_text ||
+    result.output?.flatMap((item) => item.content ?? []).map((item) => item.text ?? "").join("\n").trim() ||
+    fallbackKnowledgeReply(knowledgeMatches) ||
+    fallbackAssistantReply(messages)
+  );
 }
 
 function isChatMessage(value: unknown): value is ChatMessage {
