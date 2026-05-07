@@ -56,17 +56,24 @@ const unsafeElectricalTerms = [
   "electrician",
   "exposed wiring",
   "fuse board",
+  "hot to touch",
   "internal component",
   "overheating",
   "pen fault",
   "rcd",
+  "smells hot",
+  "sparking",
   "tripping",
   "wire",
   "wiring",
 ];
 
 function text(messages: ChatMessage[]) {
-  return messages.map((message) => message.content).join("\n").toLowerCase();
+  return messages
+    .filter((message) => message.role === "user")
+    .map((message) => message.content)
+    .join("\n")
+    .toLowerCase();
 }
 
 export function isUnsafeElectricalIssue(messages: ChatMessage[]) {
@@ -110,7 +117,7 @@ export function inferIssueCategory(messages: ChatMessage[]): IssueCategory {
     return "warranty_hardware_fault";
   }
 
-  if (/(order|delivery|sales|quote|price|invoice|promotion)/i.test(conversation)) {
+  if (/(order|delivery|sales|quote|price|invoice|promotion|grant|payment|paypal|easy pay|allstar|rightcharge)/i.test(conversation)) {
     return "order_delivery_sales";
   }
 

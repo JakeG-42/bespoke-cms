@@ -1418,6 +1418,11 @@
   color: #ffffff;
 }
 
+.help-centre-message.user span,
+.help-centre-message.user p {
+  color: #ffffff;
+}
+
 .help-centre-message span {
   display: block;
   margin-bottom: 0.25rem;

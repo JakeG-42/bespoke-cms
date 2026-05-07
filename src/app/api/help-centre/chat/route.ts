@@ -51,13 +51,13 @@ export async function POST(request: Request) {
 }
 
 async function generateAssistantText(messages: ChatMessage[], knowledgeMatches: ReturnType<typeof getKnowledgeMatches>) {
-  const apiKey = process.env.OPENAI_API_KEY;
+  const apiKey = process.env.OPENAI_API_KEY || process.env.OPENAI_KEY || process.env.bespoke_cms;
 
   if (!apiKey) {
     return fallbackKnowledgeReply(knowledgeMatches) || fallbackAssistantReply(messages);
   }
 
-  const model = process.env.OPENAI_MODEL || "gpt-5.4-mini";
+  const model = process.env.OPENAI_MODEL || "gpt-4.1-mini";
   const knowledgeContext = formatKnowledgeContext(knowledgeMatches);
   const response = await fetch("https://api.openai.com/v1/responses", {
     body: JSON.stringify({
