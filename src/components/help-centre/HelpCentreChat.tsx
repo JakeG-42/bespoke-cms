@@ -1,7 +1,7 @@
 "use client";
 
 import { Send, ShieldAlert, TicketCheck } from "lucide-react";
-import { type FormEvent, useMemo, useState } from "react";
+import { type FormEvent, useEffect, useMemo, useRef, useState } from "react";
 
 import type { ChatMessage, ChatResponse, CustomerInfo, IssueCategory, TicketDraft } from "@/lib/help-centre/types";
 
@@ -48,6 +48,7 @@ function createEmptyTicketDraft(messages: ChatMessage[]): TicketDraft {
 }
 
 export function HelpCentreChat({ intro, title }: HelpCentreChatProps) {
+  const messagesRef = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([initialMessage]);
   const [input, setInput] = useState("");
   const [isSending, setIsSending] = useState(false);
@@ -65,6 +66,16 @@ export function HelpCentreChat({ intro, title }: HelpCentreChatProps) {
     }),
     [customer, messages, ticketDraft],
   );
+
+  useEffect(() => {
+    const messagesElement = messagesRef.current;
+
+    if (!messagesElement) {
+      return;
+    }
+
+    messagesElement.scrollTop = messagesElement.scrollHeight;
+  }, [isSending, messages]);
 
   async function sendMessage(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -153,7 +164,7 @@ export function HelpCentreChat({ intro, title }: HelpCentreChatProps) {
           {intro ? <p>{intro}</p> : null}
         </div>
 
-        <div aria-live="polite" className="help-centre-messages">
+        <div aria-live="polite" className="help-centre-messages" ref={messagesRef}>
           {messages.map((message) => (
             <article className={`help-centre-message ${message.role}`} key={message.id}>
               <span>{message.role === "assistant" ? "Helper" : "You"}</span>
