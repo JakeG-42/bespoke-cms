@@ -1071,6 +1071,64 @@
   transform: translateY(-2px);
 }
 
+.puck-help-article-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: center;
+  padding: clamp(1rem, 2vw, var(--builder-element-padding, 1.2rem));
+  border: 1px solid #e8ebe7;
+  border-radius: var(--builder-element-border-radius, 18px);
+  background: var(--builder-surface-fill, #f8faf9);
+  color: var(--builder-section-text, #032536);
+  text-decoration: none;
+  box-shadow: 0 10px 24px rgba(20, 35, 28, 0.05);
+  transition:
+    background-color var(--andersen-hover-duration, 300ms) var(--andersen-hover-ease, ease),
+    border-color var(--andersen-hover-duration, 300ms) var(--andersen-hover-ease, ease),
+    box-shadow var(--andersen-hover-duration, 300ms) var(--andersen-hover-ease, ease),
+    transform var(--andersen-hover-duration, 300ms) var(--andersen-hover-ease, ease);
+}
+
+.puck-help-article-card:hover,
+.puck-help-article-card:focus-visible {
+  border-color: #d8ddd6;
+  background: #ffffff;
+  box-shadow: 0 16px 32px rgba(20, 35, 28, 0.08);
+  outline: 0;
+  transform: translateY(-2px);
+}
+
+.puck-help-article-card > span {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.puck-help-article-card strong {
+  color: #032536;
+  font-size: clamp(1rem, 1.4vw, 1.16rem);
+  font-weight: 850;
+  line-height: 1.25;
+}
+
+.puck-help-article-card em {
+  color: color-mix(in srgb, #032536 70%, transparent);
+  font-size: 0.94rem;
+  font-style: normal;
+  line-height: 1.45;
+}
+
+.puck-help-article-card small {
+  color: #355b45;
+  font-size: 0.82rem;
+  font-weight: 850;
+  white-space: nowrap;
+}
+
+.puck-help-article-card small::after {
+  content: " ->";
+}
+
 .puck-help-faq-card summary {
   position: relative;
   display: grid;
@@ -1183,6 +1241,102 @@
 
 .puck-theme-andersenEV .puck-help-faq-card {
   background: #f8faf9;
+}
+
+.help-article-page {
+  min-height: 100vh;
+  padding: clamp(2.25rem, 5vw, 5rem) 0 clamp(4rem, 8vw, 7rem);
+  background: #ffffff;
+  color: #032536;
+  font-family: "Muli", Arial, Helvetica, sans-serif;
+}
+
+.help-article-shell {
+  width: min(880px, calc(100% - 96px));
+  margin: 0 auto;
+}
+
+.help-article-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+  color: #355b45;
+  font-size: 0.92rem;
+  font-weight: 850;
+  text-decoration: none;
+}
+
+.help-article-back::before {
+  content: "<-";
+}
+
+.help-article-back:hover,
+.help-article-back:focus-visible {
+  color: #111613;
+  text-decoration: underline;
+}
+
+.help-article-kicker {
+  margin: 0 0 0.65rem;
+  color: color-mix(in srgb, #032536 58%, transparent);
+  font-size: 0.78rem;
+  font-weight: 850;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.help-article-shell h1 {
+  max-width: 780px;
+  margin: 0;
+  color: #032536;
+  font-size: clamp(2.35rem, 6vw, 4.6rem);
+  font-weight: 850;
+  line-height: 0.98;
+  letter-spacing: 0;
+}
+
+.help-article-summary {
+  max-width: 720px;
+  margin: 1.2rem 0 0;
+  color: color-mix(in srgb, #032536 72%, transparent);
+  font-size: clamp(1.06rem, 2vw, 1.24rem);
+  line-height: 1.55;
+}
+
+.help-article-body {
+  display: grid;
+  gap: 1rem;
+  margin-top: clamp(2rem, 4vw, 3rem);
+  color: color-mix(in srgb, #032536 82%, transparent);
+  font-size: clamp(1rem, 1.5vw, 1.08rem);
+  line-height: 1.7;
+}
+
+.help-article-body p,
+.help-article-body ul {
+  margin: 0;
+}
+
+.help-article-body ul {
+  display: grid;
+  gap: 0.45rem;
+  padding-left: 1.2rem;
+}
+
+.help-article-source {
+  display: inline-flex;
+  margin-top: 2rem;
+  color: #355b45;
+  font-size: 0.92rem;
+  font-weight: 850;
+  text-decoration: none;
+}
+
+.help-article-source:hover,
+.help-article-source:focus-visible {
+  color: #111613;
+  text-decoration: underline;
 }
 
 .help-centre-chat {
@@ -2258,6 +2412,10 @@
     grid-template-columns: 1fr;
   }
 
+  .puck-help-article-card {
+    grid-template-columns: 1fr;
+  }
+
   .puck-help-faq-card summary small {
     justify-self: start;
   }
@@ -2270,6 +2428,10 @@
 
   .puck-help-category-card {
     min-height: auto;
+  }
+
+  .help-article-shell {
+    width: calc(100% - 32px);
   }
 
   .puck-site-header .puck-actions {

@@ -4,6 +4,7 @@ import { ChevronDown, CircleHelp, HardHat, Headphones, LifeBuoy, PlugZap, Search
 import Link from "next/link";
 
 import { HelpCentreChat } from "@/components/help-centre/HelpCentreChat";
+import { getHelpArticlePath } from "@/lib/help-centre/article-routing";
 import type {
   BuilderAdvancedStyle,
   BuilderConfig,
@@ -670,49 +671,6 @@ function HelpCategoryIcon({ icon }: { icon?: string }) {
 function getAnchorId(anchor: string | undefined) {
   const normalized = textValue(anchor).replace(/^#/, "").trim();
   return normalized || undefined;
-}
-
-function getHelpArticleStatus(status: BuilderHelpArticleStatus | undefined) {
-  if (status === "needsConfirmation") {
-    return "Needs confirmation";
-  }
-
-  if (status === "draft") {
-    return "Draft";
-  }
-
-  return "Ready";
-}
-
-function renderHelpArticleBody(body: string | undefined) {
-  const chunks = textValue(body)
-    .split(/\n{2,}/)
-    .map((chunk) => chunk.trim())
-    .filter(Boolean);
-
-  if (!chunks.length) {
-    return null;
-  }
-
-  return chunks.map((chunk, index) => {
-    const lines = chunk
-      .split("\n")
-      .map((line) => line.trim())
-      .filter(Boolean);
-    const isList = lines.length > 1 && lines.every((line) => line.startsWith("- "));
-
-    if (isList) {
-      return (
-        <ul key={`${chunk.slice(0, 12)}-${index}`}>
-          {lines.map((line) => (
-            <li key={line}>{line.replace(/^- /, "")}</li>
-          ))}
-        </ul>
-      );
-    }
-
-    return <p key={`${chunk.slice(0, 12)}-${index}`}>{lines.join(" ")}</p>;
-  });
 }
 
 function getFeaturedProducts(metadata: Record<string, unknown>): BuilderProduct[] {
@@ -1393,7 +1351,7 @@ export const builderConfig: BuilderConfig = {
         },
         ...sharedDesignFields,
       },
-      label: "Help FAQ section",
+      label: "Help article list",
       render: (props) => {
         const articles = arrayValue<NonNullable<typeof props.articles>[number]>(props.articles);
         const sectionId = getAnchorId(props.anchor);
@@ -1412,26 +1370,16 @@ export const builderConfig: BuilderConfig = {
             </div>
             <div className="puck-help-faq-list">
               {articles.map((article, index) => {
-                const status = article.status ?? "ready";
+                const href = previewHref(getHelpArticlePath(sectionId, article.title), props.puck.metadata) || "#";
 
                 return (
-                  <details className={`puck-help-faq-card puck-help-faq-status-${status}`} key={`${textValue(article.title, "article")}-${index}`}>
-                    <summary>
-                      <span>
-                        <strong>{textValue(article.title, "Help article")}</strong>
-                        {textValue(article.summary) ? <em>{textValue(article.summary)}</em> : null}
-                      </span>
-                      <small>{getHelpArticleStatus(status)}</small>
-                    </summary>
-                    <div className="puck-help-faq-body">
-                      {renderHelpArticleBody(article.body)}
-                      {textValue(article.sourceUrl) ? (
-                        <a className="puck-help-faq-source" href={previewHref(article.sourceUrl, props.puck.metadata)} rel="noreferrer" target="_blank">
-                          Source
-                        </a>
-                      ) : null}
-                    </div>
-                  </details>
+                  <a className="puck-help-article-card" href={href} key={`${textValue(article.title, "article")}-${index}`}>
+                    <span>
+                      <strong>{textValue(article.title, "Help article")}</strong>
+                      {textValue(article.summary) ? <em>{textValue(article.summary)}</em> : null}
+                    </span>
+                    <small>Read article</small>
+                  </a>
                 );
               })}
             </div>
