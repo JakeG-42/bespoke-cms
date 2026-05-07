@@ -117,7 +117,7 @@ async function generateGeminiText(messages: ChatMessage[], knowledgeMatches: Ret
     return fallbackKnowledgeReply(knowledgeMatches) || fallbackAssistantReply(messages);
   }
 
-  const model = process.env.GEMINI_MODEL || "gemini-3-flash-preview";
+  const model = process.env.GEMINI_MODEL || "gemini-2.5-flash-lite";
   const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
     body: JSON.stringify({
       contents: messages
