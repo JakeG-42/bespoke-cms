@@ -13,12 +13,8 @@ import { Media } from "./src/payload/collections/Media.ts";
 import { Menus } from "./src/payload/collections/Menus.ts";
 import { PageTemplates } from "./src/payload/collections/PageTemplates.ts";
 import { Pages } from "./src/payload/collections/Pages.ts";
-import { ProductCategories } from "./src/payload/collections/ProductCategories.ts";
-import { Products } from "./src/payload/collections/Products.ts";
 import { SupportTickets } from "./src/payload/collections/SupportTickets.ts";
 import { Themes } from "./src/payload/collections/Themes.ts";
-import { Footer } from "./src/payload/globals/Footer.ts";
-import { Navigation } from "./src/payload/globals/Navigation.ts";
 import { SiteSettings } from "./src/payload/globals/SiteSettings.ts";
 import { ThemeSettings } from "./src/payload/globals/ThemeSettings.ts";
 
@@ -150,8 +146,6 @@ export default buildConfig({
     user: ConsoleUsers.slug,
   },
   collections: [
-    Products,
-    ProductCategories,
     HelpCategories,
     HelpArticles,
     Pages,
@@ -174,7 +168,7 @@ export default buildConfig({
     disable: true,
   },
   editor: lexicalEditor(),
-  globals: [ThemeSettings, SiteSettings, Navigation, Footer],
+  globals: [ThemeSettings, SiteSettings],
   routes: {
     admin: "/console",
     api: "/console-api",

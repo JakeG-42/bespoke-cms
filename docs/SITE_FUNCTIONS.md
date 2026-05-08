@@ -17,7 +17,6 @@ Concise reference for the Andersen EV Help Centre application.
 - Menus manage editable navigation data for the Puck header.
 - Support tickets store AI-helper escalations and support-team summaries.
 - Themes and page templates control whole-site visual direction.
-- Code snippets provide scoped custom CSS where a managed override is safer than changing source code.
 
 ## Storage
 

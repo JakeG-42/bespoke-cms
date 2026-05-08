@@ -128,7 +128,6 @@ export async function VisualBuilderView({ doc, initPageResult }: DocumentViewSer
         builderData={applyThemeToBuilderData(articleToBuilderData(article), activeTheme)}
         documentId={String(page.id)}
         documentKind="helpArticle"
-        featuredProducts={[]}
         headerPath={articleMeta.path}
         helpArticle={articleMeta}
         helpArticles={helpArticles}
@@ -155,7 +154,6 @@ export async function VisualBuilderView({ doc, initPageResult }: DocumentViewSer
       builderData={applyThemeToBuilderData(pageToBuilderData(page), activeTheme)}
       documentId={String(page.id)}
       documentKind="page"
-      featuredProducts={[]}
       headerPath={slug === "home" ? "/" : `/${slug}`}
       menus={menus}
       pageTemplates={pageTemplates}

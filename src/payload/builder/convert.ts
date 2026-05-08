@@ -32,6 +32,10 @@ function asString(value: unknown, fallback = "") {
   return typeof value === "string" ? value : fallback;
 }
 
+function itemType(item: UnknownRecord) {
+  return asString(item.type);
+}
+
 function asNumber(value: unknown, fallback: number) {
   return typeof value === "number" && Number.isFinite(value) ? value : fallback;
 }
@@ -251,8 +255,8 @@ function isLegacyGeneratedArticleBuilderData(data: BuilderData) {
     const props: UnknownRecord = isRecord(item.props) ? item.props : {};
 
     return (
-      (item.type === "HelpArticleContentBlock" && props.id === "article-builder-intro") ||
-      (item.type === "RichTextBlock" && typeof props.id === "string" && props.id.startsWith("article-body-"))
+      (itemType(item) === "HelpArticleContentBlock" && props.id === "article-builder-intro") ||
+      (itemType(item) === "RichTextBlock" && typeof props.id === "string" && props.id.startsWith("article-body-"))
     );
   });
 }
@@ -335,7 +339,9 @@ function getItemProps(item: UnknownRecord | undefined) {
 }
 
 function isOldArticleLayoutPiece(item: UnknownRecord) {
-  return item.type === "HelpArticleContentBlock" || item.type === "HelpRelatedArticlesBlock" || item.type === "HelpOtherCategoriesBlock";
+  const type = itemType(item);
+
+  return type === "HelpArticleContentBlock" || type === "HelpRelatedArticlesBlock" || type === "HelpOtherCategoriesBlock";
 }
 
 function withArticleLayout(data: BuilderData, article: HelpArticleLike): BuilderData {
@@ -348,10 +354,10 @@ function withArticleLayout(data: BuilderData, article: HelpArticleLike): Builder
     };
   }
 
-  const articleContentIndex = data.content.findIndex((item) => item.type === "HelpArticleContentBlock");
+  const articleContentIndex = data.content.findIndex((item) => itemType(item) === "HelpArticleContentBlock");
   const articleContentItem = articleContentIndex >= 0 ? data.content[articleContentIndex] : undefined;
-  const relatedArticlesItem = data.content.find((item) => item.type === "HelpRelatedArticlesBlock");
-  const otherCategoriesItem = data.content.find((item) => item.type === "HelpOtherCategoriesBlock");
+  const relatedArticlesItem = data.content.find((item) => itemType(item) === "HelpRelatedArticlesBlock");
+  const otherCategoriesItem = data.content.find((item) => itemType(item) === "HelpOtherCategoriesBlock");
   const articleProps = getItemProps(articleContentItem);
   const layoutBlock = articleLayoutBlock(article, asString(articleProps.body, publicArticleBody(asString(article.body))), {
     articleProps,
@@ -382,7 +388,7 @@ function createArticleBuilderData(article: HelpArticleLike, body = publicArticle
 }
 
 export function articleToBuilderData(article: HelpArticleLike): BuilderData {
-  const existingBuilderData = normalizeBuilderData(article.builderData);
+  const existingBuilderData = normalizeBuilderData(article.builderData, { includeRetiredArticleBlocks: true });
 
   if (existingBuilderData) {
     const nextBuilderData = isLegacyGeneratedArticleBuilderData(existingBuilderData)
@@ -395,22 +401,33 @@ export function articleToBuilderData(article: HelpArticleLike): BuilderData {
   return createArticleBuilderData(article);
 }
 
-export function normalizeBuilderData(value: unknown): BuilderData | null {
+function isRetiredBuilderBlock(item: UnknownRecord, { includeRetiredArticleBlocks = false }: { includeRetiredArticleBlocks?: boolean } = {}) {
+  if (item.type === "ProductGridBlock") {
+    return true;
+  }
+
+  return !includeRetiredArticleBlocks && isOldArticleLayoutPiece(item);
+}
+
+export function normalizeBuilderData(value: unknown, options: { includeRetiredArticleBlocks?: boolean } = {}): BuilderData | null {
   if (!isRecord(value) || !Array.isArray(value.content) || !isRecord(value.root)) {
     return null;
   }
 
   return {
-    content: value.content.filter(isRecord).map((item) => {
-      if (!isRecord(item.props)) {
-        return item;
-      }
+    content: value.content
+      .filter(isRecord)
+      .filter((item) => !isRetiredBuilderBlock(item, options))
+      .map((item) => {
+        if (!isRecord(item.props)) {
+          return item;
+        }
 
-      return {
-        ...item,
-        props: groupedDesignProps(item.props),
-      };
-    }) as BuilderData["content"],
+        return {
+          ...item,
+          props: groupedDesignProps(item.props),
+        };
+      }) as BuilderData["content"],
     root: value.root as BuilderData["root"],
     zones: isRecord(value.zones) ? (value.zones as BuilderData["zones"]) : {},
   };
@@ -499,17 +516,7 @@ export function pageToBuilderData(page: PageLike): BuilderData {
       }
 
       if (block.blockType === "productGrid") {
-        return {
-          props: {
-            ...design,
-            columns: asString(block.columns, "3"),
-            heading: asString(block.heading, "Products"),
-            id,
-            intro: asString(block.intro),
-            mode: asString(block.mode, "featured") === "manual" ? "manual" : "featured",
-          },
-          type: "ProductGridBlock",
-        };
+        return null;
       }
 
       if (block.blockType === "gallery") {
@@ -577,7 +584,7 @@ export function pageToBuilderData(page: PageLike): BuilderData {
         },
         type: "CallToActionBlock",
       };
-    }) as BuilderData["content"],
+    }).filter(Boolean) as BuilderData["content"],
     root: {
       props: rootProps(page),
     },

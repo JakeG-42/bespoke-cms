@@ -61,7 +61,6 @@ export default async function HelpArticlePage({ params }: HelpArticlePageProps) 
       {helpArticle.builderData ? (
         <PuckBuilderRenderer
           data={helpArticle.builderData}
-          featuredProducts={[]}
           helpArticle={helpArticle}
           helpArticles={helpCategory.articles}
           helpCategories={data.categories}
@@ -71,7 +70,6 @@ export default async function HelpArticlePage({ params }: HelpArticlePageProps) 
       ) : data.templateData ? (
         <PuckBuilderRenderer
           data={data.templateData}
-          featuredProducts={[]}
           helpArticle={helpArticle}
           helpArticles={helpCategory.articles}
           helpCategories={data.categories}
@@ -80,7 +78,7 @@ export default async function HelpArticlePage({ params }: HelpArticlePageProps) 
         />
       ) : data.headerData ? (
         <div className="help-article-header">
-          <PuckBuilderRenderer data={data.headerData} featuredProducts={[]} menus={data.menus} />
+          <PuckBuilderRenderer data={data.headerData} menus={data.menus} />
         </div>
       ) : null}
       {!helpArticle.builderData && !data.templateData ? <main className="help-article-page">

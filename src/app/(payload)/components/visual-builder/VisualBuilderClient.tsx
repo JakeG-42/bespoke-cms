@@ -6,7 +6,7 @@ import { type FormEvent, type ReactNode, useState } from "react";
 
 import { applyThemeToBuilderData, getDefaultBuilderTheme } from "@/payload/builder/metadata";
 import { builderConfig } from "@/payload/builder/puck-config";
-import type { BuilderData, BuilderHelpArticle, BuilderHelpCategory, BuilderMenu, BuilderPageTemplate, BuilderProduct, BuilderTheme } from "@/payload/builder/types";
+import type { BuilderData, BuilderHelpArticle, BuilderHelpCategory, BuilderMenu, BuilderPageTemplate, BuilderTheme } from "@/payload/builder/types";
 
 type SaveState = "error" | "idle" | "saved" | "saving";
 
@@ -29,7 +29,6 @@ type VisualBuilderClientProps = {
   builderData: BuilderData;
   documentId: string;
   documentKind?: "helpArticle" | "page";
-  featuredProducts: BuilderProduct[];
   headerPath: string;
   helpArticle?: BuilderHelpArticle | null;
   helpArticles?: BuilderHelpArticle[];
@@ -228,7 +227,6 @@ export function VisualBuilderClient({
   builderData,
   documentId,
   documentKind = "page",
-  featuredProducts,
   headerPath,
   helpArticle,
   helpArticles = [],
@@ -423,7 +421,7 @@ export function VisualBuilderClient({
           waitForStyles: true,
         }}
         key={`${documentKind}-${documentId}-${selectedThemeId}`}
-        metadata={{ featuredProducts, helpArticle, helpArticles, helpCategories, helpCategory, menus, pageTemplates, themes }}
+        metadata={{ helpArticle, helpArticles, helpCategories, helpCategory, menus, pageTemplates, themes }}
         onPublish={save}
         overrides={{ headerActions: HeaderActionsOverride }}
         plugins={editorPlugins}

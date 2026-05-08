@@ -165,7 +165,6 @@ export async function WysiwygPageView({ initPageResult, params }: AdminViewServe
         builderData={applyThemeToBuilderData(articleToBuilderData(article), activeTheme)}
         documentId={String(article.id)}
         documentKind="helpArticle"
-        featuredProducts={[]}
         headerPath={articleMeta.path}
         helpArticle={articleMeta}
         helpArticles={helpArticles}
@@ -208,7 +207,6 @@ export async function WysiwygPageView({ initPageResult, params }: AdminViewServe
       builderData={applyThemeToBuilderData(pageToBuilderData(page), activeTheme)}
       documentId={String(page.id)}
       documentKind="page"
-      featuredProducts={[]}
       headerPath={slug === "home" ? "/" : `/${slug}`}
       menus={menus}
       pageTemplates={pageTemplates}

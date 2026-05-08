@@ -6,7 +6,6 @@ import { DownloadsBlock } from "./Downloads.ts";
 import { GalleryBlock } from "./Gallery.ts";
 import { HeroBlock } from "./Hero.ts";
 import { ImageTextBlock } from "./ImageText.ts";
-import { ProductGridBlock } from "./ProductGrid.ts";
 import { RichTextBlock } from "./RichText.ts";
 import { SpecTableBlock } from "./SpecTable.ts";
 
@@ -15,7 +14,6 @@ export const pageBlocks: Block[] = [
   RichTextBlock,
   ImageTextBlock,
   CardGridBlock,
-  ProductGridBlock,
   GalleryBlock,
   DownloadsBlock,
   SpecTableBlock,

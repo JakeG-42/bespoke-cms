@@ -67,8 +67,6 @@ export interface Config {
   };
   blocks: {};
   collections: {
-    products: Product;
-    'product-categories': ProductCategory;
     pages: Page;
     'support-tickets': SupportTicket;
     themes: Theme;
@@ -84,8 +82,6 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
-    products: ProductsSelect<false> | ProductsSelect<true>;
-    'product-categories': ProductCategoriesSelect<false> | ProductCategoriesSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     'support-tickets': SupportTicketsSelect<false> | SupportTicketsSelect<true>;
     themes: ThemesSelect<false> | ThemesSelect<true>;
@@ -106,14 +102,10 @@ export interface Config {
   globals: {
     'theme-settings': ThemeSetting;
     'site-settings': SiteSetting;
-    navigation: Navigation;
-    footer: Footer;
   };
   globalsSelect: {
     'theme-settings': ThemeSettingsSelect<false> | ThemeSettingsSelect<true>;
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
-    navigation: NavigationSelect<false> | NavigationSelect<true>;
-    footer: FooterSelect<false> | FooterSelect<true>;
   };
   locale: null;
   widgets: {
@@ -142,90 +134,6 @@ export interface ConsoleUserAuthOperations {
     email: string;
     password: string;
   };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "products".
- */
-export interface Product {
-  id: number;
-  name: string;
-  /**
-   * Lowercase URL segment. Use letters, numbers and hyphens.
-   */
-  slug: string;
-  status: 'draft' | 'published';
-  featured?: boolean | null;
-  category?: (number | null) | ProductCategory;
-  family: string;
-  template: 'website' | 'commerce' | 'workflow';
-  summary: string;
-  description: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  gallery?: (number | Media)[] | null;
-  highlights?:
-    | {
-        text: string;
-        id?: string | null;
-      }[]
-    | null;
-  specifications?:
-    | {
-        label: string;
-        value: string;
-        id?: string | null;
-      }[]
-    | null;
-  documents?: (number | Document)[] | null;
-  variants?:
-    | {
-        name: string;
-        details?: string | null;
-        sku?: string | null;
-        articleNumber?: string | null;
-        price?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  enquiryPrompt: string;
-  /**
-   * Optional search/social metadata. Leave blank to use the page title and summary.
-   */
-  seo?: {
-    title?: string | null;
-    description?: string | null;
-    image?: (number | null) | Media;
-  };
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "product-categories".
- */
-export interface ProductCategory {
-  id: number;
-  name: string;
-  /**
-   * Lowercase URL segment. Use letters, numbers and hyphens.
-   */
-  slug: string;
-  description?: string | null;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -373,19 +281,6 @@ export interface Page {
         id?: string | null;
         blockName?: string | null;
         blockType: 'cardGrid';
-      }
-    | {
-        heading: string;
-        intro?: string | null;
-        mode: 'featured' | 'manual';
-        products?: (number | Product)[] | null;
-        backgroundStyle: 'default' | 'panel' | 'soft' | 'contrast';
-        spacing: 'compact' | 'normal' | 'spacious';
-        alignment: 'left' | 'center';
-        columns: '2' | '3' | '4';
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'productGrid';
       }
     | {
         heading?: string | null;
@@ -660,14 +555,6 @@ export interface PayloadLockedDocument {
   id: number;
   document?:
     | ({
-        relationTo: 'products';
-        value: number | Product;
-      } | null)
-    | ({
-        relationTo: 'product-categories';
-        value: number | ProductCategory;
-      } | null)
-    | ({
         relationTo: 'pages';
         value: number | Page;
       } | null)
@@ -740,67 +627,6 @@ export interface PayloadMigration {
   batch?: number | null;
   updatedAt: string;
   createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "products_select".
- */
-export interface ProductsSelect<T extends boolean = true> {
-  name?: T;
-  slug?: T;
-  status?: T;
-  featured?: T;
-  category?: T;
-  family?: T;
-  template?: T;
-  summary?: T;
-  description?: T;
-  gallery?: T;
-  highlights?:
-    | T
-    | {
-        text?: T;
-        id?: T;
-      };
-  specifications?:
-    | T
-    | {
-        label?: T;
-        value?: T;
-        id?: T;
-      };
-  documents?: T;
-  variants?:
-    | T
-    | {
-        name?: T;
-        details?: T;
-        sku?: T;
-        articleNumber?: T;
-        price?: T;
-        id?: T;
-      };
-  enquiryPrompt?: T;
-  seo?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        image?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "product-categories_select".
- */
-export interface ProductCategoriesSelect<T extends boolean = true> {
-  name?: T;
-  slug?: T;
-  description?: T;
-  updatedAt?: T;
-  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -888,20 +714,6 @@ export interface PagesSelect<T extends boolean = true> {
                         };
                     id?: T;
                   };
-              backgroundStyle?: T;
-              spacing?: T;
-              alignment?: T;
-              columns?: T;
-              id?: T;
-              blockName?: T;
-            };
-        productGrid?:
-          | T
-          | {
-              heading?: T;
-              intro?: T;
-              mode?: T;
-              products?: T;
               backgroundStyle?: T;
               spacing?: T;
               alignment?: T;
@@ -1222,59 +1034,6 @@ export interface SiteSetting {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "navigation".
- */
-export interface Navigation {
-  id: number;
-  primary?:
-    | {
-        label: string;
-        url: string;
-        id?: string | null;
-      }[]
-    | null;
-  utility?:
-    | {
-        label: string;
-        url: string;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "footer".
- */
-export interface Footer {
-  id: number;
-  intro?: string | null;
-  linkGroups?:
-    | {
-        heading: string;
-        links?:
-          | {
-              label: string;
-              url: string;
-              id?: string | null;
-            }[]
-          | null;
-        id?: string | null;
-      }[]
-    | null;
-  legalLinks?:
-    | {
-        label: string;
-        url: string;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "theme-settings_select".
  */
 export interface ThemeSettingsSelect<T extends boolean = true> {
@@ -1300,59 +1059,6 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         title?: T;
         description?: T;
         image?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "navigation_select".
- */
-export interface NavigationSelect<T extends boolean = true> {
-  primary?:
-    | T
-    | {
-        label?: T;
-        url?: T;
-        id?: T;
-      };
-  utility?:
-    | T
-    | {
-        label?: T;
-        url?: T;
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "footer_select".
- */
-export interface FooterSelect<T extends boolean = true> {
-  intro?: T;
-  linkGroups?:
-    | T
-    | {
-        heading?: T;
-        links?:
-          | T
-          | {
-              label?: T;
-              url?: T;
-              id?: T;
-            };
-        id?: T;
-      };
-  legalLinks?:
-    | T
-    | {
-        label?: T;
-        url?: T;
-        id?: T;
       };
   updatedAt?: T;
   createdAt?: T;

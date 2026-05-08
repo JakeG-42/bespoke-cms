@@ -49,14 +49,13 @@ export default async function HelpCategoryPage({ params }: HelpCategoryPageProps
       {data.templateData ? (
         <PuckBuilderRenderer
           data={data.templateData}
-          featuredProducts={[]}
           helpArticles={helpCategory.articles}
           helpCategory={helpCategory}
           menus={data.menus}
         />
       ) : data.headerData ? (
         <div className="help-category-header">
-          <PuckBuilderRenderer data={data.headerData} featuredProducts={[]} menus={data.menus} />
+          <PuckBuilderRenderer data={data.headerData} menus={data.menus} />
         </div>
       ) : null}
       {!data.templateData ? <main className="help-category-page">

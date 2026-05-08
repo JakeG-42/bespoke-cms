@@ -132,7 +132,6 @@ export async function PayloadSitePage({
     return (
       <PuckBuilderRenderer
         data={themedBuilderData}
-        featuredProducts={[]}
         hideHelpArticleSections={slug === "help-centre"}
         internalLinkBasePath={internalLinkBasePath}
         menus={menus}

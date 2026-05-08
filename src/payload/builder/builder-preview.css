@@ -2085,7 +2085,7 @@
   margin-top: 0;
 }
 
-.puck-section h1 {
+.puck-section:not(.puck-help-article-template):not(.puck-help-category-template) > h1 {
   max-width: 12ch;
   margin-bottom: 1rem;
   font-size: var(--builder-heading-size, clamp(2.65rem, 7vw, 6rem));
@@ -2093,14 +2093,15 @@
   line-height: 0.96;
 }
 
-.puck-section h2 {
+.puck-section > h2,
+.puck-section > .puck-section-heading h2 {
   margin-bottom: 0.85rem;
   font-size: var(--builder-heading-size, clamp(2rem, 4vw, 3.7rem));
   font-weight: var(--builder-font-weight, 850);
   line-height: 1;
 }
 
-.puck-section h3 {
+.puck-section > h3 {
   margin-bottom: 0.55rem;
   font-size: var(--builder-subheading-size, 1.12rem);
   font-weight: var(--builder-font-weight, 850);
@@ -2122,7 +2123,8 @@
   line-height: 1.12;
 }
 
-.puck-section p {
+.puck-section > p,
+.puck-section > .puck-section-heading p {
   max-width: 64ch;
   color: color-mix(in srgb, var(--builder-section-text) 78%, transparent);
   font-size: var(--builder-body-size, 1rem);

@@ -272,28 +272,6 @@ export async function getBuilderMenus(payload: Payload): Promise<BuilderMenu[]> 
   const menus: BuilderMenu[] = [];
 
   try {
-    const navigation = await payload.findGlobal({
-      depth: 0,
-      slug: "navigation",
-    });
-
-    menus.push(
-      {
-        handle: "primary",
-        items: normalizeMenuItems(navigation.primary),
-        title: "Primary navigation",
-      },
-      {
-        handle: "utility",
-        items: normalizeMenuItems(navigation.utility),
-        title: "Utility navigation",
-      },
-    );
-  } catch (error) {
-    console.error("Unable to load Payload navigation menus.", error);
-  }
-
-  try {
     const result = await payload.find({
       collection: "menus",
       depth: 0,

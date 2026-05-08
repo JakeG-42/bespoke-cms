@@ -2,11 +2,10 @@ import { Render } from "@puckeditor/core/rsc";
 
 import { normalizeBuilderData } from "@/payload/builder/convert";
 import { builderConfig } from "@/payload/builder/puck-config";
-import type { BuilderHelpArticle, BuilderHelpCategory, BuilderMenu, BuilderProduct } from "@/payload/builder/types";
+import type { BuilderHelpArticle, BuilderHelpCategory, BuilderMenu } from "@/payload/builder/types";
 
 export function PuckBuilderRenderer({
   data,
-  featuredProducts,
   helpArticle,
   helpArticles,
   helpCategories,
@@ -17,7 +16,6 @@ export function PuckBuilderRenderer({
   routeSlug,
 }: {
   data: unknown;
-  featuredProducts: BuilderProduct[];
   helpArticle?: BuilderHelpArticle | null;
   helpArticles?: BuilderHelpArticle[];
   helpCategories?: BuilderHelpCategory[];
@@ -37,7 +35,7 @@ export function PuckBuilderRenderer({
     <Render
       config={builderConfig}
       data={builderData}
-      metadata={{ featuredProducts, helpArticle, helpArticles, helpCategories, helpCategory, hideHelpArticleSections, internalLinkBasePath, menus, routeSlug }}
+      metadata={{ helpArticle, helpArticles, helpCategories, helpCategory, hideHelpArticleSections, internalLinkBasePath, menus, routeSlug }}
     />
   );
 }

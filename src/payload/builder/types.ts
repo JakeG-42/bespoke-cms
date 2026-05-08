@@ -116,13 +116,6 @@ export type BuilderLink = {
   url?: string;
 };
 
-export type BuilderProduct = {
-  family?: string;
-  name: string;
-  slug: string;
-  summary?: string;
-};
-
 export type BuilderHelpCategory = {
   description?: string;
   heading?: string;
@@ -257,18 +250,6 @@ export type BuilderComponents = {
     intro?: string;
     title?: string;
   };
-  HelpArticleContentBlock: BuilderAdvancedStyle & {
-    backLabel?: string;
-    body?: string;
-    emptyMessage?: string;
-    heading?: string;
-    sourceLabel?: string;
-    sourceUrl?: string;
-    showBody?: boolean;
-    showBackLink?: boolean;
-    showSourceUrl?: boolean;
-    summary?: string;
-  };
   HelpArticleLayoutBlock: BuilderAdvancedStyle & {
     backLabel?: string;
     body?: string;
@@ -290,20 +271,6 @@ export type BuilderComponents = {
     sourceLabel?: string;
     sourceUrl?: string;
     summary?: string;
-  };
-  HelpOtherCategoriesBlock: BuilderAdvancedStyle & {
-    columns?: "2" | "3";
-    emptyMessage?: string;
-    heading?: string;
-    intro?: string;
-    showCurrentCategory?: boolean;
-  };
-  HelpRelatedArticlesBlock: BuilderAdvancedStyle & {
-    emptyMessage?: string;
-    heading?: string;
-    intro?: string;
-    limit?: number;
-    showCategoryLabel?: boolean;
   };
   HelpCategoryArticlesBlock: BuilderAdvancedStyle & {
     backLabel?: string;
@@ -351,12 +318,6 @@ export type BuilderComponents = {
     menuHandle?: string;
     orientation?: "horizontal" | "vertical";
     showHeading?: boolean;
-  };
-  ProductGridBlock: BuilderAdvancedStyle & {
-    columns?: "2" | "3" | "4";
-    heading: string;
-    intro?: string;
-    mode?: "featured" | "manual";
   };
   RichTextBlock: BuilderAdvancedStyle & {
     body: string;
