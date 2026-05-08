@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import config from "@payload-config";
-import { getPayload, type Payload, type Where } from "payload";
+import { getPayload, type Payload } from "payload";
 
 import { PuckBuilderRenderer } from "@/components/payload/puck-builder-renderer";
 import {
@@ -11,7 +11,7 @@ import {
   getPageBuilderTheme,
 } from "@/payload/builder/metadata";
 import { normalizeBuilderData } from "@/payload/builder/convert";
-import type { BuilderMenu, BuilderTheme, BuilderThemeSettings } from "@/payload/builder/types";
+import type { BuilderMenu, BuilderTheme } from "@/payload/builder/types";
 import type { Page } from "@/payload-types";
 import { absoluteUrl } from "@/lib/seo";
 
@@ -58,91 +58,10 @@ async function getPayloadPage(payload: Payload, slug: string): Promise<Page | nu
   return result.docs[0] ?? null;
 }
 
-function numericId(value: number | string | undefined) {
-  if (typeof value === "number") {
-    return value;
-  }
-
-  return typeof value === "string" && /^\d+$/.test(value) ? Number(value) : undefined;
-}
-
-async function getCustomCss(payload: Payload, { pageId, themeId }: { pageId?: number | string; themeId?: number | string }) {
-  const orConditions: Where[] = [
-    {
-      scope: {
-        equals: "global",
-      },
-    },
-  ];
-  const numericThemeId = numericId(themeId);
-  const numericPageId = numericId(pageId);
-
-  if (numericThemeId) {
-    orConditions.push({
-      and: [
-        {
-          scope: {
-            equals: "theme",
-          },
-        },
-        {
-          theme: {
-            equals: numericThemeId,
-          },
-        },
-      ],
-    });
-  }
-
-  if (numericPageId) {
-    orConditions.push({
-      and: [
-        {
-          scope: {
-            equals: "page",
-          },
-        },
-        {
-          page: {
-            equals: numericPageId,
-          },
-        },
-      ],
-    });
-  }
-
-  const result = await payload.find({
-    collection: "code-snippets",
-    depth: 0,
-    limit: 50,
-    sort: "priority",
-    where: {
-      and: [
-        {
-          status: {
-            equals: "active",
-          },
-        },
-        {
-          or: orConditions,
-        },
-      ],
-    },
-  });
-
-  return result.docs
-    .map((snippet) => (snippet.css ? `/* ${snippet.title} */\n${snippet.css}` : ""))
-    .filter(Boolean)
-    .join("\n\n");
-}
-
 async function loadPayloadSite(slug: string): Promise<{
-  customCss: string;
   menus: BuilderMenu[];
   page: Page | null;
   theme: BuilderTheme;
-  themeSettings: BuilderThemeSettings;
-  themes: BuilderTheme[];
 }> {
   const payload = await getPayload({ config });
   const [page, menus, themes, themeSettings] = await Promise.all([
@@ -152,15 +71,11 @@ async function loadPayloadSite(slug: string): Promise<{
     getBuilderThemeSettings(payload),
   ]);
   const theme = getPageBuilderTheme(page, themes, themeSettings.themeId);
-  const customCss = page ? await getCustomCss(payload, { pageId: page.id, themeId: theme.id }).catch(() => "") : "";
 
   return {
-    customCss,
     menus,
     page,
     theme,
-    themeSettings,
-    themes,
   };
 }
 
@@ -208,7 +123,7 @@ export async function PayloadSitePage({
   internalLinkBasePath = "",
   slug,
 }: PayloadSiteRenderOptions) {
-  const { customCss, menus, page, theme } = await loadPayloadSite(slug);
+  const { menus, page, theme } = await loadPayloadSite(slug);
 
   if (page && "builderData" in page && page.builderData) {
     const builderData = normalizeBuilderData(page.builderData);
@@ -216,7 +131,6 @@ export async function PayloadSitePage({
 
     return (
       <PuckBuilderRenderer
-        customCss={customCss}
         data={themedBuilderData}
         featuredProducts={[]}
         hideHelpArticleSections={slug === "help-centre"}

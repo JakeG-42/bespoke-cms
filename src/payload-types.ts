@@ -74,7 +74,6 @@ export interface Config {
     'support-tickets': SupportTicket;
     themes: Theme;
     'page-templates': PageTemplate;
-    'code-snippets': CodeSnippet;
     menus: Menu;
     media: Media;
     documents: Document;
@@ -93,7 +92,6 @@ export interface Config {
     'support-tickets': SupportTicketsSelect<false> | SupportTicketsSelect<true>;
     themes: ThemesSelect<false> | ThemesSelect<true>;
     'page-templates': PageTemplatesSelect<false> | PageTemplatesSelect<true>;
-    'code-snippets': CodeSnippetsSelect<false> | CodeSnippetsSelect<true>;
     menus: MenusSelect<false> | MenusSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     documents: DocumentsSelect<false> | DocumentsSelect<true>;
@@ -714,45 +712,6 @@ export interface Post {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "code-snippets".
- */
-export interface CodeSnippet {
-  id: number;
-  title: string;
-  /**
-   * Short internal key, for example product-card-css.
-   */
-  handle: string;
-  status: 'active' | 'draft';
-  /**
-   * Choose where this CSS is allowed to run.
-   */
-  scope: 'global' | 'theme' | 'page';
-  /**
-   * Only used when the scope is One theme.
-   */
-  theme?: (number | null) | Theme;
-  /**
-   * Only used when the scope is One page.
-   */
-  page?: (number | null) | Page;
-  /**
-   * Lower numbers load first. Use this when one snippet needs to override another.
-   */
-  priority: number;
-  /**
-   * Custom CSS for the Help Centre site. JavaScript is intentionally not supported here.
-   */
-  css: string;
-  /**
-   * Internal note explaining what this snippet changes.
-   */
-  notes?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "support-tickets".
  */
 export interface SupportTicket {
@@ -904,10 +863,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'page-templates';
         value: number | PageTemplate;
-      } | null)
-    | ({
-        relationTo: 'code-snippets';
-        value: number | CodeSnippet;
       } | null)
     | ({
         relationTo: 'menus';
@@ -1426,23 +1381,6 @@ export interface PageTemplatesSelect<T extends boolean = true> {
   description?: T;
   theme?: T;
   builderData?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "code-snippets_select".
- */
-export interface CodeSnippetsSelect<T extends boolean = true> {
-  title?: T;
-  handle?: T;
-  status?: T;
-  scope?: T;
-  theme?: T;
-  page?: T;
-  priority?: T;
-  css?: T;
-  notes?: T;
   updatedAt?: T;
   createdAt?: T;
 }

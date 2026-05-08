@@ -6,7 +6,6 @@ import { buildConfig } from "payload";
 import { fileURLToPath } from "url";
 
 import { ConsoleUsers } from "./src/payload/collections/ConsoleUsers.ts";
-import { CodeSnippets } from "./src/payload/collections/CodeSnippets.ts";
 import { Documents } from "./src/payload/collections/Documents.ts";
 import { HelpArticles } from "./src/payload/collections/HelpArticles.ts";
 import { HelpCategories } from "./src/payload/collections/HelpCategories.ts";
@@ -161,7 +160,6 @@ export default buildConfig({
     SupportTickets,
     Themes,
     PageTemplates,
-    CodeSnippets,
     Menus,
     Media,
     Documents,

@@ -336,7 +336,6 @@
 
 #nav-themes,
 #nav-page-templates,
-#nav-code-snippets,
 #nav-menus,
 #nav-global-theme-settings {
   --console-group-accent: #fbbf24;
@@ -364,10 +363,6 @@
 #nav-page-templates,
 #nav-global-theme-settings {
   --console-nav-icon: var(--console-nav-icon-palette);
-}
-
-#nav-code-snippets {
-  --console-nav-icon: var(--console-nav-icon-code);
 }
 
 #nav-menus {

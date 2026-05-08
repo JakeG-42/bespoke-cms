@@ -1,7 +1,6 @@
 "use client";
 
 import { ChevronRight, Copy, FileCode2, Folder, RefreshCw, Search } from "lucide-react";
-import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
 type RepoTreeNode = {
@@ -223,7 +222,6 @@ export function CodeWorkspaceClient() {
           <h1>Code workspace</h1>
         </div>
         <div className="code-workspace-header-actions">
-          <Link href="/console/collections/code-snippets">Custom CSS snippets</Link>
           <button disabled={isTreeLoading} onClick={loadTree} type="button">
             <RefreshCw aria-hidden="true" size={15} />
             <span>Refresh</span>

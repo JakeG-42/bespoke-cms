@@ -5,7 +5,6 @@ import { builderConfig } from "@/payload/builder/puck-config";
 import type { BuilderHelpArticle, BuilderHelpCategory, BuilderMenu, BuilderProduct } from "@/payload/builder/types";
 
 export function PuckBuilderRenderer({
-  customCss,
   data,
   featuredProducts,
   helpArticle,
@@ -17,7 +16,6 @@ export function PuckBuilderRenderer({
   menus,
   routeSlug,
 }: {
-  customCss?: string;
   data: unknown;
   featuredProducts: BuilderProduct[];
   helpArticle?: BuilderHelpArticle | null;
@@ -36,17 +34,10 @@ export function PuckBuilderRenderer({
   }
 
   return (
-    <>
-      {customCss ? <style data-payload-code-editor dangerouslySetInnerHTML={{ __html: safeStyleCss(customCss) }} /> : null}
-      <Render
-        config={builderConfig}
-        data={builderData}
-        metadata={{ featuredProducts, helpArticle, helpArticles, helpCategories, helpCategory, hideHelpArticleSections, internalLinkBasePath, menus, routeSlug }}
-      />
-    </>
+    <Render
+      config={builderConfig}
+      data={builderData}
+      metadata={{ featuredProducts, helpArticle, helpArticles, helpCategories, helpCategory, hideHelpArticleSections, internalLinkBasePath, menus, routeSlug }}
+    />
   );
-}
-
-function safeStyleCss(css: string) {
-  return css.replace(/<\/style/gi, "<\\/style");
 }
