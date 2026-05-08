@@ -269,6 +269,20 @@ export type BuilderComponents = {
     showSourceUrl?: boolean;
     summary?: string;
   };
+  HelpOtherCategoriesBlock: BuilderAdvancedStyle & {
+    columns?: "2" | "3";
+    emptyMessage?: string;
+    heading?: string;
+    intro?: string;
+    showCurrentCategory?: boolean;
+  };
+  HelpRelatedArticlesBlock: BuilderAdvancedStyle & {
+    emptyMessage?: string;
+    heading?: string;
+    intro?: string;
+    limit?: number;
+    showCategoryLabel?: boolean;
+  };
   HelpCategoryArticlesBlock: BuilderAdvancedStyle & {
     backLabel?: string;
     emptyMessage?: string;

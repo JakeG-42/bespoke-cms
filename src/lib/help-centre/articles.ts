@@ -30,6 +30,7 @@ export type HelpCategory = BuilderHelpCategory & {
 
 export type HelpArticlePageData = {
   article: HelpArticle | null;
+  categories: HelpCategory[];
   category: HelpCategory | null;
   headerData: BuilderData | null;
   menus: Awaited<ReturnType<typeof getBuilderMenus>>;
@@ -101,16 +102,25 @@ function getThemedBuilderData(page: Page | null, themes: Awaited<ReturnType<type
 
 export async function getHelpArticlePageData(categorySlug: string, articleSlug: string): Promise<HelpArticlePageData> {
   const { articleTemplateData, fallbackBuilderData, menus, payload } = await getSharedHelpData();
-  const category = await getHelpCategoryFromCollection(payload, categorySlug);
-  const article = category ? await getHelpArticleFromCollection(payload, category, articleSlug) : null;
-  const fallbackArticles = fallbackBuilderData ? extractHelpArticles(fallbackBuilderData) : [];
+  const collectionCategories = await getPublishedHelpCategories(payload);
+  const fallbackCategories = fallbackBuilderData ? extractHelpCategories(fallbackBuilderData) : [];
+  const categories = collectionCategories.length ? collectionCategories : fallbackCategories;
+  const category = categories.find((item) => item.slug === categorySlug) ?? null;
+  const article = category?.articles.find((item) => item.slug === articleSlug) ?? null;
+  const fallbackArticles = fallbackCategories.flatMap((item) => item.articles);
   const fallbackArticle = fallbackArticles.find((item) => item.categorySlug === categorySlug && item.slug === articleSlug) ?? null;
   const resolvedArticle = article ?? fallbackArticle;
-  const resolvedCategory =
-    category ?? (fallbackBuilderData ? extractHelpCategories(fallbackBuilderData).find((item) => item.slug === categorySlug) ?? null : null);
+  const resolvedCategory = category ?? fallbackCategories.find((item) => item.slug === categorySlug) ?? null;
+  const resolvedArticleWithBuilderData = resolvedArticle
+    ? {
+        ...resolvedArticle,
+        builderData: articleToBuilderData(resolvedArticle),
+      }
+    : null;
 
   return {
-    article: resolvedArticle,
+    article: resolvedArticleWithBuilderData,
+    categories,
     category: resolvedCategory,
     headerData: fallbackBuilderData ? extractHeaderBuilderData(fallbackBuilderData) : null,
     menus,
@@ -132,7 +142,13 @@ export async function getHelpCategoryPageData(categorySlug: string): Promise<Hel
 }
 
 export async function getPublishedHelpKnowledgeArticles(): Promise<HelpArticle[]> {
-  const payload = await getPayload({ config });
+  const categories = await getPublishedHelpCategories();
+
+  return categories.flatMap((category) => category.articles);
+}
+
+export async function getPublishedHelpCategories(payloadOverride?: Payload): Promise<HelpCategory[]> {
+  const payload = payloadOverride ?? (await getPayload({ config }));
   const categoryResult = await payload.find({
     collection: HELP_CATEGORIES_COLLECTION,
     depth: 0,
@@ -144,9 +160,8 @@ export async function getPublishedHelpKnowledgeArticles(): Promise<HelpArticle[]
       },
     },
   });
-  const categories = await Promise.all(categoryResult.docs.map((category) => getHelpCategoryWithArticles(payload, category as unknown as UnknownRecord)));
 
-  return categories.flatMap((category) => category.articles);
+  return Promise.all(categoryResult.docs.map((category) => getHelpCategoryWithArticles(payload, category as unknown as UnknownRecord)));
 }
 
 async function getHelpCategoryFromCollection(payload: Payload, categorySlug: string): Promise<HelpCategory | null> {
@@ -202,37 +217,6 @@ async function getHelpCategoryWithArticles(payload: Payload, categoryDoc: Unknow
     ...category,
     articles: articleResult.docs.map((article) => mapArticleDoc(article as unknown as UnknownRecord, category)),
   };
-}
-
-async function getHelpArticleFromCollection(payload: Payload, category: HelpCategory, articleSlug: string): Promise<HelpArticle | null> {
-  const result = await payload.find({
-    collection: HELP_ARTICLES_COLLECTION,
-    depth: 0,
-    limit: 1,
-    where: {
-      and: [
-        {
-          slug: {
-            equals: articleSlug,
-          },
-        },
-        {
-          category: {
-            equals: category.id,
-          },
-        },
-        {
-          status: {
-            equals: "published",
-          },
-        },
-      ],
-    },
-  });
-
-  const article = result.docs[0];
-
-  return article ? mapArticleDoc(article as unknown as UnknownRecord, category) : null;
 }
 
 function mapCategoryDoc(doc: UnknownRecord): HelpCategory {

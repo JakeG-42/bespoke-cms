@@ -2,6 +2,7 @@ import type { AdminViewServerProps, Payload } from "payload";
 import Link from "next/link";
 
 import { getHelpArticlePath, getHelpCategoryPath } from "@/lib/help-centre/article-routing";
+import { getPublishedHelpCategories } from "@/lib/help-centre/articles";
 import { articleToBuilderData, pageToBuilderData } from "@/payload/builder/convert";
 import {
   applyThemeToBuilderData,
@@ -146,6 +147,12 @@ function getArticleMeta(article: Record<string, unknown>, category: BuilderHelpC
   };
 }
 
+function categoryArticlesForEditor(categories: { articles?: BuilderHelpArticle[]; slug: string }[], category: BuilderHelpCategory, article: BuilderHelpArticle) {
+  const categoryArticles = categories.find((item) => item.slug === category.slug)?.articles ?? [];
+
+  return categoryArticles.some((item) => item.slug === article.slug) ? categoryArticles : [article, ...categoryArticles];
+}
+
 export async function WysiwygPageView({ initPageResult, params }: AdminViewServerProps) {
   const target = getEditorTarget(params);
 
@@ -175,14 +182,17 @@ export async function WysiwygPageView({ initPageResult, params }: AdminViewServe
     const category = await getArticleCategory(payload, article);
     const articleMeta = getArticleMeta(article, category);
     const title = articleMeta.title;
-    const [featuredProducts, menus, themes, pageTemplates, themeSettings] = await Promise.all([
+    const [featuredProducts, menus, themes, pageTemplates, themeSettings, helpCategories] = await Promise.all([
       getFeaturedProducts(payload),
       getBuilderMenus(payload),
       getBuilderThemes(payload),
       getBuilderPageTemplates(payload),
       getBuilderThemeSettings(payload),
+      getPublishedHelpCategories(payload),
     ]);
     const activeTheme = themes.find((theme) => theme.id === themeSettings.themeId) ?? getDefaultBuilderTheme(themes);
+    const helpArticles = categoryArticlesForEditor(helpCategories, category, articleMeta);
+    const categories = helpCategories.some((item) => item.slug === category.slug) ? helpCategories : [category, ...helpCategories];
 
     return (
       <VisualBuilderClient
@@ -194,7 +204,8 @@ export async function WysiwygPageView({ initPageResult, params }: AdminViewServe
         featuredProducts={featuredProducts}
         headerPath={articleMeta.path}
         helpArticle={articleMeta}
-        helpArticles={[articleMeta]}
+        helpArticles={helpArticles}
+        helpCategories={categories}
         helpCategory={category}
         menus={menus}
         pageTemplates={pageTemplates}

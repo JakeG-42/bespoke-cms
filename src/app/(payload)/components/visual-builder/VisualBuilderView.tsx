@@ -1,6 +1,7 @@
 import type { DocumentViewServerProps, Payload } from "payload";
 
 import { getHelpArticlePath, getHelpCategoryPath } from "@/lib/help-centre/article-routing";
+import { getPublishedHelpCategories } from "@/lib/help-centre/articles";
 import { articleToBuilderData, pageToBuilderData } from "@/payload/builder/convert";
 import {
   applyThemeToBuilderData,
@@ -69,6 +70,12 @@ function getArticleMeta(article: Record<string, unknown>, category: BuilderHelpC
   };
 }
 
+function categoryArticlesForEditor(categories: { articles?: BuilderHelpArticle[]; slug: string }[], category: BuilderHelpCategory, article: BuilderHelpArticle) {
+  const categoryArticles = categories.find((item) => item.slug === category.slug)?.articles ?? [];
+
+  return categoryArticles.some((item) => item.slug === article.slug) ? categoryArticles : [article, ...categoryArticles];
+}
+
 async function getFeaturedProducts(payload: Payload): Promise<BuilderProduct[]> {
   try {
     const result = await payload.find({
@@ -133,12 +140,13 @@ export async function VisualBuilderView({ doc, initPageResult }: DocumentViewSer
   const slug = page.slug ?? "home";
   const title = page.title ?? "Untitled page";
   const payload = initPageResult.req.payload;
-  const [featuredProducts, menus, themes, pageTemplates, themeSettings] = await Promise.all([
+  const [featuredProducts, menus, themes, pageTemplates, themeSettings, helpCategories] = await Promise.all([
     getFeaturedProducts(payload),
     getBuilderMenus(payload),
     getBuilderThemes(payload),
     getBuilderPageTemplates(payload),
     getBuilderThemeSettings(payload),
+    getPublishedHelpCategories(payload),
   ]);
 
   if (isHelpArticle) {
@@ -146,6 +154,8 @@ export async function VisualBuilderView({ doc, initPageResult }: DocumentViewSer
     const category = getArticleCategory(article);
     const articleMeta = getArticleMeta(article, category);
     const activeTheme = themes.find((theme) => theme.id === themeSettings.themeId) ?? getDefaultBuilderTheme(themes);
+    const helpArticles = categoryArticlesForEditor(helpCategories, category, articleMeta);
+    const categories = helpCategories.some((item) => item.slug === category.slug) ? helpCategories : [category, ...helpCategories];
 
     return (
       <VisualBuilderClient
@@ -157,7 +167,8 @@ export async function VisualBuilderView({ doc, initPageResult }: DocumentViewSer
         featuredProducts={featuredProducts}
         headerPath={articleMeta.path}
         helpArticle={articleMeta}
-        helpArticles={[articleMeta]}
+        helpArticles={helpArticles}
+        helpCategories={categories}
         helpCategory={category}
         menus={menus}
         pageTemplates={pageTemplates}

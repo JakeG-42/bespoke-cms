@@ -10,6 +10,7 @@ export function PuckBuilderRenderer({
   featuredProducts,
   helpArticle,
   helpArticles,
+  helpCategories,
   helpCategory,
   hideHelpArticleSections = false,
   internalLinkBasePath = "",
@@ -21,6 +22,7 @@ export function PuckBuilderRenderer({
   featuredProducts: BuilderProduct[];
   helpArticle?: BuilderHelpArticle | null;
   helpArticles?: BuilderHelpArticle[];
+  helpCategories?: BuilderHelpCategory[];
   helpCategory?: BuilderHelpCategory | null;
   hideHelpArticleSections?: boolean;
   internalLinkBasePath?: string;
@@ -39,7 +41,7 @@ export function PuckBuilderRenderer({
       <Render
         config={builderConfig}
         data={builderData}
-        metadata={{ featuredProducts, helpArticle, helpArticles, helpCategory, hideHelpArticleSections, internalLinkBasePath, menus, routeSlug }}
+        metadata={{ featuredProducts, helpArticle, helpArticles, helpCategories, helpCategory, hideHelpArticleSections, internalLinkBasePath, menus, routeSlug }}
       />
     </>
   );

@@ -64,6 +64,7 @@ export default async function HelpArticlePage({ params }: HelpArticlePageProps) 
           featuredProducts={[]}
           helpArticle={helpArticle}
           helpArticles={helpCategory.articles}
+          helpCategories={data.categories}
           helpCategory={helpCategory}
           menus={data.menus}
         />
@@ -73,6 +74,7 @@ export default async function HelpArticlePage({ params }: HelpArticlePageProps) 
           featuredProducts={[]}
           helpArticle={helpArticle}
           helpArticles={helpCategory.articles}
+          helpCategories={data.categories}
           helpCategory={helpCategory}
           menus={data.menus}
         />

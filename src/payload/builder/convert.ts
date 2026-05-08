@@ -297,9 +297,88 @@ function articleContentBlock(article: HelpArticleLike, body: string) {
   } as BuilderData["content"][number];
 }
 
+function relatedArticlesBlock() {
+  return {
+    props: {
+      ...groupedDesignProps({
+        backgroundColor: "#ffffff",
+        bodySize: 1,
+        elementBorderRadius: 24,
+        elementGap: 1,
+        elementPadding: 1.35,
+        fontFamily: "sans",
+        headingSize: 1.7,
+        hoverEffect: "lift",
+        sectionPaddingBottom: 1.5,
+        sectionPaddingTop: 0,
+        sectionWidth: "narrow",
+        surfaceColor: "#f5f8fa",
+        textColor: "#032536",
+      }),
+      emptyMessage: "Related articles will appear here.",
+      heading: "Suggested articles",
+      id: "article-builder-related",
+      intro: "A few useful next reads from the Andersen Help Centre.",
+      limit: 3,
+      showCategoryLabel: true,
+    },
+    type: "HelpRelatedArticlesBlock",
+  } as BuilderData["content"][number];
+}
+
+function otherCategoriesBlock() {
+  return {
+    props: {
+      ...groupedDesignProps({
+        backgroundColor: "#ffffff",
+        bodySize: 1,
+        elementBorderRadius: 18,
+        elementGap: 1,
+        elementPadding: 1.2,
+        fontFamily: "sans",
+        headingSize: 1.7,
+        hoverEffect: "lift",
+        sectionPaddingBottom: 5,
+        sectionPaddingTop: 0.5,
+        sectionWidth: "narrow",
+        surfaceColor: "#f5f8fa",
+        textColor: "#032536",
+      }),
+      columns: "3",
+      emptyMessage: "Other Help Centre categories will appear here.",
+      heading: "Other categories",
+      id: "article-builder-other-categories",
+      intro: "Browse another topic if this article is not quite what you need.",
+      showCurrentCategory: false,
+    },
+    type: "HelpOtherCategoriesBlock",
+  } as BuilderData["content"][number];
+}
+
+function withArticleSupportBlocks(data: BuilderData): BuilderData {
+  const hasRelatedArticles = data.content.some((item) => item.type === "HelpRelatedArticlesBlock");
+  const hasOtherCategories = data.content.some((item) => item.type === "HelpOtherCategoriesBlock");
+
+  if (hasRelatedArticles && hasOtherCategories) {
+    return data;
+  }
+
+  const contentBlockIndex = data.content.findIndex((item) => item.type === "HelpArticleContentBlock");
+  const insertIndex = contentBlockIndex >= 0 ? contentBlockIndex + 1 : data.content.length;
+  const companionBlocks = [
+    hasRelatedArticles ? null : relatedArticlesBlock(),
+    hasOtherCategories ? null : otherCategoriesBlock(),
+  ].filter(Boolean) as BuilderData["content"];
+
+  return {
+    ...data,
+    content: [...data.content.slice(0, insertIndex), ...companionBlocks, ...data.content.slice(insertIndex)],
+  };
+}
+
 function createArticleBuilderData(article: HelpArticleLike, body = publicArticleBody(asString(article.body))): BuilderData {
   return {
-    content: [andersenHeaderBlock(), articleContentBlock(article, body)] as BuilderData["content"],
+    content: [andersenHeaderBlock(), articleContentBlock(article, body), relatedArticlesBlock(), otherCategoriesBlock()] as BuilderData["content"],
     root: {
       props: articleRootProps(article),
     },
@@ -311,9 +390,11 @@ export function articleToBuilderData(article: HelpArticleLike): BuilderData {
   const existingBuilderData = normalizeBuilderData(article.builderData);
 
   if (existingBuilderData) {
-    return isLegacyGeneratedArticleBuilderData(existingBuilderData)
+    const nextBuilderData = isLegacyGeneratedArticleBuilderData(existingBuilderData)
       ? createArticleBuilderData(article, legacyGeneratedArticleBody(existingBuilderData, asString(article.body)))
       : existingBuilderData;
+
+    return withArticleSupportBlocks(nextBuilderData);
   }
 
   return createArticleBuilderData(article);

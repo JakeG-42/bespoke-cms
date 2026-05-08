@@ -33,6 +33,7 @@ type VisualBuilderClientProps = {
   headerPath: string;
   helpArticle?: BuilderHelpArticle | null;
   helpArticles?: BuilderHelpArticle[];
+  helpCategories?: BuilderHelpCategory[];
   helpCategory?: BuilderHelpCategory | null;
   menus: BuilderMenu[];
   pageTemplates: BuilderPageTemplate[];
@@ -231,6 +232,7 @@ export function VisualBuilderClient({
   headerPath,
   helpArticle,
   helpArticles = [],
+  helpCategories = [],
   helpCategory,
   menus,
   pageTemplates,
@@ -421,7 +423,7 @@ export function VisualBuilderClient({
           waitForStyles: true,
         }}
         key={`${documentKind}-${documentId}-${selectedThemeId}`}
-        metadata={{ featuredProducts, helpArticle, helpArticles, helpCategory, menus, pageTemplates, themes }}
+        metadata={{ featuredProducts, helpArticle, helpArticles, helpCategories, helpCategory, menus, pageTemplates, themes }}
         onPublish={save}
         overrides={{ headerActions: HeaderActionsOverride }}
         plugins={editorPlugins}
