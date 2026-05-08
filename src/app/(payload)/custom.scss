@@ -329,11 +329,6 @@
   background: var(--console-group-accent, #8bd3ff);
 }
 
-#nav-products,
-#nav-product-categories {
-  --console-group-accent: #8bd3ff;
-}
-
 #nav-pages,
 #nav-posts {
   --console-group-accent: #22c55e;
@@ -355,14 +350,6 @@
 #nav-console-users,
 #nav-global-site-settings {
   --console-group-accent: #38bdf8;
-}
-
-#nav-products {
-  --console-nav-icon: var(--console-nav-icon-box);
-}
-
-#nav-product-categories {
-  --console-nav-icon: var(--console-nav-icon-tags);
 }
 
 #nav-pages {

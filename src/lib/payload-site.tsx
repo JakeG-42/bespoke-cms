@@ -9,11 +9,10 @@ import {
   getBuilderThemeSettings,
   getBuilderThemes,
   getPageBuilderTheme,
-  productsToBuilderProducts,
 } from "@/payload/builder/metadata";
 import { normalizeBuilderData } from "@/payload/builder/convert";
 import type { BuilderMenu, BuilderTheme, BuilderThemeSettings } from "@/payload/builder/types";
-import type { Page, Product } from "@/payload-types";
+import type { Page } from "@/payload-types";
 import { absoluteUrl } from "@/lib/seo";
 
 type PayloadSiteRenderOptions = {
@@ -57,47 +56,6 @@ async function getPayloadPage(payload: Payload, slug: string): Promise<Page | nu
   });
 
   return result.docs[0] ?? null;
-}
-
-async function getFeaturedProducts(payload: Payload): Promise<Product[]> {
-  const featured = await payload.find({
-    collection: "products",
-    depth: 1,
-    limit: 6,
-    sort: "-updatedAt",
-    where: {
-      and: [
-        {
-          status: {
-            equals: "published",
-          },
-        },
-        {
-          featured: {
-            equals: true,
-          },
-        },
-      ],
-    },
-  });
-
-  if (featured.docs.length) {
-    return featured.docs;
-  }
-
-  const fallback = await payload.find({
-    collection: "products",
-    depth: 1,
-    limit: 6,
-    sort: "-updatedAt",
-    where: {
-      status: {
-        equals: "published",
-      },
-    },
-  });
-
-  return fallback.docs;
 }
 
 function numericId(value: number | string | undefined) {
@@ -180,7 +138,6 @@ async function getCustomCss(payload: Payload, { pageId, themeId }: { pageId?: nu
 
 async function loadPayloadSite(slug: string): Promise<{
   customCss: string;
-  featuredProducts: Product[];
   menus: BuilderMenu[];
   page: Page | null;
   theme: BuilderTheme;
@@ -188,12 +145,8 @@ async function loadPayloadSite(slug: string): Promise<{
   themes: BuilderTheme[];
 }> {
   const payload = await getPayload({ config });
-  const [page, featuredProducts, menus, themes, themeSettings] = await Promise.all([
+  const [page, menus, themes, themeSettings] = await Promise.all([
     getPayloadPage(payload, slug),
-    getFeaturedProducts(payload).catch((error) => {
-      console.error("Unable to load Payload products for site.", error);
-      return [];
-    }),
     getBuilderMenus(payload),
     getBuilderThemes(payload),
     getBuilderThemeSettings(payload),
@@ -203,7 +156,6 @@ async function loadPayloadSite(slug: string): Promise<{
 
   return {
     customCss,
-    featuredProducts,
     menus,
     page,
     theme,
@@ -256,7 +208,7 @@ export async function PayloadSitePage({
   internalLinkBasePath = "",
   slug,
 }: PayloadSiteRenderOptions) {
-  const { customCss, featuredProducts, menus, page, theme } = await loadPayloadSite(slug);
+  const { customCss, menus, page, theme } = await loadPayloadSite(slug);
 
   if (page && "builderData" in page && page.builderData) {
     const builderData = normalizeBuilderData(page.builderData);
@@ -266,7 +218,7 @@ export async function PayloadSitePage({
       <PuckBuilderRenderer
         customCss={customCss}
         data={themedBuilderData}
-        featuredProducts={productsToBuilderProducts(featuredProducts)}
+        featuredProducts={[]}
         hideHelpArticleSections={slug === "help-centre"}
         internalLinkBasePath={internalLinkBasePath}
         menus={menus}

@@ -6,7 +6,6 @@ import type {
   BuilderMenu,
   BuilderMenuItem,
   BuilderPageTemplate,
-  BuilderProduct,
   BuilderRootProps,
   BuilderTheme,
   BuilderThemeSettings,
@@ -383,13 +382,4 @@ export async function getBuilderThemeSettings(payload: Payload): Promise<Builder
     console.error("Unable to load Payload theme settings.", error);
     return {};
   }
-}
-
-export function productsToBuilderProducts(products: BuilderProduct[]): BuilderProduct[] {
-  return products.map((product) => ({
-    family: product.family,
-    name: product.name,
-    slug: product.slug,
-    summary: product.summary,
-  }));
 }

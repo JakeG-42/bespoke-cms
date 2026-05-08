@@ -14,6 +14,7 @@ export const ProductCategories: CollectionConfig = {
   admin: {
     defaultColumns: ["name", "slug", "updatedAt"],
     group: "Products",
+    hidden: true,
     useAsTitle: "name",
   },
   fields: [

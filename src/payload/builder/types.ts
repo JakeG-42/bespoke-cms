@@ -379,6 +379,6 @@ export type BuilderComponents = {
   };
 };
 
-export type BuilderCategoryName = "commerce" | "content" | "media" | "navigation" | "structure" | "support";
+export type BuilderCategoryName = "content" | "media" | "navigation" | "structure" | "support";
 export type BuilderConfig = Config<BuilderComponents, BuilderRootProps, BuilderCategoryName>;
 export type BuilderData = Data<BuilderComponents, BuilderRootProps>;

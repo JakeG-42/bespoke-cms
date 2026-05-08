@@ -1,4 +1,4 @@
-import type { DocumentViewServerProps, Payload } from "payload";
+import type { DocumentViewServerProps } from "payload";
 
 import { getHelpArticlePath, getHelpCategoryPath } from "@/lib/help-centre/article-routing";
 import { getPublishedHelpCategories } from "@/lib/help-centre/articles";
@@ -12,7 +12,7 @@ import {
   getBuilderThemes,
   getPageBuilderTheme,
 } from "@/payload/builder/metadata";
-import type { BuilderHelpArticle, BuilderHelpCategory, BuilderProduct } from "@/payload/builder/types";
+import type { BuilderHelpArticle, BuilderHelpCategory } from "@/payload/builder/types";
 
 import { VisualBuilderClient } from "./VisualBuilderClient";
 
@@ -76,41 +76,6 @@ function categoryArticlesForEditor(categories: { articles?: BuilderHelpArticle[]
   return categoryArticles.some((item) => item.slug === article.slug) ? categoryArticles : [article, ...categoryArticles];
 }
 
-async function getFeaturedProducts(payload: Payload): Promise<BuilderProduct[]> {
-  try {
-    const result = await payload.find({
-      collection: "products",
-      depth: 0,
-      limit: 6,
-      sort: "-updatedAt",
-      where: {
-        and: [
-          {
-            status: {
-              equals: "published",
-            },
-          },
-          {
-            featured: {
-              equals: true,
-            },
-          },
-        ],
-      },
-    });
-
-    return result.docs.map((product) => ({
-      family: product.family,
-      name: product.name,
-      slug: product.slug,
-      summary: product.summary,
-    }));
-  } catch (error) {
-    console.error("Unable to load featured products for visual builder.", error);
-    return [];
-  }
-}
-
 export async function VisualBuilderView({ doc, initPageResult }: DocumentViewServerProps) {
   if (!initPageResult.req.user) {
     return (
@@ -140,8 +105,7 @@ export async function VisualBuilderView({ doc, initPageResult }: DocumentViewSer
   const slug = page.slug ?? "home";
   const title = page.title ?? "Untitled page";
   const payload = initPageResult.req.payload;
-  const [featuredProducts, menus, themes, pageTemplates, themeSettings, helpCategories] = await Promise.all([
-    getFeaturedProducts(payload),
+  const [menus, themes, pageTemplates, themeSettings, helpCategories] = await Promise.all([
     getBuilderMenus(payload),
     getBuilderThemes(payload),
     getBuilderPageTemplates(payload),
@@ -164,7 +128,7 @@ export async function VisualBuilderView({ doc, initPageResult }: DocumentViewSer
         builderData={applyThemeToBuilderData(articleToBuilderData(article), activeTheme)}
         documentId={String(page.id)}
         documentKind="helpArticle"
-        featuredProducts={featuredProducts}
+        featuredProducts={[]}
         headerPath={articleMeta.path}
         helpArticle={articleMeta}
         helpArticles={helpArticles}
@@ -191,7 +155,7 @@ export async function VisualBuilderView({ doc, initPageResult }: DocumentViewSer
       builderData={applyThemeToBuilderData(pageToBuilderData(page), activeTheme)}
       documentId={String(page.id)}
       documentKind="page"
-      featuredProducts={featuredProducts}
+      featuredProducts={[]}
       headerPath={slug === "home" ? "/" : `/${slug}`}
       menus={menus}
       pageTemplates={pageTemplates}

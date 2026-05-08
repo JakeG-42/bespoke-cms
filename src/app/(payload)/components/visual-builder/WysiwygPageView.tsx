@@ -13,7 +13,7 @@ import {
   getBuilderThemes,
   getPageBuilderTheme,
 } from "@/payload/builder/metadata";
-import type { BuilderHelpArticle, BuilderHelpCategory, BuilderProduct } from "@/payload/builder/types";
+import type { BuilderHelpArticle, BuilderHelpCategory } from "@/payload/builder/types";
 
 import { VisualBuilderClient } from "./VisualBuilderClient";
 
@@ -45,41 +45,6 @@ function getEditorTarget(params: AdminViewServerProps["params"]) {
   }
 
   return { id: getPageId(params), kind: "page" as const };
-}
-
-async function getFeaturedProducts(payload: Payload): Promise<BuilderProduct[]> {
-  try {
-    const result = await payload.find({
-      collection: "products",
-      depth: 0,
-      limit: 6,
-      sort: "-updatedAt",
-      where: {
-        and: [
-          {
-            status: {
-              equals: "published",
-            },
-          },
-          {
-            featured: {
-              equals: true,
-            },
-          },
-        ],
-      },
-    });
-
-    return result.docs.map((product) => ({
-      family: product.family,
-      name: product.name,
-      slug: product.slug,
-      summary: product.summary,
-    }));
-  } catch (error) {
-    console.error("Unable to load featured products for visual builder.", error);
-    return [];
-  }
 }
 
 function recordValue(value: unknown): Record<string, unknown> | null {
@@ -182,8 +147,7 @@ export async function WysiwygPageView({ initPageResult, params }: AdminViewServe
     const category = await getArticleCategory(payload, article);
     const articleMeta = getArticleMeta(article, category);
     const title = articleMeta.title;
-    const [featuredProducts, menus, themes, pageTemplates, themeSettings, helpCategories] = await Promise.all([
-      getFeaturedProducts(payload),
+    const [menus, themes, pageTemplates, themeSettings, helpCategories] = await Promise.all([
       getBuilderMenus(payload),
       getBuilderThemes(payload),
       getBuilderPageTemplates(payload),
@@ -201,7 +165,7 @@ export async function WysiwygPageView({ initPageResult, params }: AdminViewServe
         builderData={applyThemeToBuilderData(articleToBuilderData(article), activeTheme)}
         documentId={String(article.id)}
         documentKind="helpArticle"
-        featuredProducts={featuredProducts}
+        featuredProducts={[]}
         headerPath={articleMeta.path}
         helpArticle={articleMeta}
         helpArticles={helpArticles}
@@ -227,8 +191,7 @@ export async function WysiwygPageView({ initPageResult, params }: AdminViewServe
   const slug = page.slug ?? "home";
   const title = page.title ?? "Untitled page";
   const payload = initPageResult.req.payload;
-  const [featuredProducts, menus, themes, pageTemplates, themeSettings] = await Promise.all([
-    getFeaturedProducts(payload),
+  const [menus, themes, pageTemplates, themeSettings] = await Promise.all([
     getBuilderMenus(payload),
     getBuilderThemes(payload),
     getBuilderPageTemplates(payload),
@@ -245,7 +208,7 @@ export async function WysiwygPageView({ initPageResult, params }: AdminViewServe
       builderData={applyThemeToBuilderData(pageToBuilderData(page), activeTheme)}
       documentId={String(page.id)}
       documentKind="page"
-      featuredProducts={featuredProducts}
+      featuredProducts={[]}
       headerPath={slug === "home" ? "/" : `/${slug}`}
       menus={menus}
       pageTemplates={pageTemplates}

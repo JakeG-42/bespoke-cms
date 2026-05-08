@@ -949,10 +949,6 @@ function Root({ children, ...props }: BuilderRootProps & { children: ReactNode }
 
 export const builderConfig: BuilderConfig = {
   categories: {
-    commerce: {
-      components: ["ProductGridBlock"],
-      title: "Commerce",
-    },
     content: {
       components: ["SectionBlock", "RichTextBlock", "ImageTextBlock", "CardGridBlock", "SpecTableBlock", "CallToActionBlock"],
       defaultExpanded: true,
