@@ -7,7 +7,7 @@
     "helpCentreRoute": "/help-centre"
   },
   "content": {
-    "primaryCollections": ["pages", "posts", "menus", "support-tickets", "themes", "page-templates", "media", "documents"],
+    "primaryCollections": ["pages", "help-articles", "help-categories", "menus", "support-tickets", "themes", "page-templates", "media", "documents"],
     "seedPolicy": "Use Andersen EV demo content only when requested. Do not store credentials, private customer data or real support transcripts."
   },
   "storage": {

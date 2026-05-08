@@ -13,7 +13,6 @@ import { Media } from "./src/payload/collections/Media.ts";
 import { Menus } from "./src/payload/collections/Menus.ts";
 import { PageTemplates } from "./src/payload/collections/PageTemplates.ts";
 import { Pages } from "./src/payload/collections/Pages.ts";
-import { Posts } from "./src/payload/collections/Posts.ts";
 import { ProductCategories } from "./src/payload/collections/ProductCategories.ts";
 import { Products } from "./src/payload/collections/Products.ts";
 import { SupportTickets } from "./src/payload/collections/SupportTickets.ts";
@@ -156,7 +155,6 @@ export default buildConfig({
     HelpCategories,
     HelpArticles,
     Pages,
-    Posts,
     SupportTickets,
     Themes,
     PageTemplates,

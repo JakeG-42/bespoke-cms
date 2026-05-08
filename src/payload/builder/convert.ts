@@ -36,6 +36,10 @@ function asNumber(value: unknown, fallback: number) {
   return typeof value === "number" && Number.isFinite(value) ? value : fallback;
 }
 
+function asBoolean(value: unknown, fallback: boolean) {
+  return typeof value === "boolean" ? value : fallback;
+}
+
 function asArray(value: unknown): UnknownRecord[] {
   return Array.isArray(value) ? value.filter(isRecord) : [];
 }
@@ -268,117 +272,108 @@ function legacyGeneratedArticleBody(data: BuilderData, fallback: string) {
   return body || publicArticleBody(fallback);
 }
 
-function articleContentBlock(article: HelpArticleLike, body: string) {
+function articleLayoutBlock(
+  article: HelpArticleLike,
+  body: string,
+  {
+    articleProps = {},
+    otherCategoriesProps = {},
+    relatedArticlesProps = {},
+  }: {
+    articleProps?: UnknownRecord;
+    otherCategoriesProps?: UnknownRecord;
+    relatedArticlesProps?: UnknownRecord;
+  } = {},
+) {
+  const articleDesignProps = groupedDesignProps({
+    backgroundColor: "#ffffff",
+    bodySize: 1.08,
+    elementBorderRadius: 22,
+    elementGap: 1,
+    elementPadding: 1.15,
+    fontFamily: "sans",
+    headingSize: 4.1,
+    sectionPaddingBottom: 6,
+    sectionPaddingTop: 4.5,
+    sectionWidth: "wide",
+    surfaceColor: "#f5f8fa",
+    textColor: "#032536",
+    ...articleProps,
+  });
+
   return {
     props: {
-      ...groupedDesignProps({
-        backgroundColor: "#ffffff",
-        bodySize: 1.08,
-        fontFamily: "sans",
-        headingSize: 4.4,
-        sectionPaddingBottom: 6,
-        sectionPaddingTop: 4.5,
-        sectionWidth: "narrow",
-        textColor: "#032536",
-      }),
-      backLabel: "Back to category",
-      body,
-      emptyMessage: "Article content is being prepared.",
-      heading: asString(article.title),
-      id: "article-builder-content",
-      showBackLink: true,
-      showBody: true,
-      showSourceUrl: true,
-      sourceLabel: "Source reference",
-      sourceUrl: asString(article.sourceUrl),
-      summary: asString(article.summary),
+      ...articleDesignProps,
+      backLabel: asString(articleProps.backLabel, "Back to category"),
+      body: asString(articleProps.body, body),
+      categoriesColumns: asString(otherCategoriesProps.columns, "2") === "1" ? "1" : "2",
+      categoriesEmptyMessage: asString(otherCategoriesProps.emptyMessage, "Other Help Centre categories will appear here."),
+      categoriesHeading: asString(otherCategoriesProps.heading, "Other categories"),
+      categoriesIntro: asString(otherCategoriesProps.intro),
+      emptyMessage: asString(articleProps.emptyMessage, "Article content is being prepared."),
+      heading: asString(articleProps.heading, asString(article.title)),
+      id: "article-builder-layout",
+      relatedEmptyMessage: asString(relatedArticlesProps.emptyMessage, "Related articles will appear here."),
+      relatedHeading: asString(relatedArticlesProps.heading, "Suggested articles"),
+      relatedIntro: asString(relatedArticlesProps.intro),
+      relatedLimit: asNumber(relatedArticlesProps.limit, 3),
+      relatedShowCategoryLabel: asBoolean(relatedArticlesProps.showCategoryLabel, true),
+      showBackLink: asBoolean(articleProps.showBackLink, true),
+      showBody: asBoolean(articleProps.showBody, true),
+      showCurrentCategory: asBoolean(otherCategoriesProps.showCurrentCategory, false),
+      showSourceUrl: asBoolean(articleProps.showSourceUrl, true),
+      sourceLabel: asString(articleProps.sourceLabel, "Source reference"),
+      sourceUrl: asString(articleProps.sourceUrl, asString(article.sourceUrl)),
+      summary: asString(articleProps.summary, asString(article.summary)),
     },
-    type: "HelpArticleContentBlock",
+    type: "HelpArticleLayoutBlock",
   } as BuilderData["content"][number];
 }
 
-function relatedArticlesBlock() {
-  return {
-    props: {
-      ...groupedDesignProps({
-        backgroundColor: "#ffffff",
-        bodySize: 1,
-        elementBorderRadius: 24,
-        elementGap: 1,
-        elementPadding: 1.35,
-        fontFamily: "sans",
-        headingSize: 1.7,
-        hoverEffect: "lift",
-        sectionPaddingBottom: 1.5,
-        sectionPaddingTop: 0,
-        sectionWidth: "narrow",
-        surfaceColor: "#f5f8fa",
-        textColor: "#032536",
-      }),
-      emptyMessage: "Related articles will appear here.",
-      heading: "Suggested articles",
-      id: "article-builder-related",
-      intro: "A few useful next reads from the Andersen Help Centre.",
-      limit: 3,
-      showCategoryLabel: true,
-    },
-    type: "HelpRelatedArticlesBlock",
-  } as BuilderData["content"][number];
+function getItemProps(item: UnknownRecord | undefined) {
+  return isRecord(item?.props) ? item.props : {};
 }
 
-function otherCategoriesBlock() {
-  return {
-    props: {
-      ...groupedDesignProps({
-        backgroundColor: "#ffffff",
-        bodySize: 1,
-        elementBorderRadius: 18,
-        elementGap: 1,
-        elementPadding: 1.2,
-        fontFamily: "sans",
-        headingSize: 1.7,
-        hoverEffect: "lift",
-        sectionPaddingBottom: 5,
-        sectionPaddingTop: 0.5,
-        sectionWidth: "narrow",
-        surfaceColor: "#f5f8fa",
-        textColor: "#032536",
-      }),
-      columns: "3",
-      emptyMessage: "Other Help Centre categories will appear here.",
-      heading: "Other categories",
-      id: "article-builder-other-categories",
-      intro: "Browse another topic if this article is not quite what you need.",
-      showCurrentCategory: false,
-    },
-    type: "HelpOtherCategoriesBlock",
-  } as BuilderData["content"][number];
+function isOldArticleLayoutPiece(item: UnknownRecord) {
+  return item.type === "HelpArticleContentBlock" || item.type === "HelpRelatedArticlesBlock" || item.type === "HelpOtherCategoriesBlock";
 }
 
-function withArticleSupportBlocks(data: BuilderData): BuilderData {
-  const hasRelatedArticles = data.content.some((item) => item.type === "HelpRelatedArticlesBlock");
-  const hasOtherCategories = data.content.some((item) => item.type === "HelpOtherCategoriesBlock");
+function withArticleLayout(data: BuilderData, article: HelpArticleLike): BuilderData {
+  const existingLayoutIndex = data.content.findIndex((item) => item.type === "HelpArticleLayoutBlock");
 
-  if (hasRelatedArticles && hasOtherCategories) {
-    return data;
+  if (existingLayoutIndex >= 0) {
+    return {
+      ...data,
+      content: data.content.filter((item) => item.type === "HelpArticleLayoutBlock" || !isOldArticleLayoutPiece(item)),
+    };
   }
 
-  const contentBlockIndex = data.content.findIndex((item) => item.type === "HelpArticleContentBlock");
-  const insertIndex = contentBlockIndex >= 0 ? contentBlockIndex + 1 : data.content.length;
-  const companionBlocks = [
-    hasRelatedArticles ? null : relatedArticlesBlock(),
-    hasOtherCategories ? null : otherCategoriesBlock(),
-  ].filter(Boolean) as BuilderData["content"];
+  const articleContentIndex = data.content.findIndex((item) => item.type === "HelpArticleContentBlock");
+  const articleContentItem = articleContentIndex >= 0 ? data.content[articleContentIndex] : undefined;
+  const relatedArticlesItem = data.content.find((item) => item.type === "HelpRelatedArticlesBlock");
+  const otherCategoriesItem = data.content.find((item) => item.type === "HelpOtherCategoriesBlock");
+  const articleProps = getItemProps(articleContentItem);
+  const layoutBlock = articleLayoutBlock(article, asString(articleProps.body, publicArticleBody(asString(article.body))), {
+    articleProps,
+    otherCategoriesProps: getItemProps(otherCategoriesItem),
+    relatedArticlesProps: getItemProps(relatedArticlesItem),
+  });
+  const contentWithoutOldPieces = data.content.filter((item) => !isOldArticleLayoutPiece(item));
+  const headerIndex = contentWithoutOldPieces.findIndex((item) => item.type === "SiteHeaderBlock");
+  const insertIndex =
+    articleContentIndex >= 0
+      ? data.content.slice(0, articleContentIndex).filter((item) => !isOldArticleLayoutPiece(item)).length
+      : Math.max(0, headerIndex + 1);
 
   return {
     ...data,
-    content: [...data.content.slice(0, insertIndex), ...companionBlocks, ...data.content.slice(insertIndex)],
+    content: [...contentWithoutOldPieces.slice(0, insertIndex), layoutBlock, ...contentWithoutOldPieces.slice(insertIndex)],
   };
 }
 
 function createArticleBuilderData(article: HelpArticleLike, body = publicArticleBody(asString(article.body))): BuilderData {
   return {
-    content: [andersenHeaderBlock(), articleContentBlock(article, body), relatedArticlesBlock(), otherCategoriesBlock()] as BuilderData["content"],
+    content: [andersenHeaderBlock(), articleLayoutBlock(article, body)] as BuilderData["content"],
     root: {
       props: articleRootProps(article),
     },
@@ -394,7 +389,7 @@ export function articleToBuilderData(article: HelpArticleLike): BuilderData {
       ? createArticleBuilderData(article, legacyGeneratedArticleBody(existingBuilderData, asString(article.body)))
       : existingBuilderData;
 
-    return withArticleSupportBlocks(nextBuilderData);
+    return withArticleLayout(nextBuilderData, article);
   }
 
   return createArticleBuilderData(article);

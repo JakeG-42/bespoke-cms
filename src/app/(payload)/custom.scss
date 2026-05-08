@@ -329,8 +329,7 @@
   background: var(--console-group-accent, #8bd3ff);
 }
 
-#nav-pages,
-#nav-posts {
+#nav-pages {
   --console-group-accent: #22c55e;
 }
 
@@ -353,10 +352,6 @@
 
 #nav-pages {
   --console-nav-icon: var(--console-nav-icon-file);
-}
-
-#nav-posts {
-  --console-nav-icon: var(--console-nav-icon-article);
 }
 
 #nav-themes,

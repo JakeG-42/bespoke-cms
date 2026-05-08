@@ -269,6 +269,28 @@ export type BuilderComponents = {
     showSourceUrl?: boolean;
     summary?: string;
   };
+  HelpArticleLayoutBlock: BuilderAdvancedStyle & {
+    backLabel?: string;
+    body?: string;
+    categoriesColumns?: "1" | "2";
+    categoriesEmptyMessage?: string;
+    categoriesHeading?: string;
+    categoriesIntro?: string;
+    emptyMessage?: string;
+    heading?: string;
+    relatedEmptyMessage?: string;
+    relatedHeading?: string;
+    relatedIntro?: string;
+    relatedLimit?: number;
+    relatedShowCategoryLabel?: boolean;
+    showBackLink?: boolean;
+    showBody?: boolean;
+    showCurrentCategory?: boolean;
+    showSourceUrl?: boolean;
+    sourceLabel?: string;
+    sourceUrl?: string;
+    summary?: string;
+  };
   HelpOtherCategoriesBlock: BuilderAdvancedStyle & {
     columns?: "2" | "3";
     emptyMessage?: string;

@@ -972,9 +972,7 @@ export const builderConfig: BuilderConfig = {
       components: [
         "HelpCategoryGridBlock",
         "HelpCategoryArticlesBlock",
-        "HelpArticleContentBlock",
-        "HelpRelatedArticlesBlock",
-        "HelpOtherCategoriesBlock",
+        "HelpArticleLayoutBlock",
         "HelpFaqSectionBlock",
         "HelpCentreBlock",
       ],
@@ -1549,6 +1547,185 @@ export const builderConfig: BuilderConfig = {
               ) : (
                 <p className="help-template-empty">{textValue(props.emptyMessage, "Articles are being prepared for this category.")}</p>
               )}
+            </div>
+          </section>
+        );
+      },
+    },
+    HelpArticleLayoutBlock: {
+      defaultProps: {
+        ...defaultDesign,
+        backLabel: "Back to category",
+        backgroundColor: "#ffffff",
+        body: "",
+        bodySize: 1.08,
+        categoriesColumns: "2",
+        categoriesEmptyMessage: "Other Help Centre categories will appear here.",
+        categoriesHeading: "Other categories",
+        categoriesIntro: "",
+        colorControls: { ...defaultDesign.colorControls, backgroundColor: "#ffffff", textColor: "#032536", surfaceColor: "#f5f8fa" },
+        elementBorderRadius: 22,
+        elementGap: 1,
+        elementPadding: 1.15,
+        emptyMessage: "Article content is being prepared.",
+        fontFamily: "sans",
+        heading: "",
+        headingSize: 4.1,
+        relatedEmptyMessage: "Related articles will appear here.",
+        relatedHeading: "Suggested articles",
+        relatedIntro: "",
+        relatedLimit: 3,
+        relatedShowCategoryLabel: true,
+        sectionPaddingBottom: 6,
+        sectionPaddingTop: 4.5,
+        sectionWidth: "wide",
+        showBackLink: true,
+        showBody: true,
+        showCurrentCategory: false,
+        showSourceUrl: true,
+        sourceLabel: "Source reference",
+        sourceUrl: "",
+        spacingControls: {
+          ...defaultDesign.spacingControls,
+          elementGap: 1,
+          elementPadding: 1.15,
+          sectionPaddingBottom: 6,
+          sectionPaddingTop: 4.5,
+          sectionWidth: "wide",
+        },
+        summary: "",
+        surfaceColor: "#f5f8fa",
+        textColor: "#032536",
+        typographyControls: { ...defaultDesign.typographyControls, bodySize: 1.08, fontFamily: "sans", headingSize: 4.1 },
+      },
+      fields: {
+        backLabel: { contentEditable: true, label: "Back link label", type: "text" },
+        heading: { contentEditable: true, label: "Article title override", type: "text" },
+        summary: { contentEditable: true, label: "Summary override", type: "textarea" },
+        body: { contentEditable: true, label: "Article body override", type: "textarea" },
+        sourceLabel: { contentEditable: true, label: "Source link label", type: "text" },
+        sourceUrl: { label: "Source URL override", type: "text" },
+        emptyMessage: { contentEditable: true, label: "Empty message", type: "textarea" },
+        showBody: toggleField("Show article body"),
+        showBackLink: toggleField("Show back link"),
+        showSourceUrl: toggleField("Show source URL"),
+        relatedHeading: { contentEditable: true, label: "Suggested heading", type: "text" },
+        relatedIntro: { contentEditable: true, label: "Suggested intro", type: "textarea" },
+        relatedLimit: { label: "Suggested article limit", max: 6, min: 1, step: 1, type: "number" },
+        relatedEmptyMessage: { contentEditable: true, label: "Suggested empty message", type: "textarea" },
+        relatedShowCategoryLabel: toggleField("Show suggested category label"),
+        categoriesHeading: { contentEditable: true, label: "Categories heading", type: "text" },
+        categoriesIntro: { contentEditable: true, label: "Categories intro", type: "textarea" },
+        categoriesColumns: {
+          label: "Category columns",
+          options: [
+            { label: "1 column", value: "1" },
+            { label: "2 columns", value: "2" },
+          ],
+          type: "select",
+        },
+        categoriesEmptyMessage: { contentEditable: true, label: "Categories empty message", type: "textarea" },
+        showCurrentCategory: toggleField("Show current category"),
+        ...sharedDesignFields,
+      },
+      label: "Article layout",
+      render: (props) => {
+        const metadata = props.puck.metadata as Record<string, unknown>;
+        const category = getCurrentHelpCategory(metadata) ?? sampleHelpCategory();
+        const article = getCurrentHelpArticle(metadata) ?? sampleHelpArticles()[0];
+        const inlineHeading = inlineEditableValue(props.heading);
+        const inlineSummary = inlineEditableValue(props.summary);
+        const inlineBody = inlineEditableValue(props.body);
+        const inlineSourceLabel = inlineEditableValue(props.sourceLabel);
+        const inlineRelatedHeading = inlineEditableValue(props.relatedHeading);
+        const inlineRelatedIntro = inlineEditableValue(props.relatedIntro);
+        const inlineCategoriesHeading = inlineEditableValue(props.categoriesHeading);
+        const inlineCategoriesIntro = inlineEditableValue(props.categoriesIntro);
+        const heading = textValue(props.heading) || article.title;
+        const summary = textValue(props.summary) || article.summary;
+        const body = textValue(props.body) || article.body || textValue(props.emptyMessage, "Article content is being prepared.");
+        const sourceUrl = textValue(props.sourceUrl) || article.sourceUrl;
+        const sourceLabel = textValue(props.sourceLabel, "Source reference");
+        const allArticles = getHelpArticles(metadata);
+        const relatedLimit = typeof props.relatedLimit === "number" && Number.isFinite(props.relatedLimit) ? props.relatedLimit : 3;
+        const categoryArticles = allArticles.filter((candidate) => {
+          if (candidate.path === article.path) {
+            return false;
+          }
+
+          return candidate.categorySlug === category.slug;
+        });
+        const fallbackArticles = allArticles.filter((candidate) => candidate.path !== article.path);
+        const relatedArticles = (categoryArticles.length ? categoryArticles : fallbackArticles.length ? fallbackArticles : sampleHelpArticles()).slice(0, relatedLimit);
+        const categories = (getHelpCategories(metadata).length ? getHelpCategories(metadata) : sampleHelpCategories()).filter(
+          (candidate) => props.showCurrentCategory || candidate.slug !== category.slug,
+        );
+        const relatedHeading = textValue(props.relatedHeading, "Suggested articles");
+        const relatedIntro = textValue(props.relatedIntro);
+        const categoriesHeading = textValue(props.categoriesHeading, "Other categories");
+        const categoriesIntro = textValue(props.categoriesIntro);
+
+        return (
+          <section className={getSectionClassName(props, "puck-help-article-layout")} style={getSectionStyle(props)}>
+            <div className="puck-help-article-layout__inner">
+              <article className="puck-help-article-template puck-help-article-layout__content">
+                {props.showBackLink ? (
+                  <Link className="help-article-back" href={category.path}>
+                    {textValue(props.backLabel, `Back to ${category.title}`)}
+                  </Link>
+                ) : null}
+                <p className="help-article-kicker">{article.sectionHeading || category.heading || category.title}</p>
+                <h1>{inlineHeading ?? heading}</h1>
+                {inlineSummary || summary ? <p className="help-article-summary">{inlineSummary ?? summary}</p> : null}
+                {props.showBody !== false ? <div className="help-article-body">{inlineBody ?? <ArticleBody body={body} />}</div> : null}
+                {props.showSourceUrl && sourceUrl ? (
+                  <a className="help-article-source" href={sourceUrl} rel="noreferrer" target="_blank">
+                    {inlineSourceLabel ?? sourceLabel}
+                  </a>
+                ) : null}
+              </article>
+              <aside className="puck-help-article-sidebar" aria-label="Related Help Centre content">
+                <div className="puck-help-sidebar-panel">
+                  <div className="puck-help-sidebar-heading">
+                    {inlineRelatedHeading ?? (relatedHeading ? <h2>{relatedHeading}</h2> : null)}
+                    {inlineRelatedIntro ?? (relatedIntro ? <p>{relatedIntro}</p> : null)}
+                  </div>
+                  {relatedArticles.length ? (
+                    <div className="puck-help-sidebar-related-list">
+                      {relatedArticles.map((relatedArticle) => (
+                        <Link className="puck-help-sidebar-related-card" href={previewHref(relatedArticle.path, metadata) || relatedArticle.path} key={relatedArticle.path}>
+                          {props.relatedShowCategoryLabel ? (
+                            <span>{relatedArticle.sectionHeading || category.heading || category.title}</span>
+                          ) : null}
+                          <strong>{relatedArticle.title}</strong>
+                        </Link>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="help-template-empty">{textValue(props.relatedEmptyMessage, "Related articles will appear here.")}</p>
+                  )}
+                </div>
+                <div className="puck-help-sidebar-panel">
+                  <div className="puck-help-sidebar-heading">
+                    {inlineCategoriesHeading ?? (categoriesHeading ? <h2>{categoriesHeading}</h2> : null)}
+                    {inlineCategoriesIntro ?? (categoriesIntro ? <p>{categoriesIntro}</p> : null)}
+                  </div>
+                  {categories.length ? (
+                    <div className={`puck-help-sidebar-category-grid puck-help-sidebar-category-columns-${props.categoriesColumns ?? "2"}`}>
+                      {categories.map((helpCategory) => (
+                        <Link className="puck-help-sidebar-category-card" href={previewHref(helpCategory.path, metadata) || helpCategory.path} key={helpCategory.path}>
+                          <span className="puck-help-sidebar-category-icon">
+                            <HelpCategoryIcon icon={helpCategory.icon} />
+                          </span>
+                          <span className="puck-help-sidebar-category-name">{helpCategory.title}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="help-template-empty">{textValue(props.categoriesEmptyMessage, "Other Help Centre categories will appear here.")}</p>
+                  )}
+                </div>
+              </aside>
             </div>
           </section>
         );

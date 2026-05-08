@@ -13,7 +13,7 @@ Concise reference for the Andersen EV Help Centre application.
 ## Payload Content
 
 - Pages manage slugs, SEO, structured blocks and hidden Puck `builderData`.
-- Posts can be used for help articles and advice content.
+- Help Articles are used for Help Centre article content.
 - Menus manage editable navigation data for the Puck header.
 - Support tickets store AI-helper escalations and support-team summaries.
 - Themes and page templates control whole-site visual direction.
