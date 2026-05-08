@@ -58,7 +58,16 @@ export default async function HelpArticlePage({ params }: HelpArticlePageProps) 
 
   return (
     <>
-      {data.templateData ? (
+      {helpArticle.builderData ? (
+        <PuckBuilderRenderer
+          data={helpArticle.builderData}
+          featuredProducts={[]}
+          helpArticle={helpArticle}
+          helpArticles={helpCategory.articles}
+          helpCategory={helpCategory}
+          menus={data.menus}
+        />
+      ) : data.templateData ? (
         <PuckBuilderRenderer
           data={data.templateData}
           featuredProducts={[]}
@@ -72,7 +81,7 @@ export default async function HelpArticlePage({ params }: HelpArticlePageProps) 
           <PuckBuilderRenderer data={data.headerData} featuredProducts={[]} menus={data.menus} />
         </div>
       ) : null}
-      {!data.templateData ? <main className="help-article-page">
+      {!helpArticle.builderData && !data.templateData ? <main className="help-article-page">
         <article className="help-article-shell">
           <Link className="help-article-back" href={getHelpCategoryPath(helpArticle.categorySlug)}>
             Back to {helpArticle.sectionHeading}

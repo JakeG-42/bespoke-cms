@@ -6,7 +6,7 @@ import { type FormEvent, type ReactNode, useState } from "react";
 
 import { applyThemeToBuilderData, getDefaultBuilderTheme } from "@/payload/builder/metadata";
 import { builderConfig } from "@/payload/builder/puck-config";
-import type { BuilderData, BuilderMenu, BuilderPageTemplate, BuilderProduct, BuilderTheme } from "@/payload/builder/types";
+import type { BuilderData, BuilderHelpArticle, BuilderHelpCategory, BuilderMenu, BuilderPageTemplate, BuilderProduct, BuilderTheme } from "@/payload/builder/types";
 
 type SaveState = "error" | "idle" | "saved" | "saving";
 
@@ -27,12 +27,17 @@ type VisualBuilderClientProps = {
   activeTemplateId: string;
   activeThemeId: string;
   builderData: BuilderData;
+  documentId: string;
+  documentKind?: "helpArticle" | "page";
   featuredProducts: BuilderProduct[];
+  headerPath: string;
+  helpArticle?: BuilderHelpArticle | null;
+  helpArticles?: BuilderHelpArticle[];
+  helpCategory?: BuilderHelpCategory | null;
   menus: BuilderMenu[];
   pageTemplates: BuilderPageTemplate[];
-  pageId: string;
   previewUrl: string;
-  slug: string;
+  showNewPageButton?: boolean;
   themes: BuilderTheme[];
   title: string;
 };
@@ -47,6 +52,7 @@ type HeaderActionsProps = {
   previewUrl: string;
   saveState: SaveState;
   selectedThemeId: string;
+  showNewPageButton: boolean;
   state: {
     data?: BuilderData;
     indexes?: {
@@ -161,6 +167,10 @@ function payloadRelationshipId(id: string) {
   return /^\d+$/.test(id) ? Number(id) : undefined;
 }
 
+function documentApiPath(kind: NonNullable<VisualBuilderClientProps["documentKind"]>, id: string) {
+  return kind === "helpArticle" ? `/console-api/help-articles/${id}` : `/console-api/pages/${id}`;
+}
+
 function renderHeaderActions({
   children,
   creatingPage,
@@ -171,6 +181,7 @@ function renderHeaderActions({
   previewUrl,
   saveState,
   selectedThemeId,
+  showNewPageButton,
   state,
   themes,
 }: HeaderActionsProps) {
@@ -186,10 +197,12 @@ function renderHeaderActions({
           ))}
         </select>
       </label>
-      <button className="visual-builder-action" disabled={creatingPage} onClick={onOpenNewPage} type="button">
-        <FilePlus2 aria-hidden="true" size={15} />
-        <span>New page</span>
-      </button>
+      {showNewPageButton ? (
+        <button className="visual-builder-action" disabled={creatingPage} onClick={onOpenNewPage} type="button">
+          <FilePlus2 aria-hidden="true" size={15} />
+          <span>New page</span>
+        </button>
+      ) : null}
       <a className="visual-builder-action" href="/console/globals/theme-settings" rel="noreferrer" target="_blank">
         <ExternalLink aria-hidden="true" size={14} />
         <span>Theme settings</span>
@@ -212,12 +225,17 @@ export function VisualBuilderClient({
   activeTemplateId,
   activeThemeId,
   builderData,
+  documentId,
+  documentKind = "page",
   featuredProducts,
+  headerPath,
+  helpArticle,
+  helpArticles = [],
+  helpCategory,
   menus,
   pageTemplates,
-  pageId,
   previewUrl,
-  slug,
+  showNewPageButton = true,
   themes,
   title,
 }: VisualBuilderClientProps) {
@@ -325,10 +343,10 @@ export function VisualBuilderClient({
     setSaveState("saving");
     setMessage(`Switching to ${theme.name}...`);
 
-    const response = await fetch(`/console-api/pages/${pageId}`, {
+    const response = await fetch(documentApiPath(documentKind, documentId), {
       body: JSON.stringify({
         builderData: nextBuilderData,
-        theme: payloadRelationshipId(theme.id),
+        ...(documentKind === "page" ? { theme: payloadRelationshipId(theme.id) } : {}),
       }),
       credentials: "same-origin",
       headers: {
@@ -351,7 +369,7 @@ export function VisualBuilderClient({
     setSaveState("saving");
     setMessage("Saving visual builder data...");
 
-    const response = await fetch(`/console-api/pages/${pageId}`, {
+    const response = await fetch(documentApiPath(documentKind, documentId), {
       body: JSON.stringify({ builderData: data }),
       credentials: "same-origin",
       headers: {
@@ -368,7 +386,7 @@ export function VisualBuilderClient({
 
     setActiveBuilderData(data);
     setSaveState("saved");
-    setMessage("Saved to Payload. Refresh the site tab to see the published page update.");
+    setMessage("Saved to Payload. Refresh the site tab to see the published content update.");
   }
 
   function HeaderActionsOverride({ children }: { children?: ReactNode }) {
@@ -384,6 +402,7 @@ export function VisualBuilderClient({
       previewUrl,
       saveState,
       selectedThemeId,
+      showNewPageButton,
       state: appState as HeaderActionsProps["state"],
       themes,
     });
@@ -394,15 +413,15 @@ export function VisualBuilderClient({
       <Puck
         config={builderConfig}
         data={activeBuilderData}
-        headerPath={slug === "home" ? "/" : `/${slug}`}
+        headerPath={headerPath}
         headerTitle={title}
         height="calc(100vh - 2rem)"
         iframe={{
           enabled: true,
           waitForStyles: true,
         }}
-        key={`${pageId}-${selectedThemeId}`}
-        metadata={{ featuredProducts, menus, pageTemplates, themes }}
+        key={`${documentKind}-${documentId}-${selectedThemeId}`}
+        metadata={{ featuredProducts, helpArticle, helpArticles, helpCategory, menus, pageTemplates, themes }}
         onPublish={save}
         overrides={{ headerActions: HeaderActionsOverride }}
         plugins={editorPlugins}

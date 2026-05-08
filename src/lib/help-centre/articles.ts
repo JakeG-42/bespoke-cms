@@ -259,6 +259,7 @@ function mapArticleDoc(doc: UnknownRecord, category: HelpCategory): HelpArticle 
 
   return {
     body: stringValue(doc.body),
+    builderData: normalizeBuilderData(doc.builderData),
     categorySlug: category.slug,
     path: getHelpArticlePath(category.slug, slug),
     reviewStatus: stringValue(doc.reviewStatus),
@@ -288,6 +289,7 @@ export function extractHelpArticles(builderData: BuilderData): HelpArticle[] {
 
       return {
         body,
+        builderData: null,
         categorySlug: slugifyHelpArticle(sectionAnchor),
         path: getHelpArticlePath(sectionAnchor, slug),
         reviewStatus: stringValue(article.status),

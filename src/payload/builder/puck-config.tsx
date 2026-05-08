@@ -1518,6 +1518,7 @@ export const builderConfig: BuilderConfig = {
         sectionPaddingBottom: 6,
         sectionPaddingTop: 4.5,
         sectionWidth: "narrow",
+        showBody: true,
         showBackLink: true,
         showSourceUrl: true,
         spacingControls: { ...defaultDesign.spacingControls, elementGap: 1, sectionPaddingBottom: 6, sectionPaddingTop: 4.5, sectionWidth: "narrow" },
@@ -1527,6 +1528,7 @@ export const builderConfig: BuilderConfig = {
       fields: {
         backLabel: { contentEditable: true, label: "Back link label", type: "text" },
         emptyMessage: { contentEditable: true, label: "Empty message", type: "textarea" },
+        showBody: toggleField("Show article body"),
         showBackLink: toggleField("Show back link"),
         showSourceUrl: toggleField("Show source URL"),
         ...sharedDesignFields,
@@ -1547,9 +1549,11 @@ export const builderConfig: BuilderConfig = {
             <p className="help-article-kicker">{article.sectionHeading || category.heading || category.title}</p>
             <h1>{article.title}</h1>
             {article.summary ? <p className="help-article-summary">{article.summary}</p> : null}
-            <div className="help-article-body">
-              <ArticleBody body={article.body || textValue(props.emptyMessage, "Article content is being prepared.")} />
-            </div>
+            {props.showBody !== false ? (
+              <div className="help-article-body">
+                <ArticleBody body={article.body || textValue(props.emptyMessage, "Article content is being prepared.")} />
+              </div>
+            ) : null}
             {props.showSourceUrl && article.sourceUrl ? (
               <a className="help-article-source" href={article.sourceUrl} rel="noreferrer" target="_blank">
                 Source reference

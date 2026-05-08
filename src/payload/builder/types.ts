@@ -135,9 +135,11 @@ export type BuilderHelpCategory = {
 
 export type BuilderHelpArticle = {
   body: string;
+  builderData?: BuilderData | null;
   categorySlug: string;
   path: string;
   reviewStatus?: string;
+  sectionAnchor?: string;
   sectionHeading?: string;
   slug: string;
   sourceUrl?: string;
@@ -258,6 +260,7 @@ export type BuilderComponents = {
   HelpArticleContentBlock: BuilderAdvancedStyle & {
     backLabel?: string;
     emptyMessage?: string;
+    showBody?: boolean;
     showBackLink?: boolean;
     showSourceUrl?: boolean;
   };

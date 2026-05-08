@@ -132,6 +132,14 @@ export default buildConfig({
           },
           path: "/wysiwyg/:id",
         },
+        wysiwygHelpArticle: {
+          Component: "/components/visual-builder/WysiwygPageView#WysiwygPageView",
+          exact: true,
+          meta: {
+            title: "Article WYSIWYG Builder",
+          },
+          path: "/wysiwyg/help-articles/:id",
+        },
       },
     },
     importMap: {

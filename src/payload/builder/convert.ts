@@ -9,6 +9,14 @@ type PageLike = {
   title?: unknown;
 };
 
+type HelpArticleLike = {
+  body?: unknown;
+  builderData?: unknown;
+  sourceUrl?: unknown;
+  summary?: unknown;
+  title?: unknown;
+};
+
 const backgroundMap: Record<string, string> = {
   contrast: "rgba(2, 6, 23, 0.94)",
   default: "",
@@ -175,6 +183,119 @@ function rootProps(page: PageLike): BuilderRootProps {
     surfaceOpacity: 0.78,
     textColor: "#f1f5f9",
     themePreset: "platformDark",
+  };
+}
+
+function articleRootProps(article: HelpArticleLike): BuilderRootProps {
+  return {
+    accentColor: "#355b45",
+    backgroundColor: "#ffffff",
+    fontFamily: "sans",
+    pagePaddingBottom: 0,
+    pagePaddingTop: 0,
+    pageTitle: asString(article.title, "Help article"),
+    sectionSpacing: "normal",
+    surfaceColor: "255, 255, 255",
+    surfaceOpacity: 0.95,
+    textColor: "#161b18",
+    themePreset: "andersenEV",
+  };
+}
+
+function andersenHeaderBlock() {
+  return {
+    props: {
+      brandImageAlt: "Andersen EV",
+      brandImageUrl: "https://andersen-ev.com/cdn/shop/files/Untitled_design_31.png?v=1672740204&width=240",
+      brandLabel: "ANDERSEN EV",
+      ctaLabel: "COMPARE MODELS",
+      ctaUrl: "/charge-points",
+      fullWidth: true,
+      id: "article-builder-header",
+      menuHandle: "main-navigation",
+      searchUrl: "#search",
+      showSearchIcon: true,
+      showTopBar: false,
+      showUserIcon: true,
+      sticky: true,
+      userUrl: "#account",
+    },
+    type: "SiteHeaderBlock",
+  } as BuilderData["content"][number];
+}
+
+function articleBodyChunks(body: string) {
+  return body
+    .split(/\n{2,}/)
+    .map((chunk) => chunk.trim())
+    .filter(Boolean)
+    .filter((chunk) => !isInternalArticleNote(chunk));
+}
+
+function isInternalArticleNote(chunk: string) {
+  return /^(needs andersen confirmation|publication warning|recommended asset|recommended page note|recommended support detail|migration note|content gaps|suggested review owners)/i.test(
+    chunk,
+  );
+}
+
+export function articleToBuilderData(article: HelpArticleLike): BuilderData {
+  const existingBuilderData = normalizeBuilderData(article.builderData);
+
+  if (existingBuilderData) {
+    return existingBuilderData;
+  }
+
+  const body = asString(article.body);
+  const chunks = articleBodyChunks(body);
+
+  return {
+    content: [
+      andersenHeaderBlock(),
+      {
+        props: {
+          ...groupedDesignProps({
+            backgroundColor: "#ffffff",
+            bodySize: 1.08,
+            fontFamily: "sans",
+            headingSize: 4.4,
+            sectionPaddingBottom: chunks.length ? 1.75 : 6,
+            sectionPaddingTop: 4.5,
+            sectionWidth: "narrow",
+            textColor: "#032536",
+          }),
+          backLabel: "Back to category",
+          emptyMessage: "Article content is being prepared.",
+          id: "article-builder-intro",
+          showBackLink: true,
+          showBody: !chunks.length,
+          showSourceUrl: true,
+        },
+        type: "HelpArticleContentBlock",
+      },
+      ...(chunks.length
+        ? chunks.map((chunk, index) => ({
+            props: {
+              ...groupedDesignProps({
+                backgroundColor: "#ffffff",
+                bodySize: 1.08,
+                fontFamily: "sans",
+                lineHeight: 1.75,
+                sectionPaddingBottom: index === chunks.length - 1 ? 4 : 0.75,
+                sectionPaddingTop: index === 0 ? 0.75 : 0,
+                sectionWidth: "narrow",
+                textColor: "#032536",
+              }),
+              body: chunk,
+              id: `article-body-${index + 1}`,
+            },
+            type: "RichTextBlock",
+          }))
+        : []),
+    ] as BuilderData["content"],
+    root: {
+      props: articleRootProps(article),
+    },
+    zones: {},
   };
 }
 

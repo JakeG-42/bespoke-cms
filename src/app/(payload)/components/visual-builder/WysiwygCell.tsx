@@ -10,11 +10,15 @@ export function WysiwygCell({ rowData }: DefaultCellComponentProps) {
     return null;
   }
 
+  const isHelpArticle = Boolean(rowData?.category);
+  const label = isHelpArticle ? "article" : "page";
+  const href = isHelpArticle ? `/console/wysiwyg/help-articles/${id}` : `/console/wysiwyg/${id}`;
+
   return (
     <a
-      aria-label={`Open WYSIWYG builder for ${rowData.title ?? "page"}`}
+      aria-label={`Open WYSIWYG builder for ${rowData.title ?? label}`}
       className="wysiwyg-cell-button"
-      href={`/console/wysiwyg/${id}`}
+      href={href}
       onClick={(event) => event.stopPropagation()}
       rel="noreferrer"
       target="_blank"
