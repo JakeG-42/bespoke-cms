@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from "react";
+import { isValidElement, type CSSProperties, type ReactNode } from "react";
 import type { CustomFieldRender } from "@puckeditor/core";
 import { ChevronDown, CircleHelp, HardHat, Headphones, LifeBuoy, PlugZap, Search, Settings, UserRound, Wrench } from "lucide-react";
 import Link from "next/link";
@@ -578,6 +578,10 @@ function getSectionClassName(style: BuilderAdvancedStyle = {}, className = "") {
 
 function textValue(value: unknown, fallback = "") {
   return typeof value === "string" ? value : fallback;
+}
+
+function inlineEditableValue(value: unknown): ReactNode | null {
+  return isValidElement(value) ? value : null;
 }
 
 function getInternalLinkBasePath(metadata: unknown) {
@@ -1872,14 +1876,16 @@ export const builderConfig: BuilderConfig = {
       },
       label: "Rich text",
       render: (props) => {
+        const inlineBody = inlineEditableValue(props.body);
         const body = textValue(props.body, "Add body copy here.");
 
         return (
           <section className={getSectionClassName(props, "puck-rich-section")} style={getSectionStyle(props)}>
             <div className="puck-rich-text">
-              {body.split("\n").map((paragraph, index) => (
-                <p key={`${paragraph}-${index}`}>{paragraph}</p>
-              ))}
+              {inlineBody ??
+                body.split("\n").map((paragraph, index) => (
+                  <p key={`${paragraph}-${index}`}>{paragraph}</p>
+                ))}
             </div>
           </section>
         );
