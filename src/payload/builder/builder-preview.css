@@ -2106,6 +2106,22 @@
   font-weight: var(--builder-font-weight, 850);
 }
 
+.puck-help-article-template.puck-section h1,
+.puck-help-article-layout .puck-help-article-template h1 {
+  max-width: min(100%, 980px);
+  font-size: min(var(--builder-heading-size, 2.85rem), clamp(2rem, 3vw, 2.85rem));
+  line-height: 1.05;
+}
+
+.puck-help-article-layout .puck-help-sidebar-heading h2,
+.puck-help-related-section .puck-help-support-heading h2,
+.puck-help-other-categories-section .puck-help-support-heading h2 {
+  max-width: none;
+  margin-bottom: 0;
+  font-size: clamp(0.95rem, 1vw, 1.05rem);
+  line-height: 1.12;
+}
+
 .puck-section p {
   max-width: 64ch;
   color: color-mix(in srgb, var(--builder-section-text) 78%, transparent);
