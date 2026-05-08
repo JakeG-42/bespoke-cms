@@ -1368,14 +1368,23 @@
   font-family: "Muli", Arial, Helvetica, sans-serif;
 }
 
-.puck-help-category-template h1,
-.puck-help-article-template h1 {
+.puck-help-category-template h1 {
   max-width: 780px;
   margin: 0;
   color: var(--builder-section-text, #032536);
   font-size: var(--builder-heading-size, clamp(2.6rem, 6vw, 5rem));
   font-weight: var(--builder-font-weight, 850);
   line-height: 0.98;
+  letter-spacing: 0;
+}
+
+.puck-help-article-template h1 {
+  max-width: min(100%, 980px);
+  margin: 0;
+  color: var(--builder-section-text, #032536);
+  font-size: min(var(--builder-heading-size, 2.85rem), clamp(2rem, 3vw, 2.85rem));
+  font-weight: var(--builder-font-weight, 850);
+  line-height: 1.05;
   letter-spacing: 0;
 }
 
@@ -1400,8 +1409,8 @@
 .puck-help-article-layout__inner {
   display: grid;
   align-items: start;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 350px);
-  gap: clamp(2.5rem, 5vw, 5rem);
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 320px);
+  gap: clamp(2rem, 4vw, 3.5rem);
 }
 
 .puck-help-article-layout__content {
@@ -1432,7 +1441,7 @@
 .puck-help-sidebar-heading h2 {
   margin: 0;
   color: var(--builder-section-text, #032536);
-  font-size: clamp(1.15rem, 1.4vw, 1.35rem);
+  font-size: clamp(0.95rem, 1vw, 1.05rem);
   font-weight: 850;
   line-height: 1.12;
   letter-spacing: 0;

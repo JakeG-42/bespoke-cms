@@ -292,7 +292,7 @@ function articleLayoutBlock(
     elementGap: 1,
     elementPadding: 1.15,
     fontFamily: "sans",
-    headingSize: 4.1,
+    headingSize: 2.85,
     sectionPaddingBottom: 6,
     sectionPaddingTop: 4.5,
     sectionWidth: "wide",
