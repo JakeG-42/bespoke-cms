@@ -232,71 +232,91 @@ function articleBodyChunks(body: string) {
     .filter((chunk) => !isInternalArticleNote(chunk));
 }
 
+function publicArticleBody(body: string) {
+  return articleBodyChunks(body).join("\n\n");
+}
+
 function isInternalArticleNote(chunk: string) {
   return /^(needs andersen confirmation|publication warning|recommended asset|recommended page note|recommended support detail|migration note|content gaps|suggested review owners)/i.test(
     chunk,
   );
 }
 
-export function articleToBuilderData(article: HelpArticleLike): BuilderData {
-  const existingBuilderData = normalizeBuilderData(article.builderData);
+function isLegacyGeneratedArticleBuilderData(data: BuilderData) {
+  return data.content.some((item) => {
+    const props: UnknownRecord = isRecord(item.props) ? item.props : {};
 
-  if (existingBuilderData) {
-    return existingBuilderData;
-  }
+    return (
+      (item.type === "HelpArticleContentBlock" && props.id === "article-builder-intro") ||
+      (item.type === "RichTextBlock" && typeof props.id === "string" && props.id.startsWith("article-body-"))
+    );
+  });
+}
 
-  const body = asString(article.body);
-  const chunks = articleBodyChunks(body);
+function legacyGeneratedArticleBody(data: BuilderData, fallback: string) {
+  const chunks = data.content.flatMap((item) => {
+    if (item.type !== "RichTextBlock" || !isRecord(item.props)) {
+      return [];
+    }
 
+    const id = asString(item.props.id);
+
+    return id.startsWith("article-body-") ? [asString(item.props.body)] : [];
+  });
+  const body = chunks.map((chunk) => chunk.trim()).filter(Boolean).join("\n\n");
+
+  return body || publicArticleBody(fallback);
+}
+
+function articleContentBlock(article: HelpArticleLike, body: string) {
   return {
-    content: [
-      andersenHeaderBlock(),
-      {
-        props: {
-          ...groupedDesignProps({
-            backgroundColor: "#ffffff",
-            bodySize: 1.08,
-            fontFamily: "sans",
-            headingSize: 4.4,
-            sectionPaddingBottom: chunks.length ? 1.75 : 6,
-            sectionPaddingTop: 4.5,
-            sectionWidth: "narrow",
-            textColor: "#032536",
-          }),
-          backLabel: "Back to category",
-          emptyMessage: "Article content is being prepared.",
-          id: "article-builder-intro",
-          showBackLink: true,
-          showBody: !chunks.length,
-          showSourceUrl: true,
-        },
-        type: "HelpArticleContentBlock",
-      },
-      ...(chunks.length
-        ? chunks.map((chunk, index) => ({
-            props: {
-              ...groupedDesignProps({
-                backgroundColor: "#ffffff",
-                bodySize: 1.08,
-                fontFamily: "sans",
-                lineHeight: 1.75,
-                sectionPaddingBottom: index === chunks.length - 1 ? 4 : 0.75,
-                sectionPaddingTop: index === 0 ? 0.75 : 0,
-                sectionWidth: "narrow",
-                textColor: "#032536",
-              }),
-              body: chunk,
-              id: `article-body-${index + 1}`,
-            },
-            type: "RichTextBlock",
-          }))
-        : []),
-    ] as BuilderData["content"],
+    props: {
+      ...groupedDesignProps({
+        backgroundColor: "#ffffff",
+        bodySize: 1.08,
+        fontFamily: "sans",
+        headingSize: 4.4,
+        sectionPaddingBottom: 6,
+        sectionPaddingTop: 4.5,
+        sectionWidth: "narrow",
+        textColor: "#032536",
+      }),
+      backLabel: "Back to category",
+      body,
+      emptyMessage: "Article content is being prepared.",
+      heading: asString(article.title),
+      id: "article-builder-content",
+      showBackLink: true,
+      showBody: true,
+      showSourceUrl: true,
+      sourceLabel: "Source reference",
+      sourceUrl: asString(article.sourceUrl),
+      summary: asString(article.summary),
+    },
+    type: "HelpArticleContentBlock",
+  } as BuilderData["content"][number];
+}
+
+function createArticleBuilderData(article: HelpArticleLike, body = publicArticleBody(asString(article.body))): BuilderData {
+  return {
+    content: [andersenHeaderBlock(), articleContentBlock(article, body)] as BuilderData["content"],
     root: {
       props: articleRootProps(article),
     },
     zones: {},
   };
+}
+
+export function articleToBuilderData(article: HelpArticleLike): BuilderData {
+  const existingBuilderData = normalizeBuilderData(article.builderData);
+
+  if (existingBuilderData) {
+    return isLegacyGeneratedArticleBuilderData(existingBuilderData)
+      ? createArticleBuilderData(article, legacyGeneratedArticleBody(existingBuilderData, asString(article.body)))
+      : existingBuilderData;
+  }
+
+  return createArticleBuilderData(article);
 }
 
 export function normalizeBuilderData(value: unknown): BuilderData | null {

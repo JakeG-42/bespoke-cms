@@ -1513,24 +1513,34 @@ export const builderConfig: BuilderConfig = {
         ...defaultDesign,
         backLabel: "Back to category",
         backgroundColor: "#ffffff",
+        body: "",
         bodySize: 1.08,
         colorControls: { ...defaultDesign.colorControls, backgroundColor: "#ffffff", textColor: "#032536", surfaceColor: "#ffffff" },
         elementGap: 1,
         emptyMessage: "Article content is being prepared.",
         fontFamily: "sans",
+        heading: "",
         headingSize: 4.4,
         sectionPaddingBottom: 6,
         sectionPaddingTop: 4.5,
         sectionWidth: "narrow",
+        sourceLabel: "Source reference",
+        sourceUrl: "",
         showBody: true,
         showBackLink: true,
         showSourceUrl: true,
         spacingControls: { ...defaultDesign.spacingControls, elementGap: 1, sectionPaddingBottom: 6, sectionPaddingTop: 4.5, sectionWidth: "narrow" },
+        summary: "",
         textColor: "#032536",
         typographyControls: { ...defaultDesign.typographyControls, bodySize: 1.08, fontFamily: "sans", headingSize: 4.4 },
       },
       fields: {
         backLabel: { contentEditable: true, label: "Back link label", type: "text" },
+        heading: { contentEditable: true, label: "Article title override", type: "text" },
+        summary: { contentEditable: true, label: "Summary override", type: "textarea" },
+        body: { label: "Article body override", type: "textarea" },
+        sourceLabel: { label: "Source link label", type: "text" },
+        sourceUrl: { label: "Source URL override", type: "text" },
         emptyMessage: { contentEditable: true, label: "Empty message", type: "textarea" },
         showBody: toggleField("Show article body"),
         showBackLink: toggleField("Show back link"),
@@ -1542,6 +1552,14 @@ export const builderConfig: BuilderConfig = {
         const metadata = props.puck.metadata as Record<string, unknown>;
         const category = getCurrentHelpCategory(metadata) ?? sampleHelpCategory();
         const article = getCurrentHelpArticle(metadata) ?? sampleHelpArticles()[0];
+        const inlineHeading = inlineEditableValue(props.heading);
+        const inlineSummary = inlineEditableValue(props.summary);
+        const inlineBody = inlineEditableValue(props.body);
+        const heading = textValue(props.heading) || article.title;
+        const summary = textValue(props.summary) || article.summary;
+        const body = textValue(props.body) || article.body || textValue(props.emptyMessage, "Article content is being prepared.");
+        const sourceUrl = textValue(props.sourceUrl) || article.sourceUrl;
+        const sourceLabel = textValue(props.sourceLabel, "Source reference");
 
         return (
           <article className={getSectionClassName(props, "puck-help-article-template")} style={getSectionStyle(props)}>
@@ -1551,16 +1569,16 @@ export const builderConfig: BuilderConfig = {
               </Link>
             ) : null}
             <p className="help-article-kicker">{article.sectionHeading || category.heading || category.title}</p>
-            <h1>{article.title}</h1>
-            {article.summary ? <p className="help-article-summary">{article.summary}</p> : null}
+            <h1>{inlineHeading ?? heading}</h1>
+            {inlineSummary || summary ? <p className="help-article-summary">{inlineSummary ?? summary}</p> : null}
             {props.showBody !== false ? (
               <div className="help-article-body">
-                <ArticleBody body={article.body || textValue(props.emptyMessage, "Article content is being prepared.")} />
+                {inlineBody ?? <ArticleBody body={body} />}
               </div>
             ) : null}
-            {props.showSourceUrl && article.sourceUrl ? (
-              <a className="help-article-source" href={article.sourceUrl} rel="noreferrer" target="_blank">
-                Source reference
+            {props.showSourceUrl && sourceUrl ? (
+              <a className="help-article-source" href={sourceUrl} rel="noreferrer" target="_blank">
+                {sourceLabel}
               </a>
             ) : null}
           </article>

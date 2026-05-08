@@ -259,10 +259,15 @@ export type BuilderComponents = {
   };
   HelpArticleContentBlock: BuilderAdvancedStyle & {
     backLabel?: string;
+    body?: string;
     emptyMessage?: string;
+    heading?: string;
+    sourceLabel?: string;
+    sourceUrl?: string;
     showBody?: boolean;
     showBackLink?: boolean;
     showSourceUrl?: boolean;
+    summary?: string;
   };
   HelpCategoryArticlesBlock: BuilderAdvancedStyle & {
     backLabel?: string;

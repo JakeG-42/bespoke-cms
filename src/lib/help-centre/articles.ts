@@ -1,7 +1,7 @@
 import config from "@payload-config";
 import { getPayload, type Payload } from "payload";
 
-import { normalizeBuilderData } from "@/payload/builder/convert";
+import { articleToBuilderData, normalizeBuilderData } from "@/payload/builder/convert";
 import {
   applyThemeToBuilderData,
   getBuilderMenus,
@@ -259,7 +259,7 @@ function mapArticleDoc(doc: UnknownRecord, category: HelpCategory): HelpArticle 
 
   return {
     body: stringValue(doc.body),
-    builderData: normalizeBuilderData(doc.builderData),
+    builderData: doc.builderData ? articleToBuilderData(doc) : null,
     categorySlug: category.slug,
     path: getHelpArticlePath(category.slug, slug),
     reviewStatus: stringValue(doc.reviewStatus),
