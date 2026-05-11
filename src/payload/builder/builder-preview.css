@@ -856,6 +856,550 @@
 
 .puck-help-centre-section {
   color: var(--builder-section-text);
+  padding-bottom: 0;
+}
+
+.puck-ai-helper-card {
+  display: grid;
+  gap: 0;
+  width: min(30rem, 100%);
+  margin: 0 auto clamp(2.5rem, 4vw, 3.5rem);
+  border: 1px solid rgba(104, 232, 255, 0.18);
+  border-radius: 8px;
+  background: #2e332f;
+  color: #ffffff;
+  box-shadow:
+    0 0 16px rgba(104, 232, 255, 0.16),
+    0 0 32px rgba(183, 255, 207, 0.1),
+    0 12px 28px rgba(17, 22, 19, 0.12);
+  overflow: hidden;
+  transition:
+    border-color 680ms var(--andersen-hover-ease, ease),
+    box-shadow 680ms var(--andersen-hover-ease, ease),
+    max-width 520ms var(--andersen-hover-ease, ease),
+    transform 680ms var(--andersen-hover-ease, ease),
+    width 520ms var(--andersen-hover-ease, ease);
+}
+
+.puck-ai-helper-card[open] {
+  width: 100%;
+}
+
+.puck-ai-helper-card:not([open]):hover,
+.puck-ai-helper-card:not([open]):focus-within {
+  border-color: rgba(183, 255, 207, 0.95);
+  box-shadow:
+    0 0 22px rgba(104, 232, 255, 0.74),
+    0 0 52px rgba(183, 255, 207, 0.44),
+    0 0 92px rgba(212, 177, 255, 0.36),
+    0 0 124px rgba(104, 232, 255, 0.18),
+    0 24px 48px rgba(17, 22, 19, 0.24);
+  transform: translateY(-5px) scale(1.035);
+}
+
+.puck-ai-helper-card-header {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  justify-content: center;
+  gap: 0.7rem;
+  align-items: center;
+  padding: clamp(1.35rem, 3vw, 2.1rem);
+  font-family: "Muli", Arial, Helvetica, sans-serif;
+  list-style: none;
+  cursor: pointer;
+}
+
+.puck-ai-helper-card-header::-webkit-details-marker {
+  display: none;
+}
+
+.puck-ai-helper-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+.puck-ai-helper-title-group {
+  display: grid;
+  justify-items: center;
+  gap: 0.28rem;
+}
+
+.puck-ai-helper-brow {
+  display: inline-block;
+  background: linear-gradient(90deg, #b7ffcf 0%, #68e8ff 38%, #d4b1ff 72%, #ffffff 100%);
+  background-clip: text;
+  color: transparent;
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  text-transform: uppercase;
+  text-shadow:
+    0 0 8px rgba(104, 232, 255, 0.46),
+    0 0 18px rgba(183, 255, 207, 0.24),
+    0 0 26px rgba(212, 177, 255, 0.2);
+}
+
+.puck-ai-helper-card-header h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(1.45rem, 3vw, 2.15rem);
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.08;
+}
+
+.puck-ai-helper-chevron {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  padding: 0.42rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  transition:
+    background-color 260ms var(--andersen-hover-ease, ease),
+    border-color 260ms var(--andersen-hover-ease, ease),
+    color 260ms var(--andersen-hover-ease, ease),
+    transform 260ms var(--andersen-hover-ease, ease);
+}
+
+.puck-ai-helper-chevron > svg:first-child {
+  grid-area: 1 / 1;
+}
+
+.puck-ai-helper-lock {
+  position: absolute;
+  right: -0.22rem;
+  bottom: -0.16rem;
+  padding: 0.14rem;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #2e332f;
+  box-shadow: 0 2px 6px rgba(17, 22, 19, 0.22);
+}
+
+.puck-ai-helper-chevron.is-locked {
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.puck-ai-helper-card-header:hover .puck-ai-helper-chevron,
+.puck-ai-helper-card-header:focus-visible .puck-ai-helper-chevron {
+  border-color: rgba(255, 255, 255, 0.36);
+  background: rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.puck-ai-helper-card[open] .puck-ai-helper-chevron {
+  transform: rotate(180deg);
+}
+
+.puck-ai-helper-pin-modal {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(17, 22, 19, 0.52);
+  backdrop-filter: blur(5px);
+}
+
+.puck-ai-helper-pin-card {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  width: min(24rem, 100%);
+  padding: 2rem;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #111613;
+  font-family: "Muli", Arial, Helvetica, sans-serif;
+  text-align: center;
+  box-shadow: 0 24px 70px rgba(17, 22, 19, 0.22);
+}
+
+.puck-ai-helper-pin-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: inline-grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  border-radius: 999px;
+  background: #f2f3ef;
+  color: #111613;
+  cursor: pointer;
+}
+
+.puck-ai-helper-pin-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 2.8rem;
+  height: 2.8rem;
+  margin-bottom: 0.9rem;
+  border-radius: 999px;
+  background: #2e332f;
+  color: #ffffff;
+}
+
+.puck-ai-helper-pin-card h2 {
+  margin: 0;
+  color: #111613;
+  font-size: 1.5rem;
+  font-weight: 650;
+  line-height: 1.1;
+}
+
+.puck-ai-helper-pin-card p {
+  margin: 0.55rem 0 0;
+  color: #555b55;
+  font-size: 0.96rem;
+  line-height: 1.45;
+}
+
+.puck-ai-helper-pin-card form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.65rem;
+  width: 100%;
+  margin-top: 1.35rem;
+}
+
+.puck-ai-helper-pin-card input {
+  min-width: 0;
+  min-height: 2.9rem;
+  padding: 0 1rem;
+  border: 1px solid #d9dbd4;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #111613;
+  font: inherit;
+  text-align: center;
+}
+
+.puck-ai-helper-pin-card button[type="submit"] {
+  min-height: 2.9rem;
+  padding: 0 1rem;
+  border: 1px solid #111613;
+  border-radius: 999px;
+  background: #111613;
+  color: #ffffff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.puck-ai-helper-pin-error {
+  width: 100%;
+  margin-top: 0.9rem !important;
+  padding: 0.75rem 0.9rem;
+  border-radius: 8px;
+  background: #fef2f2;
+  color: #991b1b !important;
+  font-size: 0.86rem !important;
+}
+
+.puck-ai-helper-content {
+  display: grid;
+  padding: 0 clamp(1.35rem, 3vw, 2.1rem) clamp(1.35rem, 3vw, 2.1rem);
+  background: #2e332f;
+}
+
+.puck-theme-andersenEV .puck-section .puck-ai-helper-card-header h2,
+.puck-theme-andersenEV .puck-ai-helper-card-header h2 {
+  color: #ffffff;
+}
+
+.puck-help-footer {
+  width: 100vw;
+  margin: 0 50%;
+  padding: clamp(2rem, 4vw, 3rem) 24px;
+  background: #eef0ed;
+  color: #5f6660;
+  font-family: "Muli", Arial, Helvetica, sans-serif;
+  transform: translateX(-50%);
+}
+
+.puck-help-footer-inner {
+  display: grid;
+  gap: 1.2rem;
+  justify-items: center;
+  width: min(1170px, 100%);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.puck-help-footer-socials,
+.puck-help-footer-payments {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.55rem;
+}
+
+.puck-help-footer-trustpilot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid #d3d7d0;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.76);
+  color: #111613;
+  text-decoration: none;
+  box-shadow: 0 10px 24px rgba(17, 22, 19, 0.05);
+  transition:
+    background-color 360ms var(--andersen-hover-ease, ease),
+    border-color 360ms var(--andersen-hover-ease, ease),
+    box-shadow 360ms var(--andersen-hover-ease, ease),
+    transform 360ms var(--andersen-hover-ease, ease);
+}
+
+.puck-help-footer-trustpilot:hover,
+.puck-help-footer-trustpilot:focus-visible {
+  border-color: #00b67a;
+  background: #ffffff;
+  box-shadow: 0 14px 30px rgba(17, 22, 19, 0.08);
+  outline: 0;
+  transform: translateY(-2px);
+}
+
+.puck-help-footer-trustpilot-score,
+.puck-help-footer-trustpilot-logo {
+  font-weight: 800;
+}
+
+.puck-help-footer-trustpilot-stars {
+  display: inline-flex;
+  gap: 0.14rem;
+}
+
+.puck-help-footer-trustpilot-stars span {
+  display: inline-grid;
+  place-items: center;
+  width: 1.55rem;
+  height: 1.55rem;
+  border-radius: 2px;
+  background: #00b67a;
+  color: #ffffff;
+  font-size: 0.9rem;
+  line-height: 1;
+}
+
+.puck-help-footer-trustpilot-reviews {
+  color: #5f6660;
+  font-size: 0.86rem;
+}
+
+.puck-help-footer-trustpilot-reviews strong {
+  color: #111613;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.puck-help-footer-menu-wrap {
+  width: 100%;
+}
+
+.puck-help-footer-menu {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+  align-items: start;
+  gap: clamp(1rem, 2.5vw, 2rem);
+  width: 100%;
+  padding: 1.25rem 0 0.35rem;
+  border-top: 1px solid #d9ddd6;
+  text-align: left;
+}
+
+.puck-help-footer-menu-column {
+  display: grid;
+  align-content: start;
+  gap: 0.55rem;
+  min-width: 0;
+}
+
+.puck-help-footer-menu-parent,
+.puck-help-footer-submenu a {
+  color: #111613;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    color 260ms var(--andersen-hover-ease, ease),
+    opacity 260ms var(--andersen-hover-ease, ease);
+}
+
+.puck-help-footer-menu-parent {
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.puck-help-footer-submenu {
+  display: grid;
+  gap: 0.36rem;
+}
+
+.puck-help-footer-submenu a {
+  color: #6a706a;
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+.puck-help-footer-menu-parent:hover,
+.puck-help-footer-menu-parent:focus-visible,
+.puck-help-footer-submenu a:hover,
+.puck-help-footer-submenu a:focus-visible {
+  color: #42634d;
+  opacity: 0.9;
+  outline: 0;
+}
+
+.puck-help-footer-mobile-menu {
+  display: none;
+}
+
+.puck-help-footer-socials a {
+  display: inline-grid;
+  place-items: center;
+  width: 2.15rem;
+  height: 2.15rem;
+  color: #111613;
+  text-decoration: none;
+  transition:
+    color 620ms var(--andersen-hover-ease, ease),
+    opacity 620ms var(--andersen-hover-ease, ease),
+    transform 620ms var(--andersen-hover-ease, ease);
+}
+
+.puck-help-footer-socials svg {
+  display: block;
+  width: 1.75rem;
+  height: 1.75rem;
+  fill: currentColor;
+}
+
+.puck-help-footer-socials a:hover,
+.puck-help-footer-socials a:focus-visible {
+  color: #000000;
+  opacity: 1;
+  outline: 0;
+  transform: translateY(-5px) scale(1.14);
+}
+
+.puck-payment-badge {
+  position: relative;
+  display: inline-grid;
+  align-items: center;
+  justify-items: center;
+  min-width: 2.65rem;
+  height: 1.58rem;
+  padding: 0 0.34rem;
+  overflow: hidden;
+  border: 1px solid #d6d9d4;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #111613;
+  box-shadow: 0 1px 2px rgba(17, 22, 19, 0.06);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.56rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.puck-payment-badge-amex {
+  background: #0078d2;
+  color: #ffffff;
+  font-size: 0.58rem;
+  line-height: 0.82;
+}
+
+.puck-payment-badge-gpay {
+  grid-auto-flow: column;
+  gap: 0.16rem;
+  font-size: 0.58rem;
+}
+
+.puck-payment-badge-gpay span {
+  color: #4285f4;
+  font-size: 0.72rem;
+}
+
+.puck-payment-badge-android {
+  color: #3ddc84;
+  font-size: 0.5rem;
+}
+
+.puck-payment-badge-paypal {
+  color: #003087;
+  font-size: 0.94rem;
+  font-style: italic;
+}
+
+.puck-payment-badge-mastercard {
+  grid-template-columns: repeat(2, 1rem);
+  gap: 0;
+  min-width: 2.8rem;
+}
+
+.puck-payment-badge-mastercard span {
+  width: 1.05rem;
+  height: 1.05rem;
+  border-radius: 999px;
+}
+
+.puck-payment-badge-mastercard span:first-child {
+  background: #eb001b;
+  transform: translateX(0.2rem);
+}
+
+.puck-payment-badge-mastercard span:last-child {
+  background: #f79e1b;
+  mix-blend-mode: multiply;
+  transform: translateX(-0.2rem);
+}
+
+.puck-payment-badge-visa {
+  color: #1434cb;
+  font-size: 0.68rem;
+  font-style: italic;
+}
+
+.puck-payment-badge-shop {
+  background: #5a31f4;
+  color: #ffffff;
+  font-size: 0.62rem;
+  text-transform: lowercase;
+}
+
+.puck-payment-badge-union {
+  background:
+    linear-gradient(90deg, #e21836 0 34%, #0066b3 34% 68%, #00945e 68% 100%);
+  color: #ffffff;
+  font-size: 0.46rem;
+}
+
+.puck-help-footer p {
+  max-width: 58rem;
+  margin: 0.2rem 0 0;
+  color: #9aa09b;
+  font-size: 0.78rem;
+  line-height: 1.5;
 }
 
 .puck-help-category-section {
@@ -893,10 +1437,225 @@
   line-height: var(--builder-line-height, 1.55);
 }
 
+.puck-help-category-hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-items: center;
+  justify-items: start;
+  width: 100vw;
+  min-height: clamp(20rem, 36vw, 30rem);
+  margin: 0 50% clamp(2rem, 4vw, 3rem);
+  overflow: hidden;
+  border-radius: 0;
+  background: #101511;
+  color: #ffffff;
+  transform: translateX(-50%);
+}
+
+.puck-help-category-hero-image,
+.puck-help-category-hero-overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.puck-help-category-hero-image {
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.puck-help-category-hero-overlay {
+  z-index: -1;
+  background:
+    linear-gradient(180deg, rgba(9, 12, 10, 0.1) 0%, rgba(9, 12, 10, 0.34) 42%, rgba(9, 12, 10, 0.78) 100%),
+    linear-gradient(90deg, rgba(9, 12, 10, 0.62) 0%, rgba(9, 12, 10, 0.24) 54%, rgba(9, 12, 10, 0.12) 100%);
+}
+
+.puck-help-category-hero-content {
+  display: grid;
+  justify-items: start;
+  gap: 0.85rem;
+  width: min(48rem, calc(100% - 96px));
+  margin-left: max(48px, calc((100vw - 1170px) / 2));
+  padding: clamp(1.75rem, 4vw, 3rem) 0;
+  font-family: "Muli", Arial, Helvetica, sans-serif;
+  text-align: left;
+}
+
+.puck-help-category-hero-content h1,
+.puck-help-category-hero-content p {
+  margin: 0;
+  color: #ffffff;
+}
+
+.puck-theme-andersenEV .puck-help-category-hero-content h1,
+.puck-theme-andersenEV .puck-help-category-hero-content p {
+  color: #ffffff;
+}
+
+.puck-theme-andersenEV .puck-section .puck-help-category-hero .puck-help-category-hero-content h1,
+.puck-theme-andersenEV .puck-section .puck-help-category-hero .puck-help-category-hero-content p {
+  color: #ffffff;
+}
+
+.puck-help-category-hero-content h1 {
+  font-size: clamp(2rem, 4.6vw, 3.55rem);
+  font-weight: 620;
+  letter-spacing: 0;
+  line-height: 0.95;
+}
+
+.puck-help-category-hero-content p {
+  max-width: 44rem;
+  font-size: clamp(0.95rem, 1.35vw, 1.05rem);
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+.puck-help-category-search {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.65rem;
+  width: min(46.35rem, 100%);
+  min-height: 3.2rem;
+  margin-top: 0.35rem;
+  padding: 0 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.94);
+  color: #111613;
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.22);
+}
+
+.puck-help-category-search input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: #111613;
+  font: inherit;
+  font-size: 0.95rem;
+  outline: 0;
+}
+
+.puck-help-category-search input::placeholder {
+  color: rgba(17, 22, 19, 0.62);
+}
+
+.puck-help-pinned-articles {
+  display: grid;
+  gap: 0;
+  margin-bottom: clamp(1.7rem, 3.4vw, 2.4rem);
+  font-family: "Muli", Arial, Helvetica, sans-serif;
+}
+
+.puck-help-pinned-heading {
+  margin: 0;
+  color: color-mix(in srgb, var(--builder-section-text, #032536) 62%, transparent);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.puck-help-pinned-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.puck-help-pinned-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.95rem;
+  min-height: 5.35rem;
+  padding: 1rem 1.08rem;
+  border: 1px solid #e5e7df;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #111613;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  box-shadow: 0 10px 22px rgba(17, 22, 19, 0.06);
+  transition:
+    background-color 560ms var(--andersen-hover-ease, ease),
+    border-color 560ms var(--andersen-hover-ease, ease),
+    box-shadow 560ms var(--andersen-hover-ease, ease),
+    color 560ms var(--andersen-hover-ease, ease),
+    transform 560ms var(--andersen-hover-ease, ease);
+}
+
+.puck-help-pinned-card span {
+  min-width: 0;
+}
+
+.puck-help-pinned-icon,
+.puck-help-pinned-card > svg {
+  display: block;
+  width: 2.55rem;
+  height: 2.55rem;
+  border-radius: 999px;
+  box-sizing: border-box;
+}
+
+.puck-help-pinned-icon {
+  display: inline-grid;
+  place-items: center;
+  background: #f1f0ea;
+  color: #111613;
+  transition:
+    background-color 560ms var(--andersen-hover-ease, ease),
+    color 560ms var(--andersen-hover-ease, ease),
+    transform 560ms var(--andersen-hover-ease, ease);
+}
+
+.puck-help-pinned-icon svg {
+  width: 1.28rem;
+  height: 1.28rem;
+}
+
+.puck-help-pinned-card > svg {
+  padding: 0.62rem;
+  background: #f1f0ea;
+  color: #111613;
+  transition:
+    background-color 560ms var(--andersen-hover-ease, ease),
+    color 560ms var(--andersen-hover-ease, ease),
+    transform 560ms var(--andersen-hover-ease, ease);
+}
+
+.puck-help-pinned-card:hover,
+.puck-help-pinned-card:focus-visible {
+  border-color: #111613;
+  box-shadow: 0 14px 28px rgba(17, 22, 19, 0.1);
+  outline: 0;
+  transform: translateY(-2px) scale(1.025);
+}
+
+.puck-help-pinned-card:hover .puck-help-pinned-icon,
+.puck-help-pinned-card:focus-visible .puck-help-pinned-icon,
+.puck-help-pinned-card:hover > svg,
+.puck-help-pinned-card:focus-visible > svg {
+  background: #111613;
+  color: #ffffff;
+}
+
+.puck-help-pinned-card:hover > svg,
+.puck-help-pinned-card:focus-visible > svg {
+  transform: translateX(2px);
+}
+
 .puck-help-category-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--builder-element-gap, 1.25rem);
+  margin-bottom: 0;
 }
 
 .puck-help-category-columns-3 {
@@ -904,23 +1663,31 @@
 }
 
 .puck-help-category-card {
+  position: relative;
+  isolation: isolate;
   display: grid;
-  align-content: start;
-  min-height: 12.5rem;
-  padding: var(--builder-element-padding, 1.85rem);
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  align-content: center;
+  align-items: center;
+  column-gap: 1rem;
+  min-height: 9.3rem;
+  padding: clamp(1.55rem, calc(var(--builder-element-padding, 1.85rem) * 1.35), 1.75rem) min(var(--builder-element-padding, 1.85rem), 1.15rem);
   border: var(--builder-element-border-width, 0) var(--builder-element-border-style, solid) var(--builder-element-border-color, transparent);
   border-radius: var(--builder-element-border-radius, 10px);
   background: var(--builder-surface-fill, #f5f8fa);
   color: var(--builder-section-text, #032536);
+  font-family: "Muli", Arial, Helvetica, sans-serif;
+  overflow: hidden;
   text-align: left;
   text-decoration: none;
   box-shadow: none;
   transition:
-    background-color var(--andersen-hover-duration, 300ms) var(--andersen-hover-ease, ease),
-    border-color var(--andersen-hover-duration, 300ms) var(--andersen-hover-ease, ease),
-    box-shadow var(--andersen-hover-duration, 300ms) var(--andersen-hover-ease, ease),
-    color var(--andersen-hover-duration, 300ms) var(--andersen-hover-ease, ease),
-    transform var(--andersen-hover-duration, 300ms) var(--andersen-hover-ease, ease);
+    background-color 620ms var(--andersen-hover-ease, ease),
+    border-color 620ms var(--andersen-hover-ease, ease),
+    box-shadow 620ms var(--andersen-hover-ease, ease),
+    color 620ms var(--andersen-hover-ease, ease),
+    transform 620ms var(--andersen-hover-ease, ease);
 }
 
 .puck-help-category-card:hover,
@@ -931,52 +1698,194 @@
 }
 
 .puck-help-category-icon {
+  position: relative;
+  z-index: 1;
   display: inline-grid;
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  justify-self: end;
+  align-self: center;
   place-items: center;
-  width: 3.1rem;
-  height: 3.1rem;
-  margin-bottom: 0.85rem;
+  width: 4.1rem;
+  height: 4.1rem;
+  margin-bottom: 0;
+  border: 1px solid color-mix(in srgb, var(--builder-accent, #355b45) 16%, transparent);
   border-radius: 999px;
-  background: #ffffff;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(244, 246, 241, 0.94)),
+    #ffffff;
   color: var(--builder-accent, #355b45);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.82),
+    0 10px 22px rgba(17, 22, 19, 0.08);
+  transition:
+    background-color 620ms var(--andersen-hover-ease, ease),
+    border-color 620ms var(--andersen-hover-ease, ease),
+    box-shadow 620ms var(--andersen-hover-ease, ease),
+    color 620ms var(--andersen-hover-ease, ease),
+    transform 620ms var(--andersen-hover-ease, ease);
 }
 
 .puck-help-category-icon svg {
-  width: 1.65rem;
-  height: 1.65rem;
+  width: 2.15rem;
+  height: 2.15rem;
+  transition: transform 620ms var(--andersen-hover-ease, ease);
 }
 
 .puck-help-category-name {
+  position: relative;
+  z-index: 1;
   display: block;
+  grid-column: 1;
+  grid-row: 1;
+  align-self: end;
   color: inherit;
-  font-size: var(--builder-subheading-size, clamp(1.4rem, 3vw, 1.9rem));
-  font-weight: var(--builder-font-weight, 850);
+  font-size: min(var(--builder-subheading-size, 1.55rem), 1.5rem);
+  font-weight: 650;
+  letter-spacing: 0;
   line-height: 1.08;
 }
 
 .puck-help-category-description {
+  position: relative;
+  z-index: 1;
   display: block;
+  grid-column: 1;
+  grid-row: 2;
   max-width: 32rem;
-  margin-top: 0.75rem;
+  margin-top: 0.55rem;
   color: color-mix(in srgb, var(--builder-section-text, #032536) 76%, transparent);
-  font-size: var(--builder-body-size, 1.05rem);
+  font-size: min(var(--builder-body-size, 1.05rem), 0.96rem);
   line-height: 1.42;
 }
 
 .puck-theme-andersenEV .puck-help-category-section {
   width: min(1170px, calc(100% - 96px));
-  padding-top: clamp(2rem, 4vw, 3rem);
-  padding-bottom: clamp(2rem, 4vw, 4rem);
+  padding-top: 0;
+  padding-bottom: clamp(0.75rem, 1.5vw, 1.25rem);
 }
 
 .puck-theme-andersenEV .puck-help-category-card {
-  background: #f5f8fa;
+  border: 1px solid #e7e9e2;
+  background: #ffffff;
   color: #032536;
+  box-shadow: 0 12px 28px rgba(17, 22, 19, 0.045);
+}
+
+.puck-theme-andersenEV .puck-help-category-card::before {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background:
+    linear-gradient(128deg, #ffffff 0%, #ffffff 50%, #fafaf8 66%, #f0f2ee 80%, #e2e7df 100%),
+    #f5f8fa;
+  content: "";
+  pointer-events: none;
+  transform: translate(0, 0) rotate(0deg) scale(1);
+  transform-origin: 100% 100%;
+  transition:
+    opacity 760ms var(--andersen-hover-ease, ease),
+    transform 760ms var(--andersen-hover-ease, ease);
 }
 
 .puck-theme-andersenEV .puck-help-category-icon {
-  background: #ffffff;
+  background:
+    linear-gradient(145deg, #ffffff, #f1f3ee),
+    #ffffff;
   color: #032536;
+}
+
+.puck-theme-andersenEV .puck-help-category-card:hover,
+.puck-theme-andersenEV .puck-help-category-card:focus-visible {
+  border-color: #111613;
+  background: #ffffff;
+  box-shadow:
+    0 20px 38px rgba(17, 22, 19, 0.1),
+    0 0 0 1px rgba(17, 22, 19, 0.08);
+}
+
+.puck-theme-andersenEV .puck-help-category-card:hover::before,
+.puck-theme-andersenEV .puck-help-category-card:focus-visible::before {
+  opacity: 0;
+  transform: translate(22%, 24%) rotate(10deg) scale(0.78);
+}
+
+.puck-theme-andersenEV .puck-help-category-card:hover .puck-help-category-icon,
+.puck-theme-andersenEV .puck-help-category-card:focus-visible .puck-help-category-icon {
+  border-color: #111613;
+  background: #111613;
+  color: #ffffff;
+  box-shadow: 0 14px 28px rgba(17, 22, 19, 0.16);
+  transform: translateY(-2px);
+}
+
+.puck-theme-andersenEV .puck-help-category-card:hover .puck-help-category-icon svg,
+.puck-theme-andersenEV .puck-help-category-card:focus-visible .puck-help-category-icon svg {
+  transform: scale(1.06);
+}
+
+.puck-installer-support-section {
+  display: grid;
+  justify-items: center;
+  gap: 0.75rem;
+  width: 100vw;
+  max-width: none;
+  margin: clamp(4rem, 6vw, 6rem) auto 0;
+  padding: clamp(3rem, 6vw, 5rem) 24px;
+  background: #eef0ed;
+  color: #111613;
+  font-family: "Muli", Arial, Helvetica, sans-serif;
+  text-align: center;
+  transform: translateX(calc((min(1170px, calc(100vw - 96px)) - 100vw) / 2));
+}
+
+.puck-installer-support-section p,
+.puck-installer-support-section h2 {
+  margin: 0;
+}
+
+.puck-installer-support-section p {
+  font-size: clamp(1.55rem, 3vw, 2.25rem);
+  font-weight: 650;
+  line-height: 1.05;
+}
+
+.puck-installer-support-section h2 {
+  max-width: 36rem;
+  color: #555b55;
+  font-size: clamp(0.98rem, 1.6vw, 1.15rem);
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+.puck-installer-support-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.85rem;
+  margin-top: 0.25rem;
+  padding: 0.78rem 1.55rem;
+  border: 1px solid #111613;
+  border-radius: 999px;
+  background: #111613;
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 750;
+  letter-spacing: 0;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    background-color 360ms var(--andersen-hover-ease, ease),
+    color 360ms var(--andersen-hover-ease, ease),
+    transform 360ms var(--andersen-hover-ease, ease);
+}
+
+.puck-installer-support-button:hover,
+.puck-installer-support-button:focus-visible {
+  background: #ffffff;
+  color: #111613;
+  outline: 0;
+  transform: translateY(-2px);
 }
 
 .puck-help-faq-section {
@@ -1762,7 +2671,7 @@
 
 .help-centre-chat {
   display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(20rem, 0.6fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: clamp(1rem, 2vw, 1.5rem);
   width: 100%;
   font-family: "Muli", Arial, Helvetica, sans-serif;
@@ -2021,6 +2930,10 @@
   color: #991b1b;
 }
 
+.help-centre-chat-panel > .help-centre-error {
+  margin: 0 1rem 1rem;
+}
+
 .puck-theme-signalContrast {
   --builder-accent: #fbbf24;
   --builder-bg: #050505;
@@ -2061,6 +2974,11 @@
     box-shadow 160ms ease,
     color 160ms ease,
     transform 160ms ease;
+}
+
+.puck-section.puck-help-centre-section {
+  padding-top: clamp(0.75rem, 1.5vw, 1.25rem);
+  padding-bottom: 0;
 }
 
 .puck-width-full {
@@ -2274,6 +3192,34 @@
   justify-content: flex-end;
   gap: 0.6rem;
   white-space: nowrap;
+}
+
+.puck-mobile-menu {
+  display: none;
+}
+
+.puck-mobile-menu-trigger {
+  list-style: none;
+}
+
+.puck-mobile-menu-trigger::-webkit-details-marker {
+  display: none;
+}
+
+.puck-mobile-menu-icon-close {
+  display: none;
+}
+
+.puck-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .puck-site-icon-button {
@@ -2820,8 +3766,210 @@
     padding-left: 20px;
   }
 
+  .puck-theme-andersenEV .puck-site-header {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas: "mobile-menu mobile-spacer secondary-nav";
+    align-items: center;
+    min-height: 4.65rem;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    column-gap: 12px;
+    row-gap: 0;
+  }
+
+  .puck-theme-andersenEV .puck-site-header > .puck-menu {
+    display: none;
+  }
+
+  .puck-theme-andersenEV .puck-mobile-menu {
+    grid-area: mobile-menu;
+    display: block;
+    justify-self: start;
+  }
+
+  .puck-theme-andersenEV .puck-mobile-menu-trigger {
+    display: inline-grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border: 1px solid #ddd9ce;
+    border-radius: 999px;
+    color: #111613;
+    cursor: pointer;
+    font-family: "Muli", Arial, Helvetica, sans-serif;
+    transition:
+      background-color var(--andersen-hover-duration) var(--andersen-hover-ease),
+      border-color var(--andersen-hover-duration) var(--andersen-hover-ease),
+      color var(--andersen-hover-duration) var(--andersen-hover-ease);
+  }
+
+  .puck-theme-andersenEV .puck-mobile-menu[open] .puck-mobile-menu-trigger,
+  .puck-theme-andersenEV .puck-mobile-menu-trigger:hover,
+  .puck-theme-andersenEV .puck-mobile-menu-trigger:focus-visible {
+    border-color: #111613;
+    background: #111613;
+    color: #ffffff;
+    outline: 0;
+  }
+
+  .puck-theme-andersenEV .puck-mobile-menu[open] .puck-mobile-menu-icon-open {
+    display: none;
+  }
+
+  .puck-theme-andersenEV .puck-mobile-menu[open] .puck-mobile-menu-icon-close {
+    display: block;
+  }
+
+  .puck-theme-andersenEV .puck-mobile-menu-panel {
+    position: absolute;
+    z-index: 60;
+    top: calc(100% - 4px);
+    left: 20px;
+    display: grid;
+    width: calc(100vw - 40px);
+    max-height: calc(100vh - 6rem);
+    overflow-y: auto;
+    padding: 0.9rem;
+    border: 1px solid #e1dfd6;
+    border-radius: 6px;
+    background: #ffffff;
+    box-shadow: 0 18px 38px rgba(22, 27, 24, 0.14);
+    font-family: "Muli", Arial, Helvetica, sans-serif;
+  }
+
+  .puck-theme-andersenEV .puck-mobile-menu-list {
+    display: grid;
+    gap: 0.28rem;
+  }
+
+  .puck-theme-andersenEV .puck-mobile-menu-item {
+    border-bottom: 1px solid #efede5;
+  }
+
+  .puck-theme-andersenEV .puck-mobile-menu-item:last-child {
+    border-bottom: 0;
+  }
+
+  .puck-theme-andersenEV .puck-mobile-menu-summary,
+  .puck-theme-andersenEV .puck-mobile-menu-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 3.1rem;
+    padding: 0.7rem 0.35rem 0.7rem 0.45rem;
+    color: #1d221f;
+    font-family: "Muli", Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 1.2;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .puck-theme-andersenEV .puck-mobile-menu-summary {
+    list-style: none;
+  }
+
+  .puck-theme-andersenEV .puck-mobile-menu-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .puck-theme-andersenEV .puck-mobile-menu-summary:hover,
+  .puck-theme-andersenEV .puck-mobile-menu-summary:focus-visible,
+  .puck-theme-andersenEV .puck-mobile-menu-link:hover,
+  .puck-theme-andersenEV .puck-mobile-menu-link:focus-visible {
+    color: #333333;
+    outline: 0;
+  }
+
+  .puck-theme-andersenEV .puck-mobile-menu-chevron {
+    display: inline-grid;
+    flex: 0 0 auto;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    margin-left: 0.8rem;
+    border-radius: 999px;
+    background: #f1f0ea;
+    color: #1d221f;
+    transition:
+      background-color 520ms var(--andersen-hover-ease),
+      color 520ms var(--andersen-hover-ease),
+      transform 520ms var(--andersen-hover-ease);
+  }
+
+  .puck-theme-andersenEV .puck-mobile-menu-summary:hover .puck-mobile-menu-chevron,
+  .puck-theme-andersenEV .puck-mobile-menu-summary:focus-visible .puck-mobile-menu-chevron {
+    background: #e4e1d7;
+  }
+
+  .puck-theme-andersenEV .puck-mobile-menu-item[open] .puck-mobile-menu-chevron {
+    background: #111613;
+    color: #ffffff;
+    transform: rotate(180deg);
+  }
+
+  .puck-theme-andersenEV .puck-mobile-submenu {
+    display: grid;
+    gap: 0.1rem;
+    padding: 0 0 0.75rem 0.65rem;
+  }
+
+  .puck-theme-andersenEV .puck-mobile-submenu a {
+    display: flex;
+    align-items: center;
+    min-height: 2.45rem;
+    padding: 0.42rem 0.7rem;
+    border-radius: 4px;
+    color: #4a504b;
+    font-family: "Muli", Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.25;
+    text-decoration: none;
+  }
+
+  .puck-theme-andersenEV .puck-mobile-submenu a:hover,
+  .puck-theme-andersenEV .puck-mobile-submenu a:focus-visible {
+    background: #f4f4ef;
+    color: #111613;
+    outline: 0;
+  }
+
   .puck-theme-andersenEV .puck-site-brand {
+    position: absolute;
+    left: 50%;
+    justify-self: center;
     margin-left: 0;
+    transform: translateX(-50%);
+  }
+
+  .puck-theme-andersenEV .puck-site-logo-image {
+    width: 94px;
+    max-height: 38px;
+  }
+
+  .puck-theme-andersenEV .puck-site-actions {
+    gap: 8px;
+  }
+
+  .puck-theme-andersenEV .puck-site-icon-button {
+    width: 36px;
+    height: 36px;
+  }
+
+  .puck-theme-andersenEV .puck-header-compare-button {
+    max-width: 6rem;
+    min-height: 2.35rem;
+    padding: 0.45rem 0.68rem;
+    font-size: 0.62rem;
+    line-height: 1.05;
+    text-align: center;
+    white-space: normal;
   }
 
   .puck-theme-andersenEV .puck-hero {
@@ -2856,6 +4004,134 @@
 
   .puck-theme-andersenEV .puck-help-category-section {
     width: calc(100% - 32px);
+  }
+
+  .puck-help-category-hero {
+    width: 100vw;
+    min-height: 24rem;
+    margin-bottom: 1.6rem;
+    border-radius: 0;
+  }
+
+  .puck-help-category-hero-content {
+    width: calc(100% - 32px);
+    margin-left: 0;
+    padding: 1.75rem 16px;
+  }
+
+  .puck-help-category-hero-content h1 {
+    font-size: clamp(1.9rem, 10vw, 2.8rem);
+  }
+
+  .puck-help-category-search {
+    min-height: 3rem;
+    padding: 0 0.9rem;
+  }
+
+  .puck-installer-support-section {
+    margin-top: 2.25rem;
+    margin-bottom: 0;
+    transform: translateX(-16px);
+  }
+
+  .puck-ai-helper-card {
+    margin: 0 auto 2rem;
+  }
+
+  .puck-help-footer-menu {
+    display: none;
+  }
+
+  .puck-help-footer-mobile-menu {
+    display: grid;
+    width: 100%;
+    padding-top: 1rem;
+    border-top: 1px solid #d9ddd6;
+    text-align: left;
+  }
+
+  .puck-help-footer-mobile-menu summary {
+    display: inline-grid;
+    align-items: center;
+    justify-content: center;
+    place-items: center;
+    width: 2.8rem;
+    height: 2.8rem;
+    min-height: 0;
+    margin: 0 auto;
+    border: 1px solid #d3d7d0;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #111613;
+    cursor: pointer;
+    font-family: "Muli", Arial, Helvetica, sans-serif;
+    font-size: 0.86rem;
+    font-weight: 750;
+    list-style: none;
+  }
+
+  .puck-help-footer-mobile-menu summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .puck-help-footer-mobile-menu-close {
+    display: none;
+  }
+
+  .puck-help-footer-mobile-menu[open] .puck-help-footer-mobile-menu-open {
+    display: none;
+  }
+
+  .puck-help-footer-mobile-menu[open] .puck-help-footer-mobile-menu-close {
+    display: block;
+  }
+
+  .puck-help-footer-mobile-menu-panel {
+    display: grid;
+    gap: 0.95rem;
+    padding: 1rem 0 0.25rem;
+  }
+
+  .puck-help-footer-mobile-menu-group {
+    display: grid;
+    gap: 0.45rem;
+    padding-bottom: 0.85rem;
+    border-bottom: 1px solid #dfe2dc;
+  }
+
+  .puck-help-footer-mobile-menu-group:last-child {
+    border-bottom: 0;
+  }
+
+  .puck-help-footer-mobile-menu-parent,
+  .puck-help-footer-mobile-submenu a {
+    color: #111613;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .puck-help-footer-mobile-menu-parent {
+    font-size: 0.94rem;
+    font-weight: 800;
+  }
+
+  .puck-help-footer-mobile-submenu {
+    display: grid;
+    gap: 0.32rem;
+  }
+
+  .puck-help-footer-mobile-submenu a {
+    color: #6a706a;
+    font-size: 0.82rem;
+  }
+
+  .puck-help-pinned-list {
+    grid-template-columns: 1fr;
+  }
+
+  .puck-help-pinned-card {
+    min-height: 4.5rem;
+    border-radius: 8px;
   }
 
   .puck-theme-andersenEV .puck-help-faq-section {

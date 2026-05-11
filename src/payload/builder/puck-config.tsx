@@ -1,9 +1,26 @@
 import { isValidElement, type CSSProperties, type ReactNode } from "react";
 import type { CustomFieldRender } from "@puckeditor/core";
-import { ChevronDown, CircleHelp, HardHat, Headphones, LifeBuoy, PlugZap, Search, Settings, UserRound, Wrench } from "lucide-react";
+import {
+  ArrowRight,
+  BatteryCharging,
+  CalendarClock,
+  ChevronDown,
+  CircleHelp,
+  HardHat,
+  Headphones,
+  LifeBuoy,
+  Menu,
+  PlugZap,
+  Search,
+  Settings,
+  UserRound,
+  WifiOff,
+  Wrench,
+  X,
+} from "lucide-react";
 import Link from "next/link";
 
-import { HelpCentreChat } from "@/components/help-centre/HelpCentreChat";
+import { AndersenAssistant } from "@/components/help-centre/AndersenAssistant";
 import { getHelpArticlePath, getHelpCategoryPath } from "@/lib/help-centre/article-routing";
 import type {
   BuilderAdvancedStyle,
@@ -104,6 +121,7 @@ const helpCategoryColumnOptions = [
 ] as const;
 
 const helpCategoryIconOptions = [
+  { label: "First charge", value: "firstCharge" },
   { label: "Product", value: "product" },
   { label: "Support", value: "support" },
   { label: "Installation", value: "installation" },
@@ -111,13 +129,18 @@ const helpCategoryIconOptions = [
   { label: "Troubleshooting", value: "troubleshooting" },
   { label: "Installers", value: "installers" },
   { label: "Getting set up", value: "setup" },
+  { label: "Offline charger", value: "offline" },
+  { label: "Schedule charging", value: "schedule" },
 ] as const;
 
 const helpCategoryIcons = {
+  firstCharge: BatteryCharging,
   howTo: CircleHelp,
   installation: Wrench,
   installers: HardHat,
+  offline: WifiOff,
   product: PlugZap,
+  schedule: CalendarClock,
   setup: Settings,
   support: Headphones,
   troubleshooting: LifeBuoy,
@@ -160,25 +183,25 @@ const defaultHelpCategories = [
   {
     description: "Charger models, features and product details",
     icon: "product",
-    title: "Product",
+    title: "Product Information",
     url: "#product",
   },
   {
     description: "Contact routes, account questions and support options",
     icon: "support",
-    title: "Support",
+    title: "Customer Journey",
     url: "#support",
   },
   {
     description: "Getting ready, appointments and installation steps",
     icon: "installation",
-    title: "Installation",
+    title: "Your Installation",
     url: "#installation",
   },
   {
     description: "Using the app, charging settings and everyday tasks",
     icon: "howTo",
-    title: "How do I?",
+    title: "How do I / FAQs?",
     url: "#how-do-i",
   },
   {
@@ -190,8 +213,39 @@ const defaultHelpCategories = [
   {
     description: "Installer resources, setup checks and handover guidance",
     icon: "installers",
-    title: "Installers",
+    title: "Engineers / Installers",
     url: "#installers",
+  },
+] as const;
+
+const helpCategoryTitleMap: Record<string, string> = {
+  "How do I?": "How do I / FAQs?",
+  Installation: "Your Installation",
+  Installers: "Engineers / Installers",
+  Product: "Product Information",
+  Support: "Customer Journey",
+};
+
+const defaultPinnedHelpArticles = [
+  {
+    icon: "installation",
+    title: "Installation - what to expect",
+    url: "#installation",
+  },
+  {
+    icon: "firstCharge",
+    title: "Your First Charge",
+    url: "#how-do-i",
+  },
+  {
+    icon: "offline",
+    title: "Charger is offline",
+    url: "#troubleshooting",
+  },
+  {
+    icon: "schedule",
+    title: "How to Schedule charging",
+    url: "#how-do-i",
   },
 ] as const;
 
@@ -1223,6 +1277,66 @@ export const builderConfig: BuilderConfig = {
       render: (props) => {
         const menu = getMenu(props.puck.metadata, props.menuHandle);
         const headerProps = withFullWidth(props);
+        const renderMenuItems = (keyPrefix: string) =>
+          (menu?.items ?? []).map((item, index) => {
+            const submenuItems = item.children ?? [];
+
+            return (
+              <div className="puck-menu-item" key={`${keyPrefix}-${item.label}-${index}`}>
+                <a className="puck-menu-trigger" href={previewHref(item.url, props.puck.metadata)}>
+                  <span>{item.label}</span>
+                  {submenuItems.length ? (
+                    <ChevronDown aria-hidden="true" className="puck-menu-chevron" size={13} strokeLinecap="square" strokeLinejoin="miter" strokeWidth={5} />
+                  ) : null}
+                </a>
+                {submenuItems.length ? (
+                  <div className="puck-menu-dropdown">
+                    {submenuItems.map((submenuItem) => (
+                      <a href={previewHref(submenuItem.url, props.puck.metadata) || "#"} key={`${keyPrefix}-${submenuItem.label}-${submenuItem.url}`}>
+                        {submenuItem.label}
+                      </a>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+            );
+          });
+        const renderMobileMenuItems = () =>
+          (menu?.items ?? []).map((item, index) => {
+            const submenuItems = item.children ?? [];
+            const itemHref = previewHref(item.url, props.puck.metadata);
+
+            if (!submenuItems.length) {
+              return (
+                <a className="puck-mobile-menu-link" href={itemHref} key={`mobile-link-${item.label}-${index}`}>
+                  {item.label}
+                </a>
+              );
+            }
+
+            return (
+              <details className="puck-mobile-menu-item" key={`mobile-item-${item.label}-${index}`} name="puck-mobile-menu-accordion">
+                <summary className="puck-mobile-menu-summary">
+                  <span>{item.label}</span>
+                  <span className="puck-mobile-menu-chevron">
+                    <ChevronDown aria-hidden="true" size={17} strokeWidth={2.5} />
+                  </span>
+                </summary>
+                <div className="puck-mobile-submenu">
+                  {itemHref ? (
+                    <a href={itemHref} key={`mobile-parent-${item.label}`}>
+                      View {item.label}
+                    </a>
+                  ) : null}
+                  {submenuItems.map((submenuItem) => (
+                    <a href={previewHref(submenuItem.url, props.puck.metadata) || "#"} key={`mobile-submenu-${submenuItem.label}-${submenuItem.url}`}>
+                      {submenuItem.label}
+                    </a>
+                  ))}
+                </div>
+              </details>
+            );
+          });
 
         return (
           <div className={`puck-site-header-stack ${props.sticky ? "puck-site-header-stack-sticky" : ""}`}>
@@ -1242,6 +1356,16 @@ export const builderConfig: BuilderConfig = {
               </div>
             ) : null}
             <header className={getSectionClassName(headerProps, "puck-site-header")} style={getSectionStyle(headerProps)}>
+              <details className="puck-mobile-menu">
+                <summary aria-label="Open menu" className="puck-mobile-menu-trigger">
+                  <Menu aria-hidden="true" className="puck-mobile-menu-icon puck-mobile-menu-icon-open" size={21} strokeWidth={2} />
+                  <X aria-hidden="true" className="puck-mobile-menu-icon puck-mobile-menu-icon-close" size={21} strokeWidth={2} />
+                  <span className="puck-sr-only">Open menu</span>
+                </summary>
+                <nav aria-label={`${menu?.title ?? "Site menu"} mobile`} className="puck-mobile-menu-panel">
+                  <div className="puck-mobile-menu-list">{renderMobileMenuItems()}</div>
+                </nav>
+              </details>
               <Link className="puck-site-brand" href={previewHref("/", props.puck.metadata)}>
                 {textValue(props.brandImageUrl) ? (
                   // eslint-disable-next-line @next/next/no-img-element -- Logo URLs are CMS-managed and may be external client assets.
@@ -1251,29 +1375,7 @@ export const builderConfig: BuilderConfig = {
                 )}
               </Link>
               <nav aria-label={menu?.title ?? "Site menu"} className="puck-menu puck-menu-horizontal">
-                {(menu?.items ?? []).map((item, index) => {
-                  const submenuItems = item.children ?? [];
-
-                  return (
-                    <div className="puck-menu-item" key={`${item.label}-${index}`}>
-                      <a className="puck-menu-trigger" href={previewHref(item.url, props.puck.metadata)}>
-                        <span>{item.label}</span>
-                        {submenuItems.length ? (
-                          <ChevronDown aria-hidden="true" className="puck-menu-chevron" size={13} strokeLinecap="square" strokeLinejoin="miter" strokeWidth={5} />
-                        ) : null}
-                      </a>
-                      {submenuItems.length ? (
-                        <div className="puck-menu-dropdown">
-                          {submenuItems.map((submenuItem) => (
-                            <a href={previewHref(submenuItem.url, props.puck.metadata) || "#"} key={`${submenuItem.label}-${submenuItem.url}`}>
-                              {submenuItem.label}
-                            </a>
-                          ))}
-                        </div>
-                      ) : null}
-                    </div>
-                  );
-                })}
+                {renderMenuItems("desktop")}
               </nav>
               <div className="puck-site-actions">
                 {props.showSearchIcon ? (
@@ -1382,11 +1484,137 @@ export const builderConfig: BuilderConfig = {
         ...sharedDesignFields,
       },
       label: "Help Centre AI",
-      render: (props) => (
-        <section className={getSectionClassName(props, "puck-help-centre-section")} style={getSectionStyle(props)}>
-          <HelpCentreChat intro={props.intro} title={props.title} />
+      render: (props) => {
+        const footerMenu = getMenu(props.puck.metadata, "primary");
+        const footerMenuItems = footerMenu?.items ?? [];
+
+        return (
+          <section className={getSectionClassName(props, "puck-help-centre-section")} style={getSectionStyle(props)}>
+            <AndersenAssistant intro={props.intro} title={props.title} />
+            <footer className="puck-help-footer">
+              <div className="puck-help-footer-inner">
+                <a
+                  aria-label="Trustpilot reviews. Rated Excellent. 4.8 out of 5. Based on 1,976 reviews on Trustpilot. Click to view Trustpilot profile."
+                  className="puck-help-footer-trustpilot"
+                  href="https://uk.trustpilot.com/review/andersen-ev.com?utm_medium=trustbox&utm_source=Carousel"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <span className="puck-help-footer-trustpilot-score">Excellent</span>
+                  <span aria-hidden="true" className="puck-help-footer-trustpilot-stars">
+                    <span>★</span>
+                    <span>★</span>
+                    <span>★</span>
+                    <span>★</span>
+                    <span>★</span>
+                  </span>
+                  <span className="puck-help-footer-trustpilot-reviews">
+                    Based on <strong>1,976 reviews</strong>
+                  </span>
+                  <span className="puck-help-footer-trustpilot-logo">Trustpilot</span>
+                </a>
+                {footerMenuItems.length ? (
+                  <div className="puck-help-footer-menu-wrap">
+                    <nav aria-label={`${footerMenu?.title ?? "Footer menu"} footer`} className="puck-help-footer-menu">
+                      {footerMenuItems.map((item, index) => (
+                        <div className="puck-help-footer-menu-column" key={`footer-menu-${item.label}-${index}`}>
+                          <a className="puck-help-footer-menu-parent" href={previewHref(item.url, props.puck.metadata) || "#"}>
+                            {item.label}
+                          </a>
+                          {item.children?.length ? (
+                            <div className="puck-help-footer-submenu">
+                              {item.children.map((child) => (
+                                <a href={previewHref(child.url, props.puck.metadata) || "#"} key={`footer-submenu-${item.label}-${child.label}-${child.url}`}>
+                                  {child.label}
+                                </a>
+                              ))}
+                            </div>
+                          ) : null}
+                        </div>
+                      ))}
+                    </nav>
+                    <details className="puck-help-footer-mobile-menu">
+                      <summary>
+                        <Menu aria-hidden="true" className="puck-help-footer-mobile-menu-open" size={18} strokeWidth={2.2} />
+                        <X aria-hidden="true" className="puck-help-footer-mobile-menu-close" size={18} strokeWidth={2.2} />
+                        <span className="puck-sr-only">Footer menu</span>
+                      </summary>
+                      <nav aria-label={`${footerMenu?.title ?? "Footer menu"} mobile footer`} className="puck-help-footer-mobile-menu-panel">
+                        {footerMenuItems.map((item, index) => (
+                          <div className="puck-help-footer-mobile-menu-group" key={`footer-mobile-menu-${item.label}-${index}`}>
+                            <a className="puck-help-footer-mobile-menu-parent" href={previewHref(item.url, props.puck.metadata) || "#"}>
+                              {item.label}
+                            </a>
+                            {item.children?.length ? (
+                              <div className="puck-help-footer-mobile-submenu">
+                                {item.children.map((child) => (
+                                  <a href={previewHref(child.url, props.puck.metadata) || "#"} key={`footer-mobile-submenu-${item.label}-${child.label}-${child.url}`}>
+                                    {child.label}
+                                  </a>
+                                ))}
+                              </div>
+                            ) : null}
+                          </div>
+                        ))}
+                      </nav>
+                    </details>
+                  </div>
+                ) : null}
+                <div className="puck-help-footer-socials" aria-label="Social links">
+                <a aria-label="Facebook" href="#">
+                  <svg aria-hidden="true" viewBox="0 0 24 24">
+                    <path d="M14.2 8.2V6.6c0-.8.5-1 1-1h1.5V3h-2.2c-2.5 0-3.8 1.5-3.8 4v1.2H8.4V11h2.3v10h3.1V11h2.5l.4-2.8h-2.5z" />
+                  </svg>
+                </a>
+                <a aria-label="Instagram" href="#">
+                  <svg aria-hidden="true" viewBox="0 0 24 24">
+                    <path d="M7.4 2.8h9.2c2.5 0 4.6 2.1 4.6 4.6v9.2c0 2.5-2.1 4.6-4.6 4.6H7.4c-2.5 0-4.6-2.1-4.6-4.6V7.4c0-2.5 2.1-4.6 4.6-4.6zm0 2A2.6 2.6 0 0 0 4.8 7.4v9.2a2.6 2.6 0 0 0 2.6 2.6h9.2a2.6 2.6 0 0 0 2.6-2.6V7.4a2.6 2.6 0 0 0-2.6-2.6H7.4zm4.6 3.3a3.9 3.9 0 1 1 0 7.8 3.9 3.9 0 0 1 0-7.8zm0 2a1.9 1.9 0 1 0 0 3.8 1.9 1.9 0 0 0 0-3.8zm4.2-2.7a1 1 0 1 1 2 0 1 1 0 0 1-2 0z" />
+                  </svg>
+                </a>
+                <a aria-label="YouTube" href="#">
+                  <svg aria-hidden="true" viewBox="0 0 24 24">
+                    <path d="M21.6 7.1a3 3 0 0 0-2.1-2.1C17.7 4.5 12 4.5 12 4.5s-5.7 0-7.5.5a3 3 0 0 0-2.1 2.1C1.9 8.9 1.9 12 1.9 12s0 3.1.5 4.9a3 3 0 0 0 2.1 2.1c1.8.5 7.5.5 7.5.5s5.7 0 7.5-.5a3 3 0 0 0 2.1-2.1c.5-1.8.5-4.9.5-4.9s0-3.1-.5-4.9zM9.9 15.2V8.8l5.6 3.2-5.6 3.2z" />
+                  </svg>
+                </a>
+                <a aria-label="LinkedIn" href="#">
+                  <svg aria-hidden="true" viewBox="0 0 24 24">
+                    <path d="M5.2 8.8h3.2V21H5.2V8.8zM6.8 3a1.9 1.9 0 1 1 0 3.8A1.9 1.9 0 0 1 6.8 3zm4.2 5.8h3.1v1.7h.1c.4-.8 1.5-2 3.2-2 3.4 0 4 2.2 4 5.1V21h-3.2v-6.6c0-1.6 0-3.6-2.2-3.6s-2.5 1.7-2.5 3.5V21H11V8.8z" />
+                  </svg>
+                </a>
+              </div>
+              <div className="puck-help-footer-payments" aria-label="Payment methods">
+                <span aria-label="American Express" className="puck-payment-badge puck-payment-badge-amex">
+                  AMEX
+                </span>
+                <span aria-label="Google Pay" className="puck-payment-badge puck-payment-badge-gpay">
+                  <span>G</span> Pay
+                </span>
+                <span aria-label="Android Pay" className="puck-payment-badge puck-payment-badge-android">
+                  Android Pay
+                </span>
+                <span aria-label="PayPal" className="puck-payment-badge puck-payment-badge-paypal">
+                  P
+                </span>
+                <span aria-label="Mastercard" className="puck-payment-badge puck-payment-badge-mastercard">
+                  <span />
+                  <span />
+                </span>
+                <span aria-label="Visa" className="puck-payment-badge puck-payment-badge-visa">
+                  VISA
+                </span>
+                <span aria-label="Shop Pay" className="puck-payment-badge puck-payment-badge-shop">
+                  shop
+                </span>
+                <span aria-label="UnionPay" className="puck-payment-badge puck-payment-badge-union">
+                  UnionPay
+                </span>
+              </div>
+              <p>© 2026, Andersen EV. Andersen EV Plc t/a Andersen EV is regulated by the Financial Conduct Authority FRN: 972396</p>
+            </div>
+          </footer>
         </section>
-      ),
+        );
+      },
     },
     HelpCategoryGridBlock: {
       defaultProps: {
@@ -1400,10 +1628,12 @@ export const builderConfig: BuilderConfig = {
         elementGap: 1.25,
         elementPadding: 1.85,
         fontFamily: "sans",
-        heading: "What can we help with?",
+        heading: "Help Centre",
         headingSize: 2.4,
         hoverEffect: "lift",
-        intro: "Choose a topic to find setup guides, common fixes and support information.",
+        intro: "Need help? Use our new self help centre, if you require further assistance we will automatically connect you with our support team.",
+        pinnedArticles: [...defaultPinnedHelpArticles],
+        pinnedHeading: "Featured articles",
         sectionPaddingBottom: 2.5,
         sectionPaddingTop: 1,
         sectionWidth: "wide",
@@ -1433,31 +1663,91 @@ export const builderConfig: BuilderConfig = {
           label: "Bubbles",
           type: "array",
         },
+        pinnedHeading: { contentEditable: true, label: "Pinned articles heading", type: "text" },
+        pinnedArticles: {
+          arrayFields: {
+            icon: { label: "Icon", options: helpCategoryIconOptions, type: "select" },
+            title: { label: "Title", type: "text" },
+            url: { label: "URL", type: "text" },
+          },
+          defaultItemProps: {
+            icon: "support",
+            title: "Pinned article",
+            url: "#",
+          },
+          getItemSummary: (item) => item.title || "Pinned article",
+          label: "Pinned articles",
+          type: "array",
+        },
         ...sharedDesignFields,
       },
       label: "Help category bubbles",
       render: (props) => {
         const categories = arrayValue<NonNullable<typeof props.categories>[number]>(props.categories);
+        const pinnedArticles = arrayValue<NonNullable<typeof props.pinnedArticles>[number]>(props.pinnedArticles);
+        const featuredArticles = pinnedArticles.length ? pinnedArticles : [...defaultPinnedHelpArticles];
+        const rawHeading = textValue(props.heading, "Help Centre");
+        const defaultHeroIntro = "Need help? Use our new self help centre, if you require further assistance we will automatically connect you with our support team.";
+        const rawIntro = textValue(props.intro, defaultHeroIntro);
+        const heroHeading = rawHeading === "What can we help with?" ? "Help Centre" : rawHeading;
+        const heroIntro =
+          rawIntro === "Choose a topic to find setup guides, common fixes and support information." || rawIntro === "Need help? Use our new self help centre below."
+            ? defaultHeroIntro
+            : rawIntro;
 
         return (
           <section className={getSectionClassName(props, "puck-help-category-section")} style={getSectionStyle(props)}>
-            {textValue(props.heading) || textValue(props.intro) ? (
-              <div className="puck-help-category-heading">
-                {textValue(props.heading) ? <h2>{textValue(props.heading)}</h2> : null}
-                {textValue(props.intro) ? <p>{textValue(props.intro)}</p> : null}
+            <div className="puck-help-category-hero">
+              {/* eslint-disable-next-line @next/next/no-img-element -- Public support hero asset is styled as a full-bleed background image. */}
+              <img alt="Andersen EV charger installation" className="puck-help-category-hero-image" src="/andersen/installation-square-4.png" />
+              <div className="puck-help-category-hero-overlay" />
+              <div className="puck-help-category-hero-content">
+                {heroHeading ? <h1>{heroHeading}</h1> : null}
+                {heroIntro ? <p>{heroIntro}</p> : null}
+                <div aria-label="Search help centre" className="puck-help-category-search" role="search">
+                  <Search aria-hidden="true" size={20} strokeWidth={2} />
+                  <input aria-label="Search help centre" placeholder="Search the help centre" type="search" />
+                </div>
+              </div>
+            </div>
+            {featuredArticles.length ? (
+              <div className="puck-help-pinned-articles" aria-label={textValue(props.pinnedHeading, "Featured articles")}>
+                <div className="puck-help-pinned-list">
+                  {featuredArticles.map((article, index) => (
+                    <a className="puck-help-pinned-card" href={previewHref(textValue(article.url, "#"), props.puck.metadata) || "#"} key={`${textValue(article.title, "Pinned article")}-${index}`}>
+                      <span className="puck-help-pinned-icon">
+                        <HelpCategoryIcon icon={article.icon} />
+                      </span>
+                      <span>{textValue(article.title, "Pinned article")}</span>
+                      <ArrowRight aria-hidden="true" size={16} strokeWidth={2} />
+                    </a>
+                  ))}
+                </div>
               </div>
             ) : null}
             <div className={`puck-help-category-grid puck-help-category-columns-${props.columns ?? "2"}`}>
-              {categories.map((category, index) => (
-                <a className="puck-help-category-card" href={helpCategoryHref(category, props.puck.metadata)} key={`${textValue(category.title, "topic")}-${index}`}>
-                  <span className="puck-help-category-icon">
-                    <HelpCategoryIcon icon={category.icon} />
-                  </span>
-                  <span className="puck-help-category-name">{textValue(category.title, "Support topic")}</span>
-                  {textValue(category.description) ? <span className="puck-help-category-description">{textValue(category.description)}</span> : null}
-                </a>
-              ))}
+              {categories.map((category, index) => {
+                const categoryTitle = textValue(category.title, "Support topic");
+                const displayTitle = helpCategoryTitleMap[categoryTitle] ?? categoryTitle;
+
+                return (
+                  <a className="puck-help-category-card" href={helpCategoryHref(category, props.puck.metadata)} key={`${categoryTitle}-${index}`}>
+                    <span className="puck-help-category-icon">
+                      <HelpCategoryIcon icon={category.icon} />
+                    </span>
+                    <span className="puck-help-category-name">{displayTitle}</span>
+                    {textValue(category.description) ? <span className="puck-help-category-description">{textValue(category.description)}</span> : null}
+                  </a>
+                );
+              })}
             </div>
+            <section className="puck-installer-support-section">
+              <p>Are you an installer?</p>
+              <h2>Registration, affiliate documents and installer resources available on our:</h2>
+              <a className="puck-installer-support-button" href="#">
+                Trade Portal
+              </a>
+            </section>
           </section>
         );
       },
