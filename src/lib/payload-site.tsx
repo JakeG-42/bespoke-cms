@@ -3,6 +3,7 @@ import config from "@payload-config";
 import { getPayload, type Payload } from "payload";
 
 import { PuckBuilderRenderer } from "@/components/payload/puck-builder-renderer";
+import { SiteFooter } from "@/components/payload/site-footer";
 import {
   applyThemeToBuilderData,
   getBuilderMenus,
@@ -142,26 +143,32 @@ export async function PayloadSitePage({
 
   if (page) {
     return (
-      <main className="public-site-empty">
-        <section className="public-site-empty-panel">
-          <p>{emptyLabel}</p>
-          <h1>{page.title}</h1>
-          <p>Open this page in the WYSIWYG builder and publish visual builder data to control this route.</p>
-        </section>
-      </main>
+      <>
+        <main className="public-site-empty">
+          <section className="public-site-empty-panel">
+            <p>{emptyLabel}</p>
+            <h1>{page.title}</h1>
+            <p>Open this page in the WYSIWYG builder and publish visual builder data to control this route.</p>
+          </section>
+        </main>
+        <SiteFooter internalLinkBasePath={internalLinkBasePath} menus={menus} />
+      </>
     );
   }
 
   return (
-    <main className="public-site-empty">
-      <section className="public-site-empty-panel">
-        <p>{emptyLabel}</p>
-        <h1>Andersen EV Help Centre</h1>
-        <p>
-          Create and publish a Payload page with the slug <code>{slug}</code> to control this route.
-          {indexed ? "" : " This route is hidden from search engines."}
-        </p>
-      </section>
-    </main>
+    <>
+      <main className="public-site-empty">
+        <section className="public-site-empty-panel">
+          <p>{emptyLabel}</p>
+          <h1>Andersen EV Help Centre</h1>
+          <p>
+            Create and publish a Payload page with the slug <code>{slug}</code> to control this route.
+            {indexed ? "" : " This route is hidden from search engines."}
+          </p>
+        </section>
+      </main>
+      <SiteFooter internalLinkBasePath={internalLinkBasePath} menus={menus} />
+    </>
   );
 }

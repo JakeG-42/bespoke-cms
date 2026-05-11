@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { PuckBuilderRenderer } from "@/components/payload/puck-builder-renderer";
+import { SiteFooter } from "@/components/payload/site-footer";
 import { getHelpCategoryPageData } from "@/lib/help-centre/articles";
 import { siteConfig } from "@/lib/seo";
 
@@ -55,7 +56,7 @@ export default async function HelpCategoryPage({ params }: HelpCategoryPageProps
         />
       ) : data.headerData ? (
         <div className="help-category-header">
-          <PuckBuilderRenderer data={data.headerData} menus={data.menus} />
+          <PuckBuilderRenderer data={data.headerData} menus={data.menus} showFooter={false} />
         </div>
       ) : null}
       {!data.templateData ? <main className="help-category-page">
@@ -79,6 +80,7 @@ export default async function HelpCategoryPage({ params }: HelpCategoryPageProps
           </div>
         </section>
       </main> : null}
+      {!data.templateData ? <SiteFooter menus={data.menus} /> : null}
     </>
   );
 }

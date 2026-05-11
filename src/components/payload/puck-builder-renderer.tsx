@@ -3,6 +3,7 @@ import { Render } from "@puckeditor/core/rsc";
 import { normalizeBuilderData } from "@/payload/builder/convert";
 import { builderConfig } from "@/payload/builder/puck-config";
 import type { BuilderHelpArticle, BuilderHelpCategory, BuilderMenu } from "@/payload/builder/types";
+import { SiteFooter } from "./site-footer";
 
 export function PuckBuilderRenderer({
   data,
@@ -14,6 +15,7 @@ export function PuckBuilderRenderer({
   internalLinkBasePath = "",
   menus,
   routeSlug,
+  showFooter = true,
 }: {
   data: unknown;
   helpArticle?: BuilderHelpArticle | null;
@@ -24,6 +26,7 @@ export function PuckBuilderRenderer({
   internalLinkBasePath?: string;
   menus: BuilderMenu[];
   routeSlug?: string;
+  showFooter?: boolean;
 }) {
   const builderData = normalizeBuilderData(data);
 
@@ -32,10 +35,13 @@ export function PuckBuilderRenderer({
   }
 
   return (
-    <Render
-      config={builderConfig}
-      data={builderData}
-      metadata={{ helpArticle, helpArticles, helpCategories, helpCategory, hideHelpArticleSections, internalLinkBasePath, menus, routeSlug }}
-    />
+    <>
+      <Render
+        config={builderConfig}
+        data={builderData}
+        metadata={{ helpArticle, helpArticles, helpCategories, helpCategory, hideHelpArticleSections, internalLinkBasePath, menus, routeSlug }}
+      />
+      {showFooter ? <SiteFooter internalLinkBasePath={internalLinkBasePath} menus={menus} /> : null}
+    </>
   );
 }
