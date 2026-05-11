@@ -11,7 +11,7 @@ type AndersenAssistantProps = {
 };
 
 const assistantPin = "0000";
-const shouldLockAssistant = process.env.NODE_ENV !== "production";
+const shouldLockAssistant = true;
 
 export function AndersenAssistant({ intro, title }: AndersenAssistantProps) {
   const [isOpen, setIsOpen] = useState(false);

@@ -1791,32 +1791,60 @@ export const builderConfig: BuilderConfig = {
         const category = getCurrentHelpCategory(metadata) ?? sampleHelpCategory();
         const articles = getHelpArticles(metadata);
         const cards = articles.length ? articles : sampleHelpArticles();
+        const metadataCategories = getHelpCategories(metadata);
+        const categories = metadataCategories.length ? metadataCategories : sampleHelpCategories();
+        const otherCategories = categories.filter((item) => item.slug !== category.slug);
         const heading = textValue(props.heading) || category.title;
         const intro = textValue(props.intro) || category.description || "";
 
         return (
           <section className={getSectionClassName(props, "puck-help-category-template")} style={getSectionStyle(props)}>
-            {props.showBackLink ? (
-              <Link className="help-article-back" href="/help-centre">
-                {textValue(props.backLabel, "Back to Help Centre")}
-              </Link>
-            ) : null}
-            <p className="help-article-kicker">Help Centre</p>
-            <h1>{heading}</h1>
-            {intro ? <p className="help-category-summary">{intro}</p> : null}
-            <div className="help-category-article-grid">
-              {cards.length ? (
-                cards.map((article) => (
-                  <Link className="help-category-article-card" href={article.path} key={article.path}>
-                    <span className="help-category-article-label">{article.sectionHeading || category.heading || category.title}</span>
-                    <strong>{article.title}</strong>
-                    {article.summary ? <em>{article.summary}</em> : null}
-                    <small>Read article</small>
+            <div className="help-category-listing-layout">
+              <aside className="help-category-sidebar" aria-label="Other Help Centre categories">
+                {props.showBackLink ? (
+                  <Link className="help-category-sidebar-back" href="/help-centre">
+                    {textValue(props.backLabel, "Back to Help Centre")}
                   </Link>
-                ))
-              ) : (
-                <p className="help-template-empty">{textValue(props.emptyMessage, "Articles are being prepared for this category.")}</p>
-              )}
+                ) : null}
+                <div className="help-category-sidebar-panel">
+                  <span>Categories</span>
+                  <h2>Other categories</h2>
+                  <nav className="help-category-sidebar-list">
+                    {otherCategories.map((item) => (
+                      <Link className="help-category-sidebar-link" href={item.path} key={item.path}>
+                        <span className="help-category-sidebar-icon">
+                          <HelpCategoryIcon icon={item.icon} />
+                        </span>
+                        <span>{helpCategoryTitleMap[item.title] ?? item.title}</span>
+                      </Link>
+                    ))}
+                  </nav>
+                </div>
+              </aside>
+              <div className="help-category-listing-main">
+                <p className="help-article-kicker">Help Centre</p>
+                <h1>{heading}</h1>
+                {intro ? <p className="help-category-summary">{intro}</p> : null}
+                <div className="help-category-article-table" aria-label={`${heading} articles`}>
+                  {cards.length ? (
+                    cards.map((article, index) => (
+                      <Link className="help-category-article-row" href={article.path} key={article.path}>
+                        <span className="help-category-article-index">{String(index + 1).padStart(2, "0")}</span>
+                        <span className="help-category-article-copy">
+                          <strong>{article.title}</strong>
+                          {article.summary ? <em>{article.summary}</em> : null}
+                        </span>
+                        <span className="help-category-article-action">
+                          <span>Read</span>
+                          <ArrowRight aria-hidden="true" size={16} strokeWidth={2} />
+                        </span>
+                      </Link>
+                    ))
+                  ) : (
+                    <p className="help-template-empty">{textValue(props.emptyMessage, "Articles are being prepared for this category.")}</p>
+                  )}
+                </div>
+              </div>
             </div>
           </section>
         );
@@ -1987,7 +2015,7 @@ export const builderConfig: BuilderConfig = {
                           <span className="puck-help-sidebar-category-icon">
                             <HelpCategoryIcon icon={helpCategory.icon} />
                           </span>
-                          <span className="puck-help-sidebar-category-name">{helpCategory.title}</span>
+                          <span className="puck-help-sidebar-category-name">{helpCategoryTitleMap[helpCategory.title] ?? helpCategory.title}</span>
                         </Link>
                       ))}
                     </div>
