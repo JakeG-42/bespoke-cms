@@ -3086,6 +3086,20 @@
   font-family: var(--font-code, "SFMono-Regular", Consolas, monospace);
 }
 
+.puck-theme-andersenEV .puck-help-category-template,
+.puck-theme-andersenEV .puck-help-article-layout,
+.puck-theme-andersenEV .puck-help-article-template,
+.puck-theme-andersenEV .puck-help-related-section,
+.puck-theme-andersenEV .puck-help-other-categories-section,
+.puck-theme-andersenEV .help-category-listing-layout,
+.puck-theme-andersenEV .puck-help-article-sidebar,
+.puck-theme-andersenEV .puck-help-sidebar-panel,
+.puck-theme-andersenEV .puck-help-sidebar-related-card,
+.puck-theme-andersenEV .puck-help-sidebar-category-card,
+.puck-theme-andersenEV .puck-help-article-card {
+  font-family: "Muli", Arial, Helvetica, sans-serif;
+}
+
 .puck-section {
   --builder-density-padding-bottom: clamp(2.4rem, 5vw, 4.8rem);
   --builder-density-padding-top: clamp(2.4rem, 5vw, 4.8rem);
