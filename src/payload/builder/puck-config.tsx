@@ -21,6 +21,7 @@ import {
 import Link from "next/link";
 
 import { AndersenAssistant } from "@/components/help-centre/AndersenAssistant";
+import { HelpCentreSearch } from "@/components/help-centre/HelpCentreSearch";
 import { getHelpArticlePath, getHelpCategoryPath } from "@/lib/help-centre/article-routing";
 import type {
   BuilderAdvancedStyle,
@@ -1560,6 +1561,8 @@ export const builderConfig: BuilderConfig = {
         const categories = arrayValue<NonNullable<typeof props.categories>[number]>(props.categories);
         const pinnedArticles = arrayValue<NonNullable<typeof props.pinnedArticles>[number]>(props.pinnedArticles);
         const featuredArticles = pinnedArticles.length ? pinnedArticles : [...defaultPinnedHelpArticles];
+        const helpArticles = getHelpArticles(props.puck.metadata);
+        const helpCategories = getHelpCategories(props.puck.metadata);
         const rawHeading = textValue(props.heading, "Help Centre");
         const defaultHeroIntro = "Need help? Use our new self help centre, if you require further assistance we will automatically connect you with our support team.";
         const rawIntro = textValue(props.intro, defaultHeroIntro);
@@ -1578,10 +1581,11 @@ export const builderConfig: BuilderConfig = {
               <div className="puck-help-category-hero-content">
                 {heroHeading ? <h1>{heroHeading}</h1> : null}
                 {heroIntro ? <p>{heroIntro}</p> : null}
-                <div aria-label="Search help centre" className="puck-help-category-search" role="search">
-                  <Search aria-hidden="true" size={20} strokeWidth={2} />
-                  <input aria-label="Search help centre" placeholder="Search the help centre" type="search" />
-                </div>
+                <HelpCentreSearch
+                  articles={helpArticles}
+                  categories={helpCategories}
+                  internalLinkBasePath={typeof props.puck.metadata.internalLinkBasePath === "string" ? props.puck.metadata.internalLinkBasePath : ""}
+                />
               </div>
             </div>
             {featuredArticles.length ? (

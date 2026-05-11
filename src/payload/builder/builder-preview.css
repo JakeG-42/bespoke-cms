@@ -1459,6 +1459,7 @@
 
 .puck-help-category-hero {
   position: relative;
+  z-index: 5;
   isolation: isolate;
   display: grid;
   align-items: center;
@@ -1466,7 +1467,7 @@
   width: 100vw;
   min-height: clamp(20rem, 36vw, 30rem);
   margin: 0 50% clamp(2rem, 4vw, 3rem);
-  overflow: hidden;
+  overflow: visible;
   border-radius: 0;
   background: #101511;
   color: #ffffff;
@@ -1494,6 +1495,8 @@
 }
 
 .puck-help-category-hero-content {
+  position: relative;
+  z-index: 2;
   display: grid;
   justify-items: start;
   gap: 0.85rem;
@@ -1563,6 +1566,109 @@
 
 .puck-help-category-search input::placeholder {
   color: rgba(17, 22, 19, 0.62);
+}
+
+.puck-help-category-search-shell {
+  position: relative;
+  z-index: 20;
+  width: min(46.35rem, 100%);
+  margin-top: 0.35rem;
+  font-family: "Muli", Arial, Helvetica, sans-serif;
+}
+
+.puck-help-category-search-shell .puck-help-category-search {
+  width: 100%;
+  margin-top: 0;
+}
+
+.puck-help-search-results {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 0.65rem);
+  left: 0;
+  display: grid;
+  gap: 0.45rem;
+  width: 100%;
+  padding: 0.65rem;
+  border: 1px solid rgba(17, 22, 19, 0.12);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 24px 52px rgba(17, 22, 19, 0.2);
+  color: #111613;
+}
+
+.puck-help-search-result {
+  position: relative;
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.72rem 2.5rem 0.72rem 0.78rem;
+  border: 1px solid rgba(17, 22, 19, 0.08);
+  border-radius: 8px;
+  background: #ffffff;
+  color: #111613;
+  text-align: left;
+  text-decoration: none;
+  transition:
+    border-color 360ms var(--andersen-hover-ease, ease),
+    box-shadow 360ms var(--andersen-hover-ease, ease),
+    transform 360ms var(--andersen-hover-ease, ease);
+}
+
+.puck-help-search-result:hover,
+.puck-help-search-result:focus-visible {
+  border-color: #111613;
+  box-shadow: 0 12px 22px rgba(17, 22, 19, 0.08);
+  outline: 0;
+  transform: translateY(-1px);
+}
+
+.puck-help-search-result span {
+  color: #6a706a;
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.puck-help-search-result strong {
+  color: #111613;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.16;
+}
+
+.puck-help-search-result em {
+  display: -webkit-box;
+  overflow: hidden;
+  color: #555b55;
+  font-size: 0.82rem;
+  font-style: normal;
+  line-height: 1.35;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.puck-help-search-result svg {
+  position: absolute;
+  top: 50%;
+  right: 0.85rem;
+  color: #111613;
+  transform: translateY(-50%);
+  transition: transform 360ms var(--andersen-hover-ease, ease);
+}
+
+.puck-help-search-result:hover svg,
+.puck-help-search-result:focus-visible svg {
+  transform: translate(3px, -50%);
+}
+
+.puck-help-search-empty {
+  margin: 0;
+  padding: 0.85rem;
+  color: #555b55;
+  font-size: 0.9rem;
+  text-align: left;
 }
 
 .puck-help-pinned-articles {

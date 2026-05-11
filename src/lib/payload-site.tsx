@@ -15,6 +15,7 @@ import { normalizeBuilderData } from "@/payload/builder/convert";
 import type { BuilderMenu, BuilderTheme } from "@/payload/builder/types";
 import type { Page } from "@/payload-types";
 import { absoluteUrl } from "@/lib/seo";
+import { extractHelpCategories, getPublishedHelpCategories } from "@/lib/help-centre/articles";
 
 type PayloadSiteRenderOptions = {
   emptyLabel?: string;
@@ -129,10 +130,23 @@ export async function PayloadSitePage({
   if (page && "builderData" in page && page.builderData) {
     const builderData = normalizeBuilderData(page.builderData);
     const themedBuilderData = builderData ? applyThemeToBuilderData(builderData, theme) : page.builderData;
+    let helpCategories: Awaited<ReturnType<typeof getPublishedHelpCategories>> = [];
+
+    if (slug === "help-centre" && builderData) {
+      const collectionCategories = await getPublishedHelpCategories().catch((error) => {
+        console.error("Unable to load Help Centre articles for search.", error);
+
+        return [];
+      });
+
+      helpCategories = collectionCategories.length ? collectionCategories : extractHelpCategories(builderData);
+    }
 
     return (
       <PuckBuilderRenderer
         data={themedBuilderData}
+        helpArticles={helpCategories.flatMap((category) => category.articles ?? [])}
+        helpCategories={helpCategories}
         hideHelpArticleSections={slug === "help-centre"}
         internalLinkBasePath={internalLinkBasePath}
         menus={menus}
