@@ -62,6 +62,13 @@ export function SiteFooter({ internalLinkBasePath = "", menus }: SiteFooterProps
           </span>
           <span className="puck-help-footer-trustpilot-logo">Trustpilot</span>
         </a>
+        <a className="puck-help-footer-brand" href={footerHref("/", internalLinkBasePath) || "/"} aria-label="Andersen EV homepage">
+          <img
+            alt="Andersen EV"
+            className="puck-help-footer-logo"
+            src="https://andersen-ev.com/cdn/shop/files/Untitled_design_31.png?v=1672740204&width=240"
+          />
+        </a>
         {footerMenuItems.length ? (
           <div className="puck-help-footer-menu-wrap">
             <nav aria-label={`${footerMenu?.title ?? "Footer menu"} footer`} className="puck-help-footer-menu">
