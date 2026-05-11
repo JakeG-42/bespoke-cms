@@ -6,6 +6,7 @@ import { PuckBuilderRenderer } from "@/components/payload/puck-builder-renderer"
 import { SiteFooter } from "@/components/payload/site-footer";
 import { getHelpCategoryPath } from "@/lib/help-centre/article-routing";
 import { getHelpArticlePageData } from "@/lib/help-centre/articles";
+import { ensureDemoArticleBodyLength } from "@/lib/help-centre/demo-article-content";
 import { siteConfig } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
@@ -85,7 +86,7 @@ export default async function HelpArticlePage({ params }: HelpArticlePageProps) 
       {!helpArticle.builderData && !data.templateData ? <main className="help-article-page">
         <article className="help-article-shell">
           <Link className="help-article-back" href={getHelpCategoryPath(helpArticle.categorySlug)}>
-            Back to {helpArticle.sectionHeading}
+            Back to article list
           </Link>
           <p className="help-article-kicker">{helpArticle.sectionHeading}</p>
           <h1>{helpArticle.title}</h1>
@@ -104,7 +105,7 @@ export default async function HelpArticlePage({ params }: HelpArticlePageProps) 
 }
 
 function renderArticleBody(body: string) {
-  const chunks = publicArticleChunks(body);
+  const chunks = publicArticleChunks(ensureDemoArticleBodyLength(body));
 
   if (!chunks.length) {
     return <p>Article content is being prepared.</p>;

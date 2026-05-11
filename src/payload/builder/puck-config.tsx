@@ -23,6 +23,7 @@ import Link from "next/link";
 import { AndersenAssistant } from "@/components/help-centre/AndersenAssistant";
 import { HelpCentreSearch } from "@/components/help-centre/HelpCentreSearch";
 import { getHelpArticlePath, getHelpCategoryPath } from "@/lib/help-centre/article-routing";
+import { ensureDemoArticleBodyLength } from "@/lib/help-centre/demo-article-content";
 import type {
   BuilderAdvancedStyle,
   BuilderConfig,
@@ -873,7 +874,7 @@ function publicArticleChunks(body: string) {
 }
 
 function ArticleBody({ body }: { body: string }) {
-  const chunks = publicArticleChunks(body);
+  const chunks = publicArticleChunks(ensureDemoArticleBodyLength(body));
 
   if (!chunks.length) {
     return <p>Article content is being prepared.</p>;
@@ -1590,6 +1591,7 @@ export const builderConfig: BuilderConfig = {
             </div>
             {featuredArticles.length ? (
               <div className="puck-help-pinned-articles" aria-label={textValue(props.pinnedHeading, "Featured articles")}>
+                <p className="puck-help-pinned-heading">Common questions</p>
                 <div className="puck-help-pinned-list">
                   {featuredArticles.map((article, index) => (
                     <a className="puck-help-pinned-card" href={previewHref(textValue(article.url, "#"), props.puck.metadata) || "#"} key={`${textValue(article.title, "Pinned article")}-${index}`}>
@@ -1603,6 +1605,7 @@ export const builderConfig: BuilderConfig = {
                 </div>
               </div>
             ) : null}
+            <h2 className="puck-help-category-grid-heading">Frequently Asked Questions</h2>
             <div className={`puck-help-category-grid puck-help-category-columns-${props.columns ?? "2"}`}>
               {categories.map((category, index) => {
                 const categoryTitle = textValue(category.title, "Support topic");
@@ -1705,9 +1708,8 @@ export const builderConfig: BuilderConfig = {
                 {intro ? <p className="help-category-summary">{intro}</p> : null}
                 <div className="help-category-article-table" aria-label={`${heading} articles`}>
                   {cards.length ? (
-                    cards.map((article, index) => (
+                    cards.map((article) => (
                       <Link className="help-category-article-row" href={article.path} key={article.path}>
-                        <span className="help-category-article-index">{String(index + 1).padStart(2, "0")}</span>
                         <span className="help-category-article-copy">
                           <strong>{article.title}</strong>
                           {article.summary ? <em>{article.summary}</em> : null}
@@ -1731,7 +1733,7 @@ export const builderConfig: BuilderConfig = {
     HelpArticleLayoutBlock: {
       defaultProps: {
         ...defaultDesign,
-        backLabel: "Back to category",
+        backLabel: "Back to article list",
         backgroundColor: "#ffffff",
         body: "",
         bodySize: 1.08,
@@ -1840,6 +1842,8 @@ export const builderConfig: BuilderConfig = {
         const relatedIntro = textValue(props.relatedIntro);
         const categoriesHeading = textValue(props.categoriesHeading, "Other categories");
         const categoriesIntro = textValue(props.categoriesIntro);
+        const backLabel = textValue(props.backLabel, "Back to article list").trim();
+        const resolvedBackLabel = backLabel.toLowerCase() === "back to category" ? "Back to article list" : backLabel;
 
         return (
           <section className={getSectionClassName(props, "puck-help-article-layout")} style={getSectionStyle(props)}>
@@ -1847,7 +1851,7 @@ export const builderConfig: BuilderConfig = {
               <article className="puck-help-article-template puck-help-article-layout__content">
                 {props.showBackLink ? (
                   <Link className="help-article-back" href={category.path}>
-                    {textValue(props.backLabel, `Back to ${category.title}`)}
+                    {resolvedBackLabel}
                   </Link>
                 ) : null}
                 <p className="help-article-kicker">{article.sectionHeading || category.heading || category.title}</p>
@@ -2132,15 +2136,28 @@ export const builderConfig: BuilderConfig = {
       label: "Section",
       render: (props) => {
         const sectionProps = withFullWidth(props);
+        const isDemoPlaceholder =
+          textValue(props.eyebrow).trim().toLowerCase() === "demo page shell" ||
+          /normal andersen ev page would usually be show/i.test(textValue(props.body));
+        const sectionClassName = getSectionClassName(
+          sectionProps,
+          `puck-builder-section puck-builder-section-${props.variant ?? "panel"}${isDemoPlaceholder ? " puck-demo-page-section" : ""}`,
+        );
 
         return (
-          <section className={getSectionClassName(sectionProps, `puck-builder-section puck-builder-section-${props.variant ?? "panel"}`)} style={getSectionStyle(sectionProps)}>
+          <section className={sectionClassName} style={getSectionStyle(sectionProps)}>
             {textValue(props.eyebrow) ? <span className="puck-kicker">{textValue(props.eyebrow)}</span> : null}
             <h2>{textValue(props.heading, "Build a new section")}</h2>
             {textValue(props.body) ? <p>{textValue(props.body)}</p> : null}
-            <div className="puck-actions">
-              <BuilderButton link={{ label: props.primaryLabel, url: props.primaryUrl }} metadata={props.puck.metadata} />
-              <BuilderButton link={{ label: props.secondaryLabel, url: props.secondaryUrl }} metadata={props.puck.metadata} secondary />
+            <div className={`puck-actions${isDemoPlaceholder ? " puck-demo-preview-actions" : ""}`}>
+              {isDemoPlaceholder ? (
+                <BuilderButton link={{ label: "Go to Help Centre", url: "/help-centre" }} metadata={props.puck.metadata} />
+              ) : (
+                <>
+                  <BuilderButton link={{ label: props.primaryLabel, url: props.primaryUrl }} metadata={props.puck.metadata} />
+                  <BuilderButton link={{ label: props.secondaryLabel, url: props.secondaryUrl }} metadata={props.puck.metadata} secondary />
+                </>
+              )}
             </div>
           </section>
         );

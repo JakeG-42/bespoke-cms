@@ -126,6 +126,8 @@ export async function PayloadSitePage({
   slug,
 }: PayloadSiteRenderOptions) {
   const { menus, page, theme } = await loadPayloadSite(slug);
+  const basePath = internalLinkBasePath.replace(/\/+$/, "");
+  const helpCentreHref = basePath ? `${basePath}/help-centre` : "/help-centre";
 
   if (page && "builderData" in page && page.builderData) {
     const builderData = normalizeBuilderData(page.builderData);
@@ -162,7 +164,12 @@ export async function PayloadSitePage({
           <section className="public-site-empty-panel">
             <p>{emptyLabel}</p>
             <h1>{page.title}</h1>
-            <p>Open this page in the WYSIWYG builder and publish visual builder data to control this route.</p>
+            <p>This is a preview route. The usual Andersen page content would be displayed here once the page is connected.</p>
+            <div className="public-site-empty-actions" aria-label="Preview page actions">
+              <a className="public-site-empty-button public-site-empty-button-primary" href={helpCentreHref}>
+                Go to Help Centre
+              </a>
+            </div>
           </section>
         </main>
         <SiteFooter internalLinkBasePath={internalLinkBasePath} menus={menus} />
@@ -177,9 +184,14 @@ export async function PayloadSitePage({
           <p>{emptyLabel}</p>
           <h1>Andersen EV Help Centre</h1>
           <p>
-            Create and publish a Payload page with the slug <code>{slug}</code> to control this route.
+            This is a preview route for <code>{slug}</code>. The usual Andersen page content would be displayed here once the page is connected.
             {indexed ? "" : " This route is hidden from search engines."}
           </p>
+          <div className="public-site-empty-actions" aria-label="Preview page actions">
+            <a className="public-site-empty-button public-site-empty-button-primary" href={helpCentreHref}>
+              Go to Help Centre
+            </a>
+          </div>
         </section>
       </main>
       <SiteFooter internalLinkBasePath={internalLinkBasePath} menus={menus} />
