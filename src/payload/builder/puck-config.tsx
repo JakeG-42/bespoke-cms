@@ -232,24 +232,26 @@ const defaultPinnedHelpArticles = [
   {
     icon: "installation",
     title: "Installation - what to expect",
-    url: "#installation",
+    url: "/help-centre/articles/installation/installation-what-to-expect",
   },
   {
     icon: "firstCharge",
     title: "Your First Charge",
-    url: "#how-do-i",
+    url: "/help-centre/articles/how-do-i/your-first-charge",
   },
   {
     icon: "offline",
     title: "Charger is offline",
-    url: "#troubleshooting",
+    url: "/help-centre/articles/troubleshooting/charger-is-offline",
   },
   {
     icon: "schedule",
     title: "How to Schedule charging",
-    url: "#how-do-i",
+    url: "/help-centre/articles/how-do-i/how-to-schedule-charging",
   },
 ] as const;
+
+const featuredHelpArticleUrls: Record<string, string> = Object.fromEntries(defaultPinnedHelpArticles.map((article) => [article.title, article.url]));
 
 function rangeField({ fallback, label, max, min, step }: { fallback: number; label: string; max: number; min: number; step: number }) {
   const render: CustomFieldRender<number | undefined> = ({ field, id, onChange, readOnly, value }) => {
@@ -1593,15 +1595,21 @@ export const builderConfig: BuilderConfig = {
               <div className="puck-help-pinned-articles" aria-label={textValue(props.pinnedHeading, "Featured articles")}>
                 <p className="puck-help-pinned-heading">Common questions</p>
                 <div className="puck-help-pinned-list">
-                  {featuredArticles.map((article, index) => (
-                    <a className="puck-help-pinned-card" href={previewHref(textValue(article.url, "#"), props.puck.metadata) || "#"} key={`${textValue(article.title, "Pinned article")}-${index}`}>
-                      <span className="puck-help-pinned-icon">
-                        <HelpCategoryIcon icon={article.icon} />
-                      </span>
-                      <span>{textValue(article.title, "Pinned article")}</span>
-                      <ArrowRight aria-hidden="true" size={16} strokeWidth={2} />
-                    </a>
-                  ))}
+                  {featuredArticles.map((article, index) => {
+                    const articleTitle = textValue(article.title, "Pinned article");
+                    const articleUrl = textValue(article.url, "#");
+                    const resolvedUrl = articleUrl.startsWith("#") ? featuredHelpArticleUrls[articleTitle] ?? articleUrl : articleUrl;
+
+                    return (
+                      <a className="puck-help-pinned-card" href={previewHref(resolvedUrl, props.puck.metadata) || "#"} key={`${articleTitle}-${index}`}>
+                        <span className="puck-help-pinned-icon">
+                          <HelpCategoryIcon icon={article.icon} />
+                        </span>
+                        <span>{articleTitle}</span>
+                        <ArrowRight aria-hidden="true" size={16} strokeWidth={2} />
+                      </a>
+                    );
+                  })}
                 </div>
               </div>
             ) : null}
