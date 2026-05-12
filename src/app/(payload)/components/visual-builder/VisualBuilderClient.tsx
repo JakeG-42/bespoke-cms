@@ -203,9 +203,9 @@ function renderHeaderActions({
           <span>New page</span>
         </button>
       ) : null}
-      <a className="visual-builder-action" href="/console/globals/theme-settings" rel="noreferrer" target="_blank">
+      <a className="visual-builder-action" href="/console/collections/themes" rel="noreferrer" target="_blank">
         <ExternalLink aria-hidden="true" size={14} />
-        <span>Theme settings</span>
+        <span>Themes</span>
       </a>
       <button className="visual-builder-action primary" onClick={() => insertSection(dispatch, state)} type="button">
         <Plus aria-hidden="true" size={15} />

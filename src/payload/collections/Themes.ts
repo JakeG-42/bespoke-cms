@@ -41,7 +41,7 @@ export const Themes: CollectionConfig = {
     update: adminsOnly,
   },
   admin: {
-    defaultColumns: ["preview", "name", "handle", "status", "isDefault", "updatedAt"],
+    defaultColumns: ["preview", "name", "handle", "status", "isDefault", "activeTemplate", "updatedAt"],
     group: "Theme",
     hidden: ({ user }) => !isAdminUser(user),
     useAsTitle: "name",
@@ -107,10 +107,19 @@ export const Themes: CollectionConfig = {
       name: "isDefault",
       type: "checkbox",
       admin: {
-        description: "Used when a page does not have a theme selected.",
+        description: "Default visual theme used when a page does not have its own override.",
       },
       defaultValue: false,
       label: "Default theme",
+    },
+    {
+      name: "activeTemplate",
+      type: "relationship",
+      admin: {
+        description: "Default website template used by Help Centre routes when no page-specific template is set.",
+      },
+      label: "Default website template",
+      relationTo: "page-templates",
     },
     {
       name: "description",

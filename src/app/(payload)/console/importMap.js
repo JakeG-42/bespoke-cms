@@ -29,7 +29,7 @@ import { ThemePreviewCell as ThemePreviewCell_ac77b5c0503c02d2f3a796dd252d513c }
 import { ThemePreviewField as ThemePreviewField_ac77b5c0503c02d2f3a796dd252d513c } from '../components/theme/ThemePreview'
 import { TemplatePreviewCell as TemplatePreviewCell_ac77b5c0503c02d2f3a796dd252d513c } from '../components/theme/ThemePreview'
 import { TemplatePreviewField as TemplatePreviewField_ac77b5c0503c02d2f3a796dd252d513c } from '../components/theme/ThemePreview'
-import { ThemeSettingsPreviewField as ThemeSettingsPreviewField_ac77b5c0503c02d2f3a796dd252d513c } from '../components/theme/ThemePreview'
+import { ConsoleAccountControl as ConsoleAccountControl_6db47c836ac9103561505613d2b9a4c9 } from '../components/brand/ConsoleAccountControl'
 import { PlatformConsoleIcon as PlatformConsoleIcon_5925d11dc95fafabeec200638335a25b } from '../components/brand/ConsoleBrand'
 import { PlatformConsoleLogo as PlatformConsoleLogo_5925d11dc95fafabeec200638335a25b } from '../components/brand/ConsoleBrand'
 import { CodeWorkspaceNavLink as CodeWorkspaceNavLink_e8d5604b26950d7a38a53c138155e152 } from '../components/code-workspace/CodeWorkspaceNavLink'
@@ -71,7 +71,7 @@ export const importMap = {
   "/components/theme/ThemePreview#ThemePreviewField": ThemePreviewField_ac77b5c0503c02d2f3a796dd252d513c,
   "/components/theme/ThemePreview#TemplatePreviewCell": TemplatePreviewCell_ac77b5c0503c02d2f3a796dd252d513c,
   "/components/theme/ThemePreview#TemplatePreviewField": TemplatePreviewField_ac77b5c0503c02d2f3a796dd252d513c,
-  "/components/theme/ThemePreview#ThemeSettingsPreviewField": ThemeSettingsPreviewField_ac77b5c0503c02d2f3a796dd252d513c,
+  "/components/brand/ConsoleAccountControl#ConsoleAccountControl": ConsoleAccountControl_6db47c836ac9103561505613d2b9a4c9,
   "/components/brand/ConsoleBrand#PlatformConsoleIcon": PlatformConsoleIcon_5925d11dc95fafabeec200638335a25b,
   "/components/brand/ConsoleBrand#PlatformConsoleLogo": PlatformConsoleLogo_5925d11dc95fafabeec200638335a25b,
   "/components/code-workspace/CodeWorkspaceNavLink#CodeWorkspaceNavLink": CodeWorkspaceNavLink_e8d5604b26950d7a38a53c138155e152,

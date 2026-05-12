@@ -17,7 +17,6 @@ import { Pages } from "./src/payload/collections/Pages.ts";
 import { SupportTickets } from "./src/payload/collections/SupportTickets.ts";
 import { Themes } from "./src/payload/collections/Themes.ts";
 import { SiteSettings } from "./src/payload/globals/SiteSettings.ts";
-import { ThemeSettings } from "./src/payload/globals/ThemeSettings.ts";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -103,6 +102,9 @@ function getPayloadSecret() {
 
 export default buildConfig({
   admin: {
+    avatar: {
+      Component: "/components/brand/ConsoleAccountControl#ConsoleAccountControl",
+    },
     components: {
       afterNavLinks: [
         "/components/code-workspace/CodeWorkspaceNavLink#CodeWorkspaceNavLink",
@@ -172,7 +174,7 @@ export default buildConfig({
     disable: true,
   },
   editor: lexicalEditor(),
-  globals: [ThemeSettings, SiteSettings],
+  globals: [SiteSettings],
   routes: {
     admin: "/console",
     api: "/console-api",

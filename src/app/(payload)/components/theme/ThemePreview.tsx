@@ -2,7 +2,7 @@
 
 import { useFormFields } from "@payloadcms/ui";
 import type { DefaultCellComponentProps } from "payload";
-import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 type UnknownRecord = Record<string, unknown>;
 
@@ -27,8 +27,6 @@ type TemplatePreviewData = {
   name: string;
   theme?: ThemePreviewData | null;
 };
-
-type RelationshipValue = number | string | { id?: number | string; relationTo?: string; value?: number | string } | null | undefined;
 
 const defaultTheme: ThemePreviewData = {
   accentColor: "#8bd3ff",
@@ -57,24 +55,6 @@ function fieldValue(fields: UnknownRecord, path: string) {
   const field = fields[path];
 
   return isRecord(field) && "value" in field ? field.value : undefined;
-}
-
-function relationId(value: RelationshipValue) {
-  if (typeof value === "number" || typeof value === "string") {
-    return String(value);
-  }
-
-  if (isRecord(value)) {
-    if (typeof value.value === "number" || typeof value.value === "string") {
-      return String(value.value);
-    }
-
-    if (typeof value.id === "number" || typeof value.id === "string") {
-      return String(value.id);
-    }
-  }
-
-  return "";
 }
 
 function parseJson(value: unknown) {
@@ -195,18 +175,6 @@ function rootThemeFromTemplate(template: TemplatePreviewData) {
   const props = isRecord(root.props) ? root.props : {};
 
   return template.theme ?? normalizeTheme({ rootProps: props });
-}
-
-async function fetchPayloadDoc(collection: "page-templates" | "themes", id: string) {
-  const response = await fetch(`/console-api/${collection}/${id}?depth=1`, {
-    credentials: "same-origin",
-  });
-
-  if (!response.ok) {
-    throw new Error(await response.text());
-  }
-
-  return response.json() as Promise<unknown>;
 }
 
 function PreviewShell({
@@ -339,101 +307,6 @@ export function TemplatePreviewField() {
         <span>Uses the template builder data as a miniature page preview.</span>
       </div>
       <TemplatePreviewCard template={template} />
-    </div>
-  );
-}
-
-export function ThemeSettingsPreviewField() {
-  const values = useFormFields(([fields]) => ({
-    activeTemplate: fieldValue(fields, "activeTemplate") as RelationshipValue,
-    activeTheme: fieldValue(fields, "activeTheme") as RelationshipValue,
-  }));
-  const templateId = relationId(values.activeTemplate);
-  const themeId = relationId(values.activeTheme);
-  const [template, setTemplate] = useState<TemplatePreviewData | null>(null);
-  const [theme, setTheme] = useState<ThemePreviewData | null>(null);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    async function loadTemplate() {
-      if (!templateId) {
-        setTemplate(null);
-        return;
-      }
-
-      try {
-        const doc = await fetchPayloadDoc("page-templates", templateId);
-
-        if (isMounted && isRecord(doc)) {
-          setTemplate({
-            builderData: doc.builderData,
-            description: asString(doc.description),
-            handle: asString(doc.handle),
-            name: asString(doc.name, "Website template"),
-            theme: isRecord(doc.theme) ? normalizeTheme(doc.theme) : null,
-          });
-        }
-      } catch {
-        if (isMounted) {
-          setTemplate(null);
-        }
-      }
-    }
-
-    void loadTemplate();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [templateId]);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    async function loadTheme() {
-      if (!themeId) {
-        setTheme(null);
-        return;
-      }
-
-      try {
-        const doc = await fetchPayloadDoc("themes", themeId);
-
-        if (isMounted) {
-          setTheme(normalizeTheme(doc));
-        }
-      } catch {
-        if (isMounted) {
-          setTheme(null);
-        }
-      }
-    }
-
-    void loadTheme();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [themeId]);
-
-  const selectedTemplate = template ?? {
-    builderData: null,
-    handle: "select-template",
-    name: templateId ? "Loading selected template..." : "Select a website template",
-    theme,
-  };
-
-  return (
-    <div className="theme-preview-field">
-      <div className="theme-preview-field-header">
-        <p>Active website preview</p>
-        <span>This is the default template/theme used by the Help Centre.</span>
-      </div>
-      <div className="theme-preview-settings-grid">
-        <TemplatePreviewCard template={{ ...selectedTemplate, theme: theme ?? selectedTemplate.theme }} />
-        <ThemePreviewCard theme={theme ?? defaultTheme} />
-      </div>
     </div>
   );
 }

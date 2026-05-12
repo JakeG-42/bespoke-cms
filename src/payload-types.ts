@@ -100,11 +100,9 @@ export interface Config {
   };
   fallbackLocale: null;
   globals: {
-    'theme-settings': ThemeSetting;
     'site-settings': SiteSetting;
   };
   globalsSelect: {
-    'theme-settings': ThemeSettingsSelect<false> | ThemeSettingsSelect<true>;
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
   };
   locale: null;
@@ -373,9 +371,13 @@ export interface Theme {
   handle: string;
   status: 'active' | 'draft';
   /**
-   * Used when a page does not have a theme selected.
+   * Default visual theme used when a page does not have its own override.
    */
   isDefault?: boolean | null;
+  /**
+   * Default website template used by Help Centre routes when no page-specific template is set.
+   */
+  activeTemplate?: (number | null) | PageTemplate;
   description?: string | null;
   colors: {
     backgroundColor: string;
@@ -801,6 +803,7 @@ export interface ThemesSelect<T extends boolean = true> {
   handle?: T;
   status?: T;
   isDefault?: T;
+  activeTemplate?: T;
   description?: T;
   colors?:
     | T
@@ -995,23 +998,6 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "theme-settings".
- */
-export interface ThemeSetting {
-  id: number;
-  /**
-   * The active whole-website template for the Help Centre.
-   */
-  activeTemplate?: (number | null) | PageTemplate;
-  /**
-   * The default visual theme used when a page does not have its own override.
-   */
-  activeTheme?: (number | null) | Theme;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-settings".
  */
 export interface SiteSetting {
@@ -1031,17 +1017,6 @@ export interface SiteSetting {
   };
   updatedAt?: string | null;
   createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "theme-settings_select".
- */
-export interface ThemeSettingsSelect<T extends boolean = true> {
-  activeTemplate?: T;
-  activeTheme?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

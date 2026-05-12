@@ -13,8 +13,9 @@ import "./custom.scss";
 
 export const metadata: Metadata = {
   icons: {
-    icon: "/console-icon.svg",
-    shortcut: "/console-icon.svg",
+    apple: "/apple-touch-icon.png",
+    icon: "/aevsiteicon.png",
+    shortcut: "/aevsiteicon.png",
   },
   metadataBase: new URL(siteConfig.url),
   title: {

@@ -16,6 +16,11 @@ type Args = {
 
 export const generateMetadata = async ({ params, searchParams }: Args): Promise<Metadata> => ({
   ...(await generatePageMetadata({ config, params, searchParams })),
+  icons: {
+    apple: "/apple-touch-icon.png",
+    icon: "/aevsiteicon.png",
+    shortcut: "/aevsiteicon.png",
+  },
   metadataBase: new URL(siteConfig.url),
 });
 

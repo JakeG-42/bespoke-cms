@@ -1,7 +1,9 @@
+import Image from "next/image";
+
 export function PlatformConsoleIcon() {
   return (
-    <div aria-hidden="true" className="platform-console-icon">
-      <span />
+    <div className="platform-console-icon">
+      <Image alt="" aria-hidden="true" height={64} src="/aevsiteicon.png" width={64} />
     </div>
   );
 }

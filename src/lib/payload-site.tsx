@@ -7,7 +7,7 @@ import { SiteFooter } from "@/components/payload/site-footer";
 import {
   applyThemeToBuilderData,
   getBuilderMenus,
-  getBuilderThemeSettings,
+  getBuilderThemeDefaults,
   getBuilderThemes,
   getPageBuilderTheme,
 } from "@/payload/builder/metadata";
@@ -66,13 +66,13 @@ async function loadPayloadSite(slug: string): Promise<{
   theme: BuilderTheme;
 }> {
   const payload = await getPayload({ config });
-  const [page, menus, themes, themeSettings] = await Promise.all([
+  const [page, menus, themes, themeDefaults] = await Promise.all([
     getPayloadPage(payload, slug),
     getBuilderMenus(payload),
     getBuilderThemes(payload),
-    getBuilderThemeSettings(payload),
+    getBuilderThemeDefaults(payload),
   ]);
-  const theme = getPageBuilderTheme(page, themes, themeSettings.themeId);
+  const theme = getPageBuilderTheme(page, themes, themeDefaults.themeId);
 
   return {
     menus,

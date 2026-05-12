@@ -8,7 +8,7 @@ import {
   getDefaultBuilderTheme,
   getBuilderMenus,
   getBuilderPageTemplates,
-  getBuilderThemeSettings,
+  getBuilderThemeDefaults,
   getBuilderThemes,
   getPageBuilderTheme,
 } from "@/payload/builder/metadata";
@@ -105,11 +105,11 @@ export async function VisualBuilderView({ doc, initPageResult }: DocumentViewSer
   const slug = page.slug ?? "home";
   const title = page.title ?? "Untitled page";
   const payload = initPageResult.req.payload;
-  const [menus, themes, pageTemplates, themeSettings, helpCategories] = await Promise.all([
+  const [menus, themes, pageTemplates, themeDefaults, helpCategories] = await Promise.all([
     getBuilderMenus(payload),
     getBuilderThemes(payload),
     getBuilderPageTemplates(payload),
-    getBuilderThemeSettings(payload),
+    getBuilderThemeDefaults(payload),
     getPublishedHelpCategories(payload),
   ]);
 
@@ -117,7 +117,7 @@ export async function VisualBuilderView({ doc, initPageResult }: DocumentViewSer
     const article = page as Record<string, unknown>;
     const category = getArticleCategory(article);
     const articleMeta = getArticleMeta(article, category);
-    const activeTheme = themes.find((theme) => theme.id === themeSettings.themeId) ?? getDefaultBuilderTheme(themes);
+    const activeTheme = themes.find((theme) => theme.id === themeDefaults.themeId) ?? getDefaultBuilderTheme(themes);
     const helpArticles = categoryArticlesForEditor(helpCategories, category, articleMeta);
     const categories = helpCategories.some((item) => item.slug === category.slug) ? helpCategories : [category, ...helpCategories];
 
@@ -143,9 +143,9 @@ export async function VisualBuilderView({ doc, initPageResult }: DocumentViewSer
     );
   }
 
-  const activeTheme = getPageBuilderTheme(page, themes, themeSettings.themeId);
+  const activeTheme = getPageBuilderTheme(page, themes, themeDefaults.themeId);
   const activeTemplateId =
-    typeof page.pageTemplate === "number" || typeof page.pageTemplate === "string" ? String(page.pageTemplate) : String(page.pageTemplate?.id ?? themeSettings.templateId ?? "");
+    typeof page.pageTemplate === "number" || typeof page.pageTemplate === "string" ? String(page.pageTemplate) : String(page.pageTemplate?.id ?? themeDefaults.templateId ?? "");
 
   return (
     <VisualBuilderClient

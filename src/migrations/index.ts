@@ -13,6 +13,7 @@ import * as migration_20260511_153000_featured_help_article_placeholders from '.
 import * as migration_20260511_160000_help_article_analytics from './20260511_160000_help_article_analytics';
 import * as migration_20260512_123700_help_article_analytics_locked_documents_rel from './20260512_123700_help_article_analytics_locked_documents_rel';
 import * as migration_20260512_141500_remove_unused_page_templates from './20260512_141500_remove_unused_page_templates';
+import * as migration_20260512_143000_move_theme_settings_into_themes from './20260512_143000_move_theme_settings_into_themes';
 
 export const migrations = [
   {
@@ -89,5 +90,10 @@ export const migrations = [
     up: migration_20260512_141500_remove_unused_page_templates.up,
     down: migration_20260512_141500_remove_unused_page_templates.down,
     name: '20260512_141500_remove_unused_page_templates'
+  },
+  {
+    up: migration_20260512_143000_move_theme_settings_into_themes.up,
+    down: migration_20260512_143000_move_theme_settings_into_themes.down,
+    name: '20260512_143000_move_theme_settings_into_themes'
   },
 ];

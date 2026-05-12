@@ -8,7 +8,7 @@ import type {
   BuilderPageTemplate,
   BuilderRootProps,
   BuilderTheme,
-  BuilderThemeSettings,
+  BuilderThemeDefaults,
 } from "./types";
 
 type LinkLike = {
@@ -216,6 +216,7 @@ function normalizeTheme(theme: unknown): BuilderTheme | null {
     isDefault: asBoolean(theme.isDefault),
     name,
     rootProps: themeRootProps(theme, id, name, handle),
+    templateId: relationId(theme.activeTemplate),
   };
 }
 
@@ -345,19 +346,50 @@ export async function getBuilderPageTemplates(payload: Payload): Promise<Builder
   }
 }
 
-export async function getBuilderThemeSettings(payload: Payload): Promise<BuilderThemeSettings> {
+export async function getBuilderThemeDefaults(payload: Payload): Promise<BuilderThemeDefaults> {
   try {
-    const settings = await payload.findGlobal({
+    const defaultThemes = await payload.find({
+      collection: "themes",
       depth: 1,
-      slug: "theme-settings",
+      limit: 1,
+      where: {
+        and: [
+          {
+            status: {
+              equals: "active",
+            },
+          },
+          {
+            isDefault: {
+              equals: true,
+            },
+          },
+        ],
+      },
     });
 
+    const fallbackThemes = defaultThemes.docs.length
+      ? defaultThemes
+      : await payload.find({
+          collection: "themes",
+          depth: 1,
+          limit: 1,
+          sort: "name",
+          where: {
+            status: {
+              equals: "active",
+            },
+          },
+        });
+
+    const theme = fallbackThemes.docs[0];
+
     return {
-      templateId: relationId(isRecord(settings) ? settings.activeTemplate : ""),
-      themeId: relationId(isRecord(settings) ? settings.activeTheme : ""),
+      templateId: relationId(isRecord(theme) ? theme.activeTemplate : ""),
+      themeId: relationId(isRecord(theme) ? theme.id : ""),
     };
   } catch (error) {
-    console.error("Unable to load Payload theme settings.", error);
+    console.error("Unable to load Payload theme defaults.", error);
     return {};
   }
 }

@@ -5,7 +5,7 @@ import { articleToBuilderData, normalizeBuilderData } from "@/payload/builder/co
 import {
   applyThemeToBuilderData,
   getBuilderMenus,
-  getBuilderThemeSettings,
+  getBuilderThemeDefaults,
   getBuilderThemes,
   getPageBuilderTheme,
 } from "@/payload/builder/metadata";
@@ -70,19 +70,19 @@ async function getHelpCentrePageData(payload: Payload, slug: string): Promise<Pa
 
 async function getSharedHelpData() {
   const payload = await getPayload({ config });
-  const [helpCentrePage, categoryTemplatePage, articleTemplatePage, menus, themes, themeSettings] = await Promise.all([
+  const [helpCentrePage, categoryTemplatePage, articleTemplatePage, menus, themes, themeDefaults] = await Promise.all([
     getHelpCentrePageData(payload, "help-centre"),
     getHelpCentrePageData(payload, "templates/help-category"),
     getHelpCentrePageData(payload, "templates/help-article"),
     getBuilderMenus(payload),
     getBuilderThemes(payload),
-    getBuilderThemeSettings(payload),
+    getBuilderThemeDefaults(payload),
   ]);
 
   return {
-    articleTemplateData: getThemedBuilderData(articleTemplatePage, themes, themeSettings.themeId),
-    categoryTemplateData: getThemedBuilderData(categoryTemplatePage, themes, themeSettings.themeId),
-    fallbackBuilderData: getThemedBuilderData(helpCentrePage, themes, themeSettings.themeId),
+    articleTemplateData: getThemedBuilderData(articleTemplatePage, themes, themeDefaults.themeId),
+    categoryTemplateData: getThemedBuilderData(categoryTemplatePage, themes, themeDefaults.themeId),
+    fallbackBuilderData: getThemedBuilderData(helpCentrePage, themes, themeDefaults.themeId),
     menus,
     payload,
   };

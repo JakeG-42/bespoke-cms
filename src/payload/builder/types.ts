@@ -186,6 +186,7 @@ export type BuilderTheme = {
   isDefault?: boolean;
   name: string;
   rootProps: Partial<BuilderRootProps>;
+  templateId?: string;
 };
 
 export type BuilderPageTemplate = {
@@ -197,7 +198,7 @@ export type BuilderPageTemplate = {
   themeId?: string;
 };
 
-export type BuilderThemeSettings = {
+export type BuilderThemeDefaults = {
   templateId?: string;
   themeId?: string;
 };
