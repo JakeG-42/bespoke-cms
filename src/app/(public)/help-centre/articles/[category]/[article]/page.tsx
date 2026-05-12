@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { ArticleFeedback } from "@/components/help-centre/ArticleFeedback";
 import { PuckBuilderRenderer } from "@/components/payload/puck-builder-renderer";
 import { SiteFooter } from "@/components/payload/site-footer";
 import { getHelpCategoryPath } from "@/lib/help-centre/article-routing";
@@ -97,6 +98,7 @@ export default async function HelpArticlePage({ params }: HelpArticlePageProps) 
               Source reference
             </a>
           ) : null}
+          <ArticleFeedback articlePath={helpArticle.path} articleTitle={helpArticle.title} categorySlug={helpArticle.categorySlug} />
         </article>
       </main> : null}
       {!helpArticle.builderData && !data.templateData ? <SiteFooter menus={data.menus} /> : null}

@@ -10,6 +10,8 @@ import * as migration_20260506_232900_support_tickets_and_menu_dropdowns from '.
 import * as migration_20260507_160500_help_articles_and_templates from './20260507_160500_help_articles_and_templates';
 import * as migration_20260508_094500_help_article_builder_data from './20260508_094500_help_article_builder_data';
 import * as migration_20260511_153000_featured_help_article_placeholders from './20260511_153000_featured_help_article_placeholders';
+import * as migration_20260511_160000_help_article_analytics from './20260511_160000_help_article_analytics';
+import * as migration_20260512_123700_help_article_analytics_locked_documents_rel from './20260512_123700_help_article_analytics_locked_documents_rel';
 
 export const migrations = [
   {
@@ -71,5 +73,15 @@ export const migrations = [
     up: migration_20260511_153000_featured_help_article_placeholders.up,
     down: migration_20260511_153000_featured_help_article_placeholders.down,
     name: '20260511_153000_featured_help_article_placeholders'
+  },
+  {
+    up: migration_20260511_160000_help_article_analytics.up,
+    down: migration_20260511_160000_help_article_analytics.down,
+    name: '20260511_160000_help_article_analytics'
+  },
+  {
+    up: migration_20260512_123700_help_article_analytics_locked_documents_rel.up,
+    down: migration_20260512_123700_help_article_analytics_locked_documents_rel.down,
+    name: '20260512_123700_help_article_analytics_locked_documents_rel'
   },
 ];

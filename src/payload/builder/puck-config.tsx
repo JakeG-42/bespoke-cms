@@ -21,6 +21,7 @@ import {
 import Link from "next/link";
 
 import { AndersenAssistant } from "@/components/help-centre/AndersenAssistant";
+import { ArticleFeedback } from "@/components/help-centre/ArticleFeedback";
 import { HelpCentreSearch } from "@/components/help-centre/HelpCentreSearch";
 import { getHelpArticlePath, getHelpCategoryPath } from "@/lib/help-centre/article-routing";
 import { ensureDemoArticleBodyLength } from "@/lib/help-centre/demo-article-content";
@@ -1697,7 +1698,6 @@ export const builderConfig: BuilderConfig = {
                 ) : null}
                 <div className="help-category-sidebar-panel">
                   <span>Categories</span>
-                  <h2>Other categories</h2>
                   <nav className="help-category-sidebar-list">
                     {otherCategories.map((item) => (
                       <Link className="help-category-sidebar-link" href={item.path} key={item.path}>
@@ -1747,7 +1747,7 @@ export const builderConfig: BuilderConfig = {
         bodySize: 1.08,
         categoriesColumns: "2",
         categoriesEmptyMessage: "Other Help Centre categories will appear here.",
-        categoriesHeading: "Other categories",
+        categoriesHeading: "Categories",
         categoriesIntro: "",
         colorControls: { ...defaultDesign.colorControls, backgroundColor: "#ffffff", textColor: "#032536", surfaceColor: "#f5f8fa" },
         elementBorderRadius: 22,
@@ -1758,7 +1758,7 @@ export const builderConfig: BuilderConfig = {
         heading: "",
         headingSize: 2.85,
         relatedEmptyMessage: "Related articles will appear here.",
-        relatedHeading: "Suggested articles",
+        relatedHeading: "Related Articles",
         relatedIntro: "",
         relatedLimit: 3,
         relatedShowCategoryLabel: true,
@@ -1795,7 +1795,7 @@ export const builderConfig: BuilderConfig = {
         showBody: toggleField("Show article body"),
         showBackLink: toggleField("Show back link"),
         showSourceUrl: toggleField("Show source URL"),
-        relatedHeading: { contentEditable: true, label: "Suggested heading", type: "text" },
+        relatedHeading: { contentEditable: true, label: "Related heading", type: "text" },
         relatedIntro: { contentEditable: true, label: "Suggested intro", type: "textarea" },
         relatedLimit: { label: "Suggested article limit", max: 6, min: 1, step: 1, type: "number" },
         relatedEmptyMessage: { contentEditable: true, label: "Suggested empty message", type: "textarea" },
@@ -1846,9 +1846,11 @@ export const builderConfig: BuilderConfig = {
         const categories = (getHelpCategories(metadata).length ? getHelpCategories(metadata) : sampleHelpCategories()).filter(
           (candidate) => props.showCurrentCategory || candidate.slug !== category.slug,
         );
-        const relatedHeading = textValue(props.relatedHeading, "Suggested articles");
+        const relatedHeading = textValue(props.relatedHeading, "Related Articles");
+        const resolvedRelatedHeading = relatedHeading.toLowerCase() === "suggested articles" ? "Related Articles" : relatedHeading;
         const relatedIntro = textValue(props.relatedIntro);
-        const categoriesHeading = textValue(props.categoriesHeading, "Other categories");
+        const categoriesHeading = textValue(props.categoriesHeading, "Categories");
+        const resolvedCategoriesHeading = categoriesHeading.toLowerCase() === "other categories" ? "Categories" : categoriesHeading;
         const categoriesIntro = textValue(props.categoriesIntro);
         const backLabel = textValue(props.backLabel, "Back to article list").trim();
         const resolvedBackLabel = backLabel.toLowerCase() === "back to category" ? "Back to article list" : backLabel;
@@ -1871,11 +1873,12 @@ export const builderConfig: BuilderConfig = {
                     {inlineSourceLabel ?? sourceLabel}
                   </a>
                 ) : null}
+                <ArticleFeedback articlePath={article.path} articleTitle={article.title} categorySlug={article.categorySlug} />
               </article>
               <aside className="puck-help-article-sidebar" aria-label="Related Help Centre content">
                 <div className="puck-help-sidebar-panel">
-                  <div className="puck-help-sidebar-heading">
-                    {inlineRelatedHeading ?? (relatedHeading ? <h2>{relatedHeading}</h2> : null)}
+                  <div className="puck-help-sidebar-heading puck-help-sidebar-heading-subtle">
+                    {inlineRelatedHeading || resolvedRelatedHeading ? <h2 className="puck-help-sidebar-label">{inlineRelatedHeading ?? resolvedRelatedHeading}</h2> : null}
                     {inlineRelatedIntro ?? (relatedIntro ? <p>{relatedIntro}</p> : null)}
                   </div>
                   {relatedArticles.length ? (
@@ -1894,8 +1897,8 @@ export const builderConfig: BuilderConfig = {
                   )}
                 </div>
                 <div className="puck-help-sidebar-panel">
-                  <div className="puck-help-sidebar-heading">
-                    {inlineCategoriesHeading ?? (categoriesHeading ? <h2>{categoriesHeading}</h2> : null)}
+                  <div className="puck-help-sidebar-heading puck-help-sidebar-heading-subtle">
+                    {inlineCategoriesHeading || resolvedCategoriesHeading ? <h2 className="puck-help-sidebar-label">{inlineCategoriesHeading ?? resolvedCategoriesHeading}</h2> : null}
                     {inlineCategoriesIntro ?? (categoriesIntro ? <p>{categoriesIntro}</p> : null)}
                   </div>
                   {categories.length ? (

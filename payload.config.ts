@@ -7,6 +7,7 @@ import { fileURLToPath } from "url";
 
 import { ConsoleUsers } from "./src/payload/collections/ConsoleUsers.ts";
 import { Documents } from "./src/payload/collections/Documents.ts";
+import { HelpArticleAnalytics } from "./src/payload/collections/HelpArticleAnalytics.ts";
 import { HelpArticles } from "./src/payload/collections/HelpArticles.ts";
 import { HelpCategories } from "./src/payload/collections/HelpCategories.ts";
 import { Media } from "./src/payload/collections/Media.ts";
@@ -103,7 +104,10 @@ function getPayloadSecret() {
 export default buildConfig({
   admin: {
     components: {
-      afterNavLinks: ["/components/code-workspace/CodeWorkspaceNavLink#CodeWorkspaceNavLink"],
+      afterNavLinks: [
+        "/components/article-stats/ArticleStatsNavLink#ArticleStatsNavLink",
+        "/components/code-workspace/CodeWorkspaceNavLink#CodeWorkspaceNavLink",
+      ],
       beforeLogin: ["/components/brand/ConsoleBrand#ConsoleLoginIntro"],
       graphics: {
         Icon: "/components/brand/ConsoleBrand#PlatformConsoleIcon",
@@ -117,6 +121,14 @@ export default buildConfig({
             title: "Code workspace",
           },
           path: "/code-workspace",
+        },
+        articleStats: {
+          Component: "/components/article-stats/ArticleStatsView#ArticleStatsView",
+          exact: true,
+          meta: {
+            title: "Article stats",
+          },
+          path: "/article-stats",
         },
         wysiwyg: {
           Component: "/components/visual-builder/WysiwygPageView#WysiwygPageView",
@@ -148,6 +160,7 @@ export default buildConfig({
   collections: [
     HelpCategories,
     HelpArticles,
+    HelpArticleAnalytics,
     Pages,
     SupportTickets,
     Themes,

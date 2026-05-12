@@ -1,3 +1,6 @@
+import { WysiwygCell as WysiwygCell_9cd4df1c4e48f87d2c6f5b2c3f4dd033 } from '../components/visual-builder/WysiwygCell'
+import { WysiwygField as WysiwygField_484e685e213fa45295ffc3ef88e6ef97 } from '../components/visual-builder/WysiwygField'
+import { VisualBuilderView as VisualBuilderView_36129a47f1fcd5005fb4d0fd92d06ed1 } from '../components/visual-builder/VisualBuilderView'
 import { RscEntryLexicalCell as RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
 import { RscEntryLexicalField as RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
 import { LexicalDiffComponent as LexicalDiffComponent_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
@@ -21,9 +24,6 @@ import { StrikethroughFeatureClient as StrikethroughFeatureClient_e70f5e05f09f93
 import { UnderlineFeatureClient as UnderlineFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { BoldFeatureClient as BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
-import { WysiwygCell as WysiwygCell_9cd4df1c4e48f87d2c6f5b2c3f4dd033 } from '../components/visual-builder/WysiwygCell'
-import { WysiwygField as WysiwygField_484e685e213fa45295ffc3ef88e6ef97 } from '../components/visual-builder/WysiwygField'
-import { VisualBuilderView as VisualBuilderView_36129a47f1fcd5005fb4d0fd92d06ed1 } from '../components/visual-builder/VisualBuilderView'
 import { ThemePreviewCell as ThemePreviewCell_ac77b5c0503c02d2f3a796dd252d513c } from '../components/theme/ThemePreview'
 import { ThemePreviewField as ThemePreviewField_ac77b5c0503c02d2f3a796dd252d513c } from '../components/theme/ThemePreview'
 import { TemplatePreviewCell as TemplatePreviewCell_ac77b5c0503c02d2f3a796dd252d513c } from '../components/theme/ThemePreview'
@@ -31,14 +31,19 @@ import { TemplatePreviewField as TemplatePreviewField_ac77b5c0503c02d2f3a796dd25
 import { ThemeSettingsPreviewField as ThemeSettingsPreviewField_ac77b5c0503c02d2f3a796dd252d513c } from '../components/theme/ThemePreview'
 import { PlatformConsoleIcon as PlatformConsoleIcon_5925d11dc95fafabeec200638335a25b } from '../components/brand/ConsoleBrand'
 import { PlatformConsoleLogo as PlatformConsoleLogo_5925d11dc95fafabeec200638335a25b } from '../components/brand/ConsoleBrand'
+import { ArticleStatsNavLink as ArticleStatsNavLink_672c03d57c9d902d5226fbeb8ee15681 } from '../components/article-stats/ArticleStatsNavLink'
 import { CodeWorkspaceNavLink as CodeWorkspaceNavLink_e8d5604b26950d7a38a53c138155e152 } from '../components/code-workspace/CodeWorkspaceNavLink'
 import { ConsoleLoginIntro as ConsoleLoginIntro_5925d11dc95fafabeec200638335a25b } from '../components/brand/ConsoleBrand'
 import { CodeWorkspaceView as CodeWorkspaceView_40eca8cfb99f6a5d5b690e36c1ab1152 } from '../components/code-workspace/CodeWorkspaceView'
+import { ArticleStatsView as ArticleStatsView_b183578b067fcf1bb56f83028579d3c3 } from '../components/article-stats/ArticleStatsView'
 import { WysiwygPageView as WysiwygPageView_c7efaa2257253e4183bd87449699e9e3 } from '../components/visual-builder/WysiwygPageView'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
 /** @type import('payload').ImportMap */
 export const importMap = {
+  "/components/visual-builder/WysiwygCell#WysiwygCell": WysiwygCell_9cd4df1c4e48f87d2c6f5b2c3f4dd033,
+  "/components/visual-builder/WysiwygField#WysiwygField": WysiwygField_484e685e213fa45295ffc3ef88e6ef97,
+  "/components/visual-builder/VisualBuilderView#VisualBuilderView": VisualBuilderView_36129a47f1fcd5005fb4d0fd92d06ed1,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalField": RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e,
   "@payloadcms/richtext-lexical/rsc#LexicalDiffComponent": LexicalDiffComponent_44fe37237e0ebf4470c9990d8cb7b07e,
@@ -62,9 +67,6 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#UnderlineFeatureClient": UnderlineFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#BoldFeatureClient": BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#ItalicFeatureClient": ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
-  "/components/visual-builder/WysiwygCell#WysiwygCell": WysiwygCell_9cd4df1c4e48f87d2c6f5b2c3f4dd033,
-  "/components/visual-builder/WysiwygField#WysiwygField": WysiwygField_484e685e213fa45295ffc3ef88e6ef97,
-  "/components/visual-builder/VisualBuilderView#VisualBuilderView": VisualBuilderView_36129a47f1fcd5005fb4d0fd92d06ed1,
   "/components/theme/ThemePreview#ThemePreviewCell": ThemePreviewCell_ac77b5c0503c02d2f3a796dd252d513c,
   "/components/theme/ThemePreview#ThemePreviewField": ThemePreviewField_ac77b5c0503c02d2f3a796dd252d513c,
   "/components/theme/ThemePreview#TemplatePreviewCell": TemplatePreviewCell_ac77b5c0503c02d2f3a796dd252d513c,
@@ -72,9 +74,11 @@ export const importMap = {
   "/components/theme/ThemePreview#ThemeSettingsPreviewField": ThemeSettingsPreviewField_ac77b5c0503c02d2f3a796dd252d513c,
   "/components/brand/ConsoleBrand#PlatformConsoleIcon": PlatformConsoleIcon_5925d11dc95fafabeec200638335a25b,
   "/components/brand/ConsoleBrand#PlatformConsoleLogo": PlatformConsoleLogo_5925d11dc95fafabeec200638335a25b,
+  "/components/article-stats/ArticleStatsNavLink#ArticleStatsNavLink": ArticleStatsNavLink_672c03d57c9d902d5226fbeb8ee15681,
   "/components/code-workspace/CodeWorkspaceNavLink#CodeWorkspaceNavLink": CodeWorkspaceNavLink_e8d5604b26950d7a38a53c138155e152,
   "/components/brand/ConsoleBrand#ConsoleLoginIntro": ConsoleLoginIntro_5925d11dc95fafabeec200638335a25b,
   "/components/code-workspace/CodeWorkspaceView#CodeWorkspaceView": CodeWorkspaceView_40eca8cfb99f6a5d5b690e36c1ab1152,
+  "/components/article-stats/ArticleStatsView#ArticleStatsView": ArticleStatsView_b183578b067fcf1bb56f83028579d3c3,
   "/components/visual-builder/WysiwygPageView#WysiwygPageView": WysiwygPageView_c7efaa2257253e4183bd87449699e9e3,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }
