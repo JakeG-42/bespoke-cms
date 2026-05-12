@@ -1,12 +1,19 @@
 "use client";
 
+import { useAuth } from "@payloadcms/ui";
 import { Code2 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export function CodeWorkspaceNavLink() {
+  const { user } = useAuth();
   const pathname = usePathname();
   const codeWorkspaceActive = pathname?.startsWith("/console/code-workspace");
+  const isAdmin = typeof user === "object" && user !== null && "role" in user && user.role === "admin";
+
+  if (!isAdmin) {
+    return null;
+  }
 
   return (
     <section aria-label="Tools" className="nav-group Tools console-tools-nav-group">

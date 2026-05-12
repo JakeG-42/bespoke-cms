@@ -1,6 +1,6 @@
 import type { CollectionConfig } from "payload";
 
-import { adminsOnly } from "../access.ts";
+import { adminsOnly, isAdminUser } from "../access.ts";
 
 const categoryOptions = [
   { label: "Wi-Fi / connectivity", value: "wifi_connectivity" },
@@ -26,6 +26,7 @@ export const SupportTickets: CollectionConfig = {
   admin: {
     defaultColumns: ["title", "category", "priority", "complexity", "status", "updatedAt"],
     group: "Support",
+    hidden: ({ user }) => !isAdminUser(user),
     useAsTitle: "title",
   },
   fields: [

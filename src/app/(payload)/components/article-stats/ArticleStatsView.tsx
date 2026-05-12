@@ -1,3 +1,4 @@
+import { Gutter } from "@payloadcms/ui";
 import { getArticleStats } from "@/lib/help-centre/article-analytics";
 
 export async function ArticleStatsView() {
@@ -20,7 +21,7 @@ export async function ArticleStatsView() {
   );
 
   return (
-    <main className="article-stats-console">
+    <Gutter className="article-stats-console">
       <header className="article-stats-header">
         <div>
           <p>Help Centre analytics</p>
@@ -100,7 +101,7 @@ export async function ArticleStatsView() {
           </div>
         )}
       </section>
-    </main>
+    </Gutter>
   );
 }
 

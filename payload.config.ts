@@ -105,7 +105,6 @@ export default buildConfig({
   admin: {
     components: {
       afterNavLinks: [
-        "/components/article-stats/ArticleStatsNavLink#ArticleStatsNavLink",
         "/components/code-workspace/CodeWorkspaceNavLink#CodeWorkspaceNavLink",
       ],
       beforeLogin: ["/components/brand/ConsoleBrand#ConsoleLoginIntro"],
@@ -121,14 +120,6 @@ export default buildConfig({
             title: "Code workspace",
           },
           path: "/code-workspace",
-        },
-        articleStats: {
-          Component: "/components/article-stats/ArticleStatsView#ArticleStatsView",
-          exact: true,
-          meta: {
-            title: "Article stats",
-          },
-          path: "/article-stats",
         },
         wysiwyg: {
           Component: "/components/visual-builder/WysiwygPageView#WysiwygPageView",

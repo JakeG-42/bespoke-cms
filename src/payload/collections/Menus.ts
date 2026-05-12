@@ -1,6 +1,6 @@
 import type { CollectionConfig } from "payload";
 
-import { adminsOnly } from "../access.ts";
+import { adminsOnly, isAdminUser } from "../access.ts";
 
 export const Menus: CollectionConfig = {
   slug: "menus",
@@ -13,6 +13,7 @@ export const Menus: CollectionConfig = {
   admin: {
     defaultColumns: ["name", "handle", "updatedAt"],
     group: "Theme",
+    hidden: ({ user }) => !isAdminUser(user),
     useAsTitle: "name",
   },
   fields: [

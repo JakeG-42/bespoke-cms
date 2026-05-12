@@ -1,14 +1,14 @@
 import type { CollectionConfig } from "payload";
 
-import { adminsOnly } from "../access.ts";
+import { authenticatedOnly } from "../access.ts";
 
 export const Documents: CollectionConfig = {
   slug: "documents",
   access: {
-    create: adminsOnly,
-    delete: adminsOnly,
+    create: authenticatedOnly,
+    delete: authenticatedOnly,
     read: () => true,
-    update: adminsOnly,
+    update: authenticatedOnly,
   },
   admin: {
     defaultColumns: ["title", "filename", "updatedAt"],

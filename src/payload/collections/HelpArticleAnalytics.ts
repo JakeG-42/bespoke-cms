@@ -1,18 +1,25 @@
 import type { CollectionConfig } from "payload";
 
-import { adminsOnly } from "../access.ts";
+import { adminsOnly, authenticatedOnly } from "../access.ts";
 
 export const HelpArticleAnalytics: CollectionConfig = {
   slug: "help-article-analytics",
   access: {
     create: adminsOnly,
     delete: adminsOnly,
-    read: adminsOnly,
+    read: authenticatedOnly,
     update: adminsOnly,
   },
   admin: {
+    components: {
+      views: {
+        list: {
+          Component: "/components/article-stats/ArticleStatsView#ArticleStatsView",
+        },
+      },
+    },
     defaultColumns: ["articleTitle", "views", "helpfulVote", "totalSeconds", "lastViewedAt"],
-    group: "Analytics",
+    group: "Help Centre",
     useAsTitle: "articleTitle",
   },
   labels: {

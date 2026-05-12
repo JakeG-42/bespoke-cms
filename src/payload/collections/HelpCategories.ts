@@ -1,6 +1,6 @@
 import type { CollectionConfig } from "payload";
 
-import { adminsOnly, publishedOrAdmin } from "../access.ts";
+import { authenticatedOnly, publishedOrAdmin } from "../access.ts";
 import { slugField, statusField } from "../fields.ts";
 
 const iconOptions = [
@@ -16,10 +16,10 @@ const iconOptions = [
 export const HelpCategories: CollectionConfig = {
   slug: "help-categories",
   access: {
-    create: adminsOnly,
-    delete: adminsOnly,
+    create: authenticatedOnly,
+    delete: authenticatedOnly,
     read: publishedOrAdmin,
-    update: adminsOnly,
+    update: authenticatedOnly,
   },
   admin: {
     defaultColumns: ["title", "slug", "status", "sortOrder", "updatedAt"],

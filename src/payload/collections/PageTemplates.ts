@@ -1,6 +1,6 @@
 import type { CollectionConfig } from "payload";
 
-import { adminsOnly } from "../access.ts";
+import { adminsOnly, isAdminUser } from "../access.ts";
 
 export const PageTemplates: CollectionConfig = {
   slug: "page-templates",
@@ -13,6 +13,7 @@ export const PageTemplates: CollectionConfig = {
   admin: {
     defaultColumns: ["preview", "name", "handle", "status", "theme", "updatedAt"],
     group: "Theme",
+    hidden: ({ user }) => !isAdminUser(user),
     useAsTitle: "name",
   },
   labels: {

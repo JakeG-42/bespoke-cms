@@ -1,6 +1,6 @@
 import type { CollectionConfig } from "payload";
 
-import { adminsOnly, publishedOrAdmin } from "../access.ts";
+import { authenticatedOnly, publishedOrAdmin } from "../access.ts";
 import { pageBlocks } from "../blocks/index.ts";
 import { seoFields, slugField, statusField } from "../fields.ts";
 
@@ -15,10 +15,10 @@ function getPagePath(slug: unknown) {
 export const Pages: CollectionConfig = {
   slug: "pages",
   access: {
-    create: adminsOnly,
-    delete: adminsOnly,
+    create: authenticatedOnly,
+    delete: authenticatedOnly,
     read: publishedOrAdmin,
-    update: adminsOnly,
+    update: authenticatedOnly,
   },
   admin: {
     components: {

@@ -1,6 +1,6 @@
 import type { GlobalConfig } from "payload";
 
-import { adminsOnly } from "../access.ts";
+import { adminsOnly, isAdminUser } from "../access.ts";
 import { seoFields } from "../fields.ts";
 
 export const SiteSettings: GlobalConfig = {
@@ -11,6 +11,7 @@ export const SiteSettings: GlobalConfig = {
   },
   admin: {
     group: "Settings",
+    hidden: ({ user }) => !isAdminUser(user),
   },
   fields: [
     {

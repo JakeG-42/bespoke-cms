@@ -1,6 +1,6 @@
 import type { CollectionConfig } from "payload";
 
-import { adminsOnly, publishedOrAdmin } from "../access.ts";
+import { authenticatedOnly, publishedOrAdmin } from "../access.ts";
 import { seoFields, slugField, statusField } from "../fields.ts";
 
 function getSiteUrl() {
@@ -25,10 +25,10 @@ const reviewStatusOptions = [
 export const HelpArticles: CollectionConfig = {
   slug: "help-articles",
   access: {
-    create: adminsOnly,
-    delete: adminsOnly,
+    create: authenticatedOnly,
+    delete: authenticatedOnly,
     read: publishedOrAdmin,
-    update: adminsOnly,
+    update: authenticatedOnly,
   },
   admin: {
     components: {

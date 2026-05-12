@@ -1,6 +1,6 @@
 import type { GlobalConfig } from "payload";
 
-import { adminsOnly } from "../access.ts";
+import { adminsOnly, isAdminUser } from "../access.ts";
 
 export const ThemeSettings: GlobalConfig = {
   slug: "theme-settings",
@@ -10,6 +10,7 @@ export const ThemeSettings: GlobalConfig = {
   },
   admin: {
     group: "Theme",
+    hidden: ({ user }) => !isAdminUser(user),
   },
   fields: [
     {

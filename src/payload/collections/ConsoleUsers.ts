@@ -1,17 +1,20 @@
 import type { CollectionConfig } from "payload";
 
+import { adminFieldOnly, adminsOnly, adminsOrSelf, isAdminUser } from "../access.ts";
+
 export const ConsoleUsers: CollectionConfig = {
   slug: "console-users",
   auth: true,
   access: {
-    create: ({ req }) => Boolean(req.user),
-    delete: ({ req }) => Boolean(req.user),
-    read: ({ req }) => Boolean(req.user),
-    update: ({ req }) => Boolean(req.user),
+    create: adminsOnly,
+    delete: adminsOnly,
+    read: adminsOrSelf,
+    update: adminsOnly,
   },
   admin: {
     defaultColumns: ["email", "name", "role", "updatedAt"],
     group: "Console",
+    hidden: ({ user }) => !isAdminUser(user),
     useAsTitle: "email",
   },
   fields: [
@@ -23,9 +26,14 @@ export const ConsoleUsers: CollectionConfig = {
       name: "role",
       type: "select",
       admin: {
-        description: "Use Admin for now. Editor is available for future limited-access accounts.",
+        description: "Admins can manage the full console. Editors only see the content areas needed for day-to-day updates.",
       },
-      defaultValue: "admin",
+      access: {
+        create: adminFieldOnly,
+        read: adminFieldOnly,
+        update: adminFieldOnly,
+      },
+      defaultValue: "editor",
       options: [
         {
           label: "Admin",

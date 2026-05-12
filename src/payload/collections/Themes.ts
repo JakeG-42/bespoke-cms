@@ -1,6 +1,6 @@
 import type { CollectionConfig } from "payload";
 
-import { adminsOnly } from "../access.ts";
+import { adminsOnly, isAdminUser } from "../access.ts";
 
 const fontOptions = [
   {
@@ -43,6 +43,7 @@ export const Themes: CollectionConfig = {
   admin: {
     defaultColumns: ["preview", "name", "handle", "status", "isDefault", "updatedAt"],
     group: "Theme",
+    hidden: ({ user }) => !isAdminUser(user),
     useAsTitle: "name",
   },
   fields: [
