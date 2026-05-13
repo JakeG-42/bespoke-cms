@@ -24,7 +24,6 @@ import { AndersenAssistant } from "@/components/help-centre/AndersenAssistant";
 import { ArticleFeedback } from "@/components/help-centre/ArticleFeedback";
 import { HelpCentreSearch } from "@/components/help-centre/HelpCentreSearch";
 import { getHelpArticlePath, getHelpCategoryPath } from "@/lib/help-centre/article-routing";
-import { ensureDemoArticleBodyLength } from "@/lib/help-centre/demo-article-content";
 import type {
   BuilderAdvancedStyle,
   BuilderConfig,
@@ -877,7 +876,7 @@ function publicArticleChunks(body: string) {
 }
 
 function ArticleBody({ body }: { body: string }) {
-  const chunks = publicArticleChunks(ensureDemoArticleBodyLength(body));
+  const chunks = publicArticleChunks(body);
 
   if (!chunks.length) {
     return <p>Article content is being prepared.</p>;
@@ -2147,12 +2146,9 @@ export const builderConfig: BuilderConfig = {
       label: "Section",
       render: (props) => {
         const sectionProps = withFullWidth(props);
-        const isDemoPlaceholder =
-          textValue(props.eyebrow).trim().toLowerCase() === "demo page shell" ||
-          /normal andersen ev page would usually be show/i.test(textValue(props.body));
         const sectionClassName = getSectionClassName(
           sectionProps,
-          `puck-builder-section puck-builder-section-${props.variant ?? "panel"}${isDemoPlaceholder ? " puck-demo-page-section" : ""}`,
+          `puck-builder-section puck-builder-section-${props.variant ?? "panel"}`,
         );
 
         return (
@@ -2160,15 +2156,9 @@ export const builderConfig: BuilderConfig = {
             {textValue(props.eyebrow) ? <span className="puck-kicker">{textValue(props.eyebrow)}</span> : null}
             <h2>{textValue(props.heading, "Build a new section")}</h2>
             {textValue(props.body) ? <p>{textValue(props.body)}</p> : null}
-            <div className={`puck-actions${isDemoPlaceholder ? " puck-demo-preview-actions" : ""}`}>
-              {isDemoPlaceholder ? (
-                <BuilderButton link={{ label: "Go to Help Centre", url: "/help-centre" }} metadata={props.puck.metadata} />
-              ) : (
-                <>
-                  <BuilderButton link={{ label: props.primaryLabel, url: props.primaryUrl }} metadata={props.puck.metadata} />
-                  <BuilderButton link={{ label: props.secondaryLabel, url: props.secondaryUrl }} metadata={props.puck.metadata} secondary />
-                </>
-              )}
+            <div className="puck-actions">
+              <BuilderButton link={{ label: props.primaryLabel, url: props.primaryUrl }} metadata={props.puck.metadata} />
+              <BuilderButton link={{ label: props.secondaryLabel, url: props.secondaryUrl }} metadata={props.puck.metadata} secondary />
             </div>
           </section>
         );

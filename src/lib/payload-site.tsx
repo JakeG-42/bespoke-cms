@@ -32,10 +32,6 @@ export function getPagePath(slug: string) {
   return slug === "home" ? "/" : `/${slug}`;
 }
 
-export function getPagePathFromSegments(segments: string[] | undefined) {
-  return getPagePath(getSlugFromSegments(segments));
-}
-
 async function getPayloadPage(payload: Payload, slug: string): Promise<Page | null> {
   const result = await payload.find({
     collection: "pages",

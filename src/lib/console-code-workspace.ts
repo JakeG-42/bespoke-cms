@@ -70,12 +70,10 @@ const allowedExtensions = new Set([
 
 const rootFiles = new Set([
   ".gitignore",
-  "components.json",
   "eslint.config.mjs",
   "next.config.ts",
   "package.json",
   "payload.config.ts",
-  "postcss.config.mjs",
   "README.md",
   "tsconfig.json",
   "vercel.json",
@@ -271,7 +269,7 @@ export async function readRepoFile(requestedPath: string): Promise<RepoFile> {
     name: path.basename(relativePath),
     path: relativePath,
     readOnly: true,
-    readOnlyReason: "Source files are read-only here because Vercel deployments are immutable. Use Git for source changes, and CSS snippets for live styling overrides.",
+    readOnlyReason: "Source files are read-only here because Vercel deployments are immutable. Use Git for source changes.",
     size: stats.size,
   };
 }

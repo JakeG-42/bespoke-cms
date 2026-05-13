@@ -18,21 +18,11 @@
     "@payloadcms/next": "^3.84.1",
     "@payloadcms/richtext-lexical": "^3.84.1",
     "@puckeditor/core": "^0.21.2",
-    "@radix-ui/react-label": "^2.1.8",
-    "@radix-ui/react-slot": "^1.2.4",
-    "@tailwindcss/postcss": "^4.2.4",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
     "lucide-react": "^1.11.0",
     "next": "16.2.4",
     "payload": "^3.84.1",
     "react": "19.2.3",
-    "react-dom": "19.2.3",
-    "tailwind-merge": "^3.5.0",
-    "tailwindcss": "^4.2.4"
-  },
-  "overrides": {
-    "postcss": "^8.5.10"
+    "react-dom": "19.2.3"
   },
   "devDependencies": {
     "@types/node": "^24.10.0",

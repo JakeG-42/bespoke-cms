@@ -48,25 +48,6 @@
   text-transform: uppercase;
 }
 
-.visual-builder-status {
-  max-width: 34rem;
-  padding: 0.75rem 0.9rem;
-  border-radius: 8px;
-  background: #eff6ff;
-  color: #1e3a8a;
-  font-size: 0.9rem;
-}
-
-.visual-builder-status.error {
-  background: #fef2f2;
-  color: #991b1b;
-}
-
-.visual-builder-status.saved {
-  background: #ecfdf5;
-  color: #065f46;
-}
-
 .visual-builder-actions {
   display: flex;
   align-items: center;
@@ -833,39 +814,6 @@
   box-shadow: 0 18px 42px rgba(22, 27, 24, 0.08);
 }
 
-.puck-theme-andersenEV .puck-demo-page-section {
-  width: min(980px, calc(100% - 48px));
-  margin: clamp(3rem, 7vw, 6rem) auto;
-  border-color: rgba(17, 22, 19, 0.12);
-  background: #eef0ed;
-  color: #111613;
-  text-align: center;
-  box-shadow: 0 18px 42px rgba(17, 22, 19, 0.08);
-}
-
-.puck-theme-andersenEV .puck-demo-page-section .puck-kicker {
-  justify-self: center;
-  color: #6a706a;
-}
-
-.puck-theme-andersenEV .puck-demo-page-section h2 {
-  color: #111613;
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  font-weight: 650;
-  line-height: 1;
-}
-
-.puck-theme-andersenEV .puck-demo-page-section p {
-  justify-self: center;
-  max-width: 38rem;
-  color: #555b55;
-  font-size: clamp(1rem, 1.6vw, 1.16rem);
-}
-
-.puck-theme-andersenEV .puck-demo-preview-actions {
-  justify-content: center;
-}
-
 .puck-theme-andersenEV .puck-card h3,
 .puck-theme-andersenEV .puck-section:not(.puck-hero) h1,
 .puck-theme-andersenEV .puck-section:not(.puck-hero) h2 {
@@ -1458,36 +1406,6 @@
 .puck-help-category-section {
   color: var(--builder-section-text);
   font-family: "Muli", Arial, Helvetica, sans-serif;
-}
-
-.puck-help-category-heading {
-  display: grid;
-  gap: 0.65rem;
-  max-width: 50rem;
-  margin-bottom: clamp(1.4rem, 3vw, 2rem);
-}
-
-.puck-align-center .puck-help-category-heading {
-  margin-right: auto;
-  margin-left: auto;
-}
-
-.puck-help-category-heading h2,
-.puck-help-category-heading p {
-  margin: 0;
-}
-
-.puck-help-category-heading h2 {
-  color: var(--builder-section-text, #032536);
-  font-size: var(--builder-heading-size, clamp(2rem, 4vw, 3rem));
-  font-weight: var(--builder-font-weight, 850);
-  line-height: 1;
-}
-
-.puck-help-category-heading p {
-  color: color-mix(in srgb, var(--builder-section-text, #032536) 72%, transparent);
-  font-size: var(--builder-body-size, 1.05rem);
-  line-height: var(--builder-line-height, 1.55);
 }
 
 .puck-help-category-hero {
@@ -2141,28 +2059,6 @@
   gap: var(--builder-element-gap, 0.85rem);
 }
 
-.puck-help-faq-card {
-  overflow: clip;
-  border: 1px solid rgba(17, 17, 17, 0.1);
-  border-radius: var(--builder-element-border-radius, 18px);
-  background: rgba(255, 255, 255, 0.86);
-  color: var(--builder-section-text, #032536);
-  box-shadow: 0 10px 24px rgba(20, 35, 28, 0.05);
-  transition:
-    background-color var(--andersen-hover-duration, 300ms) var(--andersen-hover-ease, ease),
-    border-color var(--andersen-hover-duration, 300ms) var(--andersen-hover-ease, ease),
-    box-shadow var(--andersen-hover-duration, 300ms) var(--andersen-hover-ease, ease),
-    transform var(--andersen-hover-duration, 300ms) var(--andersen-hover-ease, ease);
-}
-
-.puck-help-faq-card:hover,
-.puck-help-faq-card:focus-within {
-  border-color: #111613;
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 16px 32px rgba(20, 35, 28, 0.08);
-  transform: translateY(-2px);
-}
-
 .puck-help-article-card {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -2219,120 +2115,6 @@
 
 .puck-help-article-card small::after {
   content: " ->";
-}
-
-.puck-help-faq-card summary {
-  position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 1rem;
-  align-items: center;
-  padding: clamp(1rem, 2vw, var(--builder-element-padding, 1.2rem));
-  list-style: none;
-  cursor: pointer;
-}
-
-.puck-help-faq-card summary::-webkit-details-marker {
-  display: none;
-}
-
-.puck-help-faq-card summary::after {
-  content: "";
-  width: 0.7rem;
-  height: 0.7rem;
-  margin-left: 0.3rem;
-  border-right: 2px solid currentColor;
-  border-bottom: 2px solid currentColor;
-  transform: rotate(45deg);
-  transition: transform var(--andersen-hover-duration, 300ms) var(--andersen-hover-ease, ease);
-}
-
-.puck-help-faq-card[open] summary::after {
-  transform: rotate(225deg) translate(-0.1rem, -0.1rem);
-}
-
-.puck-help-faq-card summary > span {
-  display: grid;
-  gap: 0.35rem;
-}
-
-.puck-help-faq-card summary strong {
-  color: #032536;
-  font-size: clamp(1rem, 1.4vw, 1.16rem);
-  font-weight: 850;
-  line-height: 1.25;
-}
-
-.puck-help-faq-card summary em {
-  color: color-mix(in srgb, #032536 70%, transparent);
-  font-size: 0.94rem;
-  font-style: normal;
-  line-height: 1.45;
-}
-
-.puck-help-faq-card summary small {
-  justify-self: end;
-  padding: 0.34rem 0.56rem;
-  border-radius: 999px;
-  background: #eef3f0;
-  color: #4f5650;
-  font-size: 0.72rem;
-  font-weight: 800;
-  white-space: nowrap;
-}
-
-.puck-help-faq-status-needsConfirmation summary small {
-  background: #fff5df;
-  color: #7c4a03;
-}
-
-.puck-help-faq-status-draft summary small {
-  background: #f1f5f9;
-  color: #475569;
-}
-
-.puck-help-faq-body {
-  display: grid;
-  gap: 0.85rem;
-  padding: 0 clamp(1rem, 2vw, var(--builder-element-padding, 1.2rem)) clamp(1rem, 2vw, var(--builder-element-padding, 1.2rem));
-  color: color-mix(in srgb, #032536 80%, transparent);
-  font-size: var(--builder-body-size, 1rem);
-  line-height: var(--builder-line-height, 1.65);
-}
-
-.puck-help-faq-body p,
-.puck-help-faq-body ul {
-  margin: 0;
-}
-
-.puck-help-faq-body ul {
-  display: grid;
-  gap: 0.35rem;
-  padding-left: 1.15rem;
-}
-
-.puck-help-faq-source {
-  justify-self: start;
-  color: #111613;
-  font-size: 0.88rem;
-  font-weight: 800;
-  text-decoration: none;
-}
-
-.puck-help-faq-source:hover,
-.puck-help-faq-source:focus-visible {
-  color: #111613;
-  text-decoration: underline;
-}
-
-.puck-theme-andersenEV .puck-help-faq-section {
-  width: min(1170px, calc(100% - 96px));
-  padding-top: clamp(1rem, 3vw, 2rem);
-  padding-bottom: clamp(1rem, 3vw, 2rem);
-}
-
-.puck-theme-andersenEV .puck-help-faq-card {
-  background: #f8faf9;
 }
 
 .help-article-page {
@@ -2818,98 +2600,6 @@
   font-size: 0.9rem;
   font-weight: 650;
   line-height: 1.15;
-}
-
-.puck-help-related-section,
-.puck-help-other-categories-section {
-  color: #032536;
-  font-family: "Muli", Arial, Helvetica, sans-serif;
-}
-
-.puck-help-support-heading {
-  max-width: 720px;
-  margin-bottom: clamp(1.15rem, 2vw, 1.6rem);
-}
-
-.puck-help-support-heading h2 {
-  margin: 0;
-  color: var(--builder-section-text, #032536);
-  font-size: var(--builder-heading-size, 1.7rem);
-  font-weight: var(--builder-font-weight, 850);
-  line-height: 1.05;
-  letter-spacing: 0;
-}
-
-.puck-help-support-heading p {
-  margin: 0.65rem 0 0;
-  color: color-mix(in srgb, var(--builder-section-text, #032536) 70%, transparent);
-  font-size: var(--builder-body-size, 1rem);
-  line-height: 1.55;
-}
-
-.puck-help-related-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--builder-element-gap, 1rem);
-}
-
-.puck-help-related-card {
-  display: flex;
-  min-height: 12rem;
-  flex-direction: column;
-  gap: 0.65rem;
-  padding: var(--builder-element-padding, 1.35rem);
-  border: var(--builder-element-border-width, 1px) var(--builder-element-border-style, solid) rgba(17, 17, 17, 0.1);
-  border-radius: var(--builder-element-border-radius, 24px);
-  background: rgba(255, 255, 255, 0.86);
-  color: var(--builder-section-text, #032536);
-  text-decoration: none;
-  box-shadow: 0 12px 28px rgba(20, 35, 28, 0.05);
-  transition:
-    background-color var(--andersen-hover-duration, 300ms) var(--andersen-hover-ease, ease),
-    border-color var(--andersen-hover-duration, 300ms) var(--andersen-hover-ease, ease),
-    box-shadow var(--andersen-hover-duration, 300ms) var(--andersen-hover-ease, ease),
-    transform var(--andersen-hover-duration, 300ms) var(--andersen-hover-ease, ease);
-}
-
-.puck-help-related-card:hover,
-.puck-help-related-card:focus-visible {
-  border-color: #111613;
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 18px 36px rgba(20, 35, 28, 0.09);
-  outline: 0;
-  transform: translateY(-3px);
-}
-
-.puck-help-related-card strong {
-  color: var(--builder-section-text, #032536);
-  font-size: clamp(1.05rem, 1.5vw, 1.28rem);
-  font-weight: 850;
-  line-height: 1.16;
-}
-
-.puck-help-related-card em {
-  color: color-mix(in srgb, var(--builder-section-text, #032536) 70%, transparent);
-  font-size: 0.94rem;
-  font-style: normal;
-  line-height: 1.45;
-}
-
-.puck-help-related-card small {
-  margin-top: auto;
-  color: #111613;
-  font-size: 0.84rem;
-  font-weight: 850;
-}
-
-.puck-help-related-card small::after {
-  content: " ->";
-}
-
-.puck-help-category-card-compact {
-  min-height: 11rem;
-  padding: var(--builder-element-padding, 1.2rem);
-  border-radius: var(--builder-element-border-radius, 18px);
 }
 
 .help-template-empty {
@@ -3426,8 +3116,6 @@
 .puck-theme-andersenEV .puck-help-category-template,
 .puck-theme-andersenEV .puck-help-article-layout,
 .puck-theme-andersenEV .puck-help-article-template,
-.puck-theme-andersenEV .puck-help-related-section,
-.puck-theme-andersenEV .puck-help-other-categories-section,
 .puck-theme-andersenEV .help-category-listing-layout,
 .puck-theme-andersenEV .puck-help-article-sidebar,
 .puck-theme-andersenEV .puck-help-sidebar-panel,
@@ -3516,9 +3204,7 @@
   line-height: 1.05;
 }
 
-.puck-help-article-layout .puck-help-sidebar-heading h2,
-.puck-help-related-section .puck-help-support-heading h2,
-.puck-help-other-categories-section .puck-help-support-heading h2 {
+.puck-help-article-layout .puck-help-sidebar-heading h2 {
   max-width: none;
   margin-bottom: 0;
   font-size: clamp(0.95rem, 1vw, 1.05rem);
@@ -4226,7 +3912,6 @@
   .puck-split,
   .puck-card-grid,
   .puck-help-category-grid,
-  .puck-help-related-grid,
   .puck-gallery {
     grid-template-columns: 1fr;
   }
@@ -4646,22 +4331,8 @@
     grid-template-columns: 1fr;
   }
 
-  .puck-help-faq-card summary {
-    grid-template-columns: 1fr;
-  }
-
   .puck-help-article-card {
     grid-template-columns: 1fr;
-  }
-
-  .puck-help-faq-card summary small {
-    justify-self: start;
-  }
-
-  .puck-help-faq-card summary::after {
-    position: absolute;
-    right: 1.1rem;
-    top: 1.2rem;
   }
 
   .puck-help-category-card {
